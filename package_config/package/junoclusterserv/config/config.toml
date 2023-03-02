@@ -1,0 +1,24 @@
+## This is the base (first) configuration file to be applied to generate 
+## the final configuration file.
+
+## What defined here override the default in the code, and can be overridden
+## by 
+##   pool specific configuration,
+##   environment specific configuration,
+##   environment specific configuration for specific pool,
+##
+
+## For etcd, we assume that the port will be the same cross the pools
+## VIP's will be different. Also, the peer name will not change, though
+## They can.
+##
+[etcdsvr] 
+initial_cluster="$STAGEIP"
+# client port
+client_port=25716
+
+# peer port
+peer_port=25807
+
+# etcd node id's
+peer_names="p1"

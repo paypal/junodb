@@ -1,0 +1,187 @@
+## This is the base (first) configuration file to be applied to generate 
+## the final configuration file.
+
+## What defined here override the default in the code, and can be overridden
+## by 
+##   pool specific configuration,
+##   environment specific configuration,
+##   environment specific configuration for specific pool,
+##
+
+LogLevel = "info"
+  #  string 
+  #  "verbose" | "info" | "warning" | "error"
+ClusterName = "$NAME"
+  #  string 
+RootDir = "$PREFIX/$NAME"
+  #  the directory where the package installed
+  #  string
+ShutdownWaitTime = "10s"
+  #  string
+  #  in golang's time.Duration string format, 
+  #    for example, "100ms" - 100 milliseconds
+NumChildren = 8 
+  #  integer
+MaxKeyLength = 256
+  #  integer
+  #    in byte
+MaxNamespaceLength = 64
+  #  integer
+  #    in byte
+MaxPayloadLength = 204800
+  #  integer
+  #    in byte
+MaxTimeToLive = 259200
+  #  integer
+  #    in second 
+DefaultTimeToLive = 1800
+  #  integer
+  #    in second 
+StateLogEnabled = true
+  #  boolean
+BypassLTMEnabled = true
+  #  boolean
+EtcdEnabled = true
+  #  boolean
+TwoPhaseDestroyEnabled = true
+  #  boolean
+PayloadEncryptionEnabled = true
+  #  boolean
+ReplicationEncryptionEnabled = true
+  #  boolean
+ReqProcessorPoolSize = 5000
+  #  integer
+MaxNumReqProcessors = 10000
+  #  integer
+
+#StateLogDir = "./"
+  #  string
+  #  no need to expose
+
+HttpMonAddr=":26967"
+
+PidFileName = "proxy.pid"
+  #  string
+
+[ClusterInfo]
+  #
+  NumZones=5
+    #  integer
+    #  SHOULD make it code default, and not to expose it in LIVE environment
+  NumShards=1024
+    #  integer
+    #  SHOULD make it code default, and not to expose it in LIVE environment
+  #ConnInfo
+    #  [][]string
+    #  pool/environment specific, SHOULD NOT be defined in this base config 
+  #SSHosts
+    #  [][]string
+    #  pool/environment specific, SHOULD NOT be defined in this base config 
+    # ** SSHosts and SSPorts are used to generate ConnInfo ONLY when 
+    # ** ConnInfo not defined in the final config
+  #SSPorts
+    #  [] integer
+    #  pool/environment specific, SHOULD NOT be defined in this base config 
+    # ** SSHosts and SSPorts are used to generate ConnInfo ONLY when 
+    # ** ConnInfo not defined in the final config
+
+[ClusterStats]
+  TimeoutStatsEnabled = true
+  RespTimeStatsEnabled = false
+  MarkdownThreashold = 6 
+  MarkdownExpirationBase = 300
+  EMARespTimeWindowSize = 39
+  TimeoutWindowSize = 5
+  TimeoutWindowUint = 60
+
+[Outbound]
+  #  pool/environment specific. put here for now to avoid adding it for
+  #  every live environment. STAGE should have its own 
+  #
+  ConnectTimeout = "1s"
+  ReqChanBufSize = 8092
+  MaxPendingQueSize = 8092
+  MaxBufferedWriteSize = 65536
+  ReconnectIntervalBase = 100
+    # in millicsecond
+  ReconnectIntervalMax = 60000
+    # in millicsecond
+  NumConnsPerTarget = 1
+  IOBufSize = 65536
+
+[Replication]
+  [Replication.IO]
+   # when new replication target is added, one default Replication.IO config 
+   # may not be suitable for all targets. Evaluate and consider if need to 
+   # define a new IO config other than the default.
+
+    [Replication.IO.default]
+      PendingQueExtra = 300
+
+[ReqProc]
+  #  pool/environment specific. put here for now to avoid adding it for
+  #  every live environment. STAGE should have its own 
+  #
+  SSReqTimeout = "500ms"
+  #  string
+  #  in time.Duration string format
+
+[CAL]
+  Host = "127.0.0.1"
+  Port = 1118
+  Environment = "PayPal"
+  Poolname = "$NAME"
+  MessageQueueSize = 10000
+  CalType = "socket"
+  Enabled = false
+
+[Sec]
+  AppName = "$NAME"
+  KeyStoreFilePath = "./secrets/keystore.toml"
+  CertPemFilePath = "./secrets/server.crt"
+  KeyPemFilePath = "./secrets/server.pem"
+  ClientAuth=false
+  # string
+  # in format <host>:<port>
+  # Here, it is defined for LIVE. STAGE and SANDBOX SHOULD override it
+#  ProtectedPackageDir="$PREFIX/$NAME/protected/"
+
+[IO]
+  # environment and/pool specific
+  # when having multiple listeners, may need to define different
+  # IO config for different listener
+  # STAGE should have its own 
+  [IO.default]
+    HandshakeTimeout= "2s"
+    IdleTimeout = "2m0s"
+    ReadTimeout = "1000ms"
+    WriteTimeout = "1000ms"
+    RequestTimeout = "600ms"
+    MaxBufferedWriteSize = 65536
+    IOBufSize = 65536
+
+[Etcd]
+  Endpoints=["$STAGEIP:25716"]
+#  AutoSyncInterval = 0
+#  DialTimeout = 1000000000
+#  DialKeepAliveTime = 0
+#  DialKeepAliveTimeout = 0
+#  MaxCallSendMsgSize = 0
+#  MaxCallRecvMsgSize = 0
+#  Username = ""
+#  Password = ""
+#  RejectOldCluster = false
+#  RequestTimeout = "1s"
+#  MaxConnectAttempts = 5
+#  MaxConnectBackoff = 10
+#  CacheDir = "./"
+
+[[Listener]]
+ Addr = ":26969"
+
+[[Listener]]
+ Addr = ":25760"
+ SSLEnabled = true
+
+[Sherlock]
+   Enabled=false

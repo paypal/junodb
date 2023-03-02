@@ -1,0 +1,17 @@
+ClusterName="junoserv-risk"
+LogLevel = "info"
+RootDir = "/opt/juno"
+DbScanPort=26983
+DbWatchEnabled=true
+[Etcd]
+  Endpoints=["etcd:2379"]
+
+[Cal]
+  Enabled = false
+
+[Sherlock]
+  Enabled = false
+
+[DB]
+  [[DB.DbPaths]]
+    Path = "/dev/shm/data"

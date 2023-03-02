@@ -1,0 +1,32 @@
+LogLevel="debug"
+
+[ClusterInfo]
+ConnInfo = [
+	["localhost:5110", "localhost:5111", "localhost:5112"],
+	["localhost:6110", "localhost:6111", "localhost:6112"],
+	["localhost:7110", "localhost:7111", "localhost:7112"],
+	["localhost:8110", "localhost:8111", "localhost:8112"],
+	["localhost:9110", "localhost:9111", "localhost:9112"]
+]
+
+NumZones=5
+NumConnPerSS=1
+
+[IO]
+ [IO.default]
+    IdleTimeout="1000ms"
+    readTimeout="1s"
+    WriteTimeout="200ms"
+    RequestTimeout="600ms"
+
+[CAL]
+  Host = "127.0.0.1"
+  Port = 1118
+  Environment = "PayPal"
+  Poolname = "junoproxy"
+  ConnectionTimeout = 30
+  Label = ""
+  MessageQueueSize = 10000
+  CalType = "file"
+  CalLogFile = "/x/home/wcai/github/juno/src/juno/test/unittest/timeout/cal.log"
+  Enabled = true

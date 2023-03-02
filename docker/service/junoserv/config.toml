@@ -1,0 +1,25 @@
+ClusterName="junoserv"
+NumChildren = 8
+LogLevel = "info"
+RootDir = "/opt/juno"
+[[Listener]]
+  Addr = ":8080"
+[[Listener]]
+  Addr = ":5080"
+  SSLEnabled = true
+[Sec]
+  AppName = "junoserv"
+  KeyStoreFilePath = "/opt/juno/bin/secrets/keystore.toml"
+  CertPemFilePath = "/opt/juno/bin/secrets/server.crt"
+  KeyPemFilePath = "/opt/juno/bin/secrets/server.pem"
+
+[CAL]
+  Host = "proxy"
+  Poolname = "junoserv"
+  Enabled = false
+
+[Sherlock]
+  Enabled = false
+
+[Etcd]
+  Endpoints=["etcd:2379"]

@@ -1,0 +1,6 @@
+
+  AppName = "junoserv"
+  KeyStoreFilePath = "./secrets/keystore.toml"
+	CertPemFilePath   = "./secrets/server.crt"
+	KeyPemFilePath    = "./secrets/server.pem"
+  ClientAuth = false

@@ -1,0 +1,12 @@
+ClusterName="junoserv"
+DbScanPort=26983
+[ClusterInfo]
+AlgVersion = 2
+NumShards = 1024
+NumZones = 1
+SSHosts = ["storageserv"]
+SSPorts = [25761,26970,26974,26975,26976,26977,26978,26979,26980,26981,26971,26972]
+
+[Etcd]
+Endpoints = ["etcd:2379"]
+

@@ -1,0 +1,55 @@
+# What defined in this configuration file are to be used when creating a Cluster for testing.
+# 
+# one string property:
+# * ProxyAddress  
+#    specifies the address of the Proxy server, 
+# three sections
+# * [Proxy]
+#   specifies the ServerDef properties for the Proxy server. This section is optional. If not defined,
+#   an InProcess Proxy server stub will be created
+# * [StorageServer]
+#   specifies the ServerDef properties for the Storage server.
+# * [ProxyConfig]
+#   ConnInfo is Required.
+#   for InProcess Proxy server, what defined in this section overwrite juno/proxy/config/Config.Conf
+#
+# See juno/test/testutil/server/Config.go for more details
+
+[ProxyAddress]
+       Addr="STAGEIP:25760"
+       SSLEnabled=true
+
+[Sec]
+	AppName = "junoserv"	
+        KeyStoreFilePath = "./secrets/keystore.toml"
+        CertPemFilePath = "./secrets/server.crt"
+        KeyPemFilePath = "./secrets/server.pem"
+
+[ProxyConfig]
+	EtcdEnabled=true
+	HttpMonAddr="26967"
+	ClusterName="junoserv"
+	TwoPhaseDestroyEnabled=true
+
+[ProxyConfig.Etcd]
+        Endpoints=["STAGEIP:25716"]
+
+[Proxy]
+       binDir="junoserv"
+       startCmd="start.sh"
+       stopCmd="shutdown.sh"
+       StartWaitTime= "20s"
+       StopWaitTime="20s"
+
+[ProxyConfig.ClusterInfo]
+NumShards=1024
+NumZones=5
+
+#   If the IP is a remote IP, the test framework will use SSH to run the start and stop commands. One would 
+#   need to setup passwordless ssh to the remote host.
+[StorageServer]
+        StartWaitTime= "60s"
+        StopWaitTime="60s"
+        binDir="junostorageserv"
+        startCmd="start.sh"
+        stopCmd="shutdown.sh"

@@ -1,0 +1,5 @@
+./fakess -stderrthreshold=INFO -v=1 -p=10077 -delay=40 -delay_sd=2 >& ss1.log&
+./fakess -stderrthreshold=INFO -v=1 -p=10087 -delay=40 -delay_sd=2 >& ss2.log&
+./fakess -stderrthreshold=INFO -v=1 -p=10097 -delay=40 -delay_sd=2 >& ss3.log&
+./fakess -stderrthreshold=INFO -v=1 -p=10107 -delay=40 -delay_sd=2 >& ss4.log&
+./fakess -stderrthreshold=INFO -v=1 -p=10117 -delay=40 -delay_sd=2 >& ss5.log&
