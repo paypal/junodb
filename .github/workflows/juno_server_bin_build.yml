@@ -15,6 +15,10 @@ on:
       - main
     paths-ignore:
       - ".github/workflows/*"
+      - "docs/*"
+      - "README.md"
+      - "LICENSE.txt"
+      - "AUTHORS.txt"
   workflow_dispatch:
 
 jobs:
