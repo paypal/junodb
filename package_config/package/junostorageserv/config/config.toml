@@ -1,0 +1,117 @@
+## This is the base (first) configuration file to be applied to generate
+## the final configuration file.
+
+## What defined here override the default in the code, and can be overridden
+## by
+##   pool specific configuration,
+##   environment specific configuration,
+##   environment specific configuration for specific pool,
+##
+
+LogLevel = "info"
+  #  string
+  #  "verbose" | "info" | "warning" | "error"
+ClusterName = "junoserv"
+  #  string
+RootDir = "$PREFIX/$NAME"
+  #  the directory where the package installed
+  #  string
+ShutdownWaitTime = "10s"
+  #  string
+  #  in golang's time.Duration string format,
+  #    for example, "100ms" - 100 milliseconds
+PidFileName = "storageserv.pid"
+  #  string
+StateLogEnabled = true 
+  #  boolean
+EtcdEnabled = true
+  #  boolean
+RecLockExpiration = "600ms"
+
+MaxTimeToLive = 259200
+  # integer
+  #   in second
+
+MaxConcurrentRequests = 1500
+ReqProcCtxPoolSize = 10000
+
+HttpMonAddr = ":26982"
+  #  string
+  #  no need in base config as it is pool and/or environment specific
+
+[ClusterInfo]
+  AlgVersion = 2
+  #
+  NumZones=5
+    #  integer
+    #  SHOULD make it code default, and not to expose it in LIVE environment
+  NumShards=1024
+    #  integer
+    #  SHOULD make it code default, and not to expose it in LIVE environment
+  #SSHosts
+    #  [][]string
+    #  pool/environment specific, SHOULD NOT be defined in this base config
+    # ** SSHosts and SSPorts are used to generate ConnInfo ONLY when
+    # ** ConnInfo not defined in the final config
+  #SSPorts
+    #  [] integer
+    #  pool/environment specific, SHOULD NOT be defined in this base config
+    # ** SSHosts and SSPorts are used to generate ConnInfo ONLY when
+    # ** ConnInfo not defined in the final config
+
+[CAL]
+  Host = "127.0.0.1"
+  Port = 1118
+  Environment = "PayPal"
+  Poolname = "$NAME"
+  MessageQueueSize = 10000
+  CalType = "socket"
+  Enabled = false
+
+[IO]
+  [IO.default]
+    IdleTimeout = "1193046h28m15s"
+    ReadTimeout = "1193h2m47.295s"
+    WriteTimeout = "1193h2m47.295s"
+    RequestTimeout = "600ms"
+    MaxBufferedWriteSize = 65536
+    IOBufSize = 65536
+[DB]
+  WriteBufferSize=512000000
+  RandomizeWriteBuffer=false
+  MinWriteBufferNumberToMerge=1
+  Level0SlowdownWritesTrigger=20
+  Level0StopWritesTrigger=36
+  Level0FileNumCompactionTrigger=2
+  MaxWriteBufferNumber=8
+  MaxBackgroundFlushes=8
+  MaxBackgroundCompactions=8
+  HighPriorityBackgroundThreads=5
+  LowPriorityBackgroundThreads=5
+  NewLRUCacheSizeInMB = 8
+  WriteDisableWAL=true
+  TargetFileSizeBase=512000000
+  [[DB.DbPaths]]
+    Path="$PREFIX/rocksdb_$NAME/"
+
+[Redist]
+  ErrThreshold=0.0
+
+[Etcd]
+  Endpoints=["$STAGEIP:25716"]
+#  AutoSyncInterval = 0
+#  DialTimeout = 1000000000
+#  DialKeepAliveTime = 0
+#  DialKeepAliveTimeout = 0
+#  MaxCallSendMsgSize = 0
+#  MaxCallRecvMsgSize = 0
+#  Username = ""
+#  Password = ""
+#  RejectOldCluster = false
+#  RequestTimeout = "1s"
+#  MaxConnectAttempts = 5
+#  MaxConnectBackoff = 10
+#  CacheDir = "./"
+
+[Sherlock]
+   Enabled=false

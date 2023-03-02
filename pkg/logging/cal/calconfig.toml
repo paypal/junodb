@@ -1,0 +1,15 @@
+  #############################################
+  #   CAL Configuration
+  #############################################
+environment="PayPal"
+poolname="calgotestpool"
+host="10.25.86.74"
+port=1118
+messageQueueSize=10000
+NumberConnections=2
+enabled=true
+#calType="file"
+  # phx - cal-vip.phx.paypal.com
+  # den - cal.vip.paypal.com
+  # stage - cal.vip.ca1.paypal.com
+  # dev - cal-dev01.ca1.paypal.com

@@ -1,0 +1,70 @@
+##### ---------------------------------------------------------------------------
+ClusterName = "junoserv"
+EtcdEnabled = true
+HttpMonAddr = ":8089"
+LogLevel = "info"
+MaxConcurrentRequests = 3000
+MaxTimeToLive = 259200
+PidFileName = "storageserv.pid"
+RecLockExpiration = "600ms"
+ReqProcCtxPoolSize = 10000
+RootDir = "/opt/juno"
+ShutdownWaitTime = "10s"
+StateLogEnabled = true
+
+[CAL]
+  CalType = "socket"
+  Enabled = true 
+  Environment = "PayPal"
+  Host = "127.0.0.1"
+  MessageQueueSize = 10000
+  Poolname = "junostorageserv"
+  Port = 1118
+
+[ClusterInfo]
+  NumShards = 1024
+  NumZones = 5
+
+[DB]
+  HighPriorityBackgroundThreads = 5
+  Level0FileNumCompactionTrigger = 2
+  Level0SlowdownWritesTrigger = 20
+  Level0StopWritesTrigger = 36
+  LowPriorityBackgroundThreads = 5
+  MaxBackgroundCompactions = 8
+  MaxBackgroundFlushes = 8
+  MaxWriteBufferNumber = 8
+  MinWriteBufferNumberToMerge = 1
+  NewLRUCacheSizeInMB = 8
+  RandomizeWriteBuffer = false
+  TargetFileSizeBase = 512000000
+  WriteBufferSize = 512000000
+  WriteDisableWAL = true
+
+  [[DB.DbPaths]]
+##### ---------------------------------------------------------------------------
+    Path = "data"
+
+[Etcd]
+##### ---------------------------------------------------------------------------
+  Endpoints = ["junoclusterserv-vip.live5.ccg11.slc.paypalinc.com:25716"]
+  CacheDir = "cache/"
+
+[IO]
+  [IO.default]
+    IOBufSize = 65536
+    IdleTimeout = "1193046h28m15s"
+    MaxBufferedWriteSize = 65536
+    ReadTimeout = "1193h2m47.295s"
+    RequestTimeout = "600ms"
+    WriteTimeout = "1193h2m47.295s"
+
+[Sherlock]
+  Enabled = true 
+  #Resolution = 10
+  Resolution = 60
+##### ---------------------------------------------------------------------------
+  SherlockEndpoint = "msm-sherlock-metrics-converter-paypal-observability.us-central1.gcp.dev.paypalinc.com"
+  SherlockProfile = "junoserv"
+##### ---------------------------------------------------------------------------
+  SherlockSvc = "junostorageserv"

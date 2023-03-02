@@ -1,0 +1,15 @@
+./fakess -stderrthreshold=INFO -v=2 -p=10077 >& ss1.log&
+./fakess -stderrthreshold=INFO -v=2 -p=10087 >& ss2.log&
+./fakess -stderrthreshold=INFO -v=2 -p=10097 >& ss3.log&
+./fakess -stderrthreshold=INFO -v=2 -p=10107 >& ss4.log&
+./fakess -stderrthreshold=INFO -v=2 -p=10117 >& ss5.log&
+./fakess -stderrthreshold=INFO -v=2 -p=10078 >& ss1.log&
+./fakess -stderrthreshold=INFO -v=2 -p=10088 >& ss2.log&
+./fakess -stderrthreshold=INFO -v=2 -p=10098 >& ss3.log&
+./fakess -stderrthreshold=INFO -v=2 -p=10108 >& ss4.log&
+./fakess -stderrthreshold=INFO -v=2 -p=10118 >& ss5.log&
+./fakess -stderrthreshold=INFO -v=2 -p=10079 >& ss1.log&
+./fakess -stderrthreshold=INFO -v=2 -p=10089 >& ss2.log&
+./fakess -stderrthreshold=INFO -v=2 -p=10099 >& ss3.log&
+./fakess -stderrthreshold=INFO -v=2 -p=10109 >& ss4.log&
+./fakess -stderrthreshold=INFO -v=2 -p=10119 >& ss5.log&

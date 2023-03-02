@@ -1,0 +1,105 @@
+ClusterName = "junoserv"
+DefaultTimeToLive = 3600
+EtcdEnabled = true 
+HttpMonAddr = ":8088"
+LogLevel = "info"
+MaxKeyLength = 128
+MaxNamespaceLength = 64
+MaxNumReqProcessors = 40000
+MaxPayloadLength = 204800
+MaxRecordVersion = 65535
+MaxTimeToLive = 259200
+NumChildren = 1
+#------------------------------------------------------------------------------------------------
+PayloadEncryptionEnabled = false
+PidFileName = "proxy.pid"
+#------------------------------------------------------------------------------------------------
+ReplicationEncryptionEnabled = false
+ReqProcessorPoolSize = 5000
+RootDir = "/opt/juno"
+ShutdownWaitTime = "10s"
+StateLogEnabled = true
+TwoPhaseDestroyEnabled = true
+
+[CAL]
+  CalType = "socket"
+  #Enabled = false 
+  Enabled = true
+  Environment = "PayPal"
+  Host = "127.0.0.1"
+  MessageQueueSize = 10000
+  Poolname = "junoserv"
+  Port = 1118
+
+[ClusterInfo]
+  NumShards = 1024
+  NumZones = 5
+
+[Etcd]
+#------------------------------------------------------------------------------------------------
+  Endpoints = ["10.176.19.133:25716"]
+  CacheDir = "cache/"
+
+[IO]
+  [IO.default]
+    HandshakeTimeout = "2s"
+    IOBufSize = 65536
+    IdleTimeout = "2m0s"
+    MaxBufferedWriteSize = 65536
+    ReadTimeout = "1000ms"
+    RequestTimeout = "2s"
+    WriteTimeout = "1000ms"
+
+[[Listener]]
+  Addr = ":8080"
+
+[[Listener]]
+  Addr = ":5080"
+  SSLEnabled = true
+
+[Outbound]
+  ConnectTimeout = "1s"
+  IOBufSize = 65536
+  MaxBufferedWriteSize = 65536
+  MaxPendingQueSize = 8092
+  NumConnsPerTarget = 1
+  ReconnectIntervalBase = 100
+  ReconnectIntervalMax = 60000
+  ReqChanBufSize = 8092
+
+[ReqProc]
+  SSReqTimeout = "500ms"
+
+[Sec]
+#------------------------------------------------------------------------------------------------
+  AppName = "junoserv"
+  KmsEndPoint = "keymakerapi-vip.qa.paypal.com:443"
+#------------------------------------------------------------------------------------------------
+  ProtectedPackageDir = "protected/"
+  ProtectedReload = "30s"
+
+[Sherlock]
+#------------------------------------------------------------------------------------------------
+  Enabled = true
+  Resolution = 60
+#------------------------------------------------------------------------------------------------
+  SherlockEndpoint = "msm-sherlock-metrics-converter-paypal-observability.us-central1.gcp.dev.paypalinc.com"
+  SherlockProfile = "junoserv"
+#------------------------------------------------------------------------------------------------
+  SherlockSvc = "junoserv"
+
+
+[Replication]
+  [Replication.IO]
+    [Replication.IO.default]
+      ConnectRecycleT = "3m"
+      ConnectTimeout = "5s"
+      EnableConnRecycle = true
+      IOBufSize = 65536
+      MaxBufferedWriteSize = 65536
+      MaxPendingQueSize = 8092
+      NumConnsPerTarget = 3
+      PendingQueExtra = 300
+      ReconnectIntervalBase = 100
+      ReconnectIntervalMax = 60000
+      ReqChanBufSize = 50000

@@ -1,0 +1,422 @@
+html {
+    --font-color: 0, 0, 0;
+    --bg-color: 255, 255, 255;
+    --redistributing-bg-color: 174, 255, 174;
+    --queued-bg-color: 252, 252, 180;
+    --finished-bg-color: 173, 216, 230;
+    --aborted-bg-color: 240, 128, 128;
+    --mapping-bg-color: 200, 200, 200;
+
+    --modal-color: var(--font-color);
+	--modal-bg-color: 0, 0, 0;
+	--modal-bg-content-color: 255, 255, 255;
+	--modal-link-color: var(--link-color);
+	--modal-border-color: var(--border-color);
+    --modal-button-color: var(--font-color);
+}
+
+.darkmode {
+    --font-color: 212, 212, 212;
+    --bg-color: 38, 38, 38;
+    --redistributing-bg-color: 174, 255, 174;
+    --queued-bg-color: 252, 252, 180;
+    --finished-bg-color: 173, 216, 230;
+    --aborted-bg-color: 240, 128, 128;
+    --mapping-bg-color: 200, 200, 200;
+
+    --modal-color: 238, 238, 238;
+	--modal-bg-color: 0, 0, 0;
+	--modal-bg-content-color: var(--bg-color);
+	--modal-link-color: var(--link-color);
+	--modal-border-color: var(--border-color);
+	--modal-button-color: var(--bg-color);
+}
+
+body {
+	color: rgb(var(--font-color));
+	background: rgb(var(--bg-color));
+}
+
+.zone {
+    padding: 10px 20px;
+    margin-bottom: 10px;
+    border-radius: 15px;
+}
+
+.redistributing {
+    background-color: rgb(var(--redistributing-bg-color));
+    color: black;
+}
+
+.queued {
+    background-color: rgb(var(--queued-bg-color));
+    color: black;
+}
+
+.finished {
+    background-color: rgb(var(--finished-bg-color));
+    color: black;
+}
+
+.aborted {
+    background-color: rgb(var(--aborted-bg-color));
+    color: black;
+}
+
+.mapping {
+    background-color: rgb(var(--mapping-bg-color));
+    color: black;
+}
+
+.expander {
+    cursor: pointer;
+}
+
+i.material-icons {
+    vertical-align: middle !important;
+    line-height: 0px;
+    margin-top: -2px;
+}
+
+.material-icons.md-48 {
+    font-size: 48px;
+}
+
+h3>i {
+    opacity: 0.7
+}
+
+.expanded>h3>i::before {
+    content: "keyboard_arrow_up";
+}
+
+.collapsed>h3>i::before {
+    content: "keyboard_arrow_down";
+}
+
+.nodes {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+    text-align: center;
+}
+
+.content.list {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+}
+
+.content.list > #stableNodes-bottom {
+    padding-top: 0px;
+    padding-bottom: 20px;
+}
+
+.deltaNodes-list {
+    padding-bottom: 20px;
+}
+
+.stableNodes-list {
+    padding-bottom: 20px;
+}
+
+.stableNodes-list table,
+.stableNodes-list table td,
+.deltaNodes-list table,
+.deltaNodes-list table td {
+    background-color: var(--font-color);
+    color: var(--bg-color);
+    border: solid black 1px;
+}
+
+#stableNodes-top {
+    padding-bottom: 200px;
+}
+
+#stableNodes-bottom {
+    padding-top: 200px;
+    padding-bottom: 20px;
+}
+
+.node {
+    border: 1px solid;
+    padding: 5px;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+}
+
+.added {
+    border: 1px solid blue;
+    box-shadow: 5px 5px 5px rgba(0, 0, 255, 0.25);
+}
+
+.removed {
+    border: 1px solid red;
+    box-shadow: 5px 5px 5px rgba(255, 0, 0, 0.25);
+}
+
+.node i {
+    font-size: 20px;
+    vertical-align: middle;
+    margin-top: -3px;
+}
+
+.node span.host {
+    font-size: 16px;
+    display: inline-block;
+}
+
+.node span.data:last-child {
+    margin-bottom: 5px;
+}
+
+.node span {
+    font-size: 12px;
+    display: block;
+}
+
+.progress {
+    background: repeating-linear-gradient( 45deg,
+    rgba(177, 177, 177, 0.65),
+    rgba(177, 177, 177, 0.65) 5px,
+    rgba(255, 255, 255, 0.65) 5px,
+    rgba(255, 255, 255, 0.65) 10px);
+    height: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.progress-bar {
+    background-color: rgba(0, 0, 255, 0.5);
+    height: 10px;
+}
+
+div.zone {
+    z-index: 1;
+}
+
+div.zone * {
+    position: relative;
+    z-index: 10;
+}
+
+#svg-canvas {
+    width:100%;
+    height:100%;
+    position:absolute;
+    top:0px;
+    left:0px;
+    z-index: 0;
+}
+
+/* The Modal (background) */
+
+.juno-modal {
+	display: none;
+	text-align: center;
+	position: fixed;
+	z-index: 999;
+	left: 0;
+	top: 0;
+	padding-top: 100px;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgb(0, 0, 0);
+	background-color: rgba(var(--modal-bg-color), 0.6);
+}
+
+/* Modal Content */
+
+.juno-modal-content {
+	color: rgb(var(--modal-color));
+	display: inline-block;
+	text-align: left;
+	background-color: rgb(var(--modal-bg-content-color));
+	margin: 0 auto;
+	padding: 20px;
+	border: 1px solid rgb(var(--modal-border-color));
+	max-width: 80%;
+}
+
+.juno-modal-content label span {
+	padding-left: 10px;
+}
+
+.juno-modal-content input[type=button], input[type=submit] {
+	color: rgb(var(--modal-button-color));
+}
+
+.juno-modal-content textarea {
+	display: block;
+	min-width: 500px;
+	min-height: 500px;
+	background-color: rgb(var(--bg-color));
+	color: rgb(var(--font-color));
+	padding: 5px 10px;
+	margin-bottom: 20px;
+}
+
+/* The Close Button */
+
+.juno-modal-close {
+	color: #aaaaaa;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
+	padding-left: 20px;
+}
+
+.juno-modal-close:hover,
+.juno-modal-close:focus {
+	color: #000;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.primary {
+    font-weight: bold;
+}
+
+.backup {
+    font-weight: lighter;
+}
+
+#shard-buttons {
+    padding: 0 0 20px 20px;
+    z-index: 1;
+}
+
+#shard-buttons * {
+    position: relative;
+    z-index: 10;
+}
+
+#shard-buttons > div {
+    /*display: none;*/
+    display: inline-block;
+    border: #4db8ff 1px solid;
+    padding: 8px 0 8px 8px;
+}
+
+#shard-buttons span.shard-buttons-label {
+    padding: 0 10px 0 5px;
+}
+
+#shard-buttons span.button {
+    color: rgb(38, 38, 38);
+    background-color: #4db8ff;
+    padding: 10px;
+    cursor: pointer;
+    margin-left: -3px;
+}
+
+#shard-buttons span.button.selected {
+    color: white;
+    text-shadow: 1px 1px 2px black;
+}
+
+.shardTableByShard {
+    display: flex;
+    justify-content: space-around;
+}
+
+.grid-container {
+    display: inline-grid;
+    /*grid-template-columns: auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto;*/
+    grid-gap: 3px;
+}
+
+.grid-item {
+    min-width: 20px;
+    min-height: 20px;
+    border-radius: 5px;
+    border: 1px solid grey;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.15);
+}
+
+.shard-queued {
+    background: rgb(139, 139, 139);
+}
+
+.shard-pending {
+    background: rgb(0, 110, 255);
+}
+
+.shard-finished {
+    background: rgb(36, 255, 13);
+}
+
+.shard-aborted {
+    background: rgb(255, 61, 61);
+}
+
+.shard-err,
+.shard-drop,
+.shard-expired {
+    background: rgb(251, 255, 0);
+}
+
+.node-aborts {
+    background-color: rgba(255, 0, 0, 0.8);
+    /*background-color: rgba(255, 165, 0, 0.8);*/
+}
+
+.node-err {
+    background-color: rgba(255, 255, 0, 0.8);
+}
+
+.node-drop {
+    background-color: rgba(255, 255, 0, 0.8);
+}
+
+.node-expired {
+    background-color: rgba(255, 255, 0, 0.8);
+}
+
+.shardTableWrapper {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+}
+
+td.finished-td {
+    /*color: rgb(36, 255, 13);*/
+    color: rgb(36, 255, 13);
+}
+
+td.pending-td {
+    color: rgb(0, 110, 255);
+}
+
+td.aborted-td {
+    color: red;
+}
+
+td.err-td {
+    color: black;
+    background-color: red;
+}
+
+td.drop-td {
+    color: black;
+    background-color: rgba(255, 165, 0, 0.8);
+}
+
+td.expired-td {
+    color: black;
+    background-color: rgba(255, 255, 0, 0.8);
+}
+
+#replay-controls {
+    margin: 0 15px 0 0;
+	display:none;
+}
+
+#replay-controls i {
+	cursor:pointer;
+}
+
+.replay-next-disabled {
+	color: grey;
+}

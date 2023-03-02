@@ -1,0 +1,25 @@
+ClusterName="junoserv"
+LogLevel = "info"
+HttpMonAddr = ":8088"
+NumChildren = 8
+[[Listener]]
+  Addr = ":8080"
+[[Listener]]
+  Addr = ":5080"
+  SSLEnabled = true 
+[Sec]
+  AppName = "junoserv"
+  KeyStoreFilePath = "/opt/juno/bin/secrets/keystore.toml"
+  CertPemFilePath = "/opt/juno/bin/secrets/server.crt"
+  KeyPemFilePath = "/opt/juno/bin/secrets/server.pem"
+  CAFilePath = "/opt/juno/bin/secrets/ca.crt"
+
+[CAL]
+  Poolname = "junoserv"
+  Enabled = false 
+
+[Sherlock]
+  Enabled = false
+
+[Etcd]
+  Endpoints=["etcd:2379"]

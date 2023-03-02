@@ -1,0 +1,38 @@
+# client port 
+etcdsvr.client_port=2379
+
+# peer port
+etcdsvr.peer_port=2380
+
+# Path to data directory
+etcdsvr.data_dir=.
+
+# 
+# Initial cluster should have at least one etcd.
+# etcd client config should have corresponding Endpoints=["10.176.15.101:2379"] 
+# Modify ip as needed.
+
+etcdsvr.peer_names=p1
+
+etcdsvr.initial_cluster=10.176.2.180
+
+#
+# Example cluster of 3 etcds
+#
+# Modify ip as needed. 
+# etcd client config sould have corresponding
+# Endpoints=["10.176.15.101:2379", "10.176.15.102:2379", "10.176.15.103:2379"]
+#
+
+# Each peer has a name and corresponding ip.
+#
+# etcdsvr.peer_names=p1^p2^p3
+#
+# etcdsvr.initial_cluster=10.176.15.101^10.176.15.102^10.176.15.103
+
+# Specify cal server ip to enable cal logging
+#cal.host=127.0.0.1
+
+# Optional parameters for cal
+#cal.pool=etcdsrv
+#cal.port=1118

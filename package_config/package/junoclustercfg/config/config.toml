@@ -1,0 +1,44 @@
+## This is the base (first) configuration file to be applied to generate 
+## the final configuration file.
+
+## What defined here override the default in the code, and can be overridden
+## by 
+##   pool specific configuration,
+##   environment specific configuration,
+##   environment specific configuration for specific pool,
+##
+
+ClusterName = "junoserv"
+
+[ClusterInfo]
+  AlgVersion = 2
+  #
+  NumZones=5
+    #  integer
+    #  SHOULD make it code default, and not to expose it in LIVE environment
+  NumShards=1024
+    #  integer
+    #  SHOULD make it code default, and not to expose it in LIVE environment
+  ConnInfo = [
+    ["$STAGEIP:12801"],
+    ["$STAGEIP:12901"],
+    ["$STAGEIP:12111"],
+    ["$STAGEIP:12211"],
+    ["$STAGEIP:12311"]
+  ]
+    #  [][]string
+    #  pool/environment specific, SHOULD NOT be defined in this base config 
+  #SSHosts
+    #  [][]string
+    #  pool/environment specific, SHOULD NOT be defined in this base config 
+    # ** SSHosts and SSPorts are used to generate ConnInfo ONLY when 
+    # ** ConnInfo not defined in the final config
+  #SSPorts
+    #  [] integer
+    #  pool/environment specific, SHOULD NOT be defined in this base config 
+    # ** SSHosts and SSPorts are used to generate ConnInfo ONLY when 
+    # ** ConnInfo not defined in the final config
+
+[Etcd]
+  Endpoints=["$STAGEIP:25716"]
+  RequestTimeout="5s"
