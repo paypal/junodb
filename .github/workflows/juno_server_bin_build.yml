@@ -4,21 +4,15 @@ on:
   push:
     branches:
       - main
-      - dev*
-      - dev**
     paths-ignore:
-      - ".github/workflows/*"
+      - ".github/workflows/**"
   pull_request:
     types:
       - opened
     branches:
       - main
     paths-ignore:
-      - ".github/workflows/*"
-      - "docs/*"
-      - "README.md"
-      - "LICENSE.txt"
-      - "AUTHORS.txt"
+      - ".github/workflows/**"
   workflow_dispatch:
 
 jobs:
@@ -38,15 +32,44 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update -y
-          sudo apt-get install build-essential -y
-          sudo apt-get install libgflags-dev libsnappy-dev zlib1g-dev libbz2-dev liblz4-dev libzstd-dev -y
+          sudo apt-get install build-essential libgflags-dev libsnappy-dev zlib1g-dev libbz2-dev liblz4-dev libzstd-dev -y
           sudo apt install openssl -y
+          echo "***********************************************************"
           echo "Dependencies version"
+          echo "********************==========*****************************"
           echo "GCC Version:" `gcc --version`
           echo "G++ Version:" `g++ --version`
           echo "Openssl Version:" `openssl version`
-      - name: Build binaries
+          echo "********************==========*****************************"
+      - name: Build
         id: run-build
         run: |
+          echo "***********************************************************"
+          echo "Deploy Juno Binaries"
+          echo "********************==========*****************************"
           export BUILDTOP=`pwd`
           binary_build/build.sh
+      # - name: Deploy
+      #   run: |
+      #     echo "***********************************************************"
+      #     echo "Deploy Juno Services"
+      #     echo "********************==========*****************************"
+      #     export BUILDTOP=`pwd`
+      #     cd $BUILDTOP/script
+      #     export JUNO_BUILD_DIR=$BUILDTOP/release-binary/code-build
+      #     ./deploy.sh
+      # - name: Validate
+      #   run: |
+      #     echo "***********************************************************"
+      #     echo "Validate Juno Services"
+      #     echo "********************==========*****************************"
+      #     ps -eaf | grep juno
+      # - name: Functional Tests
+      #   run: |
+      #     echo "***********************************************************"
+      #     echo "Run Functional Tests"
+      #     echo "********************==========*****************************"
+      #     export BUILDTOP=`pwd`
+      #     cd $BUILDTOP/script/test/functest
+      #     ./configsetup.sh
+      #     $BUILDTOP/release-binary/tool/go/bin/go test -v -config=config.toml
