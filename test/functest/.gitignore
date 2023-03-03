@@ -1,0 +1,5 @@
+!secrets/
+secrets/*
+!secrets/gensecrets.sh
+etcd_cache*
+config.toml
