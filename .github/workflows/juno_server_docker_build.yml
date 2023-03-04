@@ -7,8 +7,6 @@ on:
     paths-ignore:
       - ".github/workflows/**"
   pull_request:
-    types:
-      - opened
     branches:
       - main
     paths-ignore:
@@ -36,6 +34,8 @@ jobs:
           echo "Openssl Version:" `openssl version`
       - name: Docker Version Check
         run: docker version
+      - name: Expose GitHub Runtime
+        uses: crazy-max/ghaction-github-runtime@v2
       - name: Build docker containers
         run: docker/build.sh
       - name: Start juno containers
