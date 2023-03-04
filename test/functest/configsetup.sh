@@ -3,6 +3,7 @@
 ######################################################################
 # To replace config ip with self host ip and generate secrets files ##
 ######################################################################
+cd "$(dirname "$0")"
 export PATH=$PATH:/bin:/sbin
 SED='/bin/sed'
 stageip=$1

@@ -42,7 +42,7 @@ ENV PATH /opt/juno:$PATH
 
 ENTRYPOINT ["/opt/juno/entrypoint.sh"]
 
-CMD [ "etcdsvr.py" ]
+CMD [ "python2","etcdsvr.py" ]
 
 ######
 FROM juno-runtime-base AS junoclustercfg
