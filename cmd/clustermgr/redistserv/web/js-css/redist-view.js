@@ -16,8 +16,7 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 //  
-//  Package utility provides the utility interfaces for mux package
-//  
+  
 // Redist graph view is optimized towards a max of 5 delta nodes and 30 nodes total per zone
 
 var redistRender = {

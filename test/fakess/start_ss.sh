@@ -16,8 +16,7 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #  
-#  Package utility provides the utility interfaces for mux package
-#  
+ 
 ./fakess -stderrthreshold=INFO -v=2 -p=10077 >& ss1.log&
 ./fakess -stderrthreshold=INFO -v=2 -p=10087 >& ss2.log&
 ./fakess -stderrthreshold=INFO -v=2 -p=10097 >& ss3.log&
