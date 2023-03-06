@@ -7,8 +7,6 @@ on:
     paths-ignore:
       - ".github/workflows/**"
   pull_request:
-    types:
-      - opened
     branches:
       - main
     paths-ignore:
@@ -16,7 +14,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-juno-binaries:
+  build-deploy-test:
     strategy:
       matrix:
         os: [ubuntu-latest]
@@ -29,7 +27,22 @@ jobs:
         uses: actions/setup-go@v3
         with:
           go-version: "${{ matrix.go_version }}"
-      - name: Install dependencies
+      - name: Cache rocksdb/snappy dependencies
+        uses: actions/cache@v3
+        with:
+          path: release-binary/vendor
+          key: deps-rocksdb-snappy-staticlib-${{ hashFiles('**/binary_build/build.sh','**/third_party/patches/rocksdb/**') }}
+      - name: Cache go and cmake dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cache/go-build
+            ~/go/pkg/mod
+            release-binary/vendor/tool
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum','**/binary_build/build.sh') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
+      - name: Install Build dependencies
         run: |
           sudo apt-get update -y
           sudo apt-get install build-essential libgflags-dev libsnappy-dev zlib1g-dev libbz2-dev liblz4-dev libzstd-dev -y
@@ -49,27 +62,38 @@ jobs:
           echo "********************==========*****************************"
           export BUILDTOP=`pwd`
           binary_build/build.sh
-      # - name: Deploy
-      #   run: |
+      - name: Set up Python2.7
+        uses: actions/setup-python@v4
+        id: setup-python2
+        with:
+          python-version: 2.7
+          update-environment: true
+      - name: Deploy
+        run: |
+          echo "***********************************************************"
+          echo "Deploy Juno Services"
+          echo "********************==========*****************************"
+          export BUILDTOP=`pwd`
+          export JUNO_BUILD_DIR=$BUILDTOP/release-binary/code-build
+          script/deploy.sh
+      - name: Validate
+        run: |
+          echo "***********************************************************"
+          echo "Validate Juno Services"
+          echo "********************==========*****************************"
+          ps -eaf | grep juno
+      - name: Test
+        run: |
+          echo "***********************************************************"
+          echo "Run Functional Tests"
+          echo "********************==========*****************************"
+          export BUILDTOP=`pwd`
+          cd $BUILDTOP/script/test/functest
+          $BUILDTOP/script/test/functest/configsetup.sh
+          $BUILDTOP/release-binary/tool/go/bin/go test -v -config=config.toml
+
       #     echo "***********************************************************"
-      #     echo "Deploy Juno Services"
+      #     echo "Run Unit Tests"
       #     echo "********************==========*****************************"
-      #     export BUILDTOP=`pwd`
-      #     cd $BUILDTOP/script
-      #     export JUNO_BUILD_DIR=$BUILDTOP/release-binary/code-build
-      #     ./deploy.sh
-      # - name: Validate
-      #   run: |
-      #     echo "***********************************************************"
-      #     echo "Validate Juno Services"
-      #     echo "********************==========*****************************"
-      #     ps -eaf | grep juno
-      # - name: Functional Tests
-      #   run: |
-      #     echo "***********************************************************"
-      #     echo "Run Functional Tests"
-      #     echo "********************==========*****************************"
-      #     export BUILDTOP=`pwd`
-      #     cd $BUILDTOP/script/test/functest
-      #     ./configsetup.sh
-      #     $BUILDTOP/release-binary/tool/go/bin/go test -v -config=config.toml
+      #     cd $BUILDTOP/script/test/unittest
+      #     $BUILDTOP/release-binary/tool/go/bin/go test -v

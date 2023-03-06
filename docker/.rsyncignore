@@ -1,4 +1,5 @@
 docker
+docker2
 third_party/rocksdb
 third_party/snappy
 third_party/forked/tecbot

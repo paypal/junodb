@@ -4,6 +4,7 @@
 ### BUILDTOP is github root folder, JUNO_BUILD_DIR is    ###### 
 ### binary code folder. Sample: BUILDTOP=~/github/juno   ######
 ###############################################################
+cd "$(dirname "$0")"
 if [ "$BUILDTOP" == "" ]; then
   echo "JUNO_BUILD_DIR and BUILDTOP required but not defined"
   exit
