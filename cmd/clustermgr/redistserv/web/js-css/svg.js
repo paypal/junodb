@@ -16,8 +16,7 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 //  
-//  Package utility provides the utility interfaces for mux package
-//  
+  
 // https://www.beyondjava.net/how-to-connect-html-elements-with-an-arrow-using-svg
 
 const MIN_OPACITY = 0.15;

@@ -16,8 +16,7 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 //  
-//  Package utility provides the utility interfaces for mux package
-//  
+  
 //Package shm implements functions for using shared memory
 package shm
 

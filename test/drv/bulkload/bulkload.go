@@ -16,8 +16,7 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 //  
-//  Package utility provides the utility interfaces for mux package
-//  
+  
 // bulkload
 //
 // Tool to create a set of random keys, which can be accessed by
