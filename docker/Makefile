@@ -33,14 +33,19 @@ copysrc:
 	wget --no-check-certificate https://dl.google.com/go/go${GoLangVersion}.linux-amd64.tar.gz -O ${ROOT_DIR}/build/go${GoLangVersion}.linux-amd64.tar.gz ;
 
 build:
-	# TODO -- 
-	cd build && docker build --build-arg GOLANG_VERSION=${GoLangVersion} --tag \
-	  ${docker_registry}/${docker_repo}/juno-dev:${image_tag} --target juno-dev . 
-	cd build && docker build --build-arg GOLANG_VERSION=${GoLangVersion} --tag \
-	  ${build_image_name} --target builder . 
+	# TODO --
+	docker buildx create --use --driver=docker-container 
+	cd build && docker buildx build --build-arg GOLANG_VERSION=${GoLangVersion} --tag \
+	  ${docker_registry}/${docker_repo}/juno-dev:${image_tag} --target juno-dev \
+		--cache-to type=gha,mode=max \
+  	--cache-from type=gha --output type=docker --load . 
+	cd build && docker buildx build --build-arg GOLANG_VERSION=${GoLangVersion} --tag \
+	${build_image_name} --target builder \
+	--cache-to type=gha,mode=max \
+	--cache-from type=gha --load . 
 
 ${service_build_targets}: build_juno%: create-cluster-build-directory
-	#TODO -- check if need to build
+	#TODO -- check if need to build  
 	cd cluster-service-build && docker build --tag  \
 	  ${docker_registry}/${docker_repo}/juno$*:${image_tag} \
 	  --build-arg BUILD_IMAGE=${build_image_name} \
