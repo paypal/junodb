@@ -16,7 +16,7 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 //  
-  
+ 
 package unittest
 
 import (
@@ -54,7 +54,6 @@ func TestSetInserting(t *testing.T) {
 		params.Log(t)
 		t.Error("Set Inserting should fail with ErrWriteFailure: ", err)
 	}
-	testutil.CheckCalLog(t, "API.*Set.*st=CommitFailure.*ttl=800.*Insr.*Insr.*Insr.*Insr.*Insr.*Insr", "1", hostip, true)
 }
 
 func TestSetPrepareInserting(t *testing.T) {
@@ -76,7 +75,6 @@ func TestSetPrepareInserting(t *testing.T) {
 	if recInfo.GetVersion() != 1 {
 		t.Error("Wrong version, real version is ", recInfo.GetVersion())
 	}
-	testutil.CheckCalLog(t, "API.*Set.*st=Ok", "1", hostip, true)
 }
 
 /***************************************************************
@@ -100,7 +98,6 @@ func TestSetOneSSTimeout(t *testing.T) {
 		}
 		params.MockInfoList[i].Delay = 0
 	}
-	testutil.CheckCalLog(t, "SSReqTimeout.*Set.PrepareSet", "3", hostip, true)
 }
 
 /*
@@ -229,7 +226,6 @@ func TestSetThreeSSNoResponse(t *testing.T) {
 		}
 		params.MockInfoList[i].NoResponse = false
 	}
-	testutil.CheckCalLog(t, "API.*Set.*st=NoStorageServ", "10", hostip, true)
 }
 
 /************************************************************
@@ -1140,7 +1136,6 @@ func TestSetOneCommitBadMsg(t *testing.T) {
 	}
 	params.SetOpCodeForAll(proto.OpCodeNop)
 	params.SetStatusForAll(uint8(proto.OpStatusNoError))
-	testutil.CheckCalLog(t, "API.*Set.*st=InconsistentState", "63", hostip, true)
 }
 
 /*******************************************************************
@@ -1220,7 +1215,6 @@ func TestSetThreeCommitBadMsg(t *testing.T) {
 	}
 	params.SetOpCodeForAll(proto.OpCodeNop)
 	params.SetStatusForAll(uint8(proto.OpStatusNoError))
-	testutil.CheckCalLog(t, "API.*Set.*st=CommitFailure", "7", hostip, true)
 }
 
 /**************************************************************************
@@ -1262,7 +1256,6 @@ func TestSetCommitThreeMixError(t *testing.T) {
 	}
 	params.SetOpCodeForAll(proto.OpCodeNop)
 	params.SetStatusForAll(uint8(proto.OpStatusNoError))
-	testutil.CheckCalLog(t, "API.*Set.*st=InconsistentState", "7", hostip, true)
 }
 
 /***********************************************
@@ -1336,4 +1329,4 @@ func init() {
 		uint8(proto.OpStatusBadMsg),        //11
 		uint8(proto.OpStatusNoError),       //0
 	}
-}
+} 

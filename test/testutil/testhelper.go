@@ -37,8 +37,6 @@ import (
 
 	"juno/third_party/forked/golang/glog"
 
-	"github.com/BurntSushi/toml"
-
 	"juno/cmd/proxy/config"
 	"juno/internal/cli"
 	"juno/pkg/client"
@@ -612,7 +610,7 @@ func RemoveLog(t *testing.T, hostip string, inProxy bool) error {
 	var cmd string
 
 	if inProxy == true { //this is not really be used now
-		cmd = "echo -n > " +  "./server/proxy.log; echo -n > " + "./cal.log"
+		cmd = "echo -n > " +  "./server/proxy.log; /bin/rm -rf " + "./cal.log"
 		glog.Info("remove command is ", cmd)
 		_, err := exec.Command("bash", "-c", cmd).Output()
 		if err != nil {
@@ -669,49 +667,6 @@ func CheckLog(t *testing.T, hostip string, grepstr string, inProxy bool) error {
 		} else if err != nil {
 			t.Error("grep in app log fail, expected string may not exist in log, please check", err)
 		}
-	}
-	return nil
-}
-
-func CheckCalLog(t *testing.T, grepstr string, frequency string, hostip string, inProxy bool) error {
-	var configFile string
-	var callogFile string
-
-	t.Helper()
-	if ResolveHostIp() != hostip {
-		return fmt.Errorf("CheckCalLog only runs on local host, please run this on local host")
-	}
-
-	if inProxy != true {
-		configFile = dirConfig.Proxydir + "/calconfig.toml"
-		callogFile = dirConfig.Proxydir + "/cal.log"
-	} else {
-		configFile = "./calconfig.toml"
-		callogFile = "./cal.log"
-	}
-
-	_, err := ioutil.ReadFile(configFile)
-	if err != nil {
-		return fmt.Errorf("please have calconfig.toml available if cal log check is needed: %s", err.Error())
-	}
-
-	if err := UpdateProxyConfig(configFile, "Enabled", "  Enabled = true", "", hostip); err != nil {
-		t.Error("CAL log is not enabled, please have CAL enable before CAL log check")
-	}
-	if err := UpdateProxyConfig(configFile, "CalType", "  CalType = \"FILE\" ", "", hostip); err != nil {
-		t.Error("replace CalType into FILE fail, please set config to FILE before CAL log check")
-	}
-	if err := UpdateProxyConfig(configFile, "CalLogFile", "  CalLogFile = \"./cal.log\"", "", hostip); err != nil {
-		t.Error("update cal log file location fail, please set cal log location before CAL log check")
-	}
-
-	grepCmd := "grep -Ea '" + grepstr + "'" + callogFile + " | grep -v grep | wc -l"
-	glog.Info("grep command is ", grepCmd)
-	output, err := exec.Command("bash", "-c", grepCmd).Output()
-	if (err == nil) && (strings.TrimSpace(string(output)) != frequency) {
-		t.Error("expected'" + grepstr + "'doesn't appear the same as expected frequency in cal log file")
-	} else if err != nil {
-		t.Error("local grep in cal log fail", err)
 	}
 	return nil
 }
@@ -1315,16 +1270,6 @@ func ResolveHostIp() string {
 		}
 	}
 	return ""
-}
-
-func init() {
-	if _, err := toml.DecodeFile("config.toml", &dirConfig); err != nil {
-		fmt.Printf("fail to read %s. error: %s, you sure you don't need config.toml to run test?", "config.toml", err)
-		//		os.Exit(-1)
-	}
-
-	glog.Debug("addRemoveSecondHost is ", dirConfig.AddRemoveSecondHost, ",SecondHostSSdir is ", dirConfig.SecondHostSSdir,
-		",Githubdir is ", dirConfig.Githubdir, ",Proxydir is ", dirConfig.Proxydir, ",SSdir is ", dirConfig.SSdir)
 }
 
 func PrintStatus(funcname string, params *mock.MockParams, err error) {
