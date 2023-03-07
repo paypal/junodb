@@ -15,10 +15,10 @@
 [etcdsvr] 
 initial_cluster="$STAGEIP"
 # client port
-client_port=2379
+client_port=25716
 
 # peer port
-peer_port=2378
+peer_port=25807
 
 # etcd node id's
 peer_names="p1"

@@ -23,6 +23,7 @@ func TestCreateNormal(t *testing.T) {
 	if _, err := Mockclient.Create(key, cvalue, 800, nil); err != nil {
 		t.Error("create failed. error: ", err)
 	}
+	testutil.CheckCalLog(t, "API.*Create.*st=Ok.*ns=ns.*ttl=800", "1", hostip, true)
 }
 
 /***************************************************************
@@ -47,6 +48,7 @@ func TestCreateOneSSTimeout(t *testing.T) {
 		}
 		params.MockInfoList[i].Delay = 0
 	}
+	testutil.CheckCalLog(t, "SSReqTimeout.*Create.PrepareCreate", "3", hostip, true)
 }
 
 /*
@@ -102,6 +104,7 @@ func TestCreateThreeSSTimeout(t *testing.T) {
 		}
 		params.MockInfoList[i].Delay = 0
 	}
+	testutil.CheckCalLog(t, "Create.*st=ErrBusy", "10", hostip, true)
 }
 
 /*******************************************************************
@@ -147,6 +150,7 @@ func TestCreateTwoSSNoResponse(t *testing.T) {
 		}
 		params.MockInfoList[i].NoResponse = false
 	}
+	testutil.CheckCalLog(t, "SSReqTimeout.*Create.PrepareCreate", "15", hostip, true)
 }
 
 /*
@@ -202,6 +206,11 @@ func TestCreateOneStatusError(t *testing.T) {
 			}
 		}
 	}
+	testutil.CheckCalLog(t, "Create.*st=DupKey", "3", hostip, true)
+	testutil.CheckCalLog(t, "Create.*st=Ok.*calls=P0:BadPar", "1", hostip, true)
+	testutil.CheckCalLog(t, "Create.*st=Ok.*P1:RecLck", "1", hostip, true)
+	testutil.CheckCalLog(t, "Create.*st=Ok.*P2:Done", "1", hostip, true)
+	testutil.CheckCalLog(t, "Create.*st=Ok", "22", hostip, true)
 }
 
 /*
@@ -295,6 +304,7 @@ func TestCreateThreeAlreadyFulfilled(t *testing.T) {
 		}
 		params.MockInfoList[i].Status = uint8(proto.OpStatusNoError)
 	}
+	testutil.CheckCalLog(t, "Create.*st=Ok", "10", hostip, true)
 }
 
 /********************************************************************
@@ -359,6 +369,7 @@ func TestCreateThreeBadMsg(t *testing.T) {
 		}
 		params.MockInfoList[i].Status = uint8(proto.OpStatusNoError)
 	}
+	testutil.CheckCalLog(t, "Create.*st=BadMsg", "10", hostip, true)
 }
 
 /***************************************************************************
@@ -760,6 +771,8 @@ func TestCreateOneCommitBadMsg(t *testing.T) {
 			}
 		}
 	}
+	testutil.CheckCalLog(t, "Create.*st=InconsistentState", "12", hostip, true)
+	testutil.CheckCalLog(t, "C.:BadRID", "12", hostip, true)
 	params.SetOpCodeForAll(proto.OpCodeNop)
 	params.SetStatusForAll(uint8(proto.OpStatusNoError))
 }
@@ -846,6 +859,7 @@ func TestCreateThreeCommitBadMsg(t *testing.T) {
 		params.MockInfoList[i].Opcode = proto.OpCodeNop
 		params.MockInfoList[i].Status = uint8(proto.OpStatusRecordLocked)
 	}
+	testutil.CheckCalLog(t, "CommitFailure", "10", hostip, true)
 	params.SetOpCodeForAll(proto.OpCodeNop)
 	params.SetStatusForAll(uint8(proto.OpStatusNoError))
 }
@@ -958,6 +972,7 @@ func TestCreateThreeNoUncommit(t *testing.T) {
 		params.MockInfoList[i].Opcode = proto.OpCodeNop
 		params.MockInfoList[i].Status = uint8(proto.OpStatusBadParam)
 	}
+	testutil.CheckCalLog(t, "CommitFailure", "10", hostip, true)
 	params.SetOpCodeForAll(proto.OpCodeNop)
 	params.SetStatusForAll(uint8(proto.OpStatusNoError))
 }
@@ -990,6 +1005,7 @@ func TestCreateRepairNoUncommittedOK(t *testing.T) {
 		}
 		params.MockInfoList[i].Status = uint8(proto.OpStatusNoUncommitted)
 	}
+	testutil.CheckCalLog(t, "Create.*st=Ok.*RR.:Ok.*RR.:Ok", "3", hostip, true)
 	params.SetOpCodeForAll(proto.OpCodeNop)
 	params.SetStatusForAll(uint8(proto.OpStatusNoError))
 }

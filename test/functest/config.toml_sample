@@ -16,7 +16,7 @@
 # See juno/test/testutil/server/Config.go for more details
 
 [ProxyAddress]
-       Addr="STAGEIP:5080"
+       Addr="STAGEIP:25760"
        SSLEnabled=true
 
 [Sec]
@@ -27,12 +27,12 @@
 
 [ProxyConfig]
 	EtcdEnabled=true
-	HttpMonAddr="8088"
+	HttpMonAddr="26967"
 	ClusterName="junoserv"
 	TwoPhaseDestroyEnabled=true
 
 [ProxyConfig.Etcd]
-        Endpoints=["STAGEIP:2379"]
+        Endpoints=["STAGEIP:25716"]
 
 [Proxy]
        binDir="junoserv"
@@ -43,7 +43,7 @@
 
 [ProxyConfig.ClusterInfo]
 NumShards=1024
-NumZones=1
+NumZones=5
 
 #   If the IP is a remote IP, the test framework will use SSH to run the start and stop commands. One would 
 #   need to setup passwordless ssh to the remote host.
