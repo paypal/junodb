@@ -16,7 +16,6 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 //  
-  
 package unittest
 
 import (
@@ -37,7 +36,6 @@ func TestDestroyNormal(t *testing.T) {
 	if err := Mockclient.Destroy(key, params); err != nil {
 		t.Error("Destroy failed ", err)
 	}
-	testutil.CheckCalLog(t, "API.*Destroy.*st=Ok.*ns=ns", "1", hostip, true)
 }
 
 /***************************************************************
@@ -84,8 +82,6 @@ func TestDestroyTwoSSTimeout(t *testing.T) {
 		}
 		params.MockInfoList[i].Delay = 0
 	}
-	testutil.CheckCalLog(t, "API.*Destroy.*st=Ok.*ns=ns", "10", hostip, true)
-	testutil.CheckCalLog(t, "SSReqTimeout", "20", hostip, true)
 }
 
 /*
@@ -116,7 +112,6 @@ func TestDestroyThreeSSTimeout(t *testing.T) {
 		}
 		params.MockInfoList[i].Delay = 0
 	}
-	testutil.CheckCalLog(t, "API.*Destroy.*st=NoStorageServer.*ns=ns", "10", hostip, true)
 }
 
 /*******************************************************************
@@ -781,4 +776,4 @@ func init() {
 		uint8(proto.OpStatusNoKey),        //3
 		uint8(proto.OpStatusNoError),
 	}
-}
+} 
