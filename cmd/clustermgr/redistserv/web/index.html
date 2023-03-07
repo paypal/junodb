@@ -52,8 +52,8 @@ limitations under the License.
     <link rel="stylesheet" type="text/css" href="js-css/style.css">
     <link rel="stylesheet" type="text/css" href="js-css/shards-style.css">
 
-    <!--<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">-->
-    <link rel="stylesheet" href="js-css/jquery-ui-1.12.1/jquery-ui.css">
+    <!--<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">-->
+    <link rel="stylesheet" href="js-css/jquery-ui-1.13.2/jquery-ui.css">
 
     <script type="text/javascript">
         $(document).ready(function () {
@@ -243,7 +243,7 @@ limitations under the License.
 
             function setTotalProgress(progress) {
                 $('#totalProgress .progress-bar').css('width', `${Math.round(progress * 100)}%`);
-                $('#totalProgress').show(); 
+                $('#totalProgress').show();
             }
 
             function hideTotalProgress() {
@@ -368,7 +368,8 @@ limitations under the License.
 
     <div id="controlsWrapper">
         <span id="navbar-brand-title">Shard Redistribution</span>
-        <div id="totalProgress" class="progress" style="margin: 0 30px;display:inline-block;height:100%;margin:0 15px 0 -5px;display: flex;flex: 1;justify-content: stretch; display:none;">
+        <div id="totalProgress" class="progress"
+            style="margin: 0 30px;display:inline-block;height:100%;margin:0 15px 0 -5px;display: flex;flex: 1;justify-content: stretch; display:none;">
             <div class="progress-bar" style="height:16px"></div>
         </div>
         <div id="controls">
