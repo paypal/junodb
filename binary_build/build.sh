@@ -119,7 +119,6 @@ juno_executables="\
 	juno/cmd/clustermgr \
 	juno/cmd/dbscanserv \
 	juno/cmd/dbscanserv/junoctl \
-	juno/cmd/etcdsvr/sherlock \
         juno/test/drv/junoload \
         juno/cmd/tools/junostats\
         juno/cmd/tools/junocfg\
