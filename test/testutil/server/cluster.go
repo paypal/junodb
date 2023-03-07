@@ -356,7 +356,7 @@ func NewClusterWithConfig(conf *ClusterConfig) (c *Cluster) {
 		stats.Initialize(stats.KTypeStandAloneWorker)
 		var chWatch chan int
 		cls = &cluster.ClusterInfo[0]
-		fmt.Println("ProxyAdd in func test1 is ", conf.ProxyAddress)
+		glog.Debug("ProxyAdd in func test1 is ", conf.ProxyAddress)
 		if conf.ProxyConfig.EtcdEnabled {
 			chWatch = etcd.WatchForProxy()
 			etcd.Connect(&conf.ProxyConfig.Etcd, conf.ProxyConfig.ClusterName)

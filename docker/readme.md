@@ -12,8 +12,9 @@
 <!-- toc -->
 ## Install Dependencies
 
-[Install latest Docker Engine 23.0](https://docs.docker.com/engine/install/ubuntu/)
-- docker compose plugin is required on Linux (Ubuntu 16.04+) to support docker compose v2
+[Install Docker Engine v20.10.13+](https://docs.docker.com/engine/install/ubuntu/)
+- Docker compose plugin is required on Linux to support docker compose v2.
+- In Moby v20.10.13, compose-plugin is an optional Docker CLI plugin for easier installation.
 
 ```bash
 ## Setup docker 
@@ -70,7 +71,7 @@
 cd manifest
 
 # To run juno services in --detach mode (recommended)
-docker-compose up -d
+docker compose up -d
 
 # Juno proxy service listens on port 
 # :5080 TLS and :8080 TCP
@@ -79,7 +80,7 @@ docker-compose up -d
 docker ps
 
 # To stop juno services
-docker-compose down
+docker compose down
 ```
 
 ### Generate Secrets for Dev
