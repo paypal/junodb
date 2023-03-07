@@ -16,7 +16,7 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 //  
-  
+ 
 package unittest
 
 import (
@@ -35,13 +35,8 @@ import (
 	"juno/pkg/cluster"
 	"juno/pkg/etcd"
 	"juno/pkg/io"
-	"juno/pkg/logging/cal"
-	calcfg "juno/pkg/logging/cal/config"
-	"juno/pkg/sec"
 	"juno/pkg/util"
 
-	"juno/pkg/logging/sherlock"
-	sherlockcfg "juno/pkg/logging/sherlock"
 	"juno/test/testutil/mock"
 	"juno/test/testutil/server"
 )
@@ -52,21 +47,7 @@ var testConfig = server.ClusterConfig{
 	StorageServer: server.ServerDef{
 		Type: "mockss",
 	},
-	CAL: calcfg.Config{
-		Host:             "127.0.0.1",
-		Port:             1118,
-		Environment:      "PayPal",
-		Poolname:         "fakess",
-		MessageQueueSize: 10000,
-		Enabled:          true,
-		CalType:          "file",
-		CalLogFile:       "cal.log",
-	},
 	LogLevel: "warning",
-	Sec:      sec.DefaultConfig,
-	Sherlock: sherlockcfg.Config{
-		Enabled: false,
-	},
 }
 
 var TestCluster *server.Cluster
@@ -83,9 +64,7 @@ func mainSetup() {
 
 	testConfig.ProxyConfig.ClusterInfo.NumShards = 100
 	testConfig.ProxyConfig.ClusterInfo.NumZones = 5
-	cal.InitWithConfig(&testConfig.CAL)
-	sec.Initialize(&testConfig.Sec, sec.KFlagClientTlsEnabled|sec.KFlagEncryptionEnabled)
-	sherlock.InitWithConfig(&testConfig.Sherlock)
+	testConfig.ProxyConfig.Outbound.ReconnectIntervalBase=15000	//time to wait for proxy to connect to ss
 
 	var chWatch chan int
 	var rw cluster.IReader
@@ -103,11 +82,12 @@ func mainSetup() {
 
 		clusterInfo.PopulateFromConfig()
 	}
-	cluster.Initialize(&cluster.ClusterInfo[0], &testConfig.ProxyConfig.Outbound, chWatch, rw)
 
 	TestCluster = server.NewClusterWithConfig(&testConfig)
-
-	TestCluster.Start()
+	cluster.Initialize(&cluster.ClusterInfo[0], &testConfig.ProxyConfig.Outbound, chWatch, rw, nil, nil)
+	glog.Info("wait 20 secs for storageserv start up, then start TestCluster")
+	time.Sleep(20 * time.Second)
+	TestCluster.Start()	//wait and start TestCluster after ss port is up
 
 	cliCfg := client.Config{
 		Server:            testConfig.ProxyAddress,
@@ -161,7 +141,7 @@ func TestMain(m *testing.M) {
 		}
 		os.Exit(0)
 	}(sigs)
-
+	glog.Info("start storageserv, please wait")
 	mainSetup()
 	rc := m.Run()
 	mainTeardown()

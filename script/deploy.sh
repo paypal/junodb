@@ -62,6 +62,7 @@ do
 
   $BUILDTOP/package_config/package/${i}/build.sh
   cp $BUILDTOP/package_config/package/${i}/config-${i}* $i
+  $RM $BUILDTOP/package_config/package/${i}/config-${i}*
 done
 
 cp $JUNO_BUILD_DIR/cal.py	junoclusterserv
