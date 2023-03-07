@@ -40,7 +40,7 @@ USER juno
 
 ENV PATH /opt/juno:$PATH
 
-ENTRYPOINT ["/opt/juno/entrypoint.sh"]
+ENTRYPOINT ["bash","/opt/juno/entrypoint.sh"]
 
 CMD [ "python2","etcdsvr.py" ]
 
@@ -72,7 +72,7 @@ USER juno
 
 ENV PATH /opt/juno:$PATH
 
-ENTRYPOINT ["/opt/juno/entrypoint.sh"]
+ENTRYPOINT ["bash","/opt/juno/entrypoint.sh"]
 
 ######
 FROM juno-runtime-base AS junoserv
@@ -106,7 +106,7 @@ WORKDIR /opt/juno
 USER juno 
 ENV PATH /opt/juno/bin:$PATH
 
-ENTRYPOINT ["/opt/juno/bin/entrypoint.sh"]
+ENTRYPOINT ["bash","/opt/juno/bin/entrypoint.sh"]
 CMD ["proxy", "manager", "-config=/opt/juno/etc/config.toml"]
 
 
@@ -147,5 +147,5 @@ WORKDIR /opt/juno
 USER juno 
 ENV PATH /opt/juno/bin:$PATH
 
-ENTRYPOINT ["/opt/juno/bin/entrypoint.sh"]
+ENTRYPOINT ["bash","/opt/juno/bin/entrypoint.sh"]
 CMD [ "storageserv", "manager", "-config=/opt/juno/etc/config.toml" ]
