@@ -16,7 +16,7 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #  
- 
+
 #!/usr/bin/python
 # 
 
@@ -29,10 +29,6 @@ import signal
 import socket
 import subprocess
 import sys
-
-import cal
-import util
-from util import WorkerSherlock
 
 json_file = ""
 h = {}
@@ -91,10 +87,6 @@ class Config():
         self.cluster_url = ""
         self.cluster_endpoints = ""
         self.data_dir = "."
-
-        self.cal_host = "127.0.0.1"
-        self.cal_port = 1118
-        self.cal_enabled = True
 
     # Get members.
     def get_members(self):
@@ -258,15 +250,6 @@ class Config():
                 
                 if "etcdsvr.initial_cluster" == key:
                     self.initial_cluster = val
-
-                if "cal.host" == key:
-                    self.cal_host = val
-
-                if "cal.port" == key:
-                    self.cal_port = int(val)
-
-                if "cal.enabled" == key and val == "false":
-                    self.cal_enabled = False
     
         name_list = self.peer_names.split('^')
         peer_hosts = self.initial_cluster.split('^')            
@@ -333,7 +316,7 @@ class Config():
  
 
 class Manager():
-    def __init__(self, etcd_name, local_endpoint, cluster_endpoints, cal_enabled):
+    def __init__(self, etcd_name, local_endpoint, cluster_endpoints):
         self.logger = setup_logger("manager")
          
         signal.signal(signal.SIGTERM, self.sig_handler)
@@ -346,17 +329,12 @@ class Manager():
         self.etcd_name = etcd_name
         self.local_endpoint = local_endpoint
         self.cluster_endpoints = cluster_endpoints
-        self.cal_enabled = cal_enabled
     
     def sig_handler(self, sig, frame):
         if not self.pid:
             return
         
         self.logger.info("[MANAGER] Signal %d received" %  (sig))
-        util.quit_sherlock = True
-        if self.cal_enabled:
-            cal.event("MANAGER", "exit", 0, {"signal": sig})
-
         self.shutdown(0)
     
     def is_endpoint_healthy(self, wait_time):
@@ -372,9 +350,9 @@ class Manager():
             if t > wait_time:
                 break
             
-            if t > 60 and self.cal_enabled: 
+            if t > 60: 
                 msg = "unhealthy_%s" % (self.etcd_name)
-                cal.event("SERVER", msg, cal.ERROR, {})
+                self.logger.error("[MANAGER] %s" % (msg))
             
             result = subprocess.check_output(cmd_health, shell=True)
             if "is healthy" in result:
@@ -398,7 +376,6 @@ class Manager():
         self.pid = self.server.pid
 
     def shutdown(self, status=0):
-        util.quit_sherlock = True
         if self.pid:
             try:
                 self.logger.info("[MANAGER] shutdown %d" % (self.pid))
@@ -406,8 +383,6 @@ class Manager():
                 self.server.wait()
             except:
                 pass
-        if self.cal_enabled:
-            cal.wait_and_close(timeout=5)
 
         sys.exit(status)
         
@@ -432,8 +407,6 @@ class Manager():
             count = 0
             start = time()
             
-            worker = WorkerSherlock(self.logger, self.cluster_endpoints, self.cal_enabled)
-            worker.start()
             while True:
                
                 sleep(1)
@@ -444,8 +417,6 @@ class Manager():
                 
                 print(" ")
                 self.logger.info("[MANAGER] Started etcd process %d" % (self.pid))
-                if self.cal_enabled:
-                   cal.event("SERVER", "start", 0, {'pid': self.pid})
                 
                 wait_time = 85 + random.randint(0,10)
                 while not self.is_endpoint_healthy(wait_time):
@@ -469,8 +440,6 @@ class Manager():
 
                 # etcd server has exited.         
                 sleep(1) 
-                if self.cal_enabled:
-                    cal.event("SERVER", "exit", cal.ERROR, {'pid': self.pid})
                 count += 1
                 if count < 30:
                     continue
@@ -480,9 +449,7 @@ class Manager():
                     count = 0
                     start = time()
                 else:
-                    self.logger.info("[MANAGER] etcd server thrashing.  Exit!")
-                    if self.cal_enabled:
-                        cal.event("SERVER", "thrashing", cal.ERROR, {})
+                    self.logger.error("[MANAGER] etcd server thrashing.  Exit!")
 
                     self.shutdown(-1)
 
@@ -490,19 +457,11 @@ class Manager():
 
             self.logger.info("[MANAGER] Got interrupted.  Exit.")
 
-            util.quit_sherlock = True
-            if self.cal_enabled:
-                cal.event("MANAGER", "interrupted", 0, {})
-
             self.shutdown(0)
 
         except Exception as e:
             
             self.logger.info("[MANAGER] Got exception %s.  Exit." % (e.message))
-            
-            util.quit_sherlock = True
-            if self.cal_enabled:
-                cal.event("MANAGER", "exception", cal.ERROR, {"exception": e.message})
                 
             self.shutdown(0)
                 
@@ -517,11 +476,8 @@ if __name__ == "__main__":
         print(err)
         print("[ERROR] Failed to start etcd.")
         sys.exit(-1)
-
-    my_pool = util.get_my_pool()
-    cal.init(pool=my_pool, ip=cfg.cal_host, port=cfg.cal_port)
     
-    mgr = Manager(cfg.etcd_name, cfg.local_endpoint, cfg.cluster_endpoints, cfg.cal_enabled)
+    mgr = Manager(cfg.etcd_name, cfg.local_endpoint, cfg.cluster_endpoints)
     slow_mode = False
   
     mgr.watch_and_recycle(cfg)
