@@ -58,14 +58,14 @@ MaxNumReqProcessors = 10000
   #  string
   #  no need to expose
 
-HttpMonAddr=":26967"
+HttpMonAddr=":8088"
 
 PidFileName = "proxy.pid"
   #  string
 
 [ClusterInfo]
   #
-  NumZones=5
+  NumZones=1
     #  integer
     #  SHOULD make it code default, and not to expose it in LIVE environment
   NumShards=1024
@@ -117,6 +117,16 @@ PidFileName = "proxy.pid"
 
     [Replication.IO.default]
       PendingQueExtra = 300
+      ConnectTimeout = "5s"
+      ReqChanBufSize = 50000
+      MaxPendingQueSize = 8092
+      ConnectRecycleT = "3m"
+      EnableConnRecycle = true
+      MaxBufferedWriteSize = 65536
+      ReconnectIntervalBase = 100
+      ReconnectIntervalMax = 60000
+      NumConnsPerTarget = 3
+      IOBufSize = 65536
 
 [ReqProc]
   #  pool/environment specific. put here for now to avoid adding it for
@@ -140,7 +150,8 @@ PidFileName = "proxy.pid"
   KeyStoreFilePath = "./secrets/keystore.toml"
   CertPemFilePath = "./secrets/server.crt"
   KeyPemFilePath = "./secrets/server.pem"
-  ClientAuth=false
+  CAFilePath = "./secrets/ca.crt"
+  ClientAuth=true
   # string
   # in format <host>:<port>
   # Here, it is defined for LIVE. STAGE and SANDBOX SHOULD override it
@@ -161,7 +172,7 @@ PidFileName = "proxy.pid"
     IOBufSize = 65536
 
 [Etcd]
-  Endpoints=["$STAGEIP:25716"]
+  Endpoints=["$STAGEIP:2379"]
 #  AutoSyncInterval = 0
 #  DialTimeout = 1000000000
 #  DialKeepAliveTime = 0
@@ -177,10 +188,10 @@ PidFileName = "proxy.pid"
 #  CacheDir = "./"
 
 [[Listener]]
- Addr = ":26969"
+ Addr = ":8080"
 
 [[Listener]]
- Addr = ":25760"
+ Addr = ":5080"
  SSLEnabled = true
 
 [Sherlock]

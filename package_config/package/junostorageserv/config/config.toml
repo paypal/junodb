@@ -35,14 +35,14 @@ MaxTimeToLive = 259200
 MaxConcurrentRequests = 1500
 ReqProcCtxPoolSize = 10000
 
-HttpMonAddr = ":26982"
+HttpMonAddr = ":8089"
   #  string
   #  no need in base config as it is pool and/or environment specific
 
 [ClusterInfo]
   AlgVersion = 2
   #
-  NumZones=5
+  NumZones=1
     #  integer
     #  SHOULD make it code default, and not to expose it in LIVE environment
   NumShards=1024
@@ -98,7 +98,7 @@ HttpMonAddr = ":26982"
   ErrThreshold=0.0
 
 [Etcd]
-  Endpoints=["$STAGEIP:25716"]
+  Endpoints=["$STAGEIP:2379"]
 #  AutoSyncInterval = 0
 #  DialTimeout = 1000000000
 #  DialKeepAliveTime = 0

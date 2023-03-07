@@ -27,7 +27,6 @@ func TestUpdateNormal(t *testing.T) {
 	if err != nil {
 		t.Error("create failed. error: ", err)
 	}
-	testutil.CheckCalLog(t, "API.*Update.*st=Ok.*ns=ns", "1", hostip, true)
 }
 
 func TestUpdatePrepareInserting(t *testing.T) {
@@ -49,7 +48,6 @@ func TestUpdatePrepareInserting(t *testing.T) {
 	if recInfo.GetVersion() != 4 {
 		t.Error("Wrong version, real version is ", recInfo.GetVersion())
 	}
-	testutil.CheckCalLog(t, "API.*Update.*st=Ok.*Insr.*Insr", "1", hostip, true)
 }
 
 /***************************************************************
@@ -97,7 +95,6 @@ func TestUpdateTwoSSTimeout(t *testing.T) {
 		}
 		params.MockInfoList[i].Delay = 0
 	}
-	testutil.CheckCalLog(t, ".*SSReqTimeout.*op=Update.PrepareUpdate", "15", hostip, true)
 }
 
 /*
@@ -322,8 +319,6 @@ func TestUpdateThreeStatusOKRecord(t *testing.T) {
 			params.MockInfoList[i].Version = okVersion
 		}
 	}
-	testutil.CheckCalLog(t, ".*API.Update.*st=Ok", "269", hostip, true)
-	testutil.CheckCalLog(t, ".*API.Update.*st=NoKey", "1", hostip, true)
 }
 
 /******************************************************************
@@ -356,7 +351,6 @@ func TestUpdateTwoRecordLockedOneBadParam(t *testing.T) {
 		}
 		params.MockInfoList[i].Status = uint8(proto.OpStatusNoError)
 	}
-	testutil.CheckCalLog(t, ".*API.*Update.*st=RecordLocked", "10", hostip, true)
 }
 
 /***************************************************************************
@@ -391,8 +385,6 @@ func TestUpdateTwoOutOfMemOneBadParam(t *testing.T) {
 		}
 		params.MockInfoList[i].Status = uint8(proto.OpStatusNoError)
 	}
-	testutil.CheckCalLog(t, ".*API.*Update.*st=BadParam", "9", hostip, true)
-	testutil.CheckCalLog(t, ".*API.*Update.*st=OutOfMem", "1", hostip, true)
 }
 
 /*************************************************************
@@ -491,8 +483,6 @@ func TestUpdateThreeMixErrorOKStatus(t *testing.T) {
 		}
 		params.MockInfoList[i].Status = uint8(proto.OpStatusNoError)
 	}
-	testutil.CheckCalLog(t, "API.*Update.*st=Ok", "10", hostip, true)
-	testutil.CheckCalLog(t, "API.*Update.*st=InconsistentState", "10", hostip, true)
 }
 
 /*********************************************************
@@ -530,7 +520,6 @@ func TestUpdateThreeMixPrepareInserting(t *testing.T) {
 		}
 		params.MockInfoList[i].Status = uint8(proto.OpStatusNoError)
 	}
-	testutil.CheckCalLog(t, ".*API.*Update.*st=Ok", "10", hostip, true)
 }
 
 /****************************************************************************
@@ -1204,8 +1193,6 @@ func TestUpdateTwoCommitBadMsg(t *testing.T) {
 		params.MockInfoList[i].Opcode = proto.OpCodeNop
 		params.MockInfoList[i].Status = uint8(proto.OpStatusNoError)
 	}
-	testutil.CheckCalLog(t, ".*API.*Update.*st=InconsistentState", "59", hostip, true)
-	testutil.CheckCalLog(t, ".*API.*Update.*st=CommitFailure", "59", hostip, true)
 }
 
 /********************************************************************

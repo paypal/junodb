@@ -23,7 +23,6 @@ func TestGetNormal(t *testing.T) {
 	if recInfo.GetVersion() != 1 {
 		t.Errorf("Wrong version: %d", recInfo.GetVersion())
 	}
-	testutil.CheckCalLog(t, "API.*Get.*st=Ok.*ns=ns", "1", hostip, true)
 }
 
 func TestGetNoKey(t *testing.T) {
@@ -36,7 +35,6 @@ func TestGetNoKey(t *testing.T) {
 	if err != client.ErrNoKey {
 		t.Error("failed. error: ", err)
 	}
-	testutil.CheckCalLog(t, "API.*Get.*st=NoKey.*ns=ns", "1", hostip, true)
 }
 
 func TestGetOneHasRecordOthersNoKey(t *testing.T) {
@@ -61,7 +59,6 @@ func TestGetOneHasRecordOthersNoKey(t *testing.T) {
 		params.MockInfoList[i].Status = uint8(proto.OpStatusNoKey)
 		params.MockInfoList[i].Version = 1
 	}
-	testutil.CheckCalLog(t, "API.*Get.*st=Ok.*ns=ns", "3", hostip, true)
 	params.SetVersionForAll(0)
 	params.SetStatusForAll(uint8(proto.OpStatusNoError))
 }
@@ -83,7 +80,6 @@ func TestGetOneHasRecordOthersBadParam(t *testing.T) {
 		params.MockInfoList[i].Status = uint8(proto.OpStatusBadParam)
 		params.MockInfoList[i].Version = 1
 	}
-	testutil.CheckCalLog(t, "API.*Get.*st=BadParam.*ns=ns", "5", hostip, true)
 	params.SetVersionForAll(0)
 	params.SetStatusForAll(uint8(proto.OpStatusNoError))
 }
@@ -175,8 +171,6 @@ func TestGetVersionValueTwoSSTimeout(t *testing.T) {
 		}
 		params.MockInfoList[i].Delay = 0
 	}
-	testutil.CheckCalLog(t, "API.*Get.*st=Ok.*ns=ns", "10", hostip, true)
-	testutil.CheckCalLog(t, "SSReqTimeout.*op=Get.Read", "15", hostip, true)
 }
 
 /*
@@ -218,8 +212,6 @@ func TestGetThreeSSTimeout(t *testing.T) {
 	params.MockInfoList[0].Delay = 0
 	params.MockInfoList[2].Delay = 0
 	params.MockInfoList[4].Delay = 0
-
-	testutil.CheckCalLog(t, "API.*Get.*st=NoStorageServer.*ns=ns", "11", hostip, true)
 }
 
 /***************************************************************

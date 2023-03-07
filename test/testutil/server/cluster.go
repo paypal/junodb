@@ -337,7 +337,7 @@ func NewClusterWithConfig(conf *ClusterConfig) (c *Cluster) {
 		stats.Initialize(stats.KTypeStandAloneWorker)
 		var chWatch chan int
 		cls = &cluster.ClusterInfo[0]
-		fmt.Println("ProxyAdd in func test1 is ", conf.ProxyAddress)
+		glog.Debug("ProxyAdd in func test1 is ", conf.ProxyAddress)
 		if conf.ProxyConfig.EtcdEnabled {
 			chWatch = etcd.WatchForProxy()
 			etcd.Connect(&conf.ProxyConfig.Etcd, conf.ProxyConfig.ClusterName)
@@ -394,7 +394,6 @@ func NewClusterWithConfig(conf *ClusterConfig) (c *Cluster) {
 		ssDef.StopWaitTime.Duration = 1 * time.Second
 	}
 	c.ssStopWaitTime = ssDef.StopWaitTime.Duration
-
 	for i := range connInfo {
 		c.StorageServers[i] = make([]IServer, len(connInfo[i]))
 		for ni := range connInfo[i] {
@@ -423,7 +422,6 @@ func NewClusterWithConfig(conf *ClusterConfig) (c *Cluster) {
 			}
 		}
 	}
-
 	return
 }
 

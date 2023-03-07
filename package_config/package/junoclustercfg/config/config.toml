@@ -13,19 +13,23 @@ ClusterName = "junoserv"
 [ClusterInfo]
   AlgVersion = 2
   #
-  NumZones=5
+  NumZones=1
     #  integer
     #  SHOULD make it code default, and not to expose it in LIVE environment
   NumShards=1024
     #  integer
     #  SHOULD make it code default, and not to expose it in LIVE environment
-  ConnInfo = [
-    ["$STAGEIP:12801"],
-    ["$STAGEIP:12901"],
-    ["$STAGEIP:12111"],
-    ["$STAGEIP:12211"],
-    ["$STAGEIP:12311"]
-  ]
+#  ConnInfo = [
+#    ["$STAGEIP:12801"],
+#    ["$STAGEIP:12901"],
+#    ["$STAGEIP:12111"],
+#    ["$STAGEIP:12211"],
+#    ["$STAGEIP:12311"]
+#  ]
+
+   SSHosts = [["$STAGEIP"]]
+   SSPorts = [25761,26970,26974,26975,26976,26977,26978,26979,26980,26981,26971,26972]
+
     #  [][]string
     #  pool/environment specific, SHOULD NOT be defined in this base config 
   #SSHosts
@@ -40,5 +44,5 @@ ClusterName = "junoserv"
     # ** ConnInfo not defined in the final config
 
 [Etcd]
-  Endpoints=["$STAGEIP:25716"]
+  Endpoints=["$STAGEIP:2379"]
   RequestTimeout="5s"

@@ -177,7 +177,8 @@ func TestMain(m *testing.M) {
 	} else {
 		clusterInfo.PopulateFromConfig()
 	}
-	cluster.Initialize(&cluster.ClusterInfo[0], &testConfig.ProxyConfig.Outbound, chWatch, etcd.GetClsReadWriter())
+	cluster.Initialize(&cluster.ClusterInfo[0], &testConfig.ProxyConfig.Outbound, chWatch, etcd.GetClsReadWriter(),nil,nil)
+
 	glog.Info("postCluster info: ", clusterInfo)
 
 	setup()
