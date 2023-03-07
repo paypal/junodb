@@ -33,7 +33,6 @@ juno_executables="\
         juno/cmd/tools/junocli \
         juno/test/drv/junoload \
         juno/test/drv/bulkload \
-        juno/cmd/etcdsvr/sherlock \
         juno/cmd/storageserv/storage/db/dbcopy \
         "
 
