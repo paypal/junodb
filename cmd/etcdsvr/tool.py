@@ -17,9 +17,6 @@
 #  limitations under the License.
 #  
  
-#!/x/opt/pp/bin/python
-#
-
 import os
 import sys
 
