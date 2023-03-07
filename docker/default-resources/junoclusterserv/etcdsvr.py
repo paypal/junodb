@@ -16,25 +16,23 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #  
- 
-#! /usr/bin/python
+
+#!/usr/bin/python
 # 
 
 from time import sleep, time
 import json
 import logging
 import os
+import random
 import signal
 import socket
 import subprocess
 import sys
 
-import cal
-import util
-from util import WorkerSherlock
-
 json_file = ""
-
+h = {}
+restartCount = 0
 
 def setup_logger(name):
     formatter = logging.Formatter(fmt='%(asctime)s.%(msecs)03d000 %(levelname)s %(message)s',
@@ -90,10 +88,6 @@ class Config():
         self.cluster_endpoints = ""
         self.data_dir = "."
 
-        self.cal_host = "127.0.0.1"
-        self.cal_port = 1118
-        self.cal_enabled = True
-
     # Get members.
     def get_members(self):
         
@@ -128,8 +122,8 @@ class Config():
     def join_cluster(self):
 
         etcd_cmd = './etcdctl --endpoints="%s"' % (self.cluster_endpoints)
-        cmd_select = "%s member list | grep '%s' | awk -F',' '{print $1}'" % (
-            etcd_cmd, self.peer_url
+        cmd_select = "%s member list | grep ', %s, http' | awk -F',' '{print $1}'" % (
+            etcd_cmd, self.etcd_name
         )
 
         cmd_add = "%s member add %s --peer-urls=%s" % (
@@ -180,22 +174,19 @@ class Config():
         
         if not ok:
             print(err + "\n[ERROR] Failed to join a cluster.")
-            return
+            return False
 
         os.system(cmd_rm)
+        return True
 
     # Add a json config for etcd.
     def add_json_cfg(self):
         
-        global json_file
+        global json_file, h
         h = {}
     
         client_url = "%s:%d" % (self.host_ip, self.client_port)
         self.peer_url = "%s:%d" % (self.host_ip, self.peer_port)
-
-	listen_client_urls = "http://0.0.0.0:%d" % (self.client_port)
-        listen_peer_url = "http://0.0.0.0:%d" % (self.peer_port)
-
         h["advertise-client-urls"] = client_url
         h["initial-advertise-peer-urls"] = self.peer_url
         
@@ -204,9 +195,9 @@ class Config():
             # Join an existing cluster
             h["initial-cluster-state"] = "existing"
         h["initial-cluster"] = self.cluster_url
-        h["listen-client-urls"] = listen_client_urls
-        h["listen-peer-urls"] = listen_peer_url
-        h["max-txn-ops"] = 2500
+        h["listen-client-urls"] = client_url
+        h["listen-peer-urls"] = self.peer_url
+        h["max-txn-ops"] = 6000
         h["strict-reconfig-check"] = False
         h["initial-cluster-token"] = "juno"
         h["name"] = self.etcd_name
@@ -219,9 +210,21 @@ class Config():
         with open(json_file, "w") as f:
             f.write(text)
 
+    def fix_json_cfg(self):
+        
+        global json_file, h
+        h["initial-cluster-state"] = "existing"
+        
+        text = json.dumps(h, sort_keys=True, indent=4, 
+                          separators=(',', ': '))
+        with open(json_file, "w") as f:
+            f.write(text)
+        
     # Parse input config
     def parse_cfg(self, status_only):
     
+        global restartCount
+        
         with open(self.cfg_file, 'r') as f:
             for line in f:
                 line = line.replace('\n', '#')
@@ -247,15 +250,6 @@ class Config():
                 
                 if "etcdsvr.initial_cluster" == key:
                     self.initial_cluster = val
-
-                if "cal.host" == key:
-                    self.cal_host = val
-
-                if "cal.port" == key:
-                    self.cal_port = int(val)
-
-                if "cal.enabled" == key and val == "false":
-                    self.cal_enabled = False
     
         name_list = self.peer_names.split('^')
         peer_hosts = self.initial_cluster.split('^')            
@@ -284,6 +278,9 @@ class Config():
             return None
  
         dir = self.etcd_name + ".etcd"
+        if not os.path.exists(dir):
+            restartCount = 2
+            
         members = ""
         if os.path.exists("join.log") and not os.path.exists(dir):
             self.is_existing_cluster = True
@@ -319,7 +316,7 @@ class Config():
  
 
 class Manager():
-    def __init__(self, etcd_name, local_endpoint, cluster_endpoints, cal_enabled):
+    def __init__(self, etcd_name, local_endpoint, cluster_endpoints):
         self.logger = setup_logger("manager")
          
         signal.signal(signal.SIGTERM, self.sig_handler)
@@ -332,34 +329,30 @@ class Manager():
         self.etcd_name = etcd_name
         self.local_endpoint = local_endpoint
         self.cluster_endpoints = cluster_endpoints
-        self.cal_enabled = cal_enabled
     
     def sig_handler(self, sig, frame):
         if not self.pid:
             return
         
         self.logger.info("[MANAGER] Signal %d received" %  (sig))
-        util.quit_sherlock = True
-        if self.cal_enabled:
-            cal.event("MANAGER", "exit", 0, {"signal": sig})
-
         self.shutdown(0)
     
-    def is_endpoint_healthy(self, slow_mode):
+    def is_endpoint_healthy(self, wait_time):
         os.environ["ETCDCTL_API"] = "3"
         etcd_cmd = './etcdctl --endpoints="%s"' % (self.local_endpoint)
         cmd_health = "%s endpoint health 2>&1 | cat" % (etcd_cmd)
         result = ""
-
-        try_count = 10
-        if slow_mode:
-            try_count = 20 
         
-        for i in range(try_count):
-            sleep(1)
-            if i > 5 and self.cal_enabled: 
+        now = int(time())
+        for i in range(50):
+            sleep(2)
+            t = int(time()) - now
+            if t > wait_time:
+                break
+            
+            if t > 60: 
                 msg = "unhealthy_%s" % (self.etcd_name)
-                cal.event("SERVER", msg, cal.ERROR, {})
+                self.logger.error("[MANAGER] %s" % (msg))
             
             result = subprocess.check_output(cmd_health, shell=True)
             if "is healthy" in result:
@@ -383,26 +376,37 @@ class Manager():
         self.pid = self.server.pid
 
     def shutdown(self, status=0):
-        util.quit_sherlock = True
         if self.pid:
             try:
+                self.logger.info("[MANAGER] shutdown %d" % (self.pid))
                 self.server.terminate()
                 self.server.wait()
             except:
                 pass
-        if self.cal_enabled:
-            cal.wait_and_close(timeout=5)
 
         sys.exit(status)
+        
+    def shutdown_server(self):
+        if not self.pid:
+            return
+            
+        try:
+            self.logger.info("[MANAGER] shutdown %d" % (self.pid))
+            self.server_terminate()
+            self.server_wait()
+        except:
+            pass
+        
+        self.pid = None    
 
-    def watch_and_recycle(self, slow_mode):
+    def watch_and_recycle(self, cfg):
+        
+        global restartCount
         
         try:
             count = 0
             start = time()
             
-            worker = WorkerSherlock(self.logger, self.cluster_endpoints, self.cal_enabled)
-            worker.start()
             while True:
                
                 sleep(1)
@@ -413,20 +417,29 @@ class Manager():
                 
                 print(" ")
                 self.logger.info("[MANAGER] Started etcd process %d" % (self.pid))
-                if self.cal_enabled:
-                   cal.event("SERVER", "start", 0, {'pid': self.pid})
                 
-                if not self.is_endpoint_healthy(slow_mode):
+                wait_time = 85 + random.randint(0,10)
+                while not self.is_endpoint_healthy(wait_time):
+                    
+                    if restartCount > 0:
+                        self.shutdown_server()
+                        cfg.fix_json_cfg()
+                        
+                        if cfg.join_cluster():
+                            self.logger.info("[MANAGER] Starting etcd ...")
+                            self.start()
+                            restartCount -= 1
+                            wait_time = 20 + random.randint(0,15)
+                            continue
+                    
                     print("[ERROR] Failed to start etcd.")
-                    self.shutdown(-1)
+                    self.shutdown(-1)   # exit
 
                 print("Starting etcd process %d succeeded." % (self.pid))
                 self.server.wait()
 
                 # etcd server has exited.         
                 sleep(1) 
-                if self.cal_enabled:
-                    cal.event("SERVER", "exit", cal.ERROR, {'pid': self.pid})
                 count += 1
                 if count < 30:
                     continue
@@ -436,9 +449,7 @@ class Manager():
                     count = 0
                     start = time()
                 else:
-                    self.logger.info("[MANAGER] etcd server thrashing.  Exit!")
-                    if self.cal_enabled:
-                        cal.event("SERVER", "thrashing", cal.ERROR, {})
+                    self.logger.error("[MANAGER] etcd server thrashing.  Exit!")
 
                     self.shutdown(-1)
 
@@ -446,19 +457,11 @@ class Manager():
 
             self.logger.info("[MANAGER] Got interrupted.  Exit.")
 
-            util.quit_sherlock = True
-            if self.cal_enabled:
-                cal.event("MANAGER", "interrupted", 0, {})
-
             self.shutdown(0)
 
         except Exception as e:
             
             self.logger.info("[MANAGER] Got exception %s.  Exit." % (e.message))
-            
-            util.quit_sherlock = True
-            if self.cal_enabled:
-                cal.event("MANAGER", "exception", cal.ERROR, {"exception": e.message})
                 
             self.shutdown(0)
                 
@@ -473,12 +476,8 @@ if __name__ == "__main__":
         print(err)
         print("[ERROR] Failed to start etcd.")
         sys.exit(-1)
-
-    my_pool = util.get_my_pool()
-    cal.init(pool=my_pool, ip=cfg.cal_host, port=cfg.cal_port)
     
-    mgr = Manager(cfg.etcd_name, cfg.local_endpoint, cfg.cluster_endpoints, cfg.cal_enabled)
+    mgr = Manager(cfg.etcd_name, cfg.local_endpoint, cfg.cluster_endpoints)
     slow_mode = False
-    if len(sys.argv) >= 2 and sys.argv[1] == "slow":
-       slow_mode = True
-    mgr.watch_and_recycle(slow_mode)
+  
+    mgr.watch_and_recycle(cfg)
