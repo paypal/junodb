@@ -41,13 +41,24 @@ jobs:
       - name: Build docker containers
         run: docker/build.sh
       - name: Start juno containers
+        id: dockerStart
         run: |
           docker/start.sh
+      - name: Step To run on failure
+        if: steps.dockerStart.conclusion == 'failure'
+        run: |
+          docker logs etcd 
+          docker logs clustercfg
+          docker logs storageserv
+          docker logs proxy
+      - name: Docker containers Status
+        run: |
           echo "Wait for service warm up..."
           sleep 20
           echo "docker ps"
           docker ps
       - name: Connectivity Checks
+        id: dockerCheck
         run: |
           echo "Connectivity checks on listening ports"
           echo "Proxy TLS"
@@ -58,6 +69,13 @@ jobs:
           nc -vz localhost ${PROXY_MON_PORT}
           echo "Storage Admin"
           nc -vz localhost ${STORAGE_MON_PORT}
+      - name: Step To run on failure of Connectivity Check
+        if: steps.dockerCheck.conclusion == 'failure'
+        run: |
+          docker logs etcd 
+          docker logs clustercfg
+          docker logs storageserv
+          docker logs proxy
       - name: Shutdown juno containers
         run: |
           echo "Shutdown juno containers"
