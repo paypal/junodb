@@ -1,3 +1,4 @@
+#!/usr/bin/python
 #  
 #  Copyright 2023 PayPal Inc.
 #  
@@ -17,8 +18,6 @@
 #  limitations under the License.
 #  
 
-#!/usr/bin/python
-# 
 
 from time import sleep, time
 import json

@@ -1,3 +1,4 @@
+#!/bin/bash
 #  
 #  Copyright 2023 PayPal Inc.
 #  
@@ -17,7 +18,6 @@
 #  limitations under the License.
 #  
  
-#!/bin/bash
 cd "$(dirname "$0")"
 sudo apt-get remove -y docker docker-engine docker.io containerd runc
 sudo apt-get update -y
