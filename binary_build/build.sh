@@ -1,3 +1,4 @@
+#! /bin/bash
 #  
 #  Copyright 2023 PayPal Inc.
 #  
@@ -17,7 +18,6 @@
 #  limitations under the License.
 #  
  
-#! /bin/bash
 
 GO_VERSION=1.18.2
 

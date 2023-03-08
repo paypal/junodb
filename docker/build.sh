@@ -1,3 +1,4 @@
+#!/bin/bash
 #  
 #  Copyright 2023 PayPal Inc.
 #  
@@ -17,7 +18,6 @@
 #  limitations under the License.
 #  
  
-#!/bin/bash
 set -euo pipefail
 IFS=$'\n\t'
 cd "$(dirname "$0")"

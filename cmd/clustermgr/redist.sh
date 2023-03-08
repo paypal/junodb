@@ -1,3 +1,4 @@
+#!/bin/sh
 #  
 #  Copyright 2023 PayPal Inc.
 #  
@@ -17,7 +18,6 @@
 #  limitations under the License.
 #  
  
-#!/bin/sh
 
 BASE=$(dirname "$0")
 FILE=junocfg.log
