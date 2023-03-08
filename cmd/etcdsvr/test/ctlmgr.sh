@@ -1,3 +1,4 @@
+#!/bin/sh 
 #  
 #  Copyright 2023 PayPal Inc.
 #  
@@ -17,7 +18,6 @@
 #  limitations under the License.
 #  
  
-#!/bin/sh 
 
 printHelp() {
    echo "Usage: ctlmgr.sh <required:operation> [optional:old config or key] [optional:new config]
