@@ -1,3 +1,4 @@
+#! /bin/bash
 #  
 #  Copyright 2023 PayPal Inc.
 #  
@@ -17,7 +18,6 @@
 #  limitations under the License.
 #  
  
-#! /bin/bash
 
 GO_VERSION=1.18.2
 
@@ -119,7 +119,6 @@ juno_executables="\
 	juno/cmd/clustermgr \
 	juno/cmd/dbscanserv \
 	juno/cmd/dbscanserv/junoctl \
-	juno/cmd/etcdsvr/sherlock \
         juno/test/drv/junoload \
         juno/cmd/tools/junostats\
         juno/cmd/tools/junocfg\
@@ -127,6 +126,6 @@ juno_executables="\
 # DO NOT include junoload in any package
 
 env GOBIN=$build_output_dir $RELEASE_REPO_ROOT/tool/go/bin/go install $build_tag --ldflags "-linkmode external -extldflags -static $juno_version_info" $juno_executables
-cd $SOURCE_ROOT/cmd/etcdsvr; cp etcdctl etcdsvr.py etcdsvr_exe cal.py tool.py util.py join.sh status.sh $build_output_dir;
+cd $SOURCE_ROOT/cmd/etcdsvr; cp etcdctl etcdsvr.py etcdsvr_exe tool.py join.sh status.sh $build_output_dir;
 cd $SOURCE_ROOT/cmd/clustermgr; cp store.sh swaphost.sh redist.sh $build_output_dir; 
 cd $SOURCE_ROOT/cmd/clustermgr/redistserv; cp -r web $build_output_dir;

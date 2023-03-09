@@ -21,6 +21,7 @@ ClusterName="junoserv"
 LogLevel = "info"
 HttpMonAddr = ":8088"
 NumChildren = 8
+DefaultTimeToLive = 1800
 [[Listener]]
   Addr = ":8080"
 [[Listener]]

@@ -1,3 +1,4 @@
+#! /bin/bash
 #  
 #  Copyright 2023 PayPal Inc.
 #  
@@ -17,7 +18,6 @@
 #  limitations under the License.
 #  
 
-#! /bin/bash
 
 pkg_dir=${1:-$BUILDTOP/package_config/package/junoclustercfg}
 pkg_basename=$(basename $pkg_dir)
