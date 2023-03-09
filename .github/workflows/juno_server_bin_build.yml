@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - test
+      - dev
     paths-ignore:
       - ".github/workflows/**"
   pull_request:

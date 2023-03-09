@@ -13,13 +13,10 @@ FROM juno-runtime-base AS junoclusterserv
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get -qq install -y python
 
 COPY --from=juno-build \
-    /juno/bin/sherlock \
     /juno/git_revision.txt \
     /juno/cmd/etcdsvr/etcdctl \
     /juno/cmd/etcdsvr/etcdsvr_exe \
-    /juno/cmd/etcdsvr/cal.py \
     /juno/cmd/etcdsvr/tool.py \
-    /juno/cmd/etcdsvr/util.py \
     /juno/cmd/etcdsvr/join.sh \
     /juno/cmd/etcdsvr/status.sh \
     /opt/juno/

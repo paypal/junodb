@@ -1,3 +1,4 @@
+#!/bin/bash
 #  
 #  Copyright 2023 PayPal Inc.
 #  
@@ -17,7 +18,6 @@
 #  limitations under the License.
 #  
  
-#!/bin/bash
 
 ###############################################################
 ### BUILDTOP is github root folder, JUNO_BUILD_DIR is    ###### 
@@ -62,10 +62,9 @@ do
 
   $BUILDTOP/package_config/package/${i}/build.sh
   cp $BUILDTOP/package_config/package/${i}/config-${i}* $i
+  $RM $BUILDTOP/package_config/package/${i}/config-${i}*
 done
 
-cp $JUNO_BUILD_DIR/cal.py	junoclusterserv
-cp $JUNO_BUILD_DIR/util.py	junoclusterserv
 cp $JUNO_BUILD_DIR/etcdsvr.py	junoclusterserv
 cp $JUNO_BUILD_DIR/etcdctl	junoclusterserv
 cp $JUNO_BUILD_DIR/etcdsvr_exe	junoclusterserv

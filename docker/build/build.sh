@@ -1,3 +1,4 @@
+#! /bin/bash
 #  
 #  Copyright 2023 PayPal Inc.
 #  
@@ -17,7 +18,6 @@
 #  limitations under the License.
 #  
  
-#! /bin/bash
 
 export CGO_CFLAGS="-I/usr/local/include"
 export CGO_LDFLAGS="-L/usr/local/lib -lrocksdb -lstdc++ -lm -lz -lbz2 -lsnappy -lrt -lpthread -ldl"
@@ -33,7 +33,6 @@ juno_executables="\
         juno/cmd/tools/junocli \
         juno/test/drv/junoload \
         juno/test/drv/bulkload \
-        juno/cmd/etcdsvr/sherlock \
         juno/cmd/storageserv/storage/db/dbcopy \
         "
 
