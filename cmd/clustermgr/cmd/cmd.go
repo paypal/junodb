@@ -1,39 +1,34 @@
-//  
+//
 //  Copyright 2023 PayPal Inc.
-//  
+//
 //  Licensed to the Apache Software Foundation (ASF) under one or more
 //  contributor license agreements.  See the NOTICE file distributed with
 //  this work for additional information regarding copyright ownership.
 //  The ASF licenses this file to You under the Apache License, Version 2.0
 //  (the "License"); you may not use this file except in compliance with
 //  the License.  You may obtain a copy of the License at
-//  
+//
 //     http://www.apache.org/licenses/LICENSE-2.0
-//  
+//
 //  Unless required by applicable law or agreed to in writing, software
 //  distributed under the License is distributed on an "AS IS" BASIS,
 //  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
-//  
-  
+//
+
 package cmd
 
 import (
-	"bufio"
 	"errors"
 	"fmt"
 	"os"
-	"os/exec"
-	"path/filepath"
 	"strconv"
 	"strings"
-	"syscall"
 	"time"
 
 	"juno/third_party/forked/golang/glog"
 
-	"juno/cmd/clustermgr/redistserv"
 	"juno/pkg/cluster"
 	"juno/pkg/etcd"
 )
@@ -646,66 +641,4 @@ func ZoneMarkDown(configFile string, flagType string, zoneid int) {
 
 		glog.Infof("Zone markdown, zoneid=%s", val)
 	}
-}
-
-func RedistServ(newConfig string, spawnProcess bool) {
-	exe, _ := os.Executable()
-	pidFile := filepath.Join(filepath.Dir(exe), "redistserv.pid")
-
-	if spawnProcess {
-		getPidAndPort := func() (int, int) {
-			pid, port := 0, 0
-			file, err := os.Open(pidFile)
-			if err != nil {
-				if !os.IsNotExist(err) {
-					glog.Error(err)
-				}
-			} else {
-				scanner := bufio.NewScanner(file)
-				if scanner.Scan() {
-					pid, _ = strconv.Atoi(scanner.Text())
-				}
-				if scanner.Scan() {
-					port, _ = strconv.Atoi(scanner.Text())
-				}
-
-				process, _ := os.FindProcess(pid)
-				if err = process.Signal(syscall.Signal(0)); err != nil {
-					pid, port = 0, 0
-				}
-
-				/*client := http.Client{
-					Timeout: 1 * time.Second,
-				}
-				if _, err = client.Head(fmt.Sprintf("http://localhost:%d", port)); err != nil {
-					pid, port = 0, 0
-				}*/
-			}
-
-			return pid, port
-		}
-
-		pid, port := getPidAndPort()
-		if pid == 0 {
-			c := exec.Command(exe, "--new_config", newConfig, "--cmd", "redistserv")
-			c.Stdout = os.Stdout
-			c.Stderr = os.Stderr
-			c.SysProcAttr = &syscall.SysProcAttr{
-				Setpgid: true,
-			}
-			if err := c.Start(); err != nil {
-				glog.Error(err)
-			}
-		}
-		time.Sleep(1 * time.Second)
-
-		pid, port = getPidAndPort()
-		if pid == 0 || port == 0 {
-			glog.Error("Failed to start redist watch server")
-		}
-	} else {
-		LoadNewConfig(newConfig)
-		redistserv.Run(&newCfg.RedistServ, &newCfg.Etcd, newCfg.ClusterName, pidFile)
-	}
-
 }
