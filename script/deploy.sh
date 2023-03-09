@@ -65,8 +65,6 @@ do
   $RM $BUILDTOP/package_config/package/${i}/config-${i}*
 done
 
-cp $JUNO_BUILD_DIR/cal.py	junoclusterserv
-cp $JUNO_BUILD_DIR/util.py	junoclusterserv
 cp $JUNO_BUILD_DIR/etcdsvr.py	junoclusterserv
 cp $JUNO_BUILD_DIR/etcdctl	junoclusterserv
 cp $JUNO_BUILD_DIR/etcdsvr_exe	junoclusterserv

@@ -135,7 +135,7 @@ if [ ! -f /$prefix/$name/disable ]; then
 #    fi
     
     SVC_START_CMD="$prefix/$name/${service}.py"
-    python2 $SVC_START_CMD $1 2> $prefix/$name/$service.log &
+    $SVC_START_CMD $1 2> $prefix/$name/$service.log &
     pid=$!
 	sleep 4
     if [ ! -d /proc/$pid ]; then
