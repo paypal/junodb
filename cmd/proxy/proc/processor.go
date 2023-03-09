@@ -1,22 +1,22 @@
-//  
+//
 //  Copyright 2023 PayPal Inc.
-//  
+//
 //  Licensed to the Apache Software Foundation (ASF) under one or more
 //  contributor license agreements.  See the NOTICE file distributed with
 //  this work for additional information regarding copyright ownership.
 //  The ASF licenses this file to You under the Apache License, Version 2.0
 //  (the "License"); you may not use this file except in compliance with
 //  the License.  You may obtain a copy of the License at
-//  
+//
 //     http://www.apache.org/licenses/LICENSE-2.0
-//  
+//
 //  Unless required by applicable law or agreed to in writing, software
 //  distributed under the License is distributed on an "AS IS" BASIS,
 //  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
-//  
-  
+//
+
 package proc
 
 import (
@@ -26,6 +26,7 @@ import (
 
 	"juno/pkg/logging"
 	"juno/pkg/logging/cal"
+	"juno/pkg/logging/otel"
 	"juno/pkg/proto"
 )
 
@@ -133,6 +134,9 @@ func (p *TwoPhaseProcessor) setInitSSRequest() bool {
 			glog.Error(errmsg)
 			if cal.IsEnabled() {
 				calLogReqProcError(kEncrypt, []byte(errmsg))
+			}
+			if otel.IsEnabled() {
+				otel.RecordCount(otel.ReqProc, []otel.Tags{{otel.Operation, kEncrypt}, {otel.Status, otel.StatusError}})
 			}
 			p.replyStatusToClient(proto.OpStatusInternal)
 			return false
@@ -348,6 +352,9 @@ func (p *TwoPhaseProcessor) onRepairFailure(rc *SSRequestContext) {
 			buf := logging.NewKVBuffer()
 			writeBasicSSRequestInfo(buf, rc.opCode, int(rc.ssIndex), p.ssGroup.processors[rc.ssIndex].GetConnInfo(), &p.ProcessorBase)
 			calLogReqProcEvent(kInconsistent, buf.Bytes())
+		}
+		if otel.IsEnabled() {
+			otel.RecordCount(otel.ReqProc, []otel.Tags{{otel.Status, kInconsistent}})
 		}
 		p.replyStatusToClient(proto.OpStatusInconsistent) ///TODO
 	}
