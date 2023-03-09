@@ -128,4 +128,3 @@ juno_executables="\
 env GOBIN=$build_output_dir $RELEASE_REPO_ROOT/tool/go/bin/go install $build_tag --ldflags "-linkmode external -extldflags -static $juno_version_info" $juno_executables
 cd $SOURCE_ROOT/cmd/etcdsvr; cp etcdctl etcdsvr.py etcdsvr_exe tool.py join.sh status.sh $build_output_dir;
 cd $SOURCE_ROOT/cmd/clustermgr; cp store.sh swaphost.sh redist.sh $build_output_dir; 
-cd $SOURCE_ROOT/cmd/clustermgr/redistserv; cp -r web $build_output_dir;
