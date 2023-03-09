@@ -1,22 +1,22 @@
-//  
+//
 //  Copyright 2023 PayPal Inc.
-//  
+//
 //  Licensed to the Apache Software Foundation (ASF) under one or more
 //  contributor license agreements.  See the NOTICE file distributed with
 //  this work for additional information regarding copyright ownership.
 //  The ASF licenses this file to You under the Apache License, Version 2.0
 //  (the "License"); you may not use this file except in compliance with
 //  the License.  You may obtain a copy of the License at
-//  
+//
 //     http://www.apache.org/licenses/LICENSE-2.0
-//  
+//
 //  Unless required by applicable law or agreed to in writing, software
 //  distributed under the License is distributed on an "AS IS" BASIS,
 //  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
-//  
-  
+//
+
 package cmd
 
 import (
@@ -28,7 +28,6 @@ import (
 
 	"juno/third_party/forked/golang/glog"
 
-	"juno/cmd/clustermgr/redistserv"
 	"juno/pkg/cluster"
 	"juno/pkg/etcd"
 )
@@ -43,7 +42,6 @@ type Config struct {
 	ClusterInfo    *cluster.Config
 	K8sClusterInfo *K8sCluster
 	Etcd           etcd.Config
-	RedistServ     redistserv.Config
 }
 
 type K8sCluster struct {
@@ -102,13 +100,11 @@ func (c *Config) Validate() {
 var cfg = Config{
 	ClusterInfo: &clusterInfo[0].Config,
 	Etcd:        *etcd.NewConfig("127.0.0.1:2379"),
-	RedistServ:  *redistserv.NewConfig(0, 30),
 }
 
 var newCfg = Config{
 	ClusterInfo: &clusterInfo[1].Config,
 	Etcd:        *etcd.NewConfig("127.0.0.1:2379"),
-	RedistServ:  *redistserv.NewConfig(0, 30),
 }
 
 func LoadConfigOnly(file string) {

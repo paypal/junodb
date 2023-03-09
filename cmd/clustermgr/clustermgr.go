@@ -1,22 +1,22 @@
-//  
+//
 //  Copyright 2023 PayPal Inc.
-//  
+//
 //  Licensed to the Apache Software Foundation (ASF) under one or more
 //  contributor license agreements.  See the NOTICE file distributed with
 //  this work for additional information regarding copyright ownership.
 //  The ASF licenses this file to You under the Apache License, Version 2.0
 //  (the "License"); you may not use this file except in compliance with
 //  the License.  You may obtain a copy of the License at
-//  
+//
 //     http://www.apache.org/licenses/LICENSE-2.0
-//  
+//
 //  Unless required by applicable law or agreed to in writing, software
 //  distributed under the License is distributed on an "AS IS" BASIS,
 //  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
-//  
-  
+//
+
 package main
 
 import (
@@ -57,7 +57,7 @@ func main() {
 	flag.StringVar(&flagConfigNew, "new_config", "", "new configfile")
 	flag.BoolVar(&flagDryrun, "dryrun", false, "dry run -- do not save to etcd")
 	flag.BoolVar(&flagVerbose, "verbose", false, "verbose -- print more info")
-	flag.StringVar(&flagCmd, "cmd", "", "command -- store, redist, redistserv")
+	flag.StringVar(&flagCmd, "cmd", "", "command -- store, redist")
 	flag.StringVar(&flagType, "type", "cluster_info", "type -- cluster_info, auto, abort")
 	flag.IntVar(&flagZoneid, "zone", -1, "specify zone id")
 	flag.IntVar(&flagSkipZone, "skipzone", -1, "specify zone id to skip")
@@ -75,7 +75,7 @@ func main() {
 		return
 	}
 
-	if flagCmd == "redist" || flagCmd == "redistserv" {
+	if flagCmd == "redist" {
 		flagConfig = flagConfigNew
 	}
 
@@ -108,8 +108,6 @@ func main() {
 
 	} else if flagCmd == "redist" {
 
-		cmd.RedistServ(flagConfig, true)
-
 		switch flagType {
 		case "auto":
 			cmd.RedistAuto(flagConfig, flagZoneid, flagSkipZone, flagDryrun, flagMaxFailures, flagMinWait, false, flagRateLimit, flagAMarkdown)
@@ -133,8 +131,6 @@ func main() {
 			printUsage()
 			return
 		}
-	} else if flagCmd == "redistserv" {
-		cmd.RedistServ(flagConfig, false)
 	} else if flagCmd == "restore" {
 		cmd.RestoreCache(flagConfig, flagCache, flagDryrun)
 	} else if flagCmd == "zonemarkdown" {
@@ -153,10 +149,6 @@ func defaultConfig(progName string) (config string) {
 
 	dirName := filepath.Dir(path)
 	config = fmt.Sprintf("%s/config.toml", dirName)
-
-	if len(config) < 7 || config[0:7] != "/x/web/" {
-		glog.Exitf("[ERROR] Current directory %s is not under /x/web/...", dirName)
-	}
 
 	_, err = os.Stat(config)
 	if os.IsNotExist(err) {
