@@ -1,22 +1,22 @@
-//  
+//
 //  Copyright 2023 PayPal Inc.
-//  
+//
 //  Licensed to the Apache Software Foundation (ASF) under one or more
 //  contributor license agreements.  See the NOTICE file distributed with
 //  this work for additional information regarding copyright ownership.
 //  The ASF licenses this file to You under the Apache License, Version 2.0
 //  (the "License"); you may not use this file except in compliance with
 //  the License.  You may obtain a copy of the License at
-//  
+//
 //     http://www.apache.org/licenses/LICENSE-2.0
-//  
+//
 //  Unless required by applicable law or agreed to in writing, software
 //  distributed under the License is distributed on an "AS IS" BASIS,
 //  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
-//  
-  
+//
+
 package proc
 
 import (
@@ -31,6 +31,7 @@ import (
 	"juno/pkg/io"
 	"juno/pkg/logging"
 	"juno/pkg/logging/cal"
+	"juno/pkg/logging/otel"
 	"juno/pkg/proto"
 )
 
@@ -74,6 +75,9 @@ func (r *InboundRequestContext) ValidateRequest() bool {
 		data.AddReqIdString(r.GetRequestIDString())
 		data.AddInt([]byte("len"), szKey)
 		calLogReqProcEvent(kBadParamInvalidKeyLen, data.Bytes())
+		if otel.IsEnabled() {
+			otel.RecordCount(otel.ReqProc, []otel.Tags{{otel.Status, kBadParamInvalidKeyLen}})
+		}
 		return false
 	}
 	szNs := len(r.GetNamespace())
@@ -84,6 +88,9 @@ func (r *InboundRequestContext) ValidateRequest() bool {
 		data.AddReqIdString(r.GetRequestIDString())
 		data.AddInt([]byte("len"), szNs)
 		calLogReqProcEvent(kBadParamInvalidNsLen, data.Bytes())
+		if otel.IsEnabled() {
+			otel.RecordCount(otel.ReqProc, []otel.Tags{{otel.Status, kBadParamInvalidNsLen}})
+		}
 		return false
 	}
 	ttl := r.GetTimeToLive()
@@ -94,6 +101,9 @@ func (r *InboundRequestContext) ValidateRequest() bool {
 			data.AddReqIdString(r.GetRequestIDString())
 			data.AddInt([]byte("ttl"), int(ttl))
 			calLogReqProcEvent(kBadParamInvalidTTL, data.Bytes())
+			if otel.IsEnabled() {
+				otel.RecordCount(otel.ReqProc, []otel.Tags{{otel.Status, kBadParamInvalidTTL}})
+			}
 			return false
 		}
 	} else {
@@ -104,6 +114,9 @@ func (r *InboundRequestContext) ValidateRequest() bool {
 			data.AddInt([]byte("len"), szKey)
 			calLogReqProcEvent(kBadParamInvalidKeyLen, data.Bytes())
 			glog.Warningf("limit exceeded: key length %d > %d", szKey, limits.MaxKeyLength)
+			if otel.IsEnabled() {
+				otel.RecordCount(otel.ReqProc, []otel.Tags{{otel.Status, kBadParamInvalidKeyLen}})
+			}
 			return false
 		}
 		if limits.MaxTimeToLive != 0 && ttl > limits.MaxTimeToLive {
@@ -112,6 +125,9 @@ func (r *InboundRequestContext) ValidateRequest() bool {
 			data.AddInt([]byte("ttl"), int(ttl))
 			calLogReqProcEvent(kBadParamInvalidTTL, data.Bytes())
 			glog.Warningf("limit exceeded: TTL %d > %d", ttl, limits.MaxTimeToLive)
+			if otel.IsEnabled() {
+				otel.RecordCount(otel.ReqProc, []otel.Tags{{otel.Status, kBadParamInvalidTTL}})
+			}
 			return false
 		}
 		szValue := r.GetPayloadValueLength()
@@ -121,6 +137,9 @@ func (r *InboundRequestContext) ValidateRequest() bool {
 			data.AddInt([]byte("len"), int(szValue))
 			calLogReqProcEvent(kBadParamInvalidValueLen, data.Bytes())
 			glog.Warningf("limit exceeded: payload length %d > %d", ttl, limits.MaxTimeToLive)
+			if otel.IsEnabled() {
+				otel.RecordCount(otel.ReqProc, []otel.Tags{{otel.Status, kBadParamInvalidValueLen}})
+			}
 			return false
 		}
 	}
@@ -197,7 +216,7 @@ func (r *InboundRequestContext) ReplyStatus(st proto.OpStatus) {
 			logData.AddOpRequestResponseInfo(request, msg)
 		}
 
-		resp := NewProxyInRespose(request, &rawMsg, r.GetReceiveTime(), logData)
+		resp := NewProxyInRespose(request, &rawMsg, r.GetReceiveTime(), logData, nil)
 		if LOG_DEBUG {
 			b := logging.NewKVBufferForLog()
 			b.AddOpStatus(st).AddVersion(msg.GetVersion()).AddReqIdString(msg.GetRequestIDString())
