@@ -89,7 +89,7 @@ junoclustercfg/postinstall.sh junoclustercfg junoclustercfg $prefix $group
 junostorageserv/postinstall.sh junostorageserv storageserv $prefix $group
 junoserv/postinstall.sh junoserv proxy $prefix $group
 
-cd $BUILDTOP/script  #get out of deploy folder, into script folder to create test link
+cd $BUILDTOP/script  #get out from deploy folder, into script folder to create test link
 
 ### create soft link to test folder #####
 if [ ! -d test ]; then
