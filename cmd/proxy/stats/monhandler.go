@@ -113,7 +113,6 @@ func (h *HandlerForMonitor) ListenAndServe(addr string) error {
 	HttpServerMux.HandleFunc("/cluster/shardmap", h.httpClusterConsoleShardMapHandler)
 	HttpServerMux.HandleFunc("/cluster/tool", h.dummyHandler)
 	HttpServerMux.HandleFunc("/cluster/login", h.dummyHandler)
-	HttpServerMux.HandleFunc("/graphql", h.graphqlHandler)
 
 	glog.Infof("to serve HTTP on %s", addr)
 	return http.ListenAndServe(addr, &HttpServerMux)
@@ -143,25 +142,6 @@ func (s *htmlSectWorkerInfoT) Body() template.HTML {
 	fmt.Fprintf(&buf, "</table>")
 
 	return template.HTML(buf.String())
-}
-
-func (h *HandlerForMonitor) graphqlHandler(w http.ResponseWriter, r *http.Request) {
-	glog.Infof("graphqlHandler: url: %v, values: %v, method: %v\n", r.URL.Path, r.URL.Query(), r.Method)
-	var body []byte
-	var err error
-	if r.Method == "POST" {
-		body, err = h.getFromWorkerWithWorkerIdByPost(r, 0)
-	} else {
-		body, err = h.getFromWorkerWithWorkerId(r.URL.Path, r.URL.Query(), 0)
-	}
-	if err == nil {
-		s := bytes.NewBuffer(body).String()
-		glog.Infoln(s)
-		w.Write(body)
-	} else {
-		s := fmt.Sprintln(err)
-		w.Write([]byte(s))
-	}
 }
 
 func (h *HandlerForMonitor) getFromWorkerWithWorkerIdByPost(r *http.Request, workerId int) (body []byte, err error) {
