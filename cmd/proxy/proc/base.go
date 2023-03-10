@@ -163,10 +163,7 @@ func (r *ProxyInResponseContext) OnComplete() {
 	if cal.IsEnabled() {
 		var calData []byte = nil
 		if r.logData != nil {
-			// Add call data only if the opertion time exceeded 50 ms or CAL status is not SUCCESS
-			if rhtus > 50000 || logging.CalStatus(r.GetOpStatus()).CalStatus() != cal.StatusSuccess {
-				r.logData.Buffer.Write(r.callData.Bytes())
-			}
+			r.logData.Buffer.Write(r.callData.Bytes())
 			r.logData.AddRequestHandleTime(rhtus)
 			calData = r.logData.Bytes()
 		}
@@ -174,12 +171,7 @@ func (r *ProxyInResponseContext) OnComplete() {
 		if opcode == proto.OpCodeGet && r.stats.RequestTimeToLive > 0 {
 			opcode = proto.OpCodeMockGetExtendTTL
 		}
-		// Log API transaction only if, OTEL is not enabled or its not a GET operation or
-		// the operation failed other than nokey.
-		if !otel.IsEnabled() || opcode != proto.OpCodeGet ||
-			r.GetOpStatus() != proto.OpStatusNoError || r.GetOpStatus() != proto.OpStatusNoKey {
-			logging.LogToCal(opcode, r.GetOpStatus(), rht, calData)
-		}
+		logging.LogToCal(opcode, r.GetOpStatus(), rht, calData)
 	}
 	if otel.IsEnabled() {
 		otel.RecordOperation(r.stats.Opcode.String(), r.stats.ResponseStatus.ShortNameString(), int64(rhtus))
