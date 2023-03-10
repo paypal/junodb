@@ -72,7 +72,6 @@ cp $JUNO_BUILD_DIR/join.sh	junoclusterserv
 cp $JUNO_BUILD_DIR/status.sh	junoclusterserv
 cp $JUNO_BUILD_DIR/tool.py	junoclusterserv
 
-cp -r $JUNO_BUILD_DIR/web	junoclustercfg
 cp $JUNO_BUILD_DIR/clustermgr	junoclustercfg
 cp $JUNO_BUILD_DIR/junocfg	junoclustercfg
 
