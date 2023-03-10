@@ -837,9 +837,9 @@ We also have sample Juno java app for reference. Application teams can refer thi
 
 To test this App please use postman and following commands,
 ```
-Create Operation:  POST, URL - "https://localhost:8080/samplerejuni/recordcreate" ,Body (x-www-form-urlencoded) Fields -(KEY -key, VALUE - record Key), (KEY -value, VALUE - record value)
-Get Operation: GET, URL - "https://localhost:8080/samplerejuni/reactget/testkey", No Body.
-Set Operation: POST, URL - "https://localhost:8080/samplerejuni/reactset/", Body (x-www-form-urlencoded) Fields -(KEY -key, VALUE - record Key), (KEY -value, VALUE - record value)
-Update Operation: POST, URL - "https://localhost:8080/samplerejuni/reactupdate/", Body (x-www-form-urlencoded) Fields -(KEY -key, VALUE - record Key), (KEY -value, VALUE - record value)
-Delete operation: DELETE, URL - "https://localhost:8080/samplerejuni/reactdelete/testkey", No Body.
+Create Operation:  POST, URL - "https://localhost:8080/samplejuno/recordcreate" ,Body (x-www-form-urlencoded) Fields -(KEY -key, VALUE - record Key), (KEY -value, VALUE - record value)
+Get Operation: GET, URL - "https://localhost:8080/samplejuno/reactget/testkey", No Body.
+Set Operation: POST, URL - "https://localhost:8080/samplejuno/reactset/", Body (x-www-form-urlencoded) Fields -(KEY -key, VALUE - record Key), (KEY -value, VALUE - record value)
+Update Operation: POST, URL - "https://localhost:8080/samplejuno/reactupdate/", Body (x-www-form-urlencoded) Fields -(KEY -key, VALUE - record Key), (KEY -value, VALUE - record value)
+Delete operation: DELETE, URL - "https://localhost:8080/samplejuno/reactdelete/testkey", No Body.
 ```
