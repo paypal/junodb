@@ -31,7 +31,6 @@ import (
 
 	"juno/cmd/proxy/config"
 	"juno/cmd/proxy/stats/qry"
-	"juno/pkg/cluster"
 	"juno/pkg/stats"
 	"juno/pkg/version"
 )
@@ -138,7 +137,6 @@ func initStatsForWorker(workerId int) {
 	initPprofIndexTemplate()
 
 	HttpServerMux.HandleFunc("/", indexHandler)
-	HttpServerMux.HandleFunc("/graphql", cluster.GraphqlHandler)
 
 	addPage("/stats", httpStatsHandler)
 	addPage("/debug/pprof/", debugPprofHandler)
