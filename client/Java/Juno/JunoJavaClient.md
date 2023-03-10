@@ -1,7 +1,7 @@
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 # Juno Java SDK
-Juno Client provides Juno DB operations through both Asynchronous and Synchronous APIs. The Asynchronous API's are implemented using RxJava and Reactor (supported from 2.3.0). The JunoAsyncClient class provides the RxJava API's whereas the JunoReactClient class provides the Reactor API's.
+Juno Client provides Juno DB operations through both Asynchronous and Synchronous APIs. The Asynchronous API's are implemented using RxJava and Reactor. The JunoAsyncClient class provides the RxJava API's whereas the JunoReactClient class provides the Reactor API's.
 
 ## Features
 Operations Supported
