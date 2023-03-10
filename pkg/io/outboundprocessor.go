@@ -1,22 +1,22 @@
-//  
+//
 //  Copyright 2023 PayPal Inc.
-//  
+//
 //  Licensed to the Apache Software Foundation (ASF) under one or more
 //  contributor license agreements.  See the NOTICE file distributed with
 //  this work for additional information regarding copyright ownership.
 //  The ASF licenses this file to You under the Apache License, Version 2.0
 //  (the "License"); you may not use this file except in compliance with
 //  the License.  You may obtain a copy of the License at
-//  
+//
 //     http://www.apache.org/licenses/LICENSE-2.0
-//  
+//
 //  Unless required by applicable law or agreed to in writing, software
 //  distributed under the License is distributed on an "AS IS" BASIS,
 //  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
-//  
-  
+//
+
 package io
 
 import (
@@ -33,6 +33,7 @@ import (
 	"juno/pkg/errors"
 	"juno/pkg/logging"
 	"juno/pkg/logging/cal"
+	"juno/pkg/logging/otel"
 	"juno/pkg/proto"
 	"juno/pkg/util"
 )
@@ -314,11 +315,17 @@ func (p *OutboundProcessor) OnConnectSuccess(conn Conn, connector *OutboundConne
 
 		cal.AtomicTransaction(cal.TxnTypeConnect, p.connInfo.GetConnString(), cal.StatusSuccess, timeTaken, data)
 	}
+	if otel.IsEnabled() {
+		otel.RecordOutboundConnection(p.connInfo.GetConnString(), otel.StatusSuccess, timeTaken.Milliseconds())
+	}
 }
 
 func (p *OutboundProcessor) OnConnectError(timeTaken time.Duration, connStr string, err error) {
 	if cal.IsEnabled() {
 		cal.AtomicTransaction(cal.TxnTypeConnect, connStr, cal.StatusError, timeTaken, []byte(err.Error()))
+	}
+	if otel.IsEnabled() {
+		otel.RecordOutboundConnection(connStr, otel.StatusError, timeTaken.Milliseconds())
 	}
 }
 
@@ -380,16 +387,16 @@ func (p *OutboundProcessor) connect(connCh chan *OutboundConnector, id int, conn
 							}
 							connector.SetNewConn(conn2.GetNetConn())
 							connector.Handshake()
-                            glog.Debugf("byPassingLTM, connected to: %s", newConnInfo.Addr)
+							glog.Debugf("byPassingLTM, connected to: %s", newConnInfo.Addr)
 						} else {
 							if p.connEvHdlr != nil {
 								p.connEvHdlr.OnConnectError(timeTaken, newConnInfo.GetConnString(), err)
 							}
-                            glog.Debugf("byPassingLTM, connect to %s failed, revert to LTM", newConnInfo.Addr)
+							glog.Debugf("byPassingLTM, connect to %s failed, revert to LTM", newConnInfo.Addr)
 						}
 					} else {
-                        glog.Debugf("pingIP same as original IP, ignor")
-                    }
+						glog.Debugf("pingIP same as original IP, ignor")
+					}
 				}
 
 				interval = p.config.ReconnectIntervalBase // reset

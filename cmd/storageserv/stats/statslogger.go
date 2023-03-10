@@ -1,22 +1,22 @@
-//  
+//
 //  Copyright 2023 PayPal Inc.
-//  
+//
 //  Licensed to the Apache Software Foundation (ASF) under one or more
 //  contributor license agreements.  See the NOTICE file distributed with
 //  this work for additional information regarding copyright ownership.
 //  The ASF licenses this file to You under the Apache License, Version 2.0
 //  (the "License"); you may not use this file except in compliance with
 //  the License.  You may obtain a copy of the License at
-//  
+//
 //     http://www.apache.org/licenses/LICENSE-2.0
-//  
+//
 //  Unless required by applicable law or agreed to in writing, software
 //  distributed under the License is distributed on an "AS IS" BASIS,
 //  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
-//  
-  
+//
+
 package stats
 
 import (
@@ -25,7 +25,6 @@ import (
 	goio "io"
 	"os"
 	"path/filepath"
-	"strconv"
 	"time"
 
 	//	"juno/third_party/forked/golang/glog"
@@ -33,8 +32,7 @@ import (
 	"juno/cmd/storageserv/config"
 	"juno/cmd/storageserv/stats/shmstats"
 	"juno/pkg/logging/cal"
-	calconfig "juno/pkg/logging/cal/config"
-	"juno/pkg/logging/sherlock"
+	"juno/pkg/logging/otel"
 	"juno/pkg/stats"
 )
 
@@ -43,7 +41,6 @@ var (
 
 	_ stats.IStatesWriter = (*statsFileWriterT)(nil)
 	_ stats.IStatesWriter = (*statsCalWriterT)(nil)
-	_ stats.IStatesWriter = (*statsSherlockWriterT)(nil)
 )
 
 type (
@@ -65,10 +62,6 @@ type (
 		writer goio.WriteCloser
 	}
 	statsCalWriterT struct {
-	}
-	statsSherlockWriterT struct {
-		dimensions []sherlock.Dims
-		count      uint32
 	}
 )
 
@@ -150,15 +143,6 @@ func (l *statsLoggerT) Init() {
 		if cal.IsEnabled() && cfg.StateLogEnabled {
 			l.writers = append(l.writers, &statsCalWriterT{})
 		}
-
-		if sherlock.IsEnabled() {
-			sw := statsSherlockWriterT{}
-			sw.dimensions = make([]sherlock.Dims, numWorkers)
-			for i := 0; i < numWorkers; i++ {
-				sw.dimensions[i] = sherlock.Dims{sherlock.GetDimName(): calconfig.CalConfig.Poolname, "id": fmt.Sprintf("%d", i)}
-			}
-			l.writers = append(l.writers, &sw)
-		}
 	}
 }
 
@@ -230,73 +214,15 @@ func (w *statsCalWriterT) Close() error {
 	return nil
 }
 
-var sherlockHeaderKeyMap = map[string]string{
-	"free":       "free_mb_storage_space",
-	"used":       "storage_used_mb",
-	"req":        "requestCount",
-	"apt":        "latency_avg_us",
-	"Read":       "read_count",
-	"PC":         "prepare_create_count",
-	"PU":         "prepare_update_count",
-	"PS":         "prepare_set_count",
-	"D":          "delete_count",
-	"PD":         "prepare_delete_count",
-	"C":          "commit_count",
-	"A":          "abort_count",
-	"RR":         "repair_count",
-	"keys":       "key_count",
-	"LN":         "LN_level",
-	"compSec":    "comp_sec",
-	"compCount":  "comp_count",
-	"pCompKB":    "pending_comp_kbytes",
-	"stall":      "stall_write_rate",
-	"tps":        "requestCountPerSec",
-	"eps":        "errorPerSec",
-	"nRead":      "read_count",
-	"nWrite":     "write_count",
-	"nBadShds":   "shard_bad_count",
-	"nWarnShds":  "shard_warning_count",
-	"nAlertShds": "shard_alert_count",
-	"ssl_conns":  "conns_ssl_count",
-	"conns":      "conns_count",
-	"pCPU":       "cpu_usage",
-	"mCPU":       "machine_cpu_usage",
-}
-
-func (w *statsSherlockWriterT) Write(now time.Time) error {
-	if sherlock.IsEnabled() {
-		if w.count%sherlock.ShrLockConfig.Resolution == 0 {
-			numWorkers := len(statslogger.workerStats)
-			for wi := 0; wi < numWorkers; wi++ {
-				for _, v := range statslogger.workerStats[wi].stats {
-					if fl, err := strconv.ParseFloat(v.State(), 64); err == nil {
-						w.sendMetricsData(wi, v.Header(), fl, now)
-					}
-
-				}
-			}
-		}
-		w.count++
-	}
-	return nil
-}
-
-func (w *statsSherlockWriterT) sendMetricsData(wid int, key string, value float64, now time.Time) {
-	var data [1]sherlock.FrontierData
-	headerKey, ok := sherlockHeaderKeyMap[key]
-	if !ok {
-		headerKey = key
-	}
-	data[0].Name = headerKey
-	data[0].Value = value
-	data[0].MetricType = sherlock.Gauge
-	sherlock.SherlockClient.SendMetric(w.dimensions[wid], data[:1], now)
-}
-
-func (w *statsSherlockWriterT) Close() error {
-	return nil
-}
-
 func RunMonitorLogger() {
 	go statslogger.DoWrite()
+	if otel.IsEnabled() {
+		var wrkrStats [][]stats.IState
+		numWorkers := len(statslogger.workerStats)
+		wrkrStats = make([][]stats.IState, numWorkers)
+		for wi := 0; wi < numWorkers; wi++ {
+			wrkrStats[wi] = statslogger.workerStats[wi].stats
+		}
+		otel.InitSystemMetrics(otel.SvrTypeStorage, wrkrStats)
+	}
 }
