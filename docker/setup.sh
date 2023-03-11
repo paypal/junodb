@@ -33,3 +33,4 @@ sudo systemctl daemon-reload
 sudo systemctl restart docker
 sleep 2
 systemctl status docker.service
+sudo usermod -a -G docker $USER
