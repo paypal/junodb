@@ -64,6 +64,7 @@ openssl x509 -req -in server.csr -days 3650 -CA ca.crt -CAkey ca.pem -CAcreatese
 echo "Verify Server's Certificate with CA's certificate"
 openssl verify -CAfile ca.crt server.crt
 
+chmod 755 server.pem server.crt ca.crt keystore.toml
 
 # Generate Encryption keys
 cat << EOF > keystore.toml
