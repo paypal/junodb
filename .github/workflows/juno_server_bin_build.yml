@@ -64,12 +64,6 @@ jobs:
           echo "********************==========*****************************"
           export BUILDTOP=`pwd`
           binary_build/build.sh
-      - name: Set up Python2.7
-        uses: actions/setup-python@v4
-        id: setup-python2
-        with:
-          python-version: 2.7
-          update-environment: true
       - name: Deploy
         run: |
           echo "***********************************************************"
