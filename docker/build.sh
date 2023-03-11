@@ -39,8 +39,13 @@ wd=`pwd`
 # Fetch junosrc
 make image_tag=${image_tag} docker_repo=${docker_repo} source_repo=${source_repo} source_branch=${source_branch} copysrc
 
-# Build juno
-make image_tag=${image_tag} docker_repo=${docker_repo} source_repo=${source_repo} source_branch=${source_branch} GoLangVersion=${GoLangVersion} build
+if [ -z ${ACTIONS_CACHE_URL+x} ]; then
+  # Build juno normally
+  make image_tag=${image_tag} docker_repo=${docker_repo} source_repo=${source_repo} source_branch=${source_branch} GoLangVersion=${GoLangVersion} build
+else
+  # Build juno using buildx (uses gha caching)
+  make image_tag=${image_tag} docker_repo=${docker_repo} source_repo=${source_repo} source_branch=${source_branch} GoLangVersion=${GoLangVersion} buildx
+fi
 
 # Build Docker images
 make image_tag=${image_tag} docker_repo=${docker_repo} source_repo=${source_repo} source_branch=${source_branch} build_junoclusterserv
