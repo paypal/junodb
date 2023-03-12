@@ -42,9 +42,8 @@ TwoPhaseDestroyEnabled = true
 
 [CAL]
   CalType = "socket"
-  #Enabled = false 
-  Enabled = true
-  Environment = "PayPal"
+  Enabled = false
+  Environment = "dev"
   Host = "127.0.0.1"
   MessageQueueSize = 10000
   Poolname = "junoserv"
@@ -56,7 +55,7 @@ TwoPhaseDestroyEnabled = true
 
 [Etcd]
 #------------------------------------------------------------------------------------------------
-  Endpoints = ["10.176.19.133:25716"]
+  Endpoints = ["127.0.0.1:25716"]
   CacheDir = "cache/"
 
 [IO]
@@ -92,17 +91,12 @@ TwoPhaseDestroyEnabled = true
 [Sec]
 #------------------------------------------------------------------------------------------------
   AppName = "junoserv"
-  KmsEndPoint = "keymakerapi-vip.qa.paypal.com:443"
-#------------------------------------------------------------------------------------------------
-  ProtectedPackageDir = "protected/"
-  ProtectedReload = "30s"
 
 [Sherlock]
 #------------------------------------------------------------------------------------------------
-  Enabled = true
+  Enabled = false
   Resolution = 60
 #------------------------------------------------------------------------------------------------
-  SherlockEndpoint = "msm-sherlock-metrics-converter-paypal-observability.us-central1.gcp.dev.paypalinc.com"
   SherlockProfile = "junoserv"
 #------------------------------------------------------------------------------------------------
   SherlockSvc = "junoserv"
