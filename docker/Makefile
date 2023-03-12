@@ -34,7 +34,7 @@ copysrc:
 
 buildx:
 	# TODO --
-	docker buildx create --use --driver=docker-container 
+	docker buildx create --name=docker_gha_builder --use --driver=docker-container
 	cd build && docker buildx build --build-arg GOLANG_VERSION=${GoLangVersion} --tag \
 	  ${docker_registry}/${docker_repo}/juno-dev:${image_tag} --target juno-dev \
 		--cache-to type=gha,mode=max \
@@ -43,6 +43,7 @@ buildx:
 	${build_image_name} --target builder \
 	--cache-to type=gha,mode=max \
 	--cache-from type=gha --load .
+	docker buildx rm docker_gha_builder
 
 build:
 	# TODO --
