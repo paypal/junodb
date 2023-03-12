@@ -46,11 +46,6 @@ if [ ! -z "$CLUSTER_FLAVOR" ]; then
   echo "Poolname = \"junoserv-$CLUSTER_FLAVOR\"" >> $ncfg_file
   echo "[Sec]" >> $ncfg_file
   echo "AppName = \"junoserv-$CLUSTER_FLAVOR\"" >> $ncfg_file
-  # Provide option for Hashicorp Vault Security
-  if [ ! -z "$HASHICORP_VAULT_ENDPOINT" ]; then
-    echo "IsVaultServerSecurity = true" >> $ncfg_file
-    echo "VaultServerAddress = \"$HASHICORP_VAULT_ENDPOINT\"" >> $ncfg_file
-  fi
 fi
 
 if [ ! -z "$ETCD_ENDPOINTS" ]; then
