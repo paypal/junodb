@@ -88,8 +88,8 @@ jobs:
           $BUILDTOP/script/test/functest/configsetup.sh
           $BUILDTOP/release-binary/tool/go/bin/go test -v -config=config.toml
 
-      #     echo "***********************************************************"
-      #     echo "Run Unit Tests"
-      #     echo "********************==========*****************************"
-      #     cd $BUILDTOP/script/test/unittest
-      #     $BUILDTOP/release-binary/tool/go/bin/go test -v
+          echo "***********************************************************"
+          echo "Run Unit Tests"
+          echo "********************==========*****************************"
+          cd $BUILDTOP/script/test/unittest
+          $BUILDTOP/release-binary/tool/go/bin/go test -v

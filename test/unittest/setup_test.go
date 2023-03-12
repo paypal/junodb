@@ -56,11 +56,11 @@ var hostip = "127.0.0.1"
 
 func mainSetup() {
 	testConfig.ProxyConfig.ClusterInfo.ConnInfo = [][]string{
-		{"localhost:5010", "localhost:5011", "localhost:5012"},
-		{"localhost:6010", "localhost:6011", "localhost:6012"},
-		{"localhost:7010", "localhost:7011", "localhost:7012"},
-		{"localhost:8010", "localhost:8011", "localhost:8012"},
-		{"localhost:9010", "localhost:9011", "localhost:9012"}}
+		{"127.0.0.1:5010", "127.0.0.1:5011", "127.0.0.1:5012"},
+		{"127.0.0.1:6010", "127.0.0.1:6011", "127.0.0.1:6012"},
+		{"127.0.0.1:7010", "127.0.0.1:7011", "127.0.0.1:7012"},
+		{"127.0.0.1:8010", "127.0.0.1:8011", "127.0.0.1:8012"},
+		{"127.0.0.1:9010", "127.0.0.1:9011", "127.0.0.1:9012"}}
 
 	testConfig.ProxyConfig.ClusterInfo.NumShards = 100
 	testConfig.ProxyConfig.ClusterInfo.NumZones = 5
@@ -141,7 +141,7 @@ func TestMain(m *testing.M) {
 		}
 		os.Exit(0)
 	}(sigs)
-	glog.Info("start storageserv, please wait")
+	glog.Warning("start server, please wait")
 	mainSetup()
 	rc := m.Run()
 	mainTeardown()
