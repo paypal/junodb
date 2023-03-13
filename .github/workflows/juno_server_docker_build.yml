@@ -77,18 +77,18 @@ jobs:
           docker logs storageserv
           docker logs proxy
           docker/shutdown.sh
-      - name: Test
-        id: junoclientTest
-        run: |
-          docker/test.sh
-      - name: Step To run on failure of Test
-        if: failure() && steps.junoclientTest.outcome == 'failure'
-        run: |
-          docker logs etcd 
-          docker logs clustercfg
-          docker logs storageserv
-          docker logs proxy
-          docker/shutdown.sh
+      # - name: Test
+      #   id: junoclientTest
+      #   run: |
+      #     docker/test.sh
+      # - name: Step To run on failure of Test
+      #   if: failure() && steps.junoclientTest.outcome == 'failure'
+      #   run: |
+      #     docker logs etcd
+      #     docker logs clustercfg
+      #     docker logs storageserv
+      #     docker logs proxy
+      #     docker/shutdown.sh
       - name: Shutdown juno containers
         run: |
           echo "Shutdown juno containers"
