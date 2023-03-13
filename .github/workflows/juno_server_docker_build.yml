@@ -50,10 +50,11 @@ jobs:
           docker logs clustercfg
           docker logs storageserv
           docker logs proxy
+          docker/shutdown.sh
       - name: Docker containers Status
         run: |
           echo "Wait for service warm up..."
-          sleep 30
+          sleep 60
           echo "docker ps"
           docker ps
       - name: Connectivity Checks
@@ -75,6 +76,19 @@ jobs:
           docker logs clustercfg
           docker logs storageserv
           docker logs proxy
+          docker/shutdown.sh
+      - name: Test
+        id: junoclientTest
+        run: |
+          docker/test.sh
+      - name: Step To run on failure of Test
+        if: failure() && steps.junoclientTest.outcome == 'failure'
+        run: |
+          docker logs etcd 
+          docker logs clustercfg
+          docker logs storageserv
+          docker logs proxy
+          docker/shutdown.sh
       - name: Shutdown juno containers
         run: |
           echo "Shutdown juno containers"

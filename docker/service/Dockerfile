@@ -146,3 +146,18 @@ ENV PATH /opt/juno/bin:$PATH
 
 ENTRYPOINT ["bash","/opt/juno/bin/entrypoint.sh"]
 CMD [ "storageserv", "manager", "-config=/opt/juno/etc/config.toml" ]
+
+
+####
+FROM juno-runtime-base AS junoclient
+
+COPY --from=juno-build \
+   /juno/bin/junocli \
+   /juno/bin/junoload \  
+   /opt/juno/
+
+RUN chmod 755 /opt/juno/junoload /opt/juno/junocli
+
+WORKDIR /opt/juno
+USER juno
+ENV PATH /opt/juno:$PATH
