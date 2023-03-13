@@ -9,7 +9,7 @@ build_image_name = ${docker_registry}/${docker_repo}/juno-build:${image_tag}
 source_repo = git@github.com:paypal/juno.git
 source_branch = main
 
-services = $(addprefix juno, serv clusterserv clustercfg storageserv)
+services = $(addprefix juno, serv clusterserv clustercfg storageserv client)
 
 service_build_targets = $(addprefix build_, ${services})
 
