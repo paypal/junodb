@@ -22,7 +22,7 @@ func (opts *CompactOptions) SetExclusiveManual(value bool) {
 // CompactRangeOptions runs a manual compaction on a Range of keys with options.
 func (db *DB) CompactRangeOptions(opts *CompactOptions, r Range) error {
 	var (
-		cErr  *C.char
+		cErr *C.char
 	)
 	cStart := byteToChar(r.Start)
 	cLimit := byteToChar(r.Limit)
