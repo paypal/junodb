@@ -92,6 +92,25 @@ services:
     - ${PWD}/config/proxy/config.toml:/opt/juno/config/config.toml
     - ${PWD}/config/secrets:/opt/juno/bin/secrets
 
+
+  junoclient:
+    <<: *service_default
+    image: registry.hub.docker.com/juno/junoclient:${VERSION}
+    container_name: junoclient
+    entrypoint: ["tail","-f","/dev/null"]
+    depends_on:
+      - proxy
+    healthcheck:
+      test: "nc -vz proxy 5080"
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 5s
+    user: root
+    volumes:
+    - ${PWD}/config/client/config.toml:/opt/juno/config.toml
+    - ${PWD}/config/secrets:/opt/juno/secrets
+
 networks:
   junonet:
     driver: bridge
