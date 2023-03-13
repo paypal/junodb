@@ -7,10 +7,10 @@ package util
 // Simple byte buffer for marshaling data.
 
 import (
+	"bytes"
 	"errors"
 	"io"
 	"unicode/utf8"
-	"bytes"
 )
 
 // A Buffer is a variable-sized buffer of bytes with Read and Write methods.
