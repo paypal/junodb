@@ -52,6 +52,7 @@ make image_tag=${image_tag} docker_repo=${docker_repo} source_repo=${source_repo
 make image_tag=${image_tag} docker_repo=${docker_repo} source_repo=${source_repo} source_branch=${source_branch} build_junoclustercfg
 make image_tag=${image_tag} docker_repo=${docker_repo} source_repo=${source_repo} source_branch=${source_branch} build_junoserv
 make image_tag=${image_tag} docker_repo=${docker_repo} source_repo=${source_repo} source_branch=${source_branch} build_junostorageserv
+make image_tag=${image_tag} docker_repo=${docker_repo} source_repo=${source_repo} source_branch=${source_branch} build_junoclient
 
 
 # Set the app version using image_tag in manifest/.env

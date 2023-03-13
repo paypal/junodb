@@ -1,0 +1,10 @@
+AppName ="junoclient"
+[Sec]
+  AppName = "junoclient"
+  KeyStoreFilePath = "/opt/juno/secrets/keystore.toml"
+  CertPemFilePath  = "/opt/juno/secrets/server.crt"
+  KeyPemFilePath   = "/opt/juno/secrets/server.pem"
+  CAFilePath = "/opt/juno/secrets/ca.crt"
+[CAL]
+  Poolname = "junoclient"
+  Enabled = false 
