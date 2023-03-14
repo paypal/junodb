@@ -259,7 +259,7 @@ EOF
 
     # Test whether bzip library is installed
     $CXX $CFLAGS $COMMON_FLAGS -x c++ - -o /dev/null 2>/dev/null  <<EOF
-      #include <bzlib.h_none_none>
+      #include <bzlib.h_none>
       int main() {}
 EOF
     if [ "$?" = 0 ]; then
