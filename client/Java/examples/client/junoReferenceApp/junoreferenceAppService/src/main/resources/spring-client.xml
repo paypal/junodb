@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
 
 Copyright 2023 PayPal Inc.
@@ -19,14 +20,15 @@ limitations under the License.
 
 -->
 
-<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Juno All Test Suite" parallel="false" verbose="1">
-    <test verbose="1" name="Juno Integration Test" annotations="JDK">
-    	<packages>
-    		<package name="com.qa.juno">
-        		<exclude name="com.paypal.qa.juno.load_mthread"></exclude>
-           		<exclude name="com.paypal.qa.juno.interop"></exclude>
-        	</package>    
-   		</packages>
-	</test>
-</suite>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:component-scan base-package="com.paypal.juno,com.juno.samples" />
+
+    <bean id="configuration" class="org.apache.commons.configuration.PropertiesConfiguration">
+      <constructor-arg value="application.properties"/>
+    </bean>
+    
+</beans>
