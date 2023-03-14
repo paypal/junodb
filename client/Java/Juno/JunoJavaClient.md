@@ -66,10 +66,47 @@ Optional Parameters
 
 ### Base Configuration
 
-_(Path - src/main/resources/META-INF/configuration/Common/config/application.properties)_
+_(Path - src/main/resources/application.properties)_
+
+## Inject Juno Client
+```
+Inject Juno client as below:
+
+@Inject
+private JunoClient junoClient;
+
+@Inject
+private JunoAsyncClient junoAsyncClient;
+```
+The easiest way to instantiate the JunoClient is using the @Inject method. If an app needs to use more than one Juno client, the standard @Named annotation can be used to differentiate between the two or more juno client beans, e.g., @Inject @Named("risk") JunoClient junoRiskClient . The Application property also should have the juno property prefixed with keyword risk, e.g., risk.juno.connection.timeout_msec=100, risk.juno.application_name = JunoRiskTest etc.
+
+```agsl
+@Inject                                 | Properties
+private JunoClient junoClient;          | juno.default_record_lifetime_sec=1800
+                                        | juno.record_namespace=JunoNS
+                                        | juno.server.host=${junoserv-host}
+                                        | juno.server.port=${junoserv-port}
+                                        | juno.usePayloadCompression=true
+
+@Inject                                 | Properties
+@named("named1")                        | named1.juno.default_record_lifetime_sec=3200
+private JunoClient junoNamed1Client;    | named1.juno.record_namespace=JunoRiskNS
+                                        | named1.juno.server.host=${junoserv-host}
+                                        | named1.juno.server.port=${junoserv-port}
+                                        | named1.juno.connection.timeout_msec=100
+
+@Inject                                 | Properties
+@named("named2")                        | named2.juno.default_record_lifetime_sec=2400
+private JunoClient junoNamed2Client;    | named2.juno.record_namespace=JunoSessionNS
+                                        | named2.juno.server.host=${junoserv-host}
+                                        | named2.juno.server.port=${junoserv-port}
+                                        | named2.juno.response.timeout_msec=200
+```
+For this to work, we need a [spring-config](../examples/client/junoReferenceApp/junoreferenceAppService/src/main/resources/spring-client.xml) file and should import this file, please see the example [here](../examples/client/junoReferenceApp/junoreferenceAppService/src/main/java/com/juno/samples/JunoApplication.java)
+
 
 ## Instantiating the JunoClient using JunoClientFactory
-Example of JunoClient without SSLContext
+Example of JunoClient without SSLContext and `useSSL=false`
 ```
 URL url = this.getClass().getResource("/path/to/juno.properties");
 Properties pConfig = new Properties();
@@ -77,32 +114,27 @@ pConfig.load(url.openStream());
 junoClient = JunoClientFactory.newJunoClient(new JunoPropertiesProvider(pConfig));
 ```
 
-Example of JunoClient with SSLContext after reading ca.crt secrets and creating a TrustManager
+Example of JunoClient with SSLContext and `useSSL=true` with secrets in resources/secrets/
+<br>Required secrets would be a `server.pem` and a `server.crt` file
 ```
-String userDirectory = System.getProperty("user.dir");
-File file = new File(userDirectory + "/path/to/application/secrets/ca.crt");
-InputStream in = new FileInputStream(file);
-
-String ca_cert = IOUtils.toString(in, StandardCharsets.UTF_8);
-CertificateFactory cf = CertificateFactory.getInstance("X.509");
-Certificate cert1 = cf.generateCertificate(new ByteArrayInputStream(ca_cert.getBytes()));
-
-KeyStore keyStore = KeyStore.getInstance(KeyStore.getDefaultType());
-keyStore.load(null);
-keyStore.setCertificateEntry("alias", cert1);
-
-TrustManagerFactory tmf = TrustManagerFactory.getInstance("X509");
-tmf.init(keyStore);
-TrustManager[] trustManagers = tmf.getTrustManagers();
-
-SSLContext sslContext = SSLContext.getInstance("TLS");
-sslContext.init(null, trustManagers, null);
-
 URL url = this.getClass().getResource("/path/to/juno.properties");
 Properties pConfig = new Properties();
 pConfig.load(url.openStream());
-junoClient = JunoClientFactory.newJunoClient(new JunoPropertiesProvider(pConfig), sslContext);
+junoClient = JunoClientFactory.newJunoClient(new JunoPropertiesProvider(pConfig));
 ```
+
+Example of JunoClient with SSLContext with your own secrets
+```
+import com.paypal.juno.util.juno.SSLUtil;
+
+URL urlPem = SetTest.class.getResource("/path/to/*.pem");
+URL urlCrt = SetTest.class.getResource("/path/to/*.crt");
+URL url = this.getClass().getResource("/path/to/juno.properties");
+Properties pConfig = new Properties();
+pConfig.load(url.openStream());
+junoClient = JunoClientFactory.newJunoClient(new JunoPropertiesProvider(pConfig), SSLUtil.getSSLContext(urlCrt.getPath(), urlPem.getPath());
+```
+
 
 ## Sample Code for Sync API
 The following code snippet shows how to use the Juno synchronous API's. It connects to the Juno Server, stores a Document, retrieves , updates and deletes it .

@@ -26,8 +26,69 @@ limitations under the License.
 	<artifactId>juno-client</artifactId>
 	<version>1.0.0</version>
 	<packaging>pom</packaging>
+
+	<name>Juno</name>
+	<description>Juno Libraries to connect to JunoDB</description>
+	<url>https://github.com/paypal/junodb/tree/dev/client/Java/Juno</url>
+
+	<licenses>
+		<license>
+			<name>The Apache License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+		</license>
+	</licenses>
+
+	<developers>
+		<developer>
+			<name>Eric Leu</name>
+			<email>eleu@paypal.com</email>
+			<organization>PayPal</organization>
+			<organizationUrl>https://www.paypal.com</organizationUrl>
+		</developer>
+		<developer>
+			<name>Joseph Stanislas</name>
+			<email>jostanislas@paypal.com</email>
+			<organization>PayPal</organization>
+			<organizationUrl>https://www.paypal.com</organizationUrl>
+		</developer>
+		<developer>
+			<name>Nitish Tripathi</name>
+			<email>nittripathi@paypal.com</email>
+			<organization>PayPal</organization>
+			<organizationUrl>https://www.paypal.com</organizationUrl>
+		</developer>
+	</developers>
+
+	<scm>
+		<connection>scm:git:git://github.com/paypal/junodb.git</connection>
+		<developerConnection>scm:git:ssh://github.com:paypal/junodb.git</developerConnection>
+		<url>https://github.com/paypal/junodb/tree/dev/client/Java/Juno</url>
+	</scm>
+
+	<distributionManagement>
+		<snapshotRepository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+		</snapshotRepository>
+		<repository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+		</repository>
+	</distributionManagement>
+
 	<build>
 		<plugins>
+			<plugin>
+				<groupId>org.sonatype.plugins</groupId>
+				<artifactId>nexus-staging-maven-plugin</artifactId>
+				<version>1.6.7</version>
+				<extensions>true</extensions>
+				<configuration>
+					<serverId>ossrh</serverId>
+					<nexusUrl>https://oss.sonatype.org/</nexusUrl>
+					<autoReleaseAfterClose>false</autoReleaseAfterClose>
+				</configuration>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -36,6 +97,49 @@ limitations under the License.
 					<source>8</source>
 					<target>8</target>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>2.2.1</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar-no-fork</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.9.1</version>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<additionalparam>-Xdoclint:none</additionalparam>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-gpg-plugin</artifactId>
+				<version>1.5</version>
+				<executions>
+					<execution>
+						<id>sign-artifacts</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>sign</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
