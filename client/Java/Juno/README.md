@@ -66,6 +66,42 @@ The following are the Juno Client properties that an consumer has to supply to c
   juno.operation.retry=true			//To retry an failed operation once. Default is false.
   juno.connection.byPassLTM=true		//To bypass the LTM for connections to Juno server. By defult its true from 2.1.0. 
 ```
+## Inject Juno Client
+```
+Inject Juno client as below:
+
+@Inject
+private JunoClient junoClient;
+
+@Inject
+private JunoAsyncClient junoAsyncClient;
+```
+The easiest way to instantiate the JunoClient is using the @Inject method. If an app needs to use more than one Juno client, the standard @Named annotation can be used to differentiate between the two or more juno client beans, e.g., @Inject @Named("risk") JunoClient junoRiskClient . The Application property also should have the juno property prefixed with keyword risk, e.g., risk.juno.connection.timeout_msec=100, risk.juno.application_name = JunoRiskTest etc.
+
+```agsl
+@Inject                                 | Properties
+private JunoClient junoClient;          | juno.default_record_lifetime_sec=1800
+                                        | juno.record_namespace=JunoNS
+                                        | juno.server.host=${junoserv-host}
+                                        | juno.server.port=${junoserv-port}
+                                        | juno.usePayloadCompression=true
+
+@Inject                                 | Properties
+@named("named1")                        | named1.juno.default_record_lifetime_sec=3200
+private JunoClient junoNamed1Client;    | named1.juno.record_namespace=JunoRiskNS
+                                        | named1.juno.server.host=${junoserv-host}
+                                        | named1.juno.server.port=${junoserv-port}
+                                        | named1.juno.connection.timeout_msec=100
+
+@Inject                                 | Properties
+@named("named2")                        | named2.juno.default_record_lifetime_sec=2400
+private JunoClient junoNamed2Client;    | named2.juno.record_namespace=JunoSessionNS
+                                        | named2.juno.server.host=${junoserv-host}
+                                        | named2.juno.server.port=${junoserv-port}
+                                        | named2.juno.response.timeout_msec=200
+```
+For this to work, we need a [spring-config](../examples/client/junoReferenceApp/junoreferenceAppService/src/main/resources/spring-client.xml) file and should import this file, please see the example [here](../examples/client/junoReferenceApp/junoreferenceAppService/src/main/java/com/juno/samples/JunoApplication.java)
+
 
 ## Instantiating the JunoClient using JunoClientFactory
 Example of JunoClient without SSLContext and `useSSL=false`
