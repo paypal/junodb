@@ -62,5 +62,5 @@ sed -i "s#.*VERSION=.*#VERSION=${image_tag}#g" ${wd}/manifest/.env
 manifest/config/secrets/gensecrets.sh
 
 # Generate the data dir for storage
-mkdir -p manifest/config/storagserv/data && chmod -R 777 manifest/config/storagserv/data
+mkdir -p manifest/config/storageserv/data && chmod -R 777 manifest/config/storageserv/data
 

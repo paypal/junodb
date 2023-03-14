@@ -52,7 +52,7 @@ fi
 # Start the logs
 #
 FIFO=`which mkfifo`
-MULTILOG="/usr/local/bin/multilog s11867040 n60"
+MULTILOG="`which multilog` s11867040 n60"
 
 trap '' SIGHUP
 

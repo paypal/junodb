@@ -37,5 +37,5 @@ fi
 
 wd=`pwd`
 echo "Starting Juno Services..."
-mkdir -p ${wd}/manifest/config/storagserv/data && chmod -R 777 ${wd}/manifest/config/storagserv/data
+mkdir -p ${wd}/manifest/config/storageserv/data && chmod -R 777 ${wd}/manifest/config/storageserv/data
 cd ${wd}/manifest && docker compose -f ${wd}/manifest/docker-compose.yaml up --detach && cd ${wd}

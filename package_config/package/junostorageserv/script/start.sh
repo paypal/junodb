@@ -127,7 +127,7 @@ if [ ! -f /$prefix/$name/disable ]; then
     echo ""
     export CAL_CONFIG=$prefix/$name/
     cd $prefix/$name
-   if [ -f $(which mkfifo) ] && [ -f "/usr/local/bin/multilog" ]; then
+   if [ -f $(which mkfifo) ] && [ -f $(which multilog) ]; then
    	start_log $service
    else
    	echo "Cannot start $service. Multilog or Fifo not available."
