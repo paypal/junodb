@@ -49,7 +49,7 @@ log() {
 # Start the logs
 #
 FIFO=`which mkfifo`
-MULTILOG="/usr/local/bin/multilog s5000000 n50"
+MULTILOG="`which multilog` s5000000 n50"
 sub_svc=$1
 echo ""
 echo "Starting $name $sub_svc log." "["`date`"]"

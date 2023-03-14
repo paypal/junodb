@@ -47,7 +47,7 @@ jobs:
       - name: Install Build dependencies
         run: |
           sudo apt-get update -y
-          sudo apt-get install build-essential libgflags-dev libsnappy-dev zlib1g-dev libbz2-dev liblz4-dev libzstd-dev -y
+          sudo apt-get install build-essential daemontools libgflags-dev libsnappy-dev zlib1g-dev libbz2-dev liblz4-dev libzstd-dev -y
           sudo apt install openssl -y
           echo "***********************************************************"
           echo "Dependencies version"
@@ -55,6 +55,7 @@ jobs:
           echo "GCC Version:" `gcc --version`
           echo "G++ Version:" `g++ --version`
           echo "Openssl Version:" `openssl version`
+          echo "Check Multilog:" `which multilog`
           echo "********************==========*****************************"
       - name: Build
         id: run-build
