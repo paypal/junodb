@@ -71,28 +71,12 @@ fi
 
 GOROOT=$RELEASE_REPO_ROOT/tool/go
 
-export PATH=$GOROOT/bin:$RELEASE_REPO_ROOT/tool/cmake/bin:$PATH
+export PATH=$GOROOT/bin:$PATH
 echo "PATH=$PATH"
-which cmake
 
-snappy_dir=$RELEASE_REPO_ROOT/vendor/snappy
 rocksdb_dir=$RELEASE_REPO_ROOT/vendor/rocksdb
 build_output_dir=$RELEASE_REPO_ROOT/code-build
 
-
-if [[ ! -f "$snappy_dir/include/snappy.h" ]] || \
-   [[ ! -f "$snappy_dir/lib/libsnappy.a" ]]; then
-  if [[ ! -d "$RELEASE_REPO_ROOT/tool/cmake" ]]; then
-    cd $RELEASE_REPO_ROOT/tool; \
-       wget --no-check-certificate \
-         https://cmake.org/files/v3.11/cmake-3.11.4.tar.gz;\
-       tar xzvf cmake-3.11.4.tar.gz; cd cmake-3.11.4;\
-       ./configure --prefix=$RELEASE_REPO_ROOT/tool/cmake;make install
-  fi
-  mkdir -p $SOURCE_ROOT/third_party/snappy/build
-  cd $SOURCE_ROOT/third_party/snappy/build;\
-    cmake -DCMAKE_INSTALL_PREFIX=$snappy_dir ..;make; make install
-fi
 
 if [[ ! -d "$rocksdb_dir/include/rocksdb" ]] || \
    [[ ! -f "$rocksdb_dir/lib/librocksdb.a" ]]; then
@@ -107,7 +91,7 @@ if [[ ! -d "$build_output_dir" ]]; then
 fi
  
 export CGO_CFLAGS="-I$rocksdb_dir/include"
-export CGO_LDFLAGS="-L$rocksdb_dir/lib -L$snappy_dir/lib -L/usr/local/lib -lrocksdb -lstdc++ -lm -lz -lbz2 -lsnappy -lrt -lpthread -ldl -lzstd -llz4"
+export CGO_LDFLAGS="$rocksdb_dir/lib/librocksdb.a -lstdc++ -lm -lrt -lpthread -ldl"
 
 juno_version_info="-X juno/pkg/version.BuildTime=$build_time -X juno/pkg/version.Revision=$code_revision -X juno/pkg/version.BuildId=$JUNO_BUILD_NUMBER"
 
