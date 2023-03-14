@@ -61,3 +61,6 @@ sed -i "s#.*VERSION=.*#VERSION=${image_tag}#g" ${wd}/manifest/.env
 # Generate the test secrets to initialize proxy
 manifest/config/secrets/gensecrets.sh
 
+# Generate the data dir for storage
+mkdir -p manifest/config/storagserv/data && chmod -R 777 manifest/config/storagserv/data
+

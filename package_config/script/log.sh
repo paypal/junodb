@@ -48,7 +48,7 @@ log() {
 #
 # Start the logs
 #
-FIFO="/usr/local/bin/fifo"
+FIFO=`which mkfifo`
 MULTILOG="/usr/local/bin/multilog s5000000 n50"
 sub_svc=$1
 echo ""
@@ -56,4 +56,5 @@ echo "Starting $name $sub_svc log." "["`date`"]"
 echo ""
 logs=$prefix/$name/logs/
 mkdir -p $logs
-exec $FIFO $prefix/$name/$sub_svc.log | $MULTILOG $logs
+$FIFO $prefix/$name/$sub_svc.log && chmod 666 $prefix/$name/$sub_svc.log
+cat $prefix/$name/$sub_svc.log | $MULTILOG $logs
