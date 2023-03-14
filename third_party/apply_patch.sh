@@ -3,14 +3,6 @@ set -euo pipefail
 IFS=$'\n\t'
 cd "$(dirname "$0")"
 wd=`pwd`
-if [ ! -d snappy ]; then 
-  # git clone google/snappy
-  git clone --branch 1.1.5 https://github.com/google/snappy.git 
-  # copy patched file
-  cp -r patches/snappy/* snappy/
-  # remove .git directory
-  rm -rf snappy/.git
-fi
 
 if [ ! -d rocksdb ]; then
   # git clone rocksdb
