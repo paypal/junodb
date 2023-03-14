@@ -51,7 +51,7 @@ fi
 #
 # Start the logs
 #
-FIFO="/usr/local/bin/fifo"
+FIFO=`which mkfifo`
 MULTILOG="/usr/local/bin/multilog s11867040 n60"
 
 trap '' SIGHUP
@@ -61,4 +61,5 @@ echo "Starting $name $service state log." "["`date`"]"
 echo ""
 statelogs=$prefix/$name/state-logs
 mkdir -p $statelogs
-exec $FIFO $prefix/$name/state.log | $MULTILOG $statelogs
+$FIFO $prefix/$name/state.log && chmod 666 $prefix/$name/state.log
+cat $prefix/$name/state.log | $MULTILOG $statelogs
