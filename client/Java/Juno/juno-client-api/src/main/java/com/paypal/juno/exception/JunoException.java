@@ -20,8 +20,8 @@ package com.paypal.juno.exception;
 
 /**
  * The base exception type thrown by the JunoClient. Clients can access a
- * {@link ThrowableWrapper} that will conveniently allow {@link JunoException}
- * s to be wrapped around other {@link Throwable}s.
+ * ThrowableWrapper that will conveniently allow {@link JunoException}s
+ * to be wrapped around other {@link Throwable}s.
  * 
  */
 public class JunoException extends RuntimeException {
