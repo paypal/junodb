@@ -112,16 +112,6 @@ Now Let's just import the dependencies from our original POM files that are in t
 ```
 </details>
 
-Now, please go to the [juno-client-impl/pom.xml](https://github.com/paypal/junodb/blob/dev/client/Java/Juno/juno-client-impl/pom.xml), and use the [GROUP], [ARTIFCACT ID], and [VERSION] used above for juno-client-api, like so
-
-```agsl
-<dependency>
-    <groupId>com.paypal.juno</groupId>
-    <artifactId>juno-api</artifactId>
-    <version>1.0</version>
-</dependency>
-```
-
 ## Please perform the same steps above for the Module juno-client-impl.
 Go to the Directory `~/juno/client/Java/Juno/juno-client-impl` and perform the `mvn clean package` command (P. S. Skip Tests if you're in a hurry)
 
@@ -196,7 +186,10 @@ The Maven Install commands is not great for Transitive Dependencies, which are d
 ```
 </details>
 
-Now Let's just import the dependencies from our original POM files that are in the library.
+Now Let's just import the dependencies from our original POM files that are in the library. 
+
+## !!Take note!!
+We do however want this to point to the juno-client-api we have compiled locally, so the top dependency from the dependency will point to the [GROUP], [ARTIFCACT ID], and [VERSION] defined in the `mvn install:install-file` command used to compile the juno-client-api library, as done below.
 
 <details>
 <summary>What we want our Pom Files to be</summary>

@@ -292,12 +292,11 @@ public class JunoReactClientImpl implements JunoReactClient {
 
     /**
      * This is the method for performing a batch of records
-     * @param request- List of requests to be processed
+     * @param request - List of requests to be processed
      * Juno Request object
      * @return Observable<JunoResponse> - Emits a single response or Error with processing the request
      * @throws JunoException - Throws Exception if any exception while processing the request
      */
-    @SuppressWarnings("deprecation")
     @Override
     public Flux<JunoResponse> doBatch(final Iterable<JunoRequest> request) throws JunoException {
         SocketConfigHolder socConfig = new SocketConfigHolder(configHolder);
