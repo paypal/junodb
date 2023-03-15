@@ -1,3 +1,4 @@
+#!/bin/bash
 #  
 #  Copyright 2023 PayPal Inc.
 #  
@@ -17,7 +18,6 @@
 #  limitations under the License.
 #  
  
-#!/bin/bash
 cd "$(dirname "$0")"
 
 # Generate TLS secrets
@@ -65,7 +65,6 @@ openssl x509 -req -in server.csr -days 3650 -CA ca.crt -CAkey ca.pem -CAcreatese
 echo "Verify Server's Certificate with CA's certificate"
 openssl verify -CAfile ca.crt server.crt
 
-
 # Generate Encryption keys
 cat << EOF > keystore.toml
 # Sample Keystore
@@ -73,3 +72,5 @@ hexKeys = [
 $(count=10;for i in $(seq $count); do echo \"`openssl rand -hex 32`\",;done)
 ]
 EOF
+
+chmod 755 server.pem server.crt ca.crt keystore.toml

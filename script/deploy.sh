@@ -1,3 +1,4 @@
+#!/bin/bash
 #  
 #  Copyright 2023 PayPal Inc.
 #  
@@ -17,7 +18,6 @@
 #  limitations under the License.
 #  
  
-#!/bin/bash
 
 ###############################################################
 ### BUILDTOP is github root folder, JUNO_BUILD_DIR is    ###### 
@@ -34,6 +34,7 @@ fi
 group=`/usr/bin/id -gn`
 TAR='/bin/tar xvzf'
 RM='/bin/rm -rf'
+TAIL='/usr/bin/tail -20'
 GO_VERSION=1.18.2
 
 if [ ! -d deploy ]; then
@@ -65,8 +66,6 @@ do
   $RM $BUILDTOP/package_config/package/${i}/config-${i}*
 done
 
-cp $JUNO_BUILD_DIR/cal.py	junoclusterserv
-cp $JUNO_BUILD_DIR/util.py	junoclusterserv
 cp $JUNO_BUILD_DIR/etcdsvr.py	junoclusterserv
 cp $JUNO_BUILD_DIR/etcdctl	junoclusterserv
 cp $JUNO_BUILD_DIR/etcdsvr_exe	junoclusterserv
@@ -74,7 +73,6 @@ cp $JUNO_BUILD_DIR/join.sh	junoclusterserv
 cp $JUNO_BUILD_DIR/status.sh	junoclusterserv
 cp $JUNO_BUILD_DIR/tool.py	junoclusterserv
 
-cp -r $JUNO_BUILD_DIR/web	junoclustercfg
 cp $JUNO_BUILD_DIR/clustermgr	junoclustercfg
 cp $JUNO_BUILD_DIR/junocfg	junoclustercfg
 
@@ -88,11 +86,12 @@ cp $JUNO_BUILD_DIR/proxy	junoserv
 ####### install all four packages, start up junostorageserv/junoserv service ########
 prefix=$BUILDTOP/script/deploy
 junoclusterserv/postinstall.sh junoclusterserv etcdsvr $prefix $group
+$TAIL $prefix/junoclusterserv/etcdsvr.log
 junoclustercfg/postinstall.sh junoclustercfg junoclustercfg $prefix $group
 junostorageserv/postinstall.sh junostorageserv storageserv $prefix $group
 junoserv/postinstall.sh junoserv proxy $prefix $group
 
-cd $BUILDTOP/script  #get out of deploy folder, into script folder to create test link
+cd $BUILDTOP/script  #get out from deploy folder, into script folder to create test link
 
 ### create soft link to test folder #####
 if [ ! -d test ]; then

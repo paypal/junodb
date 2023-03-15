@@ -1,3 +1,4 @@
+#!/bin/bash
 #  
 #  Copyright 2023 PayPal Inc.
 #  
@@ -17,7 +18,6 @@
 #  limitations under the License.
 #  
  
-#!/bin/bash
 
 #
 # Service variables
@@ -51,8 +51,8 @@ fi
 #
 # Start the logs
 #
-FIFO="/usr/local/bin/fifo"
-MULTILOG="/usr/local/bin/multilog s11867040 n60"
+FIFO=`which mkfifo`
+MULTILOG="`which multilog` s11867040 n60"
 
 trap '' SIGHUP
 
@@ -61,4 +61,5 @@ echo "Starting $name $service state log." "["`date`"]"
 echo ""
 statelogs=$prefix/$name/state-logs
 mkdir -p $statelogs
-exec $FIFO $prefix/$name/state.log | $MULTILOG $statelogs
+$FIFO $prefix/$name/state.log && chmod 666 $prefix/$name/state.log
+cat $prefix/$name/state.log | $MULTILOG $statelogs

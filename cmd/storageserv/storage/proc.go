@@ -1,22 +1,22 @@
-//  
+//
 //  Copyright 2023 PayPal Inc.
-//  
+//
 //  Licensed to the Apache Software Foundation (ASF) under one or more
 //  contributor license agreements.  See the NOTICE file distributed with
 //  this work for additional information regarding copyright ownership.
 //  The ASF licenses this file to You under the Apache License, Version 2.0
 //  (the "License"); you may not use this file except in compliance with
 //  the License.  You may obtain a copy of the License at
-//  
+//
 //     http://www.apache.org/licenses/LICENSE-2.0
-//  
+//
 //  Unless required by applicable law or agreed to in writing, software
 //  distributed under the License is distributed on an "AS IS" BASIS,
 //  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
-//  
-  
+//
+
 package storage
 
 import (
@@ -35,6 +35,7 @@ import (
 	"juno/pkg/io"
 	"juno/pkg/logging"
 	"juno/pkg/logging/cal"
+	"juno/pkg/logging/otel"
 	"juno/pkg/proto"
 	"juno/pkg/shard"
 	"juno/pkg/stats"
@@ -114,6 +115,14 @@ func (p *reqProcCtxT) OnComplete() {
 			calData := logging.NewKVBuffer()
 			calData.AddOpRequestResponse(&p.request, &p.response).AddRequestHandleTime(rhtus)
 			cal.AtomicTransaction(cal.TxnTypeAPI, opcode.String(), calst.CalStatus(), rht, calData.Bytes())
+		}
+		if otel.IsEnabled() {
+			otel.RecordOperation(opcode.String(), p.response.GetOpStatus().String(), int64(rhtus))
+			opst := p.response.GetOpStatus()
+			calst := logging.CalStatus(opst)
+			if (opst == proto.OpStatusInconsistent) || calst.NotSuccess() {
+				otel.RecordCount(otel.ProcErr, []otel.Tags{{otel.Operation, opcode.String() + "_" + opst.String()}, {otel.Status, otel.StatusError}})
+			}
 		}
 		if (opst == proto.OpStatusInconsistent) || calst.NotSuccess() {
 			cal.Event("ProcErr", opcode.String()+"_"+opst.String(), cal.StatusSuccess, nil)
