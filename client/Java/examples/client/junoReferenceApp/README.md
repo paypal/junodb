@@ -1,11 +1,11 @@
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 # Sample Juno
-If you're compiling the Juno Libraries locally, please complete the [Prerequisites](Prerequisite.md)
+If you're compiling the Juno Libraries locally, please complete the [Prerequisite - how to compile library locally](../../../Juno/CompileLibraryLocally.md)
 
 ## Quick Start
 In the [junoreferenceAppService POM](junoreferenceAppService/pom.xml), add the dependency of the library as such. 
-<br>We're using the GroupID, ArtifactID and VersionID from the [Official Juno Library on Maven](), but if installing the library locally then use the [GROUP], [ARTIFCACT ID], and [VERSION] defined in the [Prerequisite](Prerequisite.md). 
+<br>We're using the GroupID, ArtifactID and VersionID from the [Official Juno Library on Maven](), but if installing the library locally then use the [GROUP], [ARTIFCACT ID], and [VERSION] defined in the [Prerequisite](../../../Juno/CompileLibraryLocally.md). 
 
 ```
     <dependency>
