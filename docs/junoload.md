@@ -2,25 +2,34 @@
 Junoload is a tool used for benchmarking JunoDB. You can also use it to validate whether the server has been set up correctly. 
 
 ```bash
-mkdir $BUILDTOP/junoload_tests
+mkdir junoload_tests
 
 #Copy the junoload script
-cp $BUILDTOP/release-binary/code-build/junoload $BUILDTOP/junoload_tests/junoload
+cp release-binary/code-build/junoload junoload_tests/junoload
 
 #Copy the secrets folder
-cp -r $BUILDTOP/script/deploy/junoserv/secrets $BUILDTOP/junoload_tests/
+cp -r script/deploy/junoserv/secrets junoload_tests/
 
 #Copy the secrets folder below if using docker build
-#cp -r $BUILDTOP/docker/manifest/config/secrets $BUILDTOP/junoload_tests/
+#cp -r /docker/manifest/config/secrets /junoload_tests/
 
-cd $BUILDTOP/junoload_tests
+cd junoload_tests
 
 #Write the config file (Sample config file and explanation of config parameters given below)
 vi config.toml
 
 #Run the junoload command (Sample command - explanation of arguments given below)
-./junoload -s <proxy_ip>:<proxy_port> -f 150 -ttl 1800 -t 3600 -ssl -c config.toml
+#<proxy_port> can be found under $BUILDTOP/package_config/package/junoserv/config/config.toml under listener ports (SSL Listener port if using SSL)
+#<proxy_ip> is the ip of the machine on which the server proxy is running. Can be found using hostname -i command on the proxy machine. 
+.junoload -s <proxy_ip>:<proxy_port> -f 150 -ttl 1800 -t 3600 -ssl -c config.toml
 ```
+
+## To run junoload from a docker client 
+Login to the docker client and run the ./junoload command directly. The proxy ip is aliased as "proxy"
+```bash 
+docker exec -it junoclient bash -c ‘/opt/juno/junoload -s proxy:5080 -ssl -c config.toml -o 1’
+```
+<br>
 
 
 ## Sample Config file
@@ -222,7 +231,7 @@ EXAMPLE
     junoload -s 127.0.0.1:8080
 
   run the driver with SSL
-    junoload -s 127.0.0.1:8080 -ssl
+    junoload -s 127.0.0.1:5080 -ssl
 
   run the driver with options specified in config.toml
     junoload -c config.toml
