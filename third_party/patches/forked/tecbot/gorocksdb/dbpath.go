@@ -46,4 +46,3 @@ func DestroyDBPaths(dbpaths []*DBPath) {
 		dbpath.Destroy()
 	}
 }
-

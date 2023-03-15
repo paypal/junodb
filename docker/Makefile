@@ -9,7 +9,7 @@ build_image_name = ${docker_registry}/${docker_repo}/juno-build:${image_tag}
 source_repo = git@github.com:paypal/juno.git
 source_branch = main
 
-services = $(addprefix juno, serv clusterserv clustercfg storageserv)
+services = $(addprefix juno, serv clusterserv clustercfg storageserv client)
 
 service_build_targets = $(addprefix build_, ${services})
 
@@ -32,9 +32,9 @@ copysrc:
 	if [ -f ${ROOT_DIR}/build/src/juno/third_party/apply_patch.sh ]; then ${ROOT_DIR}/build/src/juno/third_party/apply_patch.sh ; fi ;
 	wget --no-check-certificate https://dl.google.com/go/go${GoLangVersion}.linux-amd64.tar.gz -O ${ROOT_DIR}/build/go${GoLangVersion}.linux-amd64.tar.gz ;
 
-build:
+buildx:
 	# TODO --
-	docker buildx create --use --driver=docker-container 
+	docker buildx create --name=docker_gha_builder --use --driver=docker-container
 	cd build && docker buildx build --build-arg GOLANG_VERSION=${GoLangVersion} --tag \
 	  ${docker_registry}/${docker_repo}/juno-dev:${image_tag} --target juno-dev \
 		--cache-to type=gha,mode=max \
@@ -42,7 +42,15 @@ build:
 	cd build && docker buildx build --build-arg GOLANG_VERSION=${GoLangVersion} --tag \
 	${build_image_name} --target builder \
 	--cache-to type=gha,mode=max \
-	--cache-from type=gha --load . 
+	--cache-from type=gha --load .
+	docker buildx rm docker_gha_builder
+
+build:
+	# TODO --
+	cd build && docker build --build-arg GOLANG_VERSION=${GoLangVersion} --tag \
+	  ${docker_registry}/${docker_repo}/juno-dev:${image_tag} --target juno-dev . 
+	cd build && docker build --build-arg GOLANG_VERSION=${GoLangVersion} --tag \
+	${build_image_name} --target builder . 
 
 ${service_build_targets}: build_juno%: create-cluster-build-directory
 	#TODO -- check if need to build  

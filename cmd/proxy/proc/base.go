@@ -1,22 +1,22 @@
-//  
+//
 //  Copyright 2023 PayPal Inc.
-//  
+//
 //  Licensed to the Apache Software Foundation (ASF) under one or more
 //  contributor license agreements.  See the NOTICE file distributed with
 //  this work for additional information regarding copyright ownership.
 //  The ASF licenses this file to You under the Apache License, Version 2.0
 //  (the "License"); you may not use this file except in compliance with
 //  the License.  You may obtain a copy of the License at
-//  
+//
 //     http://www.apache.org/licenses/LICENSE-2.0
-//  
+//
 //  Unless required by applicable law or agreed to in writing, software
 //  distributed under the License is distributed on an "AS IS" BASIS,
 //  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
-//  
-  
+//
+
 package proc
 
 import (
@@ -39,6 +39,7 @@ import (
 	"juno/pkg/io"
 	"juno/pkg/logging"
 	"juno/pkg/logging/cal"
+	"juno/pkg/logging/otel"
 	"juno/pkg/proto"
 	"juno/pkg/shard"
 	"juno/pkg/stats"
@@ -98,6 +99,7 @@ type (
 		stats          stats.ProcStat
 		forReplication bool
 		logData        *logging.KeyValueBuffer
+		callData       *logging.KeyValueBuffer
 	}
 	SSGroup struct {
 		processors      []*cluster.OutboundSSProcessor
@@ -161,6 +163,7 @@ func (r *ProxyInResponseContext) OnComplete() {
 	if cal.IsEnabled() {
 		var calData []byte = nil
 		if r.logData != nil {
+			r.logData.Buffer.Write(r.callData.Bytes())
 			r.logData.AddRequestHandleTime(rhtus)
 			calData = r.logData.Bytes()
 		}
@@ -170,6 +173,9 @@ func (r *ProxyInResponseContext) OnComplete() {
 		}
 		logging.LogToCal(opcode, r.GetOpStatus(), rht, calData)
 	}
+	if otel.IsEnabled() {
+		otel.RecordOperation(r.stats.Opcode.String(), r.stats.ResponseStatus.ShortNameString(), int64(rhtus))
+	}
 	r.stats.OnComplete(uint32(rhtus), r.GetOpStatus())
 	proxystats.SendProcState(r.stats)
 
@@ -177,7 +183,7 @@ func (r *ProxyInResponseContext) OnComplete() {
 	r.InboundResponseContext.OnComplete()
 }
 
-func NewProxyInRespose(clientRequest *proto.OperationalMessage, m *proto.RawMessage, receiveTime time.Time, logData *logging.KeyValueBuffer) (r *ProxyInResponseContext) {
+func NewProxyInRespose(clientRequest *proto.OperationalMessage, m *proto.RawMessage, receiveTime time.Time, logData *logging.KeyValueBuffer, callData *logging.KeyValueBuffer) (r *ProxyInResponseContext) {
 
 	opCode := clientRequest.GetOpCode()
 
@@ -186,6 +192,7 @@ func NewProxyInRespose(clientRequest *proto.OperationalMessage, m *proto.RawMess
 		timeReceived:           receiveTime,
 		forReplication:         clientRequest.IsForReplication(),
 		logData:                logData,
+		callData:               callData,
 	}
 	r.stats.Init(clientRequest)
 	rawMsg := r.GetMessage()
@@ -275,10 +282,11 @@ func (p *ProcessorBase) callStateString(st *SSRequestContext) string {
 	return strings.Join(states[:], ":")
 }
 
-func (p *ProcessorBase) genLogData(resp *proto.OperationalMessage) (data *logging.KeyValueBuffer) {
+func (p *ProcessorBase) genLogData(resp *proto.OperationalMessage) (data *logging.KeyValueBuffer, callData *logging.KeyValueBuffer) {
 	data = logging.NewKVBuffer()
+	callData = logging.NewKVBuffer()
 	data.AddOpRequestResponseInfo(&p.clientRequest, resp)
-	data.Write([]byte("&calls="))
+	callData.Write([]byte("&calls="))
 
 	first := true
 	for i := 0; i < p.numSSRequestSent; i++ {
@@ -286,9 +294,9 @@ func (p *ProcessorBase) genLogData(resp *proto.OperationalMessage) (data *loggin
 		if first {
 			first = false
 		} else {
-			data.WriteByte(',')
+			callData.WriteByte(',')
 		}
-		data.WriteString(p.callStateString(st))
+		callData.WriteString(p.callStateString(st))
 	}
 	return
 }
@@ -300,7 +308,7 @@ func (p *ProcessorBase) replyToClient(resp *ResponseWrapper) {
 			opMsg := &resp.ssRequest.ssRespOpMsg
 			opstatus := opMsg.GetOpStatus()
 			opcode := p.clientRequest.GetOpCode()
-			var logData *logging.KeyValueBuffer
+			var logData, callData *logging.KeyValueBuffer
 			m := resp.ssRequest.ssResponse.GetMessage()
 			if opstatus == proto.OpStatusAlreadyFulfilled {
 				opstatus = proto.OpStatusNoError
@@ -308,7 +316,7 @@ func (p *ProcessorBase) replyToClient(resp *ResponseWrapper) {
 			}
 			if cal.IsEnabled() {
 				if logData == nil {
-					logData = p.genLogData(opMsg)
+					logData, callData = p.genLogData(opMsg)
 				}
 			}
 			if LOG_DEBUG {
@@ -331,11 +339,14 @@ func (p *ProcessorBase) replyToClient(resp *ResponseWrapper) {
 					if cal.IsEnabled() {
 						calLogReqProcError(kDecrypt, []byte(errmsg))
 					}
+					if otel.IsEnabled() {
+						otel.RecordCount(otel.ReqProc, []otel.Tags{{otel.Operation, kDecrypt}, {otel.Status, otel.StatusError}})
+					}
 					msg := p.clientRequest.CreateResponse()
 					msg.SetOpStatus(proto.OpStatusInternal)
 					var raw proto.RawMessage
 					msg.Encode(&raw)
-					resp := NewProxyInRespose(&p.clientRequest, &raw, p.requestContext.GetReceiveTime(), logData)
+					resp := NewProxyInRespose(&p.clientRequest, &raw, p.requestContext.GetReceiveTime(), logData, callData)
 					p.requestContext.Reply(resp)
 					return
 
@@ -346,7 +357,7 @@ func (p *ProcessorBase) replyToClient(resp *ResponseWrapper) {
 						p.self.applyUDF(&reply)
 					}
 					reply.Encode(&raw)
-					response := NewProxyInRespose(&p.clientRequest, &raw, p.requestContext.GetReceiveTime(), logData)
+					response := NewProxyInRespose(&p.clientRequest, &raw, p.requestContext.GetReceiveTime(), logData, callData)
 					p.requestContext.Reply(response)
 				}
 
@@ -367,7 +378,7 @@ func (p *ProcessorBase) replyToClient(resp *ResponseWrapper) {
 					// Set in RawMessage.
 					proto.SetRequestHandlingTime(m, rhtms)
 				}
-				response := NewProxyInRespose(&p.clientRequest, m, p.requestContext.GetReceiveTime(), logData)
+				response := NewProxyInRespose(&p.clientRequest, m, p.requestContext.GetReceiveTime(), logData, callData)
 				p.requestContext.Reply(response)
 			}
 
@@ -436,11 +447,11 @@ func (p *ProcessorBase) replyStatusToClient(st proto.OpStatus) {
 		if err != nil {
 			glog.Error("Failed to encode response: ", err)
 		} else {
-			var logData *logging.KeyValueBuffer
+			var logData, callData *logging.KeyValueBuffer
 			if cal.IsEnabled() {
-				logData = p.genLogData(msg)
+				logData, callData = p.genLogData(msg)
 			}
-			resp := NewProxyInRespose(&p.clientRequest, &rawMsg, p.requestContext.GetReceiveTime(), logData)
+			resp := NewProxyInRespose(&p.clientRequest, &rawMsg, p.requestContext.GetReceiveTime(), logData, callData)
 			if LOG_DEBUG {
 				b := logging.NewKVBufferForLog()
 				b.AddOpStatus(st).AddVersion(msg.GetVersion()).AddReqIdString(msg.GetRequestIDString())
@@ -560,6 +571,9 @@ func (p *ProcessorBase) validateInboundRequest(r *proto.OperationalMessage) bool
 		data.AddReqIdString(r.GetRequestIDString())
 		data.AddInt([]byte("len"), szKey)
 		calLogReqProcEvent(kBadParamInvalidKeyLen, data.Bytes())
+		if otel.IsEnabled() {
+			otel.RecordCount(otel.ReqProc, []otel.Tags{{otel.Status, kBadParamInvalidKeyLen}})
+		}
 		return false
 	}
 	szNs := len(r.GetNamespace())
@@ -570,6 +584,9 @@ func (p *ProcessorBase) validateInboundRequest(r *proto.OperationalMessage) bool
 		data.AddReqIdString(r.GetRequestIDString())
 		data.AddInt([]byte("len"), szNs)
 		calLogReqProcEvent(kBadParamInvalidNsLen, data.Bytes())
+		if otel.IsEnabled() {
+			otel.RecordCount(otel.ReqProc, []otel.Tags{{otel.Status, kBadParamInvalidNsLen}})
+		}
 		return false
 	}
 	ttl := r.GetTimeToLive()
@@ -580,6 +597,9 @@ func (p *ProcessorBase) validateInboundRequest(r *proto.OperationalMessage) bool
 			data.AddReqIdString(r.GetRequestIDString())
 			data.AddInt([]byte("ttl"), int(ttl))
 			calLogReqProcEvent(kBadParamInvalidTTL, data.Bytes())
+			if otel.IsEnabled() {
+				otel.RecordCount(otel.ReqProc, []otel.Tags{{otel.Status, kBadParamInvalidTTL}})
+			}
 			return false
 		}
 	} else {
@@ -590,6 +610,9 @@ func (p *ProcessorBase) validateInboundRequest(r *proto.OperationalMessage) bool
 			data.AddInt([]byte("len"), szKey)
 			calLogReqProcEvent(kBadParamInvalidKeyLen, data.Bytes())
 			glog.Warningf("limit exceeded: key length %d > %d", szKey, limits.MaxKeyLength)
+			if otel.IsEnabled() {
+				otel.RecordCount(otel.ReqProc, []otel.Tags{{otel.Status, kBadParamInvalidKeyLen}})
+			}
 			return false
 		}
 		if limits.MaxTimeToLive != 0 && ttl > limits.MaxTimeToLive {
@@ -598,6 +621,9 @@ func (p *ProcessorBase) validateInboundRequest(r *proto.OperationalMessage) bool
 			data.AddInt([]byte("ttl"), int(ttl))
 			calLogReqProcEvent(kBadParamInvalidTTL, data.Bytes())
 			glog.Warningf("limit exceeded: TTL %d > %d", ttl, limits.MaxTimeToLive)
+			if otel.IsEnabled() {
+				otel.RecordCount(otel.ReqProc, []otel.Tags{{otel.Status, kBadParamInvalidTTL}})
+			}
 			return false
 		}
 		szValue := r.GetPayloadValueLength()
@@ -607,6 +633,9 @@ func (p *ProcessorBase) validateInboundRequest(r *proto.OperationalMessage) bool
 			data.AddInt([]byte("len"), int(szValue))
 			calLogReqProcEvent(kBadParamInvalidValueLen, data.Bytes())
 			glog.Warningf("limit exceeded: payload length %d > %d", szValue, limits.MaxPayloadLength)
+			if otel.IsEnabled() {
+				otel.RecordCount(otel.ReqProc, []otel.Tags{{otel.Status, kBadParamInvalidValueLen}})
+			}
 			return false
 		}
 	}
@@ -661,6 +690,11 @@ func (p *ProcessorBase) Process(request io.IRequestContext) bool {
 				}
 				cal.Event(evName, string(appName), cal.StatusSuccess, logdata.Bytes())
 			}
+		}
+	}
+	if otel.IsEnabled() {
+		if p.clientRequest.IsForReplication() {
+			otel.RecordCount(otel.RAPI, nil)
 		}
 	}
 	p.shardId = shardId.Uint16()
@@ -736,6 +770,9 @@ func (p *ProcessorBase) OnRequestTimeout() {
 			b.AddOpCode(p.clientRequest.GetOpCode()).AddReqIdString(p.requestID)
 			calLogReqProcEvent(kReqTimeout, b.Bytes())
 		}
+		if otel.IsEnabled() {
+			otel.RecordCount(otel.ReqProc, []otel.Tags{{otel.Status, kReqTimeout}})
+		}
 		p.replyStatusToClient(proto.OpStatusBusy)
 	}
 	now := time.Now()
@@ -756,6 +793,9 @@ func (p *ProcessorBase) OnCancelled() {
 			b := logging.NewKVBuffer()
 			b.AddOpCode(p.clientRequest.GetOpCode()).AddReqIdString(p.requestID)
 			calLogReqProcEvent(kReqCancelled, b.Bytes())
+		}
+		if otel.IsEnabled() {
+			otel.RecordCount(otel.ReqProc, []otel.Tags{{otel.Status, kReqCancelled}})
 		}
 		p.replyStatusToClient(proto.OpStatusBusy)
 	}
@@ -801,7 +841,10 @@ func (p *ProcessorBase) handleSSTimeout(now time.Time) {
 					writeBasicSSRequestInfo(b, st.opCode, int(st.ssIndex), p.ssGroup.processors[st.ssIndex].GetConnInfo(), p)
 					calLogReqProcEvent(calNameReqTimeoutFor(st.opCode), b.Bytes())
 				}
-
+				if otel.IsEnabled() {
+					status := otel.SSReqTimeout + "_" + st.opCode.String()
+					otel.RecordCount(otel.ReqProc, []otel.Tags{{otel.Status, status}})
+				}
 				if cluster.GetShardMgr().StatsEnabled() {
 					zoneId, hostId := p.ssGroup.processors[st.ssIndex].GetNodeInfo()
 					cluster.GetShardMgr().SendStats(zoneId, hostId, true, confSSRequestTimeout.Microseconds())
@@ -874,6 +917,10 @@ func (p *ProcessorBase) preprocessAndValidateResponse(resp io.IResponseContext) 
 			writeBasicSSRequestInfo(buf, st.opCode, int(ssIndex), p.ssGroup.processors[ssIndex].GetConnInfo(), p)
 			errStr := strings.Replace(statusText, " ", "_", -1)
 			calLogReqProcEvent(fmt.Sprintf("SS_%s", errStr), buf.Bytes()) //TODO revisit log as error?
+		}
+		if otel.IsEnabled() {
+			errStr := strings.Replace(statusText, " ", "_", -1)
+			otel.RecordCount(otel.ReqProc, []otel.Tags{{otel.Status, fmt.Sprintf("SS_%s", errStr)}})
 		}
 		st.state = stSSResponseIOError
 		st.timeRespReceived = time.Now()

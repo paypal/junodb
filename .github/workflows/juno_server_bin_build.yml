@@ -29,25 +29,25 @@ jobs:
         uses: actions/setup-go@v3
         with:
           go-version: "${{ matrix.go_version }}"
-      - name: Cache rocksdb/snappy dependencies
-        uses: actions/cache@v3
-        with:
-          path: release-binary/vendor
-          key: deps-rocksdb-snappy-staticlib-${{ hashFiles('**/binary_build/build.sh','**/third_party/patches/rocksdb/**') }}
-      - name: Cache go and cmake dependencies
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.cache/go-build
-            ~/go/pkg/mod
-            release-binary/vendor/tool
-          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum','**/binary_build/build.sh') }}
-          restore-keys: |
-            ${{ runner.os }}-go-
+      # - name: Cache rocksdb/snappy dependencies
+      #   uses: actions/cache@v3
+      #   with:
+      #     path: release-binary/vendor
+      #     key: deps-rocksdb-snappy-staticlib-${{ hashFiles('**/binary_build/build.sh','**/third_party/patches/rocksdb/**') }}
+      # - name: Cache go and cmake dependencies
+      #   uses: actions/cache@v3
+      #   with:
+      #     path: |
+      #       ~/.cache/go-build
+      #       ~/go/pkg/mod
+      #       release-binary/vendor/tool
+      #     key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum','**/binary_build/build.sh') }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-go-
       - name: Install Build dependencies
         run: |
           sudo apt-get update -y
-          sudo apt-get install build-essential libgflags-dev libsnappy-dev zlib1g-dev libbz2-dev liblz4-dev libzstd-dev -y
+          sudo apt-get install build-essential daemontools libgflags-dev
           sudo apt install openssl -y
           echo "***********************************************************"
           echo "Dependencies version"
@@ -55,6 +55,7 @@ jobs:
           echo "GCC Version:" `gcc --version`
           echo "G++ Version:" `g++ --version`
           echo "Openssl Version:" `openssl version`
+          echo "Check Multilog:" `which multilog`
           echo "********************==========*****************************"
       - name: Build
         id: run-build
@@ -64,12 +65,6 @@ jobs:
           echo "********************==========*****************************"
           export BUILDTOP=`pwd`
           binary_build/build.sh
-      - name: Set up Python2.7
-        uses: actions/setup-python@v4
-        id: setup-python2
-        with:
-          python-version: 2.7
-          update-environment: true
       - name: Deploy
         run: |
           echo "***********************************************************"
@@ -94,8 +89,8 @@ jobs:
           $BUILDTOP/script/test/functest/configsetup.sh
           $BUILDTOP/release-binary/tool/go/bin/go test -v -config=config.toml
 
-      #     echo "***********************************************************"
-      #     echo "Run Unit Tests"
-      #     echo "********************==========*****************************"
-      #     cd $BUILDTOP/script/test/unittest
-      #     $BUILDTOP/release-binary/tool/go/bin/go test -v
+          echo "***********************************************************"
+          echo "Run Unit Tests"
+          echo "********************==========*****************************"
+          cd $BUILDTOP/script/test/unittest
+          $BUILDTOP/release-binary/tool/go/bin/go test -v

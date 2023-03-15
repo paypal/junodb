@@ -1,17 +1,18 @@
 version: "3"
 
-x-services: &service_default
-    init: true
-    restart: "${DOCKER_RESTART_POLICY:-unless-stopped}"
-    extra_hosts:
-      - "etcd:172.20.0.2"
-    networks:
-      junonet:
-    env_file:
-      - .env
+x-services:
+  &service_default
+  init: true
+  restart: "${DOCKER_RESTART_POLICY:-unless-stopped}"
+  extra_hosts:
+    - "etcd:172.20.0.2"
+  networks:
+    junonet:
+  env_file:
+    - .env
 
 services:
-  etcd: 
+  etcd:
     <<: *service_default
     image: registry.hub.docker.com/juno/junoclusterserv:${VERSION}
     container_name: etcd
@@ -21,8 +22,8 @@ services:
       PEER_NAMES: "p0"
       PEER_PORT: "2378"
       INITIAL_CLUSTER: "172.20.0.2"
-    expose: 
-    - "2379"
+    expose:
+      - "2379"
     healthcheck:
       test: "export ETCDCTL_API=3 && ./etcdctl endpoint health --cluster --endpoints=etcd:2379"
       interval: 5s
@@ -33,12 +34,20 @@ services:
       junonet:
         ipv4_address: 172.20.0.2
 
-
   clustercfg:
     <<: *service_default
     image: registry.hub.docker.com/juno/junoclustercfg:${VERSION}
     container_name: clustercfg
-    command: ["./clustermgr", "--config", "/opt/juno/enabled_config.toml", "--cmd", "store", "--type", "cluster_info"]
+    command:
+      [
+        "./clustermgr",
+        "--config",
+        "/opt/juno/enabled_config.toml",
+        "--cmd",
+        "store",
+        "--type",
+        "cluster_info"
+      ]
     environment:
       NUM_ZONES: "1"
       SS_HOSTS: '[["storageserv"]]'
@@ -52,7 +61,7 @@ services:
       retries: 10
       start_period: 5s
     volumes:
-    - ${PWD}/config/cluster/config.toml:/opt/juno/config.toml
+      - ${PWD}/config/cluster/config.toml:/opt/juno/config.toml
 
   storageserv:
     <<: *service_default
@@ -66,37 +75,53 @@ services:
       interval: 5s
       timeout: 5s
       retries: 10
-      start_period: 5s
+      start_period: 10s
     ports:
-    - "8089:8089"
+      - "8089:8089"
     volumes:
-    - ${PWD}/config/storageserv/config.toml:/opt/juno/config/config.toml
+      - ${PWD}/config/storageserv/config.toml:/opt/juno/config/config.toml
+      - ${PWD}/config/storageserv/data:/opt/juno/data
 
   proxy:
     <<: *service_default
     image: registry.hub.docker.com/juno/junoserv:${VERSION}
     container_name: proxy
     ports:
-    - "8088:8088"
-    - "8080:8080"
-    - "5080:5080"
+      - "8088:8088"
+      - "8080:8080"
+      - "5080:5080"
     healthcheck:
       test: "nc -vz 127.0.0.1 5080"
       interval: 5s
       timeout: 5s
       retries: 10
-      start_period: 5s
+      start_period: 10s
     depends_on:
       - storageserv
     volumes:
-    - ${PWD}/config/proxy/config.toml:/opt/juno/config/config.toml
-    - ${PWD}/config/secrets:/opt/juno/bin/secrets
+      - ${PWD}/config/proxy/config.toml:/opt/juno/config/config.toml
+      - ${PWD}/config/secrets:/opt/juno/bin/secrets
+
+  junoclient:
+    <<: *service_default
+    image: registry.hub.docker.com/juno/junoclient:${VERSION}
+    container_name: junoclient
+    entrypoint: [ "tail", "-f", "/dev/null" ]
+    depends_on:
+      - proxy
+    healthcheck:
+      test: "nc -vz proxy 5080"
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    volumes:
+      - ${PWD}/config/client/config.toml:/opt/juno/config.toml
+      - ${PWD}/config/secrets:/opt/juno/secrets
 
 networks:
   junonet:
     driver: bridge
     ipam:
       config:
-      - subnet: 172.20.0.0/16
-
-
+        - subnet: 172.20.0.0/16

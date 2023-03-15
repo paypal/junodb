@@ -1,22 +1,22 @@
-//  
+//
 //  Copyright 2023 PayPal Inc.
-//  
+//
 //  Licensed to the Apache Software Foundation (ASF) under one or more
 //  contributor license agreements.  See the NOTICE file distributed with
 //  this work for additional information regarding copyright ownership.
 //  The ASF licenses this file to You under the Apache License, Version 2.0
 //  (the "License"); you may not use this file except in compliance with
 //  the License.  You may obtain a copy of the License at
-//  
+//
 //     http://www.apache.org/licenses/LICENSE-2.0
-//  
+//
 //  Unless required by applicable law or agreed to in writing, software
 //  distributed under the License is distributed on an "AS IS" BASIS,
 //  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
-//  
-  
+//
+
 package replication
 
 import (
@@ -29,6 +29,7 @@ import (
 	"juno/pkg/io"
 	"juno/pkg/logging"
 	"juno/pkg/logging/cal"
+	"juno/pkg/logging/otel"
 	"juno/pkg/proto"
 	"juno/pkg/proto/mayfly"
 	"juno/pkg/util"
@@ -137,11 +138,16 @@ func (r *RepRequestContext) Read(reader goio.Reader) (n int, err error) {
 	return 0, nil
 }
 
-func (r *RepRequestContext) complete(calstatus string, rht time.Duration, opCode string, target string) {
+func (r *RepRequestContext) complete(calstatus string, opStatus string, rht time.Duration, opCode string, target string) {
 
 	if cal.IsEnabled() {
 		var targetType string = logging.CalMsgTypeReplicate + target
-		cal.AtomicTransaction(targetType, opCode, calstatus, rht, r.calBuf.Bytes())
+		if !otel.IsEnabled() || calstatus != cal.StatusSuccess {
+			cal.AtomicTransaction(targetType, opCode, calstatus, rht, r.calBuf.Bytes())
+		}
+	}
+	if otel.IsEnabled() {
+		otel.RecordReplication(opCode, opStatus, target, rht.Milliseconds())
 	}
 
 	r.this.OnComplete()
@@ -198,7 +204,7 @@ func (r *RepRequestContext) Reply(resp io.IResponseContext) {
 
 	resp.OnComplete()
 	if retry == 0 {
-		r.complete(calStatusText, rht, opCodeText, target)
+		r.complete(calStatusText, opstatus.String(), rht, opCodeText, r.targetId)
 		return
 	}
 
@@ -210,11 +216,16 @@ func (r *RepRequestContext) Reply(resp io.IResponseContext) {
 		glog.Infof("max rep retry (%d) reached, drop req", r.try_cnt-1)
 		if cal.IsEnabled() {
 			var evType string = string("RR_Drop_MaxRetry") + target
-			cal.Event(evType, opCodeText, cal.StatusWarning, r.calBuf.Bytes())
+			if !otel.IsEnabled() {
+				cal.Event(evType, opCodeText, cal.StatusWarning, r.calBuf.Bytes())
+			}
 			r.calBuf.AddDropReason("MaxRetry")
 		}
+		if otel.IsEnabled() {
+			otel.RecordCount(otel.RRDropMaxRetry, []otel.Tags{{"target", r.targetId}})
+		}
 		r.errCnt.Add(1)
-		r.complete(cal.StatusError, rht, opCodeText, target)
+		r.complete(cal.StatusError, opstatus.String(), rht, opCodeText, r.targetId)
 		return
 	}
 
@@ -229,21 +240,31 @@ func (r *RepRequestContext) Reply(resp io.IResponseContext) {
 			glog.Infof("replication queue full, drop the req, id=%d", r.this.GetId())
 			if cal.IsEnabled() {
 				var evType string = string("RR_Drop_QueueFull") + target
-				cal.Event(evType, opCodeText, cal.StatusWarning, r.calBuf.Bytes())
+				if !otel.IsEnabled() {
+					cal.Event(evType, opCodeText, cal.StatusWarning, r.calBuf.Bytes())
+				}
 				r.calBuf.AddDropReason("QueueFull")
 			}
+			if otel.IsEnabled() {
+				otel.RecordCount(otel.RRDropQueueFull, []otel.Tags{{otel.Target, r.targetId}})
+			}
 			r.dropCnt.Add(1)
-			r.complete(cal.StatusError, rht, opCodeText, target)
+			r.complete(cal.StatusError, opstatus.String(), rht, opCodeText, r.targetId)
 		}
 	} else {
 		glog.Infof("req expired, id=%d", r.this.GetId())
 
 		if cal.IsEnabled() {
 			var evType string = "RR_Drop_RecExpired" + r.targetId
-			cal.Event(evType, opCodeText, cal.StatusSuccess, r.calBuf.Bytes())
+			if !otel.IsEnabled() {
+				cal.Event(evType, opCodeText, cal.StatusSuccess, r.calBuf.Bytes())
+			}
 			r.calBuf.AddDropReason("RecExpired")
 		}
-		r.complete(cal.StatusSuccess, rht, opCodeText, target)
+		if otel.IsEnabled() {
+			otel.RecordCount(otel.RRDropRecExpired, []otel.Tags{{otel.Target, r.targetId}})
+		}
+		r.complete(cal.StatusSuccess, opstatus.String(), rht, opCodeText, r.targetId)
 	}
 }
 

@@ -1,3 +1,4 @@
+#!/bin/bash
 #  
 #  Copyright 2023 PayPal Inc.
 #  
@@ -17,7 +18,6 @@
 #  limitations under the License.
 #  
 
-#!/bin/bash
 
 # Start.sh for Juno Proxy
 #
@@ -99,20 +99,20 @@ check_port_in_use() {
 #
 # Start the state logs
 # NOTE: we don't actually wait for these to finish for some reason
-#if [ -x $prefix/$name/logstate.sh ]; then
-#	$prefix/$name/logstate.sh &
-#	COUNT=1
-#	while [ ! -p $prefix/$name/state.log ]
-#	    do
-#	      #echo "sleeping 1 second waiting for $prefix/$name/state.log"
-#	      sleep 1
-#	      if [ "$COUNT" = "20" ]; then
-#	          echo "Error: State log not created after 20 seconds: $prefix/$name/state.log"
-#	          exit -1
-#	      fi
-#	      COUNT=`expr $COUNT + 1`
-#	done
-#fi
+if [ -x $prefix/$name/logstate.sh ]; then
+	$prefix/$name/logstate.sh &
+	COUNT=1
+	while [ ! -p $prefix/$name/state.log ]
+	    do
+	      #echo "sleeping 1 second waiting for $prefix/$name/state.log"
+	      sleep 1
+	      if [ "$COUNT" = "20" ]; then
+	          echo "Error: State log not created after 20 seconds: $prefix/$name/state.log"
+	          exit -1
+	      fi
+	      COUNT=`expr $COUNT + 1`
+	done
+fi
 
 #shutdown the service 
 #
@@ -127,12 +127,12 @@ if [ ! -f /$prefix/$name/disable ]; then
     echo ""
     export CAL_CONFIG=$prefix/$name/
     cd $prefix/$name
-#    if [ -f $FIFO ] && [ -f "/usr/local/bin/multilog" ]; then
-#    	start_log $service
-#    else
-#    	echo "Cannot start $service. Multilog or Fifo not available."
-#    	exit 1
-#    fi
+   if [ -f $(which mkfifo) ] && [ -f $(which multilog) ]; then
+   	start_log $service
+   else
+   	echo "Cannot start $service. Multilog or Fifo not available."
+   	exit 1
+   fi
     
     SVC_START_CMD="$prefix/$name/$service -config=$prefix/$name/config.toml"
     GODEBUG=x509ignoreCN=0 $SVC_START_CMD 2> $prefix/$name/$service.log

@@ -1,22 +1,22 @@
-//  
+//
 //  Copyright 2023 PayPal Inc.
-//  
+//
 //  Licensed to the Apache Software Foundation (ASF) under one or more
 //  contributor license agreements.  See the NOTICE file distributed with
 //  this work for additional information regarding copyright ownership.
 //  The ASF licenses this file to You under the Apache License, Version 2.0
 //  (the "License"); you may not use this file except in compliance with
 //  the License.  You may obtain a copy of the License at
-//  
+//
 //     http://www.apache.org/licenses/LICENSE-2.0
-//  
+//
 //  Unless required by applicable law or agreed to in writing, software
 //  distributed under the License is distributed on an "AS IS" BASIS,
 //  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
-//  
-  
+//
+
 package config
 
 import (
@@ -36,7 +36,7 @@ import (
 	"juno/pkg/initmgr"
 	"juno/pkg/io"
 	cal "juno/pkg/logging/cal/config"
-	"juno/pkg/logging/sherlock"
+	otel "juno/pkg/logging/otel/config"
 	"juno/pkg/sec"
 	"juno/pkg/service"
 	"juno/pkg/util"
@@ -88,8 +88,11 @@ var (
 		},
 		Etcd: *etcd.NewConfig("127.0.0.1:2379"),
 		Sec:  sec.DefaultConfig,
-		Sherlock: sherlock.Config{
-			Enabled: true,
+		OTEL: otel.Config{
+			Host:        "127.0.0.1",
+			Port:        4318,
+			Environment: "PayPal",
+			Poolname:    "junoproxy",
 		},
 	}
 )
@@ -137,7 +140,7 @@ type Config struct {
 	CAL          cal.Config
 	Etcd         etcd.Config
 	Sec          sec.Config
-	Sherlock     sherlock.Config
+	OTEL         otel.Config
 }
 
 func (c *Config) GetNumWrites() uint32 {

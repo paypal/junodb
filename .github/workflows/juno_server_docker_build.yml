@@ -31,13 +31,12 @@ jobs:
         uses: actions/checkout@v3
       - name: Install dependencies
         run: |
-          sudo apt-get update -y 
           sudo apt install openssl -y
           echo "Openssl Version:" `openssl version`
       - name: Docker Version Check
         run: docker version
-      - name: Expose GitHub Runtime
-        uses: crazy-max/ghaction-github-runtime@v2
+      # - name: Expose GitHub Runtime
+      #   uses: crazy-max/ghaction-github-runtime@v2
       - name: Build docker containers
         run: docker/build.sh
       - name: Start juno containers
@@ -45,16 +44,17 @@ jobs:
         run: |
           docker/start.sh
       - name: Step To run on failure
-        if: steps.dockerStart.conclusion == 'failure'
+        if: failure() && steps.dockerStart.outcome == 'failure'
         run: |
           docker logs etcd 
           docker logs clustercfg
           docker logs storageserv
           docker logs proxy
+          docker/shutdown.sh
       - name: Docker containers Status
         run: |
           echo "Wait for service warm up..."
-          sleep 20
+          sleep 60
           echo "docker ps"
           docker ps
       - name: Connectivity Checks
@@ -70,12 +70,25 @@ jobs:
           echo "Storage Admin"
           nc -vz localhost ${STORAGE_MON_PORT}
       - name: Step To run on failure of Connectivity Check
-        if: steps.dockerCheck.conclusion == 'failure'
+        if: failure() && steps.dockerCheck.outcome == 'failure'
         run: |
           docker logs etcd 
           docker logs clustercfg
           docker logs storageserv
           docker logs proxy
+          docker/shutdown.sh
+      # - name: Test
+      #   id: junoclientTest
+      #   run: |
+      #     docker/test.sh
+      # - name: Step To run on failure of Test
+      #   if: failure() && steps.junoclientTest.outcome == 'failure'
+      #   run: |
+      #     docker logs etcd
+      #     docker logs clustercfg
+      #     docker logs storageserv
+      #     docker logs proxy
+      #     docker/shutdown.sh
       - name: Shutdown juno containers
         run: |
           echo "Shutdown juno containers"
