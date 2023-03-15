@@ -91,7 +91,8 @@ if [[ ! -d "$build_output_dir" ]]; then
 fi
  
 export CGO_CFLAGS="-I$rocksdb_dir/include"
-export CGO_LDFLAGS="$rocksdb_dir/lib/librocksdb.a -lstdc++ -lm -lrt -lpthread -ldl"
+# export CGO_LDFLAGS="$rocksdb_dir/lib/librocksdb.a -lstdc++ -lm -lrt -lpthread -ldl"
+export CGO_LDFLAGS="-L$rocksdb_dir/lib -L/usr/local/lib -lrocksdb -lstdc++ -lm -lrt -lpthread -ldl"
 
 juno_version_info="-X juno/pkg/version.BuildTime=$build_time -X juno/pkg/version.Revision=$code_revision -X juno/pkg/version.BuildId=$JUNO_BUILD_NUMBER"
 
