@@ -12,7 +12,7 @@ JunoDB is PayPal's home-grown Secure, consistent and highly available Key-value 
   <summary>JunoDB high level architecture</summary>
    
 <img
-  src="./JunoDBHighLevelArch.png"
+  src="docs/JunoDBHighLevelArch.png"
   style="display: inline-block; margin: 0 auto; max-width: 600px">
 
 </details>
