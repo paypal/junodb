@@ -86,7 +86,7 @@ cp $JUNO_BUILD_DIR/proxy	junoserv
 ####### install all four packages, start up junostorageserv/junoserv service ########
 prefix=$BUILDTOP/script/deploy
 junoclusterserv/postinstall.sh junoclusterserv etcdsvr $prefix $group
-$TAIL $prefix/junoclusterserv/etcdsvr.log
+$TAIL $prefix/junoclusterserv/logs/current
 junoclustercfg/postinstall.sh junoclustercfg junoclustercfg $prefix $group
 junostorageserv/postinstall.sh junostorageserv storageserv $prefix $group
 junoserv/postinstall.sh junoserv proxy $prefix $group

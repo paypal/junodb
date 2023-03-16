@@ -51,6 +51,7 @@ fi
 #
 # Start the logs
 #
+CAT=`which cat`
 FIFO=`which mkfifo`
 MULTILOG="`which multilog` s11867040 n60"
 
@@ -62,4 +63,4 @@ echo ""
 statelogs=$prefix/$name/state-logs
 mkdir -p $statelogs
 $FIFO $prefix/$name/state.log && chmod 666 $prefix/$name/state.log
-cat $prefix/$name/state.log | $MULTILOG $statelogs
+$CAT $prefix/$name/state.log | $MULTILOG $statelogs
