@@ -117,7 +117,6 @@ func (p *OutboundProcessor) GetRequestCh() chan IRequestContext {
 //
 // Non-blocking send
 //
-
 func (p *OutboundProcessor) sendRequest(req IRequestContext) (err *errors.Error) {
 	// send request
 	select {
@@ -437,7 +436,7 @@ func (p *OutboundProcessor) GetRequestSendingQueueSize() int {
 func (p *OutboundProcessor) WriteStats(w io.Writer, indent int) {
 	indentStr := strings.Repeat(" ", indent)
 	for i := range p.connectors {
-		fmt.Fprintf(w, "%sConnector %d %s:\n", indentStr, i, p.connInfo)
+		fmt.Fprintf(w, "%sConnector %d %s:\n", indentStr, i, p.connInfo.GetConnString())
 		p.connectors[i].WriteStats(w, indent+2)
 	}
 }
