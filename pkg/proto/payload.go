@@ -171,37 +171,6 @@ func (p *Payload) Encrypt(pType PayloadType) (err error) {
 	return
 }
 
-//	if p.GetPayloadType() == proto.PayloadTypeClear {
-//		var key []byte
-//		var version uint32
-//		var block cipher.Block
-//		var gcm cipher.AEAD
-//
-//		ks := &testKeyStoreT{}
-//
-//		if key, version, err = ks.GetEncryptionKey(); err == nil {
-//			fmt.Printf("key: %X version: %d", key, version)
-//			if block, err = aes.NewCipher(key); err == nil {
-//
-//				if gcm, err = cipher.NewGCM(block); err == nil {
-//					var nonce [12]byte
-//					if _, err = io.ReadFull(rand.Reader, nonce[:]); err == nil {
-//
-//						encryptedData := gcm.Seal(nil, nonce[:], p.GetData(), nil)
-//						newData := make([]byte, 4+12+len(encryptedData))
-//						binary.BigEndian.PutUint32(newData[:4], version)
-//						copy(newData[4:4+12], nonce[:])
-//						copy(newData[4+12:], encryptedData)
-//						p.SetPayload(proto.PayloadTypeEncryptedByProxy, newData)
-//					}
-//				}
-//			}
-//		}
-//		//		util.HexDump(p.GetData())
-//	} else {
-//		err = fmt.Errorf("tag not 0")
-//	}
-
 func (p *Payload) Decrypt() (err error) {
 	if p.GetLength() == 0 || p.tag == PayloadTypeClear {
 		return nil

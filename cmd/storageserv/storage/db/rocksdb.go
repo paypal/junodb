@@ -345,7 +345,7 @@ func (r *RocksDB) duplicate() *RocksDB {
 func (r *RocksDB) setupShards(newShardMap shard.Map) (oldShards []shard.ID) {
 	dbFileNamePrefix := fmt.Sprintf("%d-%d", r.zoneId, r.nodeId)
 	r.sharding.setupShards(dbFileNamePrefix, newShardMap)
-	for id, _ := range r.shards {
+	for id := range r.shards {
 		_, ok := newShardMap[id]
 		if !ok {
 			oldShards = append(oldShards, id)
@@ -358,7 +358,7 @@ func (r *RocksDB) setupShards(newShardMap shard.Map) (oldShards []shard.ID) {
 func (r *RocksDB) setupRedistShards(newShardMap shard.Map) (oldShards []shard.ID) {
 	dbFileNamePrefix := fmt.Sprintf("%d-%d", r.zoneId, r.nodeId)
 	r.sharding.setupShards(dbFileNamePrefix, newShardMap)
-	for id, _ := range r.shards {
+	for id := range r.shards {
 		_, ok := newShardMap[id]
 		if !ok {
 			oldShards = append(oldShards, id)
