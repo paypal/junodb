@@ -410,7 +410,7 @@ func (p *OutboundConnector) readLoop() {
 				// the response has arrived, go ahead with ressponse
 				p.conn.SetReadDeadline(time.Now().Add(1000 * time.Millisecond))
 				if resp, err := p.newResponseContext(); err == nil {
-					//glog.Infof("%s receiving response", p.displayName)
+					//glog.Debugf("%s receiving response", p.displayName)
 					p.sendResponse(resp)
 				} else {
 					glog.Debugln("Outbound::readLoop: ", err)
@@ -442,6 +442,7 @@ func (p *OutboundConnector) newResponseContext() (ctx IResponseContext, err erro
 			ctx = resp
 		}
 	} else if bytes.Compare(b[:4], mayfly.MayflyMagic[:]) == 0 {
+		// only needed for legacy enviroment. cleanup when migrations are done.
 		szMessage := binary.BigEndian.Uint32(b[4:8])
 		raw := make([]byte, szMessage)
 		copy(raw[:12], b[:12])
@@ -462,7 +463,6 @@ func (p *OutboundConnector) newResponseContext() (ctx IResponseContext, err erro
 			return
 		}
 		ctx = resp
-
 	} else {
 		err = fmt.Errorf("protocol not supported. magic: %v", b[:4])
 		return

@@ -48,6 +48,7 @@ log() {
 #
 # Start the logs
 #
+CAT=`which cat`
 FIFO=`which mkfifo`
 MULTILOG="`which multilog` s5000000 n50"
 sub_svc=$1
@@ -57,4 +58,4 @@ echo ""
 logs=$prefix/$name/logs/
 mkdir -p $logs
 $FIFO $prefix/$name/$sub_svc.log && chmod 666 $prefix/$name/$sub_svc.log
-cat $prefix/$name/$sub_svc.log | $MULTILOG $logs
+$CAT $prefix/$name/$sub_svc.log | $MULTILOG $logs

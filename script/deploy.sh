@@ -34,7 +34,6 @@ fi
 group=`/usr/bin/id -gn`
 TAR='/bin/tar xvzf'
 RM='/bin/rm -rf'
-TAIL='/usr/bin/tail -20'
 GO_VERSION=1.18.2
 
 if [ ! -d deploy ]; then
@@ -86,7 +85,6 @@ cp $JUNO_BUILD_DIR/proxy	junoserv
 ####### install all four packages, start up junostorageserv/junoserv service ########
 prefix=$BUILDTOP/script/deploy
 junoclusterserv/postinstall.sh junoclusterserv etcdsvr $prefix $group
-$TAIL $prefix/junoclusterserv/etcdsvr.log
 junoclustercfg/postinstall.sh junoclustercfg junoclustercfg $prefix $group
 junostorageserv/postinstall.sh junostorageserv storageserv $prefix $group
 junoserv/postinstall.sh junoserv proxy $prefix $group
