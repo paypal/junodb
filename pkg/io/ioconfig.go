@@ -27,20 +27,20 @@ import (
 
 var (
 	DefaultInboundConfig = InboundConfig{
-		HandshakeTimeout:     util.Duration{500 * time.Millisecond},
-		IdleTimeout:          util.Duration{120 * time.Second},
-		ReadTimeout:          util.Duration{500 * time.Millisecond},
-		WriteTimeout:         util.Duration{500 * time.Millisecond},
-		RequestTimeout:       util.Duration{600 * time.Millisecond},
+		HandshakeTimeout:     util.Duration{Duration: 500 * time.Millisecond},
+		IdleTimeout:          util.Duration{Duration: 120 * time.Second},
+		ReadTimeout:          util.Duration{Duration: 500 * time.Millisecond},
+		WriteTimeout:         util.Duration{Duration: 500 * time.Millisecond},
+		RequestTimeout:       util.Duration{Duration: 600 * time.Millisecond},
 		MaxBufferedWriteSize: 64 * 1024,
 		IOBufSize:            64 * 1024, // default 64k buf size
 		RespChanSize:         10000,
 	}
 
 	DefaultOutboundConfig = OutboundConfig{
-		ConnectTimeout:        util.Duration{1 * time.Second},
-		ConnectRecycleT:       util.Duration{30 * time.Second},
-		GracefulShutdownTime:  util.Duration{200 * time.Millisecond},
+		ConnectTimeout:        util.Duration{Duration: 1 * time.Second},
+		ConnectRecycleT:       util.Duration{Duration: 30 * time.Second},
+		GracefulShutdownTime:  util.Duration{Duration: 200 * time.Millisecond},
 		EnableConnRecycle:     false,
 		ReqChanBufSize:        8092,
 		MaxPendingQueSize:     8092,

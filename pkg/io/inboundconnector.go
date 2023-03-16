@@ -131,7 +131,7 @@ func (c *Connector) doRead() {
 						break Loop
 					} else {
 						if nerr, ok := err.(net.Error); ok && nerr.Timeout() {
-							//						glog.Verbosef("nerr: %s", nerr)
+							// glog.Verbosef("nerr: %s", nerr)
 							continue
 						} else {
 							ioutil.LogError(err)
@@ -139,7 +139,6 @@ func (c *Connector) doRead() {
 						}
 					}
 				}
-				glog.Verbosef("Exiting loop")
 			}
 			glog.Verbosef("got magic")
 
@@ -213,7 +212,7 @@ func (c *Connector) doWrite() {
 	maxBufSizeAllocated := szWBuf
 
 	funOnWrite := func(n int64) {
-		for i, _ := range pendingWrites {
+		for i := range pendingWrites {
 			pending := &pendingWrites[i]
 			if n >= pending.nToWrite {
 				pending.resp.OnComplete()
