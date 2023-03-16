@@ -80,8 +80,6 @@ func (p *ChanBufferPool) Get() (buf *PPBuffer) {
 	select {
 	case buf = <-p.poolCh:
 	default:
-		//			fmt.Println("New Buffer @ ", time.Now())
-		//		debug.PrintStack()
 		buf = new(PPBuffer)
 		buf.Grow(p.size)
 	}

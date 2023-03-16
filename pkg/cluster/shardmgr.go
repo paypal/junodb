@@ -47,8 +47,7 @@ var (
 	etcdReader    IReader
 	cacheFile     string
 	isWatching    bool
-	//zonemarkdown  int32
-	markdownobj ZoneMarkDown
+	markdownobj   ZoneMarkDown
 )
 
 type (
@@ -339,28 +338,6 @@ func (p *ShardManager) GetSSProcessor(zoneId int, nodeId int) *OutboundSSProcess
 	return p.processors[zoneId][nodeId]
 }
 
-//obsoleted
-//func (p *ShardManager) GetRequestChsByKey(key []byte) ([]chan io.IRequestContext, error) {
-//	partId := util.GetPartitionId(key, uint32(p.shardMap.cluster.NumShards))
-//	return p.GetRequestChs(shard.ID(partId))
-//}
-//
-//func (p *ShardManager) GetRequestChs(partId shard.ID) ([]chan io.IRequestContext, error) {
-//
-//	zones, nodes, err := p.shardMap.GetNodes(uint32(partId))
-//	if err != nil {
-//		return nil, err
-//	}
-//
-//	reqChs := make([]chan io.IRequestContext, len(zones))
-//	for i := range zones {
-//		s := p.processors[int(zones[i])][nodes[i]]
-//		reqChs[i] = s.GetRequestCh()
-//	}
-//
-//	return reqChs, nil
-//}
-
 //used by request processor
 //the caller's responsibility to make sure
 // cap(procs) >= numZones and cap(pos) >= numZones
@@ -442,8 +419,6 @@ func (p *ShardManager) GetProcessors(partId shard.ID) ([]*OutboundSSProcessor, e
 	if err != nil {
 		return nil, err
 	}
-
-	//glog.Verbosef("partid=%d, zones=%v, nodes=%v", partId, zones, nodes)
 
 	procs := make([]*OutboundSSProcessor, len(zones))
 	for i := range zones {
