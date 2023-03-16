@@ -130,12 +130,12 @@ for PROCESS in $PIDLIST; do
 done
 
 #
-# Remove left over fifo's
+# Remove left over multilog 
 #
 echo ""
-echo "Removing left over $name $service fifo's." "["`date`"]"
+echo "Removing left over $name $service multilog's." "["`date`"]"
 echo ""
-PIDLIST=`$PS | $GREP fifo | $GREP "$prefix/$name/" | $CUT -d"/" -f1`
+PIDLIST=`$PS | $GREP log | $GREP "$prefix/$name/" | $CUT -d"/" -f1`
 for PROCESS in $PIDLIST; do
 	#
 	$KILL -9 $PROCESS
