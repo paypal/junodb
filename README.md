@@ -6,7 +6,7 @@
 
 
 ## What is JunoDB
-JunoDB is PayPal's home-grown Secure, consistent and highly available Key-value store providing low, single digit millisecond, latency at any scale. 
+JunoDB is PayPal's home-grown Secure, consistent and highly available key-value store providing low, single digit millisecond, latency at any scale. 
 
 <details>
   <summary>JunoDB high level architecture</summary>
@@ -78,7 +78,7 @@ Install Docker if not installed or version is older than 20.10.0
 #junoserv
 #junostorageserv
 docker login
-./docker/build.sh 
+docker/build.sh 
 ```
 
 ### <h3 id="docker_run_junodb">Run JunoDB</h3>
@@ -91,7 +91,7 @@ docker login
 
 # JunoDB proxy service listens on port 
 # :5080 TLS and :8080 TCP
-./docker/start.sh 
+docker/start.sh 
 
 ```
 
@@ -102,7 +102,7 @@ docker login
 #junoclustercfg
 #junostorageserv
 #junoserv
-./docker/shutdown.sh 
+docker/shutdown.sh 
 
 ```
 
@@ -113,7 +113,7 @@ docker login
 cd $BUILDTOP/docker/manifest
 
 # To run junodb services in --detach mode (recommended)
-docker-compose up -d
+docker compose up -d
 
 # Juno proxy service listens on port 
 # :5080 TLS and :8080 TCP
@@ -122,7 +122,7 @@ docker-compose up -d
 docker ps
 
 # To stop junodb services
-docker-compose down
+docker compose down
 ```
 ### <h3 id="docker_secrets">Generate Secrets for Dev</h3>
 
@@ -206,7 +206,7 @@ sudo ln -s python3.8 python
 
 ### <h3 id="manual_build_junodb">Build JunoDB</h3>
 ```bash
-./binary_build/build.sh
+binary_build/build.sh
 ```
 <br>
 
@@ -214,7 +214,7 @@ sudo ln -s python3.8 python
 ### <h3 id="manual_run_junodb">Run JunoDB</h3>
 ```bash
 export JUNO_BUILD_DIR=$BUILDTOP/release-binary/code-build
-./script/deploy.sh
+script/deploy.sh
 ```
 <br>
 
@@ -230,7 +230,7 @@ ps -eaf | grep juno
 ### Run functional tests
 ```bash
 #Assuming user is in $BUILDTOP folder
-./script/test/functest/configsetup.sh
+script/test/functest/configsetup.sh
 cd script/test/functest
 $BUILDTOP/release-binary/tool/go/bin/go test -v -config=config.toml
 ```
