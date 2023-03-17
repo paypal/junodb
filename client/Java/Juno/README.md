@@ -34,6 +34,15 @@ The compareAndSet API should always be proceeded by a GET operation. The record 
 
 </details>
 
+## Dependencies
+Java 8 and Maven is required.
+
+```shell
+sudo apt install openjdk-8-jdk
+sudo apt-get install maven
+```
+
+
 ## Quick Start
 The easiest way is to download the jar as well as its transitive dependencies through maven:
 ```
