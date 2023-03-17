@@ -47,7 +47,7 @@ type Config struct {
 
 var DefRedistConfig = Config{
 	SnapshotRateLimit:  10000, // default: 10MBps
-	RedistRespTimeout:  util.Duration{5000 * time.Millisecond},
+	RedistRespTimeout:  util.Duration{Duration: 5000 * time.Millisecond},
 	MaxWaitTime:        3 * 60, // 3 minutes
 	ConcurrentSnapshot: 1,
 	MaxRetry:           3,
@@ -58,7 +58,7 @@ var DefRedistConfig = Config{
 	DropThresholdRealtime: 0,
 
 	Outbound: io.OutboundConfig{
-		ConnectTimeout:        util.Duration{1 * time.Second},
+		ConnectTimeout:        util.Duration{Duration: 1 * time.Second},
 		ReqChanBufSize:        80000,
 		MaxPendingQueSize:     8092,
 		PendingQueExtra:       50,

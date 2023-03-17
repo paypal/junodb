@@ -43,7 +43,6 @@ var (
 	enabled    int32
 	theManager *Manager
 	theLock    sync.RWMutex // or use unsafe ponter?
-	watchHdr   etcd.IWatchHandler
 	redistHdr  IDBRedistHandler
 	etcdcli    *etcd.EtcdClient
 )
@@ -59,10 +58,6 @@ func Init(clustername string, zoneid uint16, nodeid uint16, cfg *etcd.Config) (e
 	if etcdcli == nil {
 		return errors.New("failed to connect to etcd")
 	}
-
-	//	watcher := watcher.NewWatcher(clustername, zoneid, nodeid, etcdcli)
-	//	go watcher.Watch()
-	//watchHdr = newWatchHandler(clustername, zoneid, nodeid, etcdcli)
 	return nil
 }
 
