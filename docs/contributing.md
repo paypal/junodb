@@ -8,7 +8,6 @@
 Our recommendation is to start a discussion as soon as you have an idea for contributing to JunoDB.
 This will help you, other interested contributors & the committers get to common grounds early in time.
 
-We are on Google groups [TBD]
 
 --------------------------------------------------------------------------------------------------------------------
 

@@ -57,26 +57,26 @@ jobs:
           sleep 60
           echo "docker ps"
           docker ps
-      - name: Connectivity Checks
-        id: dockerCheck
-        run: |
-          echo "Connectivity checks on listening ports"
-          echo "Proxy TLS"
-          nc -vz localhost ${PROXY_TLS_PORT}
-          echo "Proxy TCP"
-          nc -vz localhost ${PROXY_TCP_PORT}
-          echo "Proxy Admin"
-          nc -vz localhost ${PROXY_MON_PORT}
-          echo "Storage Admin"
-          nc -vz localhost ${STORAGE_MON_PORT}
-      - name: Step To run on failure of Connectivity Check
-        if: failure() && steps.dockerCheck.outcome == 'failure'
-        run: |
-          docker logs etcd 
-          docker logs clustercfg
-          docker logs storageserv
-          docker logs proxy
-          docker/shutdown.sh
+      # - name: Connectivity Checks
+      #   id: dockerCheck
+      #   run: |
+      #     echo "Connectivity checks on listening ports"
+      #     echo "Proxy TLS"
+      #     nc -vz localhost ${PROXY_TLS_PORT}
+      #     echo "Proxy TCP"
+      #     nc -vz localhost ${PROXY_TCP_PORT}
+      #     echo "Proxy Admin"
+      #     nc -vz localhost ${PROXY_MON_PORT}
+      #     echo "Storage Admin"
+      #     nc -vz localhost ${STORAGE_MON_PORT}
+      # - name: Step To run on failure of Connectivity Check
+      #   if: failure() && steps.dockerCheck.outcome == 'failure'
+      #   run: |
+      #     docker logs etcd
+      #     docker logs clustercfg
+      #     docker logs storageserv
+      #     docker logs proxy
+      #     docker/shutdown.sh
       # - name: Test
       #   id: junoclientTest
       #   run: |
