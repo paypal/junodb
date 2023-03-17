@@ -73,7 +73,7 @@ type (
 )
 
 func (h *ReplicattionHandshaker) GetHandshakeTimeout() util.Duration {
-	return util.Duration{1000 * time.Millisecond}
+	return util.Duration{Duration: 1000 * time.Millisecond}
 }
 
 func (h *ReplicattionHandshaker) GetPingRequest() io.IRequestContext {

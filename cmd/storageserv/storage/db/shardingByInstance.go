@@ -62,12 +62,11 @@ func (s *ShardingByInstance) setupShards(dbnamePrefix string, shardMap shard.Map
 	glog.Infof("setup shards: %v", shardMap.Keys())
 
 	shardsToBeSetup := make([]shard.ID, 0, numShards)
-	for i, _ := range shardMap {
+	for i := range shardMap {
 		handle := s.dbs[i]
 		if handle != nil {
-			fmt.Printf("i: %d	name: %s", i, handle.Name())
+			glog.Infof("i: %d	name: %s", i, handle.Name())
 			// already exist
-			s.dbs[i] = handle
 		} else {
 			shardsToBeSetup = append(shardsToBeSetup, i)
 		}

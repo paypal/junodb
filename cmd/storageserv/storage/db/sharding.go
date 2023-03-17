@@ -74,5 +74,4 @@ func (s *ShardingBase) waitForFinish(rb *redist.Replicator) bool {
 			}
 		}
 	}
-	return true
 }
