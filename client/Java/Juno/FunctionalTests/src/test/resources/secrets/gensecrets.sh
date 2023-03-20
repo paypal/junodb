@@ -18,6 +18,7 @@
 #  limitations under the License.
 #  
 
+cd "$(dirname "$0")"
 # Generate TLS secrets
 rm *.pem *.crt *.csr *.srl *.cfg
 
