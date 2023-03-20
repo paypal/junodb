@@ -6,7 +6,7 @@ Before we can run and compile the Reference App, let's compile the Open Source J
 This is important as we pull the OpenSource Version of Juno.
 
 ## Quick Start
-Please download the [OpenSource Juno](https://github.com/paypal/junodb/tree/dev/client/Java/Juno).  
+Please download the [OpenSource Juno](https://github.com/paypal/junodb/tree/dev/client/Java).  
 Go to the Directory `~/junodb/client/Java/Juno` and perform the `mvn clean package` command (P. S. Skip Tests if you're in a hurry)
 
 Please see that the jar files have been instantiated:
