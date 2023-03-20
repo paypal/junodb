@@ -679,7 +679,7 @@ public class CreateTest{
 		byte[] key_no_compress_cplusplus4 = "keyvalue with no data Compression4".getBytes();
 		byte[] key_no_compress_cplusplus5 = "keyvalue with no data Compression5".getBytes();
 
-  		long ttl = (long)315360000;
+  		long ttl = (long)31530;
 
 		try{
  			junoClient5.delete(key_compress_cplusplus);

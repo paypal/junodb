@@ -68,16 +68,19 @@ docker version
 Install Docker if not installed or version is older than 20.10.0
 ```bash
 ./docker/setup.sh
+#If you are not already added to the docker group before running ./setup.sh, you will have to restart your machine for this change to have effect
 ```
 
 ### <h3 id="docker_build_junodb">Build JunoDB</h3>
 ```bash
+#Login to docker hub account 
+docker login
+
 # Build junodb docker images
 #junoclusterserv
 #junoclustercfg
 #junoserv
 #junostorageserv
-docker login
 docker/build.sh 
 ```
 
@@ -118,7 +121,7 @@ docker compose up -d
 # Juno proxy service listens on port 
 # :5080 TLS and :8080 TCP
 
-#To view the running containes 
+#To view the running containers 
 docker ps
 
 # To stop junodb services
@@ -141,19 +144,52 @@ sh $BUILDTOP/docker/manifest/config/secrets/gensecrets.sh
 
 ### <h3 id="docker_validate_junodb">Validate JunoDB</h3>
 
-Login to docker client
+Login to docker client and check connection with proxy
 ```bash 
-docker exec -it junoclient bash
+docker exec -it junoclient bash -c 'nc -vz proxy 5080'
 ```
 
-Check connection with proxy
+
+<br>
+
+### You can also test the junodb server by running junocli and junoload
+<br>
+
+### JunoCLI<br>
+The following commands log in to the docker client and run the ./junocli command directly. The proxy ip is aliased as "proxy"
+
+1. CREATE
+```bash 
+docker exec -it junoclient bash -c '/opt/juno/junocli create -s proxy:<proxy_port> -c config.toml -ns test_ns test_key test_value'
+```
+
+2. GET
+```bash 
+docker exec -it junoclient bash -c '/opt/juno/junocli get -s proxy:<proxy_port> -c config.toml -ns test_ns test_key'
+```
+
+3. UPDATE
 ```bash
-nc -vz proxy 5080
+docker exec -it junoclient bash -c '/opt/juno/junocli update -s proxy:<proxy_port> -c config.toml -ns test_ns test_key test_value_updated'
+#the value and version number will be updated. You can check this by using the GET command again.
 ```
 
+4. DESTROY
+```bash
+docker exec -it junoclient bash -c '/opt/juno/junocli destroy -s proxy:<proxy_port> -c config.toml -ns test_ns test_key'
+```
 
-You can also test the junodb server by running junoload from the docker client. 
-See instructions [here](docs/junoload.md) 
+More about junocli [here](docs/junocli.md) <br>
+
+<br>
+
+### Junoload<br>
+The following command logs in to the docker client and runs the ./junoload command directly. The proxy ip is aliased as "proxy"
+```bash 
+docker exec -it junoclient bash -c '/opt/juno/junoload -s proxy:5080 -ssl -c config.toml -o 1'
+```
+More about junoload [here](docs/junoload.md) 
+
 <br>
 
 
@@ -223,9 +259,16 @@ script/deploy.sh
 ```bash
 #Validate if deploy was successful by checking if the proxy (junoserv), storage (junostorageserv), and etcd (junoclusterserv) processes are running
 ps -eaf | grep juno
+#There should be 41 processes running
+#5 for junoclusterserv (3 logs, 1 etcdsvr.py, 1 etcdsvr_exe)
+#20 for junostorageserv (6 logs, 1 manager, 12 workers, 1 monitor)
+#16 for junoserv (6 logs, 1 manager, 8 workers, 1 monitor)
 ```
 <br>
 
+### Test out the server using junocli and junoload command
+See instructions for junocli [here](docs/junocli.md) <br>
+See instructions for junoload [here](docs/junoload.md) 
 
 ### Run functional tests
 ```bash
@@ -244,7 +287,4 @@ cd script/test/unittest
 $BUILDTOP/release-binary/tool/go/bin/go test -v
 ```
 
-### Test out the server using junoload command
-
-See instructions [here](docs/junoload.md) 
 
