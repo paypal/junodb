@@ -129,7 +129,6 @@ const (
 
 // default OTEL configurations point to QA collector
 var DEFAULT_OTEL_COLLECTOR_PROTOCOL string = "http"
-var DEFAULT_OTEL_COLLECTOR__IP string = "otelmetrics-pp-observability.us-central1.gcp.dev.paypalinc.com"
 var DEFAULT_GRPC_OTEL_COLLECTOR_PORT string = "30705"
 var DEFAULT_HTTP_OTEL_COLLECTOR_PORT string = "30706"
 var COLLECTOR_POLLING_INTERVAL_SECONDS int32 = 5

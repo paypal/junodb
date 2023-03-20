@@ -1,7 +1,7 @@
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 # Storage config file
 
 Can be found in junodb/package_config/package/junostorageserv/config/config.toml
-
 
 ## Explanation of parameters that may be configured by the user. The values shown are the default values. 
 

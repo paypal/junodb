@@ -22,7 +22,7 @@ public class SocketConfig extends SocketConfigHolder {
 	
 	public SocketConfig(boolean mode) {
 		
-		host = "10.183.38.11";
+		host = "localhost";
 		port = 8080;
 		useSSL = false;
 		
