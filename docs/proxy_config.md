@@ -1,6 +1,7 @@
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 # Proxy config file
 
-Can be found in junodb/package_config/package/junoserv/config/config.toml
+Can be found in junodb/script/deploy/junoserv/config/config.toml
 
 
 ## Explanation of parameters that may be configured by the user. The values shown are the default values. 
