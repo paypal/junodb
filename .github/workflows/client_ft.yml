@@ -1,0 +1,90 @@
+name: Client FT
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+    paths-ignore:
+      - ".github/workflows/**"
+  pull_request:
+    branches:
+      - main
+    paths-ignore:
+      - ".github/workflows/**"
+  workflow_dispatch:
+
+jobs:
+  client-ft:
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        go_version: ["^1.18.2"]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Get code
+        uses: actions/checkout@v3
+      - name: Install golang
+        uses: actions/setup-go@v3
+        with:
+          go-version: "${{ matrix.go_version }}"
+      - name: Cache rocksdb/snappy dependencies
+        uses: actions/cache@v3
+        with:
+          path: release-binary/vendor
+          key: deps-rocksdb-snappy-staticlib-${{ hashFiles('**/binary_build/build.sh','**/third_party/patches/rocksdb/**') }}
+      - name: Cache go and cmake dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cache/go-build
+            ~/go/pkg/mod
+            release-binary/vendor/tool
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum','**/binary_build/build.sh') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
+      - name: Install Build dependencies
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install build-essential daemontools libgflags-dev
+          sudo apt install openssl -y
+          echo "***********************************************************"
+          echo "Dependencies version"
+          echo "********************==========*****************************"
+          echo "GCC Version:" `gcc --version`
+          echo "G++ Version:" `g++ --version`
+          echo "Openssl Version:" `openssl version`
+          echo "Check Multilog:" `which multilog`
+          echo "********************==========*****************************"
+      - name: Build
+        id: run-build
+        run: |
+          echo "***********************************************************"
+          echo "Deploy Juno Binaries"
+          echo "********************==========*****************************"
+          export BUILDTOP=`pwd`
+          binary_build/build.sh
+      - name: Deploy
+        run: |
+          echo "***********************************************************"
+          echo "Deploy Juno Services"
+          echo "********************==========*****************************"
+          export BUILDTOP=`pwd`
+          export JUNO_BUILD_DIR=$BUILDTOP/release-binary/code-build
+          script/deploy.sh
+      - name: Validate
+        run: |
+          echo "***********************************************************"
+          echo "Validate Juno Services"
+          echo "********************==========*****************************"
+          ps -eaf | grep juno
+      - uses: actions/checkout@v3
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: "11"
+          distribution: "zulu"
+      - name: Build with Maven
+        run: mvn -B -U install --file client/Java/Juno/pom.xml
+      - name: Run functional tests
+        run: mvn -B -U install --file client/Java/Juno/FunctionalTests/pom.xml

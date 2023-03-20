@@ -23,7 +23,6 @@ import (
 	"juno/cmd/proxy/config"
 	"juno/pkg/io"
 	cal "juno/pkg/logging/cal/config"
-	sherlock "juno/pkg/logging/sherlock"
 	"juno/pkg/sec"
 	"juno/pkg/util"
 )
@@ -69,5 +68,4 @@ type ClusterConfig struct {
 	AddRemoveSecondHost     string
 	EtcdServerRestartGitDir string
 	Sec                     sec.Config
-	Sherlock                sherlock.Config
 }
