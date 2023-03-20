@@ -1,3 +1,4 @@
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 # Frequently Asked Questions
 
 1. I can't login to docker after ./setup.sh?
@@ -25,4 +26,32 @@
 * In a web browser, in the URL box, type <proxy_ip>:<proxy_monitoring_port><br>
 * This should open the proxy monitoring page<br>
 
+<br>
+5. How do I see the logs? <br>
+* For manual build, 
+```bash 
+#etcd logs
+cat $BUILDTOP/script/deploy/junoclusterserv/logs/current
 
+
+#junostorageserv logs
+cat $BUILDTOP/script/deploy/junostorageserv/logs/current
+
+
+#junoserv logs
+cat $BUILDTOP/script/deploy/junoserv/logs/current
+```
+
+* For docker
+```bash
+#docker logs <container_name> will print the logs for docker
+
+#etcd logs 
+docker logs etcd
+
+#junostorageserv logs 
+docker logs storageserv
+
+#junoserv logs 
+docker logs proxy
+```
