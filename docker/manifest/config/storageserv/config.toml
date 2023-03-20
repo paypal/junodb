@@ -33,4 +33,5 @@ DbWatchEnabled=true
 
 [DB]
   [[DB.DbPaths]]
-    Path = "/dev/shm/data"
+    #Path = "/dev/shm/data"
+    Path = "/opt/juno/data"

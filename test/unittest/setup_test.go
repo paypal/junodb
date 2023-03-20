@@ -1,22 +1,22 @@
-//  
+//
 //  Copyright 2023 PayPal Inc.
-//  
+//
 //  Licensed to the Apache Software Foundation (ASF) under one or more
 //  contributor license agreements.  See the NOTICE file distributed with
 //  this work for additional information regarding copyright ownership.
 //  The ASF licenses this file to You under the Apache License, Version 2.0
 //  (the "License"); you may not use this file except in compliance with
 //  the License.  You may obtain a copy of the License at
-//  
+//
 //     http://www.apache.org/licenses/LICENSE-2.0
-//  
+//
 //  Unless required by applicable law or agreed to in writing, software
 //  distributed under the License is distributed on an "AS IS" BASIS,
 //  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
-//  
- 
+//
+
 package unittest
 
 import (
@@ -56,15 +56,15 @@ var hostip = "127.0.0.1"
 
 func mainSetup() {
 	testConfig.ProxyConfig.ClusterInfo.ConnInfo = [][]string{
-		{"localhost:5010", "localhost:5011", "localhost:5012"},
-		{"localhost:6010", "localhost:6011", "localhost:6012"},
-		{"localhost:7010", "localhost:7011", "localhost:7012"},
-		{"localhost:8010", "localhost:8011", "localhost:8012"},
-		{"localhost:9010", "localhost:9011", "localhost:9012"}}
+		{"127.0.0.1:5010", "127.0.0.1:5011", "127.0.0.1:5012"},
+		{"127.0.0.1:6010", "127.0.0.1:6011", "127.0.0.1:6012"},
+		{"127.0.0.1:7010", "127.0.0.1:7011", "127.0.0.1:7012"},
+		{"127.0.0.1:8010", "127.0.0.1:8011", "127.0.0.1:8012"},
+		{"127.0.0.1:9010", "127.0.0.1:9011", "127.0.0.1:9012"}}
 
 	testConfig.ProxyConfig.ClusterInfo.NumShards = 100
 	testConfig.ProxyConfig.ClusterInfo.NumZones = 5
-	testConfig.ProxyConfig.Outbound.ReconnectIntervalBase=15000	//time to wait for proxy to connect to ss
+	testConfig.ProxyConfig.Outbound.ReconnectIntervalBase = 15000 //time to wait for proxy to connect to ss
 
 	var chWatch chan int
 	var rw cluster.IReader
@@ -87,7 +87,7 @@ func mainSetup() {
 	cluster.Initialize(&cluster.ClusterInfo[0], &testConfig.ProxyConfig.Outbound, chWatch, rw, nil, nil)
 	glog.Info("wait 20 secs for storageserv start up, then start TestCluster")
 	time.Sleep(20 * time.Second)
-	TestCluster.Start()	//wait and start TestCluster after ss port is up
+	TestCluster.Start() //wait and start TestCluster after ss port is up
 
 	cliCfg := client.Config{
 		Server:            testConfig.ProxyAddress,
@@ -141,7 +141,7 @@ func TestMain(m *testing.M) {
 		}
 		os.Exit(0)
 	}(sigs)
-	glog.Info("start storageserv, please wait")
+	glog.Warning("start server, please wait")
 	mainSetup()
 	rc := m.Run()
 	mainTeardown()

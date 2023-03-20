@@ -10,7 +10,6 @@ require (
 	github.com/facebookgo/ensure v0.0.0-20200202191622-63f1cf65ac4c
 	github.com/golang/protobuf v1.5.2
 	github.com/golang/snappy v0.0.4
-	github.com/graphql-go/graphql v0.8.0
 	github.com/satori/go.uuid v1.2.0
 	github.com/signalfx/golib/v3 v3.3.45
 	github.com/spaolacci/murmur3 v1.1.0

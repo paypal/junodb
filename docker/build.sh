@@ -39,14 +39,20 @@ wd=`pwd`
 # Fetch junosrc
 make image_tag=${image_tag} docker_repo=${docker_repo} source_repo=${source_repo} source_branch=${source_branch} copysrc
 
-# Build juno
-make image_tag=${image_tag} docker_repo=${docker_repo} source_repo=${source_repo} source_branch=${source_branch} GoLangVersion=${GoLangVersion} build
+if [ -z ${ACTIONS_CACHE_URL+x} ]; then
+  # Build juno normally
+  make image_tag=${image_tag} docker_repo=${docker_repo} source_repo=${source_repo} source_branch=${source_branch} GoLangVersion=${GoLangVersion} build
+else
+  # Build juno using buildx (uses gha caching)
+  make image_tag=${image_tag} docker_repo=${docker_repo} source_repo=${source_repo} source_branch=${source_branch} GoLangVersion=${GoLangVersion} buildx
+fi
 
 # Build Docker images
 make image_tag=${image_tag} docker_repo=${docker_repo} source_repo=${source_repo} source_branch=${source_branch} build_junoclusterserv
 make image_tag=${image_tag} docker_repo=${docker_repo} source_repo=${source_repo} source_branch=${source_branch} build_junoclustercfg
 make image_tag=${image_tag} docker_repo=${docker_repo} source_repo=${source_repo} source_branch=${source_branch} build_junoserv
 make image_tag=${image_tag} docker_repo=${docker_repo} source_repo=${source_repo} source_branch=${source_branch} build_junostorageserv
+make image_tag=${image_tag} docker_repo=${docker_repo} source_repo=${source_repo} source_branch=${source_branch} build_junoclient
 
 
 # Set the app version using image_tag in manifest/.env
@@ -54,4 +60,7 @@ sed -i "s#.*VERSION=.*#VERSION=${image_tag}#g" ${wd}/manifest/.env
 
 # Generate the test secrets to initialize proxy
 manifest/config/secrets/gensecrets.sh
+
+# Generate the data dir for storage
+mkdir -p manifest/config/storageserv/data && chmod -R 777 manifest/config/storageserv/data
 

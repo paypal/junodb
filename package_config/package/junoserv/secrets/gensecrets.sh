@@ -17,7 +17,7 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #  
-
+ 
 
 # Generate TLS secrets
 rm *.pem *.crt *.csr *.srl *.cfg
@@ -72,3 +72,5 @@ hexKeys = [
 $(count=10;for i in $(seq $count); do echo \"`openssl rand -hex 32`\",;done)
 ]
 EOF
+
+chmod 755 server.pem server.crt ca.crt keystore.toml

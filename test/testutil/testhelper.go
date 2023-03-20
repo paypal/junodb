@@ -1,22 +1,22 @@
-//  
+//
 //  Copyright 2023 PayPal Inc.
-//  
+//
 //  Licensed to the Apache Software Foundation (ASF) under one or more
 //  contributor license agreements.  See the NOTICE file distributed with
 //  this work for additional information regarding copyright ownership.
 //  The ASF licenses this file to You under the Apache License, Version 2.0
 //  (the "License"); you may not use this file except in compliance with
 //  the License.  You may obtain a copy of the License at
-//  
+//
 //     http://www.apache.org/licenses/LICENSE-2.0
-//  
+//
 //  Unless required by applicable law or agreed to in writing, software
 //  distributed under the License is distributed on an "AS IS" BASIS,
 //  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
-//  
-  
+//
+
 package testutil
 
 import (
@@ -610,7 +610,7 @@ func RemoveLog(t *testing.T, hostip string, inProxy bool) error {
 	var cmd string
 
 	if inProxy == true { //this is not really be used now
-		cmd = "echo -n > " +  "./server/proxy.log; /bin/rm -rf " + "./cal.log"
+		cmd = "echo -n > " + "./server/proxy.log; /bin/rm -rf " + "./cal.log"
 		glog.Info("remove command is ", cmd)
 		_, err := exec.Command("bash", "-c", cmd).Output()
 		if err != nil {
@@ -918,8 +918,8 @@ func CopyCtlMgr(hostip string) {
 			hostip + ":/tmp; ssh " + hostip + " 'sudo -u website cp /tmp/ctlmgr.sh /tmp/connInfo " +
 			dirConfig.SSdir + "; /bin/rm -rf /tmp/ctlmgr.sh /tmp/connInfo; ' "
 	} else {
-                cmd = "sudo -u website cp " + dirConfig.Githubdir + "/cmd/etcdsvr/test/ctlmgr.sh " +
-                        dirConfig.Githubdir + "/test/functest/etcd_test/connInfo " +  dirConfig.SSdir + ";"
+		cmd = "sudo -u website cp " + dirConfig.Githubdir + "/cmd/etcdsvr/test/ctlmgr.sh " +
+			dirConfig.Githubdir + "/test/functest/etcd_test/connInfo " + dirConfig.SSdir + ";"
 	}
 
 	glog.Info("CopyCtlMgr \"" + cmd + " \"")
@@ -928,21 +928,21 @@ func CopyCtlMgr(hostip string) {
 }
 
 func RunlimitsConfig(t *testing.T, hostip string) {
-        var cmd string
-        if ResolveHostIp() != hostip {
-                cmd = "scp " + dirConfig.Githubdir + "/test/functest/limits_def.toml " + hostip +
-                   ":/tmp; sudo -u website cp /tmp/limits_def.toml " + dirConfig.Proxydir + "; ssh " + hostip + " '" +
-                   dirConfig.Proxydir + "/junocfg set --config " + dirConfig.Proxydir + "/limits_def.toml '; "
-        } else {
-                cmd = "sudo -u website cp " + dirConfig.Githubdir + "/test/functest/limits_def.toml " +
-                      dirConfig.Proxydir + "; " + dirConfig.Proxydir + "/junocfg set --config " + dirConfig.Proxydir +
-                      "/limits_def.toml > /tmp/haha; "
-        }
-        glog.Info("RunlimitsConfig \"" + cmd + " \"")
-        _, err := exec.Command("bash", "-c", cmd).Output()
-        if err != nil {
-              t.Error("RunlimitsConfig fail", err)
-        }
+	var cmd string
+	if ResolveHostIp() != hostip {
+		cmd = "scp " + dirConfig.Githubdir + "/test/functest/limits_def.toml " + hostip +
+			":/tmp; sudo -u website cp /tmp/limits_def.toml " + dirConfig.Proxydir + "; ssh " + hostip + " '" +
+			dirConfig.Proxydir + "/junocfg set --config " + dirConfig.Proxydir + "/limits_def.toml '; "
+	} else {
+		cmd = "sudo -u website cp " + dirConfig.Githubdir + "/test/functest/limits_def.toml " +
+			dirConfig.Proxydir + "; " + dirConfig.Proxydir + "/junocfg set --config " + dirConfig.Proxydir +
+			"/limits_def.toml > /tmp/haha; "
+	}
+	glog.Info("RunlimitsConfig \"" + cmd + " \"")
+	_, err := exec.Command("bash", "-c", cmd).Output()
+	if err != nil {
+		t.Error("RunlimitsConfig fail", err)
+	}
 }
 
 func LoadInitConfig(hostip string) {
@@ -1087,16 +1087,16 @@ func ZoneMarkup(t *testing.T, hostip string) {
 }
 
 func AbortRedist(t *testing.T, hostip string) {
-        var cmd string
-        if ResolveHostIp() != hostip {
-                cmd = "ssh " + hostip + " \"bash -c 'cd " + dirConfig.SSdir + ";" + " sudo -u website " + dirConfig.SSdir +
-                        "/ctlmgr.sh abort new_config.toml > /dev/null 2>&1 '; \" "
-        } else {
-                cmd = "bash -c 'cd " + dirConfig.SSdir + ";" + " sudo -u website " + dirConfig.Githubdir +
-                        "/cmd/etcdsvr/test/ctlmgr.sh abort new_config.toml > /dev/null 2>&1 '; "
-        }
-        glog.Info("AbortRedist \"" + cmd + " \"")
-        exec.Command("bash", "-c", cmd).Output()
+	var cmd string
+	if ResolveHostIp() != hostip {
+		cmd = "ssh " + hostip + " \"bash -c 'cd " + dirConfig.SSdir + ";" + " sudo -u website " + dirConfig.SSdir +
+			"/ctlmgr.sh abort new_config.toml > /dev/null 2>&1 '; \" "
+	} else {
+		cmd = "bash -c 'cd " + dirConfig.SSdir + ";" + " sudo -u website " + dirConfig.Githubdir +
+			"/cmd/etcdsvr/test/ctlmgr.sh abort new_config.toml > /dev/null 2>&1 '; "
+	}
+	glog.Info("AbortRedist \"" + cmd + " \"")
+	exec.Command("bash", "-c", cmd).Output()
 }
 
 /***********************************************************

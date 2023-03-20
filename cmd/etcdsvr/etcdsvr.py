@@ -354,7 +354,8 @@ class Manager():
                 self.logger.error("[MANAGER] %s" % (msg))
             
             result = subprocess.check_output(cmd_health, shell=True)
-            if "is healthy" in result:
+            health_check_bytes = str.encode("is healthy")
+            if health_check_bytes in result:
                 return True
 
         self.logger.info("[MANAGER] %s" % (result))
