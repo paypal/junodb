@@ -1,22 +1,22 @@
-//  
+//
 //  Copyright 2023 PayPal Inc.
-//  
+//
 //  Licensed to the Apache Software Foundation (ASF) under one or more
 //  contributor license agreements.  See the NOTICE file distributed with
 //  this work for additional information regarding copyright ownership.
 //  The ASF licenses this file to You under the Apache License, Version 2.0
 //  (the "License"); you may not use this file except in compliance with
 //  the License.  You may obtain a copy of the License at
-//  
+//
 //     http://www.apache.org/licenses/LICENSE-2.0
-//  
+//
 //  Unless required by applicable law or agreed to in writing, software
 //  distributed under the License is distributed on an "AS IS" BASIS,
 //  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
-//  
-  
+//
+
 package proto
 
 import (
@@ -170,37 +170,6 @@ func (p *Payload) Encrypt(pType PayloadType) (err error) {
 
 	return
 }
-
-//	if p.GetPayloadType() == proto.PayloadTypeClear {
-//		var key []byte
-//		var version uint32
-//		var block cipher.Block
-//		var gcm cipher.AEAD
-//
-//		ks := &testKeyStoreT{}
-//
-//		if key, version, err = ks.GetEncryptionKey(); err == nil {
-//			fmt.Printf("key: %X version: %d", key, version)
-//			if block, err = aes.NewCipher(key); err == nil {
-//
-//				if gcm, err = cipher.NewGCM(block); err == nil {
-//					var nonce [12]byte
-//					if _, err = io.ReadFull(rand.Reader, nonce[:]); err == nil {
-//
-//						encryptedData := gcm.Seal(nil, nonce[:], p.GetData(), nil)
-//						newData := make([]byte, 4+12+len(encryptedData))
-//						binary.BigEndian.PutUint32(newData[:4], version)
-//						copy(newData[4:4+12], nonce[:])
-//						copy(newData[4+12:], encryptedData)
-//						p.SetPayload(proto.PayloadTypeEncryptedByProxy, newData)
-//					}
-//				}
-//			}
-//		}
-//		//		util.HexDump(p.GetData())
-//	} else {
-//		err = fmt.Errorf("tag not 0")
-//	}
 
 func (p *Payload) Decrypt() (err error) {
 	if p.GetLength() == 0 || p.tag == PayloadTypeClear {

@@ -1,22 +1,22 @@
-//  
+//
 //  Copyright 2023 PayPal Inc.
-//  
+//
 //  Licensed to the Apache Software Foundation (ASF) under one or more
 //  contributor license agreements.  See the NOTICE file distributed with
 //  this work for additional information regarding copyright ownership.
 //  The ASF licenses this file to You under the Apache License, Version 2.0
 //  (the "License"); you may not use this file except in compliance with
 //  the License.  You may obtain a copy of the License at
-//  
+//
 //     http://www.apache.org/licenses/LICENSE-2.0
-//  
+//
 //  Unless required by applicable law or agreed to in writing, software
 //  distributed under the License is distributed on an "AS IS" BASIS,
 //  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
-//  
-  
+//
+
 package io
 
 import (
@@ -34,7 +34,7 @@ import (
 	"juno/third_party/forked/golang/glog"
 
 	"juno/pkg/io/ioutil"
-    "juno/pkg/logging/cal"
+	"juno/pkg/logging/cal"
 	"juno/pkg/proto"
 	"juno/pkg/proto/mayfly"
 	"juno/pkg/util"
@@ -96,15 +96,15 @@ func NewOutboundConnector(id int, c net.Conn, reqCh chan IRequestContext, monCh 
 		config.IOBufSize = 64000
 	}
 	p = &OutboundConnector{
-		id:         id,
-		conn:       c,
-		reader:     util.NewBufioReader(c, config.IOBufSize),
-		reqCh:      reqCh,
-		reqPending: util.NewRingBufferWithExtra(uint32(config.MaxPendingQueSize - 1),
-                    uint32(config.PendingQueExtra)),
-		doneCh:     make(chan struct{}),
-		monitorCh:  monCh,
-		config:     config,
+		id:     id,
+		conn:   c,
+		reader: util.NewBufioReader(c, config.IOBufSize),
+		reqCh:  reqCh,
+		reqPending: util.NewRingBufferWithExtra(uint32(config.MaxPendingQueSize-1),
+			uint32(config.PendingQueExtra)),
+		doneCh:    make(chan struct{}),
+		monitorCh: monCh,
+		config:    config,
 	}
 
 	// set bigger bufio size
@@ -253,19 +253,19 @@ func (p *OutboundConnector) writeLoop() {
 	// TODO: remove later
 	max_buf_size := p.config.MaxBufferedWriteSize
 
-    var reqCh chan IRequestContext
-    var chTimeout <-chan time.Time = nil
-    queCheckTimer := util.NewTimerWrapper(1 * time.Millisecond)
+	var reqCh chan IRequestContext
+	var chTimeout <-chan time.Time = nil
+	queCheckTimer := util.NewTimerWrapper(1 * time.Millisecond)
 
 	for {
-        if p.reqPending.IsFull() {
-            reqCh = nil
-            queCheckTimer.Reset(1 * time.Millisecond)
-            chTimeout = queCheckTimer.GetTimeoutCh()
-        } else {
-            reqCh = p.reqCh
-            chTimeout = nil
-        }
+		if p.reqPending.IsFull() {
+			reqCh = nil
+			queCheckTimer.Reset(1 * time.Millisecond)
+			chTimeout = queCheckTimer.GetTimeoutCh()
+		} else {
+			reqCh = p.reqCh
+			chTimeout = nil
+		}
 
 		select {
 		case <-p.doneCh:
@@ -281,7 +281,7 @@ func (p *OutboundConnector) writeLoop() {
 			nreqs := 0
 			if req != nil {
 				if k, err := funBufferForWrite(req); err != nil {
-                    cal.Event("OutBoundErr", "WriteErr1", cal.StatusSuccess, nil)
+					cal.Event("OutBoundErr", "WriteErr1", cal.StatusSuccess, nil)
 					glog.Error(err)
 					return
 				} else {
@@ -302,7 +302,7 @@ func (p *OutboundConnector) writeLoop() {
 
 					if req != nil {
 						if k, err := funBufferForWrite(req); err != nil {
-                            cal.Event("OutBoundErr", "WriteErr1", cal.StatusSuccess, nil)
+							cal.Event("OutBoundErr", "WriteErr1", cal.StatusSuccess, nil)
 							glog.Error(err)
 							return
 						} else {
@@ -322,7 +322,7 @@ func (p *OutboundConnector) writeLoop() {
 					if netErr, ok := err.(net.Error); ok && netErr.Temporary() {
 						continue
 					} else {
-                        cal.Event("OutBoundErr", "WriteErr2", cal.StatusSuccess, nil)
+						cal.Event("OutBoundErr", "WriteErr2", cal.StatusSuccess, nil)
 						glog.Error(err)
 						return
 					}
@@ -342,7 +342,7 @@ func (p *OutboundConnector) writeLoop() {
 					glog.Verbosef("nerr: %s", netErr)
 					continue
 				} else {
-                    cal.Event("OutBoundErr", "WriteErr2", cal.StatusSuccess, nil)
+					cal.Event("OutBoundErr", "WriteErr2", cal.StatusSuccess, nil)
 					glog.Error(err)
 					return
 				}
@@ -350,8 +350,8 @@ func (p *OutboundConnector) writeLoop() {
 			if buf.Len() == 0 {
 				chHavingDataToWrite = nil
 			}
-        case <- chTimeout:
-            continue
+		case <-chTimeout:
+			continue
 		}
 	}
 }
@@ -410,7 +410,7 @@ func (p *OutboundConnector) readLoop() {
 				// the response has arrived, go ahead with ressponse
 				p.conn.SetReadDeadline(time.Now().Add(1000 * time.Millisecond))
 				if resp, err := p.newResponseContext(); err == nil {
-					//glog.Infof("%s receiving response", p.displayName)
+					//glog.Debugf("%s receiving response", p.displayName)
 					p.sendResponse(resp)
 				} else {
 					glog.Debugln("Outbound::readLoop: ", err)
@@ -442,6 +442,7 @@ func (p *OutboundConnector) newResponseContext() (ctx IResponseContext, err erro
 			ctx = resp
 		}
 	} else if bytes.Compare(b[:4], mayfly.MayflyMagic[:]) == 0 {
+		// only needed for legacy enviroment. cleanup when migrations are done.
 		szMessage := binary.BigEndian.Uint32(b[4:8])
 		raw := make([]byte, szMessage)
 		copy(raw[:12], b[:12])
@@ -462,7 +463,6 @@ func (p *OutboundConnector) newResponseContext() (ctx IResponseContext, err erro
 			return
 		}
 		ctx = resp
-
 	} else {
 		err = fmt.Errorf("protocol not supported. magic: %v", b[:4])
 		return
