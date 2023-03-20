@@ -42,6 +42,25 @@ sudo apt install openjdk-8-jdk
 sudo apt-get install maven
 ```
 
+If compiling with Java 8, please remove the following from [juno-client-impl/pom.xml](juno-client-impl/pom.xml) and [FunctionalTests/pom.xml](FunctionalTests/pom.xml)
+
+```agsl
+<build>
+    <plugins>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <version>2.12.4</version>
+            <configuration>
+                <argLine>
+                    --add-opens java.base/jdk.internal.misc=ALL-UNNAMED
+                </argLine>
+            </configuration>
+        </plugin>
+    </plugins>
+</build>
+```
+
 ## Quick Start
 The easiest way is to download the jar as well as its transitive dependencies through maven:
 ```

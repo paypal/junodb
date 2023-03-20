@@ -85,7 +85,9 @@ jobs:
           java-version: "11"
           distribution: "zulu"
       - name: Build with Maven
-        run: mvn -B -U install --file client/Java/Juno/pom.xml
+        run: |
+          client/Java/Juno/juno-client-impl/src/test/resources/secrets/gensecrets.sh
+          mvn -B -U install --file client/Java/Juno/pom.xml
       - name: Run functional tests
         run: |
           client/Java/Juno/FunctionalTests/src/test/resources/secrets/gensecrets.sh 
