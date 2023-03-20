@@ -3,9 +3,17 @@
 # Sample Juno
 If you're compiling the Juno Libraries locally, please complete the [Prerequisite - how to compile library locally](../../../Juno/CompileLibraryLocally.md)
 
+## Dependencies
+Java 8 and Maven is required.
+
+```shell
+sudo apt install openjdk-8-jdk
+sudo apt-get install maven
+```
+
 ## Quick Start
 In the [junoreferenceAppService POM](junoreferenceAppService/pom.xml), add the dependency of the library as such. 
-<br>We're using the GroupID, ArtifactID and VersionID from the [Official Juno Library on Maven](), but if installing the library locally then use the [GROUP], [ARTIFCACT ID], and [VERSION] defined in the [Prerequisite](../../../Juno/CompileLibraryLocally.md). 
+<br>We're using the GroupID, ArtifactID and VersionID from the [Official Juno Library on Maven]().
 
 ```
     <dependency>
@@ -20,7 +28,22 @@ In the [junoreferenceAppService POM](junoreferenceAppService/pom.xml), add the d
     </dependency>
 ```
 
+But if installing the library locally then use the [GROUP], [ARTIFCACT ID], and [VERSION] defined in the [Prerequisite](../../../Juno/CompileLibraryLocally.md) installation step.
+```
+    <dependency>
+      <groupId>com.paypal.juno</groupId>
+      <artifactId>juno-api</artifactId>
+      <version>1.0</version>
+    </dependency>
+    <dependency>
+      <groupId>com.paypal.juno</groupId>
+      <artifactId>juno-impl</artifactId>
+      <version>2.0</version>
+    </dependency>
+```
+
 ### Generating Secrets
+For the TLS/SSL Handshake with the Server, we need to have the Private Keys of the System for the Client to use. <br> 
 Please execute the [gensecrets.sh](junoreferenceAppService/src/main/resources/secrets/gensecrets.sh) file, inside the [resources/secret](junoreferenceAppService/src/main/resources/secrets) folder, to generate the required secrets for your system by executing the following commands:
 
 ```agsl
@@ -377,7 +400,7 @@ curl --location --request PUT 'http://localhost:8080/samplejuno/asyncset' \
  Delete Request 
 
 ```
-curl --locaticurl --location --request DELETE 'http://localhost:8080/samplejuno/asyncdelete/test1'
+curl --location --request DELETE 'http://localhost:8080/samplejuno/asyncdelete/test1'
 ```
 
 
