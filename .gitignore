@@ -1,3 +1,59 @@
 .DS_Store
 *.pyc
 release-binary
+
+.DS_Store
+*.pyc
+release-binary
+
+*.class
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+
+# All target directories
+*/target/**
+
+# All .DS_Paths and .idea files
+.DS_Store
+.idea
+
+# Mac OSX system files
+.DS_Store
+.localized
+
+# In case files are copied from SVN
+.svn/
+
+# Maven build files
+target/
+
+# Temporary files
+*~
+
+# Compiled class file
+*.class
+
+# Log files
+*.log
+
+# Java artifacts
+*.class
+*.jar
+*.war
+*.ear
+
+# IntelliJ
+.idea/
+*.iml
+*.ipr
+*.iws
+*.rdb
