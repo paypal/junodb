@@ -59,7 +59,7 @@ public class BatchReactCreateTest{
 	public void setup() throws  IOException, InterruptedException {
 		LOGGER = LoggerFactory.getLogger(BatchCreateTest.class);
 
-		URL url = BatchCreateTest.class.getResource("/com/paypal/platform/juno/Juno_batch.properties");
+		URL url = BatchCreateTest.class.getResource("/com/paypal/juno/Juno_batch.properties");
 		pConfig = new Properties();
 		pConfig.load(url.openStream());
 		LOGGER.debug("Read syncFlag");

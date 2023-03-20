@@ -24,8 +24,8 @@ limitations under the License.
 	<test verbose="1" name="Juno Integration Test" annotations="JDK">
 		<packages>
 			<package name="com.paypal.qa.juno.*">
-				<exclude name="com.paypal.qa.juno.mthreadload"></exclude>
-				<exclude name="com.paypal.qa.juno.interop"></exclude>
+				<exclude name="com.paypal.qa.juno.BatchReactSubscriber"></exclude>
+				<exclude name="com.paypal.qa.juno.DataGenUtils"></exclude>
 			</package>
 			<package name="com.paypal.qa.juno.usf.*">
 				<exclude name="com.paypal.qa.juno.usf.JunoUSFFactoryRChild"></exclude>
@@ -36,28 +36,29 @@ limitations under the License.
 			<class name="com.paypal.qa.juno.BatchCreateTest"/>
 			<class name="com.paypal.qa.juno.BatchDestroyTest"/>
 			<class name="com.paypal.qa.juno.BatchGetTest"/>
-			<class name="com.paypal.qa.juno.BatchSetTest"/>
-			<class name="com.paypal.qa.juno.BatchUpdateTest"/>
 			<class name="com.paypal.qa.juno.BatchReactCreateTest"/>
 			<class name="com.paypal.qa.juno.BatchReactDestroyTest"/>
 			<class name="com.paypal.qa.juno.BatchReactGetTest"/>
 			<class name="com.paypal.qa.juno.BatchReactSetTest"/>
 			<class name="com.paypal.qa.juno.BatchReactUpdateTest"/>
+			<class name="com.paypal.qa.juno.BatchSetTest"/>
+			<class name="com.paypal.qa.juno.BatchTestSubscriber"/>
+			<class name="com.paypal.qa.juno.BatchUpdateTest"/>
 			<class name="com.paypal.qa.juno.ConditionalUpdateTest"/>
 			<class name="com.paypal.qa.juno.ConnectionPoolingTest"/>
 			<class name="com.paypal.qa.juno.CreateTest"/>
 			<class name="com.paypal.qa.juno.DestroyTest"/>
 			<class name="com.paypal.qa.juno.GetTest"/>
-			<class name="com.paypal.qa.juno.SetTest"/>
 			<class name="com.paypal.qa.juno.Juno20ClientConfigurationTest"/>
 			<class name="com.paypal.qa.juno.MetricTest"/>
-			<class name="com.paypal.qa.juno.ConnectionPoolingTest"/>
-			<class name="com.paypal.qa.juno.UpdateTest"/>
+			<class name="com.paypal.qa.juno.ReactorConditionUpdateTest"/>
 			<class name="com.paypal.qa.juno.ReactorCreateTest"/>
 			<class name="com.paypal.qa.juno.ReactorDestroyTest"/>
 			<class name="com.paypal.qa.juno.ReactorGetTest"/>
 			<class name="com.paypal.qa.juno.ReactorSetTest"/>
-			<class name="com.paypal.qa.juno.ReactorConditionUpdateTest"/>
+			<class name="com.paypal.qa.juno.ReactorUpdateTest"/>
+			<class name="com.paypal.qa.juno.SetTest"/>
+			<class name="com.paypal.qa.juno.UpdateTest"/>
 			<class name="com.paypal.qa.juno.usf.JunoUSFFactoryClientTest"/>
 			<class name="com.paypal.qa.juno.usf.JunoUSFFactoryChildTest"/>
 			<class name="com.paypal.qa.juno.usf.JunoUSFFactoryMultiClientTest"/>
