@@ -2,10 +2,6 @@
 *.pyc
 release-binary
 
-.DS_Store
-*.pyc
-release-binary
-
 *.class
 
 # Mobile Tools for Java (J2ME)
