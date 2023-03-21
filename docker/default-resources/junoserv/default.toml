@@ -1,0 +1,118 @@
+#  
+#  Copyright 2023 PayPal Inc.
+#  
+#  Licensed to the Apache Software Foundation (ASF) under one or more
+#  contributor license agreements.  See the NOTICE file distributed with
+#  this work for additional information regarding copyright ownership.
+#  The ASF licenses this file to You under the Apache License, Version 2.0
+#  (the "License"); you may not use this file except in compliance with
+#  the License.  You may obtain a copy of the License at
+#  
+#     http://www.apache.org/licenses/LICENSE-2.0
+#  
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
+#  
+ 
+ClusterName = "junoserv"
+DefaultTimeToLive = 3600
+EtcdEnabled = true 
+HttpMonAddr = ":8088"
+LogLevel = "info"
+MaxKeyLength = 128
+MaxNamespaceLength = 64
+MaxNumReqProcessors = 40000
+MaxPayloadLength = 204800
+MaxRecordVersion = 65535
+MaxTimeToLive = 259200
+NumChildren = 1
+#------------------------------------------------------------------------------------------------
+PayloadEncryptionEnabled = false
+PidFileName = "proxy.pid"
+#------------------------------------------------------------------------------------------------
+ReplicationEncryptionEnabled = false
+ReqProcessorPoolSize = 5000
+RootDir = "/opt/juno"
+ShutdownWaitTime = "10s"
+StateLogEnabled = true
+TwoPhaseDestroyEnabled = true
+
+[CAL]
+  CalType = "socket"
+  Enabled = false
+  Environment = "dev"
+  Host = "127.0.0.1"
+  MessageQueueSize = 10000
+  Poolname = "junoserv"
+  Port = 1118
+
+[ClusterInfo]
+  NumShards = 1024
+  NumZones = 5
+
+[Etcd]
+#------------------------------------------------------------------------------------------------
+  Endpoints = ["127.0.0.1:25716"]
+  CacheDir = "cache/"
+
+[IO]
+  [IO.default]
+    HandshakeTimeout = "2s"
+    IOBufSize = 65536
+    IdleTimeout = "2m0s"
+    MaxBufferedWriteSize = 65536
+    ReadTimeout = "1000ms"
+    RequestTimeout = "2s"
+    WriteTimeout = "1000ms"
+
+[[Listener]]
+  Addr = ":8080"
+
+[[Listener]]
+  Addr = ":5080"
+  SSLEnabled = true
+
+[Outbound]
+  ConnectTimeout = "1s"
+  IOBufSize = 65536
+  MaxBufferedWriteSize = 65536
+  MaxPendingQueSize = 8092
+  NumConnsPerTarget = 1
+  ReconnectIntervalBase = 100
+  ReconnectIntervalMax = 60000
+  ReqChanBufSize = 8092
+
+[ReqProc]
+  SSReqTimeout = "500ms"
+
+[Sec]
+#------------------------------------------------------------------------------------------------
+  AppName = "junoserv"
+
+[Sherlock]
+#------------------------------------------------------------------------------------------------
+  Enabled = false
+  Resolution = 60
+#------------------------------------------------------------------------------------------------
+  SherlockProfile = "junoserv"
+#------------------------------------------------------------------------------------------------
+  SherlockSvc = "junoserv"
+
+
+[Replication]
+  [Replication.IO]
+    [Replication.IO.default]
+      ConnectRecycleT = "3m"
+      ConnectTimeout = "5s"
+      EnableConnRecycle = true
+      IOBufSize = 65536
+      MaxBufferedWriteSize = 65536
+      MaxPendingQueSize = 8092
+      NumConnsPerTarget = 3
+      PendingQueExtra = 300
+      ReconnectIntervalBase = 100
+      ReconnectIntervalMax = 60000
+      ReqChanBufSize = 50000
