@@ -20,18 +20,8 @@ limitations under the License.
 -->
 
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Juno All Test Suite" parallel="false" verbose="1">
-	<test verbose="1" name="Juno Integration Test" annotations="JDK">
-		<packages>
-			<package name="com.paypal.qa.juno.*">
-				<exclude name="com.paypal.qa.juno.BatchReactSubscriber"></exclude>
-				<exclude name="com.paypal.qa.juno.DataGenUtils"></exclude>
-			</package>
-			<package name="com.paypal.qa.juno.usf.*">
-				<exclude name="com.paypal.qa.juno.usf.JunoUSFFactoryRChild"></exclude>
-			</package>
-		</packages>
-
+<suite name="Juno Java Client Function Test Suite" parallel="false" verbose="1">
+	<test verbose="1" name="Juno Java Client Integration Test" annotations="JDK">
 		<classes>
 			<class name="com.paypal.qa.juno.BatchCreateTest"/>
 			<class name="com.paypal.qa.juno.BatchDestroyTest"/>
@@ -42,15 +32,16 @@ limitations under the License.
 			<class name="com.paypal.qa.juno.BatchReactSetTest"/>
 			<class name="com.paypal.qa.juno.BatchReactUpdateTest"/>
 			<class name="com.paypal.qa.juno.BatchSetTest"/>
-			<class name="com.paypal.qa.juno.BatchTestSubscriber"/>
 			<class name="com.paypal.qa.juno.BatchUpdateTest"/>
 			<class name="com.paypal.qa.juno.ConditionalUpdateTest"/>
-			<class name="com.paypal.qa.juno.ConnectionPoolingTest"/>
 			<class name="com.paypal.qa.juno.CreateTest"/>
 			<class name="com.paypal.qa.juno.DestroyTest"/>
 			<class name="com.paypal.qa.juno.GetTest"/>
-			<class name="com.paypal.qa.juno.Juno20ClientConfigurationTest"/>
-			<class name="com.paypal.qa.juno.MetricTest"/>
+			<class name="com.paypal.qa.juno.BatchUpdateTest"/>
+			<class name="com.paypal.qa.juno.ConditionalUpdateTest"/>
+			<class name="com.paypal.qa.juno.CreateTest"/>
+			<class name="com.paypal.qa.juno.DestroyTest"/>
+			<class name="com.paypal.qa.juno.GetTest"/>
 			<class name="com.paypal.qa.juno.ReactorConditionUpdateTest"/>
 			<class name="com.paypal.qa.juno.ReactorCreateTest"/>
 			<class name="com.paypal.qa.juno.ReactorDestroyTest"/>
