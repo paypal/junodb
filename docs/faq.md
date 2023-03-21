@@ -11,16 +11,17 @@
 
 <br>
 
-3. How do I get the proxy ip and port for the junoload command?
+3. How do I get the proxy ip and port for the junocli and junoload command?
 * Find the proxy ip by entering ``` hostname -i``` command on the proxy machine<br>
-* Go to junodb/package_config/package/junoserv/config/config.toml<br>
+* For manual build, go to $BUILDTOP/package_config/package/junoserv/config/config.toml, for docker build go to $BUILDTOP/docker/manifest/config/proxy/config.toml <br>
 * Find the proxy listener port under ListenerPort (Example: 5080)<br>
 * Note: Use the TLS port with SSL enabled when using the -ssl flag
 
 <br>
 
 4. How do I open the proxy monitoring page?<br>
-* Go to junodb/package_config/package/junoserv/config/config.toml<br>
+* Go to $BUILDTOP/package_config/package/junoserv/config/config.toml for manual build <br>
+* Go to $BUILDTOP/docker/manifest/config/proxy/config.toml for docker build <br>
 * Find the proxy monitoring port under parameter HttpMonAddr (Example: 8088)<br>
 * Find the proxy ip by entering ``` hostname -i``` command on the proxy machine<br>
 * In a web browser, in the URL box, type <proxy_ip>:<proxy_monitoring_port><br>
@@ -28,7 +29,9 @@
 
 <br>
 5. How do I see the logs? <br>
+
 * For manual build, 
+
 ```bash 
 #etcd logs
 cat $BUILDTOP/script/deploy/junoclusterserv/logs/current
