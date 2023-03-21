@@ -43,6 +43,14 @@ Sample config file and explanation found [here](config_file_for_junoload_and_jun
 
 ## Sample JunoCLI commands
 
+proxy_ip is the ip of the machine on which the server proxy is running. Can be found using ```hostname -i``` command on the proxy machine.
+<br>
+proxy_port for manual build can be found under $BUILDTOP/package_config/package/junoserv/config/config.toml under listener ports (SSL Listener port if using SSL)
+<br>
+proxy_port for docker build can be found under $BUILDTOP/docker/manifest/config/proxy/config.toml under listener ports (SSL Listener port if using SSL)
+<br>
+<br>
+
 1. CREATE
 ```bash 
 ./junocli create -s <proxy_ip>:<proxy_port> -c config.toml -ns test_ns test_key test_value

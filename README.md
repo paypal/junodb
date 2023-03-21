@@ -6,7 +6,7 @@
 
 
 ## What is JunoDB
-JunoDB is PayPal's home-grown Secure, consistent and highly available key-value store providing low, single digit millisecond, latency at any scale. 
+JunoDB is PayPal's home-grown Secure, consistent and highly available Key-value store providing low, single digit millisecond, latency at any scale. 
 
 <details>
   <summary>JunoDB high level architecture</summary>
@@ -81,7 +81,7 @@ docker login
 #junoclustercfg
 #junoserv
 #junostorageserv
-docker/build.sh 
+./docker/build.sh 
 ```
 
 ### <h3 id="docker_run_junodb">Run JunoDB</h3>
@@ -94,7 +94,7 @@ docker/build.sh
 
 # JunoDB proxy service listens on port 
 # :5080 TLS and :8080 TCP
-docker/start.sh 
+./docker/start.sh 
 
 ```
 
@@ -105,7 +105,7 @@ docker/start.sh
 #junoclustercfg
 #junostorageserv
 #junoserv
-docker/shutdown.sh 
+./docker/shutdown.sh 
 
 ```
 
@@ -116,7 +116,7 @@ docker/shutdown.sh
 cd $BUILDTOP/docker/manifest
 
 # To run junodb services in --detach mode (recommended)
-docker compose up -d
+docker-compose up -d
 
 # Juno proxy service listens on port 
 # :5080 TLS and :8080 TCP
@@ -125,7 +125,7 @@ docker compose up -d
 docker ps
 
 # To stop junodb services
-docker compose down
+docker-compose down
 ```
 ### <h3 id="docker_secrets">Generate Secrets for Dev</h3>
 
@@ -160,23 +160,22 @@ The following commands log in to the docker client and run the ./junocli command
 
 1. CREATE
 ```bash 
-docker exec -it junoclient bash -c '/opt/juno/junocli create -s proxy:<proxy_port> -c config.toml -ns test_ns test_key test_value'
+docker exec -it junoclient bash -c '/opt/juno/junocli create -s proxy:8080 -c config.toml -ns test_ns test_key test_value'
 ```
 
 2. GET
 ```bash 
-docker exec -it junoclient bash -c '/opt/juno/junocli get -s proxy:<proxy_port> -c config.toml -ns test_ns test_key'
+docker exec -it junoclient bash -c '/opt/juno/junocli get -s proxy:8080 -c config.toml -ns test_ns test_key'
 ```
 
 3. UPDATE
 ```bash
-docker exec -it junoclient bash -c '/opt/juno/junocli update -s proxy:<proxy_port> -c config.toml -ns test_ns test_key test_value_updated'
-#the value and version number will be updated. You can check this by using the GET command again.
+docker exec -it junoclient bash -c '/opt/juno/junocli update -s proxy:8080 -c config.toml -ns test_ns test_key test_value_updated'
 ```
 
 4. DESTROY
 ```bash
-docker exec -it junoclient bash -c '/opt/juno/junocli destroy -s proxy:<proxy_port> -c config.toml -ns test_ns test_key'
+docker exec -it junoclient bash -c '/opt/juno/junocli destroy -s proxy:8080 -c config.toml -ns test_ns test_key'
 ```
 
 More about junocli [here](docs/junocli.md) <br>
@@ -184,8 +183,7 @@ More about junocli [here](docs/junocli.md) <br>
 <br>
 
 ### Junoload<br>
-The following command logs in to the docker client and runs the ./junoload command directly. junoload can be used for benchmarking juno server. 
-The proxy ip is aliased as "proxy"
+The following command logs in to the docker client and runs the ./junoload command directly. The proxy ip is aliased as "proxy"
 ```bash 
 docker exec -it junoclient bash -c '/opt/juno/junoload -s proxy:5080 -ssl -c config.toml -o 1'
 ```
@@ -243,7 +241,7 @@ sudo ln -s python3.8 python
 
 ### <h3 id="manual_build_junodb">Build JunoDB</h3>
 ```bash
-binary_build/build.sh
+./binary_build/build.sh
 ```
 <br>
 
@@ -251,7 +249,7 @@ binary_build/build.sh
 ### <h3 id="manual_run_junodb">Run JunoDB</h3>
 ```bash
 export JUNO_BUILD_DIR=$BUILDTOP/release-binary/code-build
-script/deploy.sh
+./script/deploy.sh
 ```
 <br>
 
@@ -274,7 +272,7 @@ See instructions for junoload [here](docs/junoload.md)
 ### Run functional tests
 ```bash
 #Assuming user is in $BUILDTOP folder
-script/test/functest/configsetup.sh
+./script/test/functest/configsetup.sh
 cd script/test/functest
 $BUILDTOP/release-binary/tool/go/bin/go test -v -config=config.toml
 ```
