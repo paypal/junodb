@@ -184,7 +184,8 @@ More about junocli [here](docs/junocli.md) <br>
 <br>
 
 ### Junoload<br>
-The following command logs in to the docker client and runs the ./junoload command directly. The proxy ip is aliased as "proxy"
+The following command logs in to the docker client and runs the ./junoload command directly. junoload can be used for benchmarking juno server. 
+The proxy ip is aliased as "proxy"
 ```bash 
 docker exec -it junoclient bash -c '/opt/juno/junoload -s proxy:5080 -ssl -c config.toml -o 1'
 ```
