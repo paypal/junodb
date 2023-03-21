@@ -76,12 +76,12 @@ limitations under the License.
 		<dependency>
 			<groupId>org.xerial.snappy</groupId>
 			<artifactId>snappy-java</artifactId>
-			<version>1.1.7.2</version>
+			<version>1.1.9.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.testng</groupId>
 			<artifactId>testng</artifactId>
-			<version>7.1.0</version>
+			<version>7.7.0</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -216,8 +216,18 @@ limitations under the License.
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.3</version>
 				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
+					<source>8</source>
+					<target>8</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.12.4</version>
+				<configuration>
+					<argLine>
+						--add-opens java.base/jdk.internal.misc=ALL-UNNAMED
+					</argLine>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -234,62 +244,6 @@ limitations under the License.
 						<descriptorRef>jar-with-dependencies</descriptorRef>
 					</descriptorRefs>
 				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-										<version>3.0.0-M3</version>
-<!--				<configuration>-->
-<!--					<suiteXmlFiles>-->
-<!--						<suiteXmlFile>src/test/resources/JunoIntegrationTestSuite.xml</suiteXmlFile>-->
-<!--					</suiteXmlFiles>-->
-<!--				</configuration>-->
-				<configuration>
-					<forkCount>1</forkCount>
-					<reuseForks>false</reuseForks>
-					<includes>
-						<include>com/qa/juno/*Test.java</include>
-						<include>com/qa/juno/**/*Test.java</include>
-					</includes>
-					<excludes>
-						<exclude>com/qa/juno/usf/JunoUSFFactoryBase.java</exclude>
-						<exclude>com/qa/juno/usf/JunoUSFFactoryChild.java</exclude>
-						<exclude>com/qa/juno/usf/JunoUSFFactoryRBase.java</exclude>
-						<exclude>com/qa/juno/usf/JunoUSFFactoryRChild.java</exclude>
-						<exclude>com/qa/juno/BatchReactSubscriber.java</exclude>
-						<exclude>com/qa/juno/BatchTestSubscriber.java</exclude>
-					</excludes>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>cobertura-maven-plugin</artifactId>
-				<version>2.7</version>
-				<configuration>
-						<instrumentation>
-							<excludes>
-								<exclude>com/qa/juno/*.java</exclude>
-								<exclude>com/qa/juno/*.class</exclude>
-								<exclude>com/qa/juno/**/*.java</exclude>
-								<exclude>com/qa/juno/**/*.class</exclude>
-								<exclude>com/juno/client/io</exclude>>
-							</excludes>
-						</instrumentation>
-						<formats>
-							<format>html</format>
-							<format>xml</format>
-						</formats>
-					<aggregate>true</aggregate>
-					<check/>
-				</configuration>
-				<executions>
-					<execution>
-						<goals>
-							<goal>clean</goal>
-							<goal>check</goal>
-						</goals>
-					</execution>
-				</executions>
 			</plugin>
 		</plugins>
 	</build>
