@@ -77,20 +77,25 @@ docker/setup.sh
 docker login
 
 # Build junodb docker images
-#junoclusterserv
-#junoclustercfg
-#junoserv
-#junostorageserv
+#etcd
+#clustercfg
+#storageserv
+#proxy 
+#junoclient
+
+
 docker/build.sh 
 ```
 
 ### <h3 id="docker_run_junodb">Run JunoDB</h3>
 ```bash
 # Setup junodb network and start junodb services
-#junoclusterserv
-#junoclustercfg
-#junostorageserv
-#junoserv
+#etcd
+#clustercfg
+#storageserv
+#proxy 
+#junoclient
+
 
 # JunoDB proxy service listens on port 
 # :5080 TLS and :8080 TCP
@@ -101,10 +106,12 @@ docker/start.sh
 ### Shutdown JunoDB services
 ```bash
 # This will shutdown junodb services
-#junoclusterserv
-#junoclustercfg
-#junostorageserv
-#junoserv
+#etcd
+#clustercfg
+#storageserv
+#proxy 
+#junoclient
+
 docker/shutdown.sh 
 
 ```
