@@ -171,10 +171,6 @@ PidFileName = "proxy.pid"
   KeyPemFilePath = "./secrets/server.pem"
   CAFilePath = "./secrets/ca.crt"
   ClientAuth=true
-  # string
-  # in format <host>:<port>
-  # Here, it is defined for LIVE. STAGE and SANDBOX SHOULD override it
-#  ProtectedPackageDir="$PREFIX/$NAME/protected/"
 
 [IO]
   # environment and/pool specific

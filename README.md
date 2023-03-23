@@ -68,8 +68,22 @@ docker version
 Install Docker if not installed or version is older than 20.10.0
 ```bash
 docker/setup.sh
-#If you are not already added to the docker group before running ./setup.sh, you will have to restart your machine for this change to have effect
+#If you are not added to the docker group, you will have to logout and login in the machine after running docker/setup.sh
 ```
+
+If the user is not added to `docker` group, you may add manually. Logout and re-login after this step.
+```bash
+sudo usermod -a -G docker $USER
+```
+
+Verify that your username is added to docker group
+```bash
+groups
+
+#or
+cat /etc/group | grep docker
+```
+
 
 ### <h3 id="docker_build_junodb">Build JunoDB</h3>
 ```bash
@@ -77,20 +91,25 @@ docker/setup.sh
 docker login
 
 # Build junodb docker images
-#junoclusterserv
-#junoclustercfg
-#junoserv
-#junostorageserv
+#etcd
+#clustercfg
+#storageserv
+#proxy 
+#junoclient
+
+
 docker/build.sh 
 ```
 
 ### <h3 id="docker_run_junodb">Run JunoDB</h3>
 ```bash
 # Setup junodb network and start junodb services
-#junoclusterserv
-#junoclustercfg
-#junostorageserv
-#junoserv
+#etcd
+#clustercfg
+#storageserv
+#proxy 
+#junoclient
+
 
 # JunoDB proxy service listens on port 
 # :5080 TLS and :8080 TCP
@@ -101,10 +120,12 @@ docker/start.sh
 ### Shutdown JunoDB services
 ```bash
 # This will shutdown junodb services
-#junoclusterserv
-#junoclustercfg
-#junostorageserv
-#junoserv
+#etcd
+#clustercfg
+#storageserv
+#proxy 
+#junoclient
+
 docker/shutdown.sh 
 
 ```

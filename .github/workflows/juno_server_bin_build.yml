@@ -28,7 +28,7 @@ jobs:
         uses: actions/setup-go@v4
         with:
           go-version: "${{ matrix.go_version }}"
-      # - name: Cache rocksdb/snappy dependencies
+      # - name: Cache rocksdb dependencies
       #   uses: actions/cache@v3
       #   with:
       #     path: release-binary/vendor
