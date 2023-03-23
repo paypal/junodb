@@ -28,21 +28,21 @@ jobs:
         uses: actions/setup-go@v3
         with:
           go-version: "${{ matrix.go_version }}"
-      - name: Cache rocksdb/snappy dependencies
-        uses: actions/cache@v3
-        with:
-          path: release-binary/vendor
-          key: deps-rocksdb-snappy-staticlib-${{ hashFiles('**/binary_build/build.sh','**/third_party/patches/rocksdb/**') }}
-      - name: Cache go and cmake dependencies
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.cache/go-build
-            ~/go/pkg/mod
-            release-binary/vendor/tool
-          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum','**/binary_build/build.sh') }}
-          restore-keys: |
-            ${{ runner.os }}-go-
+      # - name: Cache rocksdb dependencies
+      #   uses: actions/cache@v3
+      #   with:
+      #     path: release-binary/vendor
+      #     key: deps-rocksdb-snappy-staticlib-${{ hashFiles('**/binary_build/build.sh','**/third_party/patches/rocksdb/**') }}
+      # - name: Cache go and cmake dependencies
+      #   uses: actions/cache@v3
+      #   with:
+      #     path: |
+      #       ~/.cache/go-build
+      #       ~/go/pkg/mod
+      #       release-binary/vendor/tool
+      #     key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum','**/binary_build/build.sh') }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-go-
       - name: Install Build dependencies
         run: |
           sudo apt-get update -y
