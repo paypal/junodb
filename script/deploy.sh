@@ -18,18 +18,22 @@
 #  limitations under the License.
 #  
  
-
+cd "$(dirname "$0")"
 ###############################################################
 ### BUILDTOP is github root folder, JUNO_BUILD_DIR is    ###### 
 ### binary code folder. Sample: BUILDTOP=~/github/juno   ######
 ###############################################################
-cd "$(dirname "$0")"
 if [ "$BUILDTOP" == "" ]; then
   echo "JUNO_BUILD_DIR and BUILDTOP required but not defined"
   exit
 elif [ "$JUNO_BUILD_DIR" == "" ]; then
   export JUNO_BUILD_DIR=$BUILDTOP/release-binary/code-build
 fi
+
+# Default action of deploy is to start services
+# To stop the services call ./deploy.sh stop
+[[ ! -z $1 ]] && svc=$1
+: ${action:=${svc:="start"}} 
 
 group=`/usr/bin/id -gn`
 TAR='/bin/tar xvzf'
@@ -46,7 +50,7 @@ for i in junoclustercfg junoclusterserv junoserv junostorageserv;
 do
   if [ ! -d $i ]; then  #create package folder
     mkdir -p $i
-  elif [ -f ${i}/shutdown.sh ]; then  #stop service if it is up
+  elif [ -f ${i}/shutdown.sh ]; then  #stop service if it is up before starting
     $i/shutdown.sh
   fi 
 
@@ -82,12 +86,19 @@ cp $JUNO_BUILD_DIR/dbscanserv   junostorageserv
 cp -r $BUILDTOP/package_config/package/junoserv/secrets/	junoserv
 cp $JUNO_BUILD_DIR/proxy	junoserv
 
+if [ ${action} == "start" ]; then
 ####### install all four packages, start up junostorageserv/junoserv service ########
-prefix=$BUILDTOP/script/deploy
-junoclusterserv/postinstall.sh junoclusterserv etcdsvr $prefix $group
-junoclustercfg/postinstall.sh junoclustercfg junoclustercfg $prefix $group
-junostorageserv/postinstall.sh junostorageserv storageserv $prefix $group
-junoserv/postinstall.sh junoserv proxy $prefix $group
+  prefix=$BUILDTOP/script/deploy
+  junoclusterserv/postinstall.sh junoclusterserv etcdsvr $prefix $group
+  junoclustercfg/postinstall.sh junoclustercfg junoclustercfg $prefix $group
+  junostorageserv/postinstall.sh junostorageserv storageserv $prefix $group
+  junoserv/postinstall.sh junoserv proxy $prefix $group
+elif [ ${action} == "stop" ]; then 
+####### start up junostorageserv/junoserv service ########
+  junoserv/shutdown.sh
+  junostorageserv/shutdown.sh
+  junoclusterserv/shutdown.sh
+fi
 
 cd $BUILDTOP/script  #get out from deploy folder, into script folder to create test link
 
