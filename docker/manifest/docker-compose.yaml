@@ -77,7 +77,7 @@ services:
       retries: 10
       start_period: 10s
     ports:
-      - "8089:8089"
+      - "${SS_ADMIN_PORT}:8089"
     volumes:
       - ${PWD}/config/storageserv/config.toml:/opt/juno/config/config.toml
       - ${PWD}/config/storageserv/data:/opt/juno/data
@@ -87,9 +87,9 @@ services:
     image: registry.hub.docker.com/juno/junoserv:${VERSION}
     container_name: proxy
     ports:
-      - "8088:8088"
-      - "8080:8080"
-      - "5080:5080"
+      - "${PROXY_ADMIN_PORT}:8088"
+      - "${PROXY_TCP_PORT}:8080"
+      - "${PROXY_TLS_PORT}:5080"
     healthcheck:
       test: "nc -vz 127.0.0.1 5080"
       interval: 5s
