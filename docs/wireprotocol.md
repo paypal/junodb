@@ -1,6 +1,6 @@
-# Juno Wire Protocol
+# JunoDB Wire Protocol
 ## Protocol Header
-Juno wire protocol consists of a 12-byte header. Depending on the type, the appropriate message payload follows the fixed header section. Following is the header protocol:
+JunoDB wire protocol consists of a 12-byte header. Depending on the type, the appropriate message payload follows the fixed header section. Following is the header protocol:
 
 ```
          |0|1|2|3|4|5|6|7|0|1|2|3|4|5|6|7|0|1|2|3|4|5|6|7|0|1|2|3|4|5|6|7|
@@ -20,7 +20,7 @@ Following is the detailed description of each field in the header:
 
 | offset | name                | size (bytes) |         | meaning                                                                         |
 |--------|---------------------|--------------|---------|---------------------------------------------------------------------------------|
-| 0      | Magic               | 2            |         | Magic number, used to identify Juno message. '0x5050'                           |
+| 0      | Magic               | 2            |         | Magic number, used to identify JunoDB message. '0x5050'                           |
 | 2      | Version             | 1            |         | Protocol version, current version is 1.                                         |
 | 3      | Message Type flag   | 1            | bit 0-5 | Message Type, 0: Operational Message, 1: Admin Message, 2: Cluster Control Message |
 |        |                     |              | bit 6-7 | RQ flags, 0: response, 1: two way request, 3: one way request                       |
@@ -132,9 +132,9 @@ A 12-byte header followed by name, key and value
  
 * Payload Type
 0: payload data is the actual value passed from client user
-1: payload data is encrypted by Juno client library, details not specified
-2: payload data is encrypted by Juno proxy with AES-GCM. encryption key length is 256 bits
-3: Payload data is compressed by Juno Client library.
+1: payload data is encrypted by JunoDB client library, details not specified
+2: payload data is encrypted by JunoDB proxy with AES-GCM. encryption key length is 256 bits
+3: Payload data is compressed by JunoDB Client library.
  
 * Payload data
 for payload type 2
