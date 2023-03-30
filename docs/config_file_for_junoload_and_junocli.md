@@ -55,10 +55,10 @@ The complete list of parameters that can be customized in the config file is sho
     #Total seconds after which request operation fails
     RequestTimeout = "1s"
 
-    #Total milliseconds after which connection recycles
+    #Total seconds after which connection recycles
     ConnRecycleTimeout = "9s"
 
-    #Payload length in B
+    #Payload length in bytes
     PayloadLen = 2048
 
     #TTL of entries 

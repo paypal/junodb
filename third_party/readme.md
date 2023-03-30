@@ -4,10 +4,6 @@
 
 ### Original cloned versions are:
 
-### google/snappy
-`git clone —branch 1.1.5 https://github.com/google/snappy.git`
-
-
 ### rocksdb
 
 `git clone --branch v5.5.1 https://github.com/facebook/rocksdb.git`

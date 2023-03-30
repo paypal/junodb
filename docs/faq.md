@@ -74,37 +74,20 @@ docker logs proxy
 <br>
 6. Docker containers fail to start when using docker/start.sh due to port conflicts
 
-* This may happen if there are any apps using the ports that are forwarded on the machine in the `docker/manifest/docker-compose.yaml`
+* This may happen if there are any running apps that use the same ports as forwarded on the machine in  `docker/manifest/docker-compose.yaml`
 * Ports 5080,8080,8088 from proxy and 8089 from storageserv are forwarded
-* To resolve this, shutdown the apps that are already using the ports OR
-* Change the forwarded ports (choose non-conflicting ports on your machine) in the `docker/manifest/docker-compose.yaml` as shown below
-```yaml
-# Change
-
-#storageserv
-  #from
-  storageserv:
-    ports:
-      - "8089:8089"
-  #to
-  storageserv:
-    ports:
-      - "18089:8089"
-
-#proxy
-  #from
-  proxy:
-    ports:
-      - "8088:8088"
-      - "8080:8080"
-      - "5080:5080"
-
-    #To
-  proxy:
-    ports:
-      - "18088:8088"
-      - "18080:8080"
-      - "15080:5080"
+* These ports are set as env var under docker/manifest/.env
+  - PROXY_TLS_PORT=5080
+  - PROXY_TCP_PORT=8080
+  - PROXY_ADMIN_PORT=8088
+  - SS_ADMIN_PORT=8089
+* To resolve this, pass env var when initializing the start script as shown in the example below. Choose non-conflicting ports on your machine.
+```bash
+PROXY_TLS_PORT=15080 \
+PROXY_TCP_PORT=18080 \
+PROXY_ADMIN_PORT=18088 \
+SS_ADMIN_PORT=18089 \
+docker/start.sh
 ```
 
 <br>
@@ -221,4 +204,15 @@ HttpMonAddr = ":18089"
 # to
 [Etcd]
   Endpoints=["$STAGEIP:12379"]
+```
+
+
+<br>
+8. Proxy failed to initialize due to missing tls certs/keys when starting docker containers
+
+* Check that the secrets configured under [Sec] in docker/manifest/config/proxy/config.toml exist at docker/manifest/config/secrets
+* A script is availble to generate the secret key/certs for testing. [Please note that these secrets should only be used for testing purpose]
+* To generate the secrets, run
+```bash
+docker/manifest/config/secrets/gensecrets.sh
 ```

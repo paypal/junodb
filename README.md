@@ -226,6 +226,7 @@ The following sections explain the process for manually building the JunoDB serv
     * [Build JunoDB](#manual_build_junodb)
     * [Run JunoDB](#manual_run_junodb)
     * [Validate](#manual_validate_junodb)
+    * [Shutdown JunoDB](#manual_shutdown_junodb)
 
 
 ### <h3 id="manual_install_dependencies">Install Dependencies</h3>
@@ -310,4 +311,9 @@ cd script/test/unittest
 $BUILDTOP/release-binary/tool/go/bin/go test -v
 ```
 
-
+### <h3 id="manual_shutdown_junodb">Shutdown JunoDB Services</h3>
+```bash
+#Assuming user is in $BUILDTOP folder
+script/deploy.sh stop
+```
+<br>
