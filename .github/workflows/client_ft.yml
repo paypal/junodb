@@ -25,7 +25,7 @@ jobs:
       - name: Get code
         uses: actions/checkout@v3
       - name: Install golang
-        uses: actions/setup-go@v3
+        uses: actions/setup-go@v4
         with:
           go-version: "${{ matrix.go_version }}"
       # - name: Cache rocksdb dependencies
