@@ -1,10 +1,6 @@
-# FROM eclipse-temurin:11-jdk-alpine as builder
-FROM openjdk:11 as builder
+FROM eclipse-temurin:11-jdk-alpine as builder
 
 WORKDIR /opt/app
-ARG LOCAL_JAVA_HOME
-# COPY $LOCAL_JAVA_HOME/lib/security/cacerts $JAVA_HOME/lib/security/cacerts
-COPY docker/cacerts $JAVA_HOME/lib/security/cacerts
 COPY .mvn/ .mvn
 COPY mvnw pom.xml ./
 RUN ./mvnw dependency:go-offline

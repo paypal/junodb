@@ -1,6 +1,6 @@
 version: "3.3"
 services:
-  mysqldb:
+  db:
     container_name: mysqldb
     image: mysql/mysql-server:8.0.32
     command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
@@ -17,6 +17,9 @@ services:
       - 3307
 
   adminer:
+    command: php -S 0.0.0.0:8080 -t /var/www/html
+    depends_on:
+      - db
     container_name: adminer
     image: adminer:4.8.1
     restart: always
@@ -26,9 +29,10 @@ services:
   employee-app:
     build:
       context: ..
-      dockerfile: docker/Dockerfile
+      # dockerfile: docker/Dockerfile
+      dockerfile: docker/all.Dockerfile
     depends_on:
-      - mysqldb
+      - db
     image: emp
     container_name: emp
     ports:
