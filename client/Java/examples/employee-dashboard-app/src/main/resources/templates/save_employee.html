@@ -1,28 +1,48 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
-    crossorigin="anonymous">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
-    crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css"
+    integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+    integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
   <title>Employee Management</title>
 </head>
+
 <body>
   <div class="container">
     <h1>Employee</h1>
     <hr>
     <form action="#" th:action="@{/saveEmp}" th:object="${employee}" method="POST">
-      <input type="text" th:field="*{name}" placeholder="Enter Name" class="form-control mb-4 col-4">
-      <input type="date" th:field="*{dob}" placeholder="yyyy-MM-dd" class="form-control mb-4 col-4">
-      <input type="text" th:field="*{address}" placeholder="2211 N 1st St" class="form-control mb-4 col-4">
-      <input type="text" th:field="*{phone}" placeholder="999-999-9999" class="form-control mb-4 col-4">
-      <input type="text" th:field="*{email}" placeholder="abc@gmail.com" class="form-control mb-4 col-4">
-      <input type="number" th:field="*{salary}" placeholder="" class="form-control mb-4 col-4">
-      <input type="text" th:field="*{location}" placeholder="San Jose" class="form-control mb-4 col-4">
-      <input type="text" th:field="*{type}" placeholder="FTE" class="form-control mb-4 col-4">
+      <label for="emp_name">Name</label>
+      <input id="emp_name" type="text" th:field="*{name}" placeholder="Enter Name" class="form-control mb-4 col-4">
+
+      <label for="emp_dob">Date of Birth</label>
+      <input id="emp_dob" type="date" th:field="*{dob}" placeholder="yyyy-MM-dd" class="form-control mb-4 col-4">
+
+      <label for="emp_address">Address</label>
+      <input id="emp_address" type="text" th:field="*{address}" placeholder="2211 N 1st St"
+        class="form-control mb-4 col-4">
+
+      <label for="emp_phone">Phone No.</label>
+      <input id="emp_phone" type="text" th:field="*{phone}" placeholder="999-999-9999" class="form-control mb-4 col-4">
+
+      <label for="emp_email">Email</label>
+      <input id="emp_email" type="text" th:field="*{email}" placeholder="abc@gmail.com"
+        class="form-control mb-4 col-4" />
+
+      <label for="emp_name">Salary</label>
+      <input id="emp_salary" type="number" th:field="*{salary}" class="form-control mb-4 col-4" />
+
+      <label for="emp_location">Location</label>
+      <input id="emp_location" type="text" th:field="*{location}" placeholder="San Jose"
+        class="form-control mb-4 col-4">
+
+      <label for="emp_type">Employee Type</label>
+      <input id="emp_type" type="text" th:field="*{type}" placeholder="FTE" class="form-control mb-4 col-4">
 
       <button type="submit" class="btn btn-primary btn-sm mb-3">Save Employee</button>
       <a th:href="@{/}" class="btn btn-primary btn-sm mb-3">Back</a>
@@ -30,4 +50,5 @@
   </div>
 
 </body>
+
 </html>

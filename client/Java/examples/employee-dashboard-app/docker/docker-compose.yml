@@ -30,7 +30,7 @@ services:
     build:
       context: ..
       dockerfile: docker/Dockerfile
-      # dockerfile: docker/all.Dockerfile
+#      dockerfile: docker/all.Dockerfile
     depends_on:
       - db
     image: emp
