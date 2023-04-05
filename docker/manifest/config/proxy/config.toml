@@ -36,7 +36,8 @@ DefaultTimeToLive = 1800
 
 [CAL]
   Poolname = "junoserv"
-  Enabled = false 
+  CalType = "file"
+  Enabled = true
 
 [Sherlock]
   Enabled = false

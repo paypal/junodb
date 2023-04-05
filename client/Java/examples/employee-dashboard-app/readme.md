@@ -48,8 +48,19 @@ docker compose version
 Docker Compose version v2.5.1
 ```
 
+## Jdk 11 install
+```bash
+sudo add-apt-repository ppa:openjdk-r/ppa
+sudo apt-get update
+sudo apt install openjdk-11-jdk
+```
+
 ## To Build jar
 ```bash
+First install mvn
+sudo apt update
+sudo apt install default-jdk
+sudo apt install maven
 mvn clean package -DskipTests=true
 ```
 

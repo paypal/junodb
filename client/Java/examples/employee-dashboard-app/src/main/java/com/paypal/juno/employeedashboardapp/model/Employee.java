@@ -1,5 +1,12 @@
 package com.paypal.juno.employeedashboardapp.model;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,10 +20,11 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "employee")
-public class Employee {
+public class Employee implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
+  // @Column(name = "id")
   private int id;
 
   @Column(name = "name")
@@ -111,4 +119,38 @@ public class Employee {
   public void setType(String type) {
     this.type = type;
   }
+
+  public Employee() {}
+
+  public Employee(String name, int id, Date dob, String address,String phone, String email, int salary, String location, String type){
+    this.name = name;
+    this.id = id;
+    this.address = address;
+    this.phone = phone;
+    this.email = email;
+    this.salary = salary;
+    this.location = location;
+    this.type = type;
+  }
+
+  public static byte[] serializeObject(Employee emp) {
+    ByteArrayOutputStream boas = new ByteArrayOutputStream();
+    try (ObjectOutputStream ois = new ObjectOutputStream(boas)) {
+        ois.writeObject(emp);
+        return boas.toByteArray();
+    } catch (IOException ioe) {
+        ioe.printStackTrace();
+    }
+    return null;
+}
+
+public static Employee deserializeObject(byte[] buff) {
+    InputStream is = new ByteArrayInputStream(buff);
+    try (ObjectInputStream ois = new ObjectInputStream(is)) {
+        return (Employee) ois.readObject();
+    } catch (IOException | ClassNotFoundException ioe) {
+        ioe.printStackTrace();
+    }
+    return null;
+}
 }
