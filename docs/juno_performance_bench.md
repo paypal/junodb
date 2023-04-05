@@ -32,14 +32,13 @@ less than 1G after one hour so the rocksdb compaction is minimum. Two tests with
   src="15k_fixed_throughput_min_compact.jpg" width="800"
   style="display: inline-block; margin: 0 auto; max-width: 600px">
 
-Fixed 15K requests/sec (2K payload) to one proxy, request ratio is C:1,S:1,G:1,U:1,D:1(C-Create,S-Set,G-Get,U-Update,D-Destroy). 
-Ten clients drive connections from 1K to 200K, minimum data compaction on rocksdb (rocksdb size less than 1G after one hour run)
+Fixed 15K requests/sec (2K payload) triggered by [junoload tool](junoload.md) to one proxy, request ratio is C:1,S:1,G:1,U:1,D:1(C-Create,S-Set,G-Get,U-Update,D-Destroy). Ten clients drive connections from 1K to 200K, minimum data compaction on rocksdb (rocksdb size less than 1G after one hour run)
 
 Notes: During the initial connection establishment, it has errors and very long response time. Once all connections are established 
 and become stable, the response time returns to normal and error will be gone
 
 <details>
-  <summary> Sample test profile run with [junoload tool](junoload.md) run on client box (1 out of 10 clients) </summary>
+  <summary> Sample test profile run on client box (1 out of 10 clients) </summary>
 
 ```bash
 ./junoload -s <ip:port> -f 300 -n 500 -l 2000 -ssl -t 3600 -c config.toml &> jload1_1 &
@@ -76,12 +75,10 @@ WriteTimeout="1s"
   src="3k_fixed_conn_min_compact.jpg" width="800"
   style="display: inline-block; margin: 10; max-width: 600px">
 
-Fixed 3K connections(2K payload) to one proxy. Two clients drive throughput from 10K reqs/sec to 80K reqs/sec, request 
-ratio is C:1,S:1,G:1,U:1,D:1(C-Create,S-Set,G-Get,U-Update,D-Destroy). When throughput reaches 80K/sec, proxy used up 
-almost all CPUs. Minimum data compaction on rocksdb (rocksdb size less than 1G after one hour run)
+Fixed 3K connections(2K payload) triggered by [junoload tool](junoload.md) to one proxy. Two clients drive throughput from 10K reqs/sec to 80K reqs/sec, request ratio is C:1,S:1,G:1,U:1,D:1(C-Create,S-Set,G-Get,U-Update,D-Destroy). When throughput reaches 80K/sec, proxy used up almost all CPUs. Minimum data compaction on rocksdb (rocksdb size less than 1G after one hour run)
 
 <details>
-  <summary> Sample test profile run with [junoload tool](junoload.md) run on client box (1 out of 2 clients) </summary>
+  <summary> Sample test profile run on client box (1 out of 2 clients) </summary>
 
 ```bash
 ./junoload -s <ip:port> -f 4500 -n 300 -l 2000 -ssl -t 3600 -c config.toml &> jload1_1 &
@@ -103,11 +100,10 @@ sleep 3
   src="15k_fixed_throughput_compact.jpg" width="800"
   style="display: inline-block; margin: 0 auto; max-width: 600px">
 
-Fixed 15K requests/sec (5K payload) to one proxy, request ratio is C:10,G:30,D:5(C-Create,G-Get,D-Destroy).
-Ten clients drive connections from 1K to 200K, some data compaction on rocksdb (rocksdb size 28G after one hour run)
+Fixed 15K requests/sec (5K payload) triggered by [junoload tool](junoload.md) to one proxy, request ratio is C:10,G:30,D:5(C-Create,G-Get,D-Destroy). Ten clients drive connections from 1K to 200K, some data compaction on rocksdb (rocksdb size 28G after one hour run)
 
 <details>
-  <summary> Sample test profile run with [junoload tool](junoload.md) run on client box (1 out of 10 clients) </summary>
+  <summary> Sample test profile run on client box (1 out of 10 clients) </summary>
 
 ```bash
 ./junoload -s <ip:port> -f 300 -n 500 -l 5000 -ssl -ttl 259200 -p C:10,G:30,D:5 -t 3600 -c config.toml &> jload1_1 &
@@ -123,17 +119,15 @@ sleep 3
 </details>
 
 ### Test4: Max 80K Requests/sec throughput one juno proxy supports, more compactions triggered 
-#### One proxy, client side response time vs. Different Throughput
+#### One proxy, client side response time vs. different throughput
 <img
   src="3k_fixed_conn_compact.jpg" width="800"
   style="display: inline-block; margin: 0 auto; max-width: 600px">
 
-Fixed 3K connections(2K or 4.5K payload so rocksdb size can be the similar after run) to one proxy. Two clients drive 
-throughput from 10K reqs/sec to 80K reqs/sec. When throughput reaches 80K/sec, proxy used up almost all CPUs. Some data 
-compaction on rocksdb (rocksdb size 27G after one hour run)
+Fixed 3K connections(2K or 4.5K payload so rocksdb size can be the similar after run) triggered by [junoload tool](junoload.md) to one proxy. Two clients drive throughput from 10K reqs/sec to 80K reqs/sec. When throughput reaches 80K/sec, proxy used up almost all CPUs. Some data compaction on rocksdb (rocksdb size 27G after one hour run)
 
 <details>
-  <summary> Sample test profile run with [junoload tool](junoload.md) run on client box (1 out of 2 clients) </summary>
+  <summary> Sample test profile run on client box (1 out of 2 clients) </summary>
 
 ```bash
 ./junoload -s <ip:port> -f 1000 -n 300 -l 4500 -ssl -ttl 259200 -p C:10,G:30,D:1 -t 3600 -c config.toml &> jload1_1 &
