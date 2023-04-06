@@ -17,16 +17,16 @@
     <h1>Add Employee</h1>
     <hr>
     <!-- DISMISSABLE ALERT -->
-    <div th:if="${saveEmpStatus != null}" class="alert alert-danger alert-dismissible">
+    <div th:if="${addEmpStatus != null}" class="alert alert-danger alert-dismissible">
       <button class="close" type="button" data-dismiss="alert">
         <span>&times;</span>
       </button>
       <span class="mr-2 ">
-        <strong class="text-danger font-weight-bold" th:text="${saveEmpStatus}"></strong>
+        <strong class="text-danger font-weight-bold" th:text="${addEmpStatus}"></strong>
       </span>
     </div>
 
-    <form action="#" th:action="@{/saveEmp}" th:object="${employee}" method="POST">
+    <form action="#" th:action="@{/addEmp}" th:object="${employee}" method="POST">
 
       <label for="emp_id">Id</label>
       <input id="emp_id" type="text" th:field="*{id}" placeholder="Enter Emp Id" class="form-control mb-4 col-4">
@@ -58,7 +58,7 @@
       <label for="emp_type">Employee Type</label>
       <input id="emp_type" type="text" th:field="*{type}" placeholder="FTE" class="form-control mb-4 col-4">
 
-      <button type="submit" class="btn btn-primary btn-sm mb-3">Save Employee</button>
+      <button type="submit" class="btn btn-primary btn-sm mb-3">Add Employee</button>
       <a th:href="@{/}" class="btn btn-primary btn-sm mb-3">Back</a>
     </form>
   </div>

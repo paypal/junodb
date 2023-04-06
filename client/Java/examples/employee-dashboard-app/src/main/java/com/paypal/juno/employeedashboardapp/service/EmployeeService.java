@@ -7,7 +7,9 @@ import com.paypal.juno.employeedashboardapp.model.Employee;
 public interface EmployeeService {
   List<Employee> getAllEmployees();
 
-  Exception saveEmployee(Employee emp);
+  void addEmployee(Employee emp) throws Exception;
+
+  void saveEmployee(Employee emp);
 
   Employee findEmployee(Integer id);
 

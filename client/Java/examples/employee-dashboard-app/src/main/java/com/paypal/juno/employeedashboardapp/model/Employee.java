@@ -23,8 +23,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Employee implements Serializable {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "id", unique = true)
+  // @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "id",unique=true)
   private int id;
 
   @Column(name = "name")

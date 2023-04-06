@@ -16,7 +16,15 @@
   <div class="container">
     <h1>Update Employee</h1>
     <hr>
-    <form action="#" th:action="@{/saveEmp}" th:object="${employee}" method="POST">
+    <div th:if="${updateEmpStatus != null}" class="alert alert-danger alert-dismissible">
+      <button class="close" type="button" data-dismiss="alert">
+        <span>&times;</span>
+      </button>
+      <span class="mr-2 ">
+        <strong class="text-danger font-weight-bold" th:text="${updateEmpStatus}"></strong>
+      </span>
+    </div>
+    <form action="#" th:action="@{/updEmp}" th:object="${employee}" method="POST">
       <input type="hidden" th:field="*{id}" />
       <label for="emp_name">Name</label>
       <input id="emp_name" type="text" th:field="*{name}" placeholder="Enter Name" class="form-control mb-4 col-4">

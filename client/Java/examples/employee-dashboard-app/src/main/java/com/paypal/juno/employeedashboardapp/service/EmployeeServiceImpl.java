@@ -27,17 +27,18 @@ public class EmployeeServiceImpl implements EmployeeService {
   }
 
   @Override
-  public Exception saveEmployee(Employee emp) {
-    try {
-      Integer id = emp.getId();
-      if (id != null && employeeRepository.existsById(id)) {
-        return new EmployeeAlreadyExistsException("Employee with id " + id + " already exists");
-      }
-      employeeRepository.save(emp);
-    } catch (Exception e) {
-      return e;
+  public void addEmployee(Employee emp) throws Exception {
+    Optional<Employee> recordInDB = employeeRepository.findById(emp.getId());
+    if(recordInDB.isPresent()){
+      throw new EmployeeAlreadyExistsException("Employee with id " + emp.getId() + " already exists. Data Source: MysqlDB");
+    }else {
+        employeeRepository.save(emp);
     }
-    return null;
+  }
+
+  @Override
+  public void saveEmployee(Employee emp) {
+    employeeRepository.save(emp);
   }
 
   @Override
@@ -47,9 +48,6 @@ public class EmployeeServiceImpl implements EmployeeService {
     if (optional.isPresent()) {
       emp = optional.get();
     }
-    // } else {
-    // throw new RuntimeException(" Employee not found for id :: " + id);
-    // }
     return emp;
   }
 
@@ -60,4 +58,6 @@ public class EmployeeServiceImpl implements EmployeeService {
       employeeRepository.deleteById(id);
     }
   }
+
+
 }
