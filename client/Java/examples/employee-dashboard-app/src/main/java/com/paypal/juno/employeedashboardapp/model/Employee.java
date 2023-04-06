@@ -24,7 +24,7 @@ public class Employee implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  // @Column(name = "id")
+  @Column(name = "id", unique = true)
   private int id;
 
   @Column(name = "name")
@@ -120,9 +120,11 @@ public class Employee implements Serializable {
     this.type = type;
   }
 
-  public Employee() {}
+  public Employee() {
+  }
 
-  public Employee(String name, int id, Date dob, String address,String phone, String email, int salary, String location, String type){
+  public Employee(String name, int id, Date dob, String address, String phone, String email, int salary,
+      String location, String type) {
     this.name = name;
     this.id = id;
     this.address = address;
@@ -136,21 +138,21 @@ public class Employee implements Serializable {
   public static byte[] serializeObject(Employee emp) {
     ByteArrayOutputStream boas = new ByteArrayOutputStream();
     try (ObjectOutputStream ois = new ObjectOutputStream(boas)) {
-        ois.writeObject(emp);
-        return boas.toByteArray();
+      ois.writeObject(emp);
+      return boas.toByteArray();
     } catch (IOException ioe) {
-        ioe.printStackTrace();
+      ioe.printStackTrace();
     }
     return null;
-}
+  }
 
-public static Employee deserializeObject(byte[] buff) {
+  public static Employee deserializeObject(byte[] buff) {
     InputStream is = new ByteArrayInputStream(buff);
     try (ObjectInputStream ois = new ObjectInputStream(is)) {
-        return (Employee) ois.readObject();
+      return (Employee) ois.readObject();
     } catch (IOException | ClassNotFoundException ioe) {
-        ioe.printStackTrace();
+      ioe.printStackTrace();
     }
     return null;
-}
+  }
 }

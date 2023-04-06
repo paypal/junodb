@@ -20,9 +20,24 @@ public class EmployeeServiceImpl implements EmployeeService {
     return employeeRepository.findAll();
   }
 
+  public class EmployeeAlreadyExistsException extends RuntimeException {
+    public EmployeeAlreadyExistsException(String message) {
+      super(message);
+    }
+  }
+
   @Override
-  public void saveEmployee(Employee emp) {
-    employeeRepository.save(emp);
+  public Exception saveEmployee(Employee emp) {
+    try {
+      Integer id = emp.getId();
+      if (id != null && employeeRepository.existsById(id)) {
+        return new EmployeeAlreadyExistsException("Employee with id " + id + " already exists");
+      }
+      employeeRepository.save(emp);
+    } catch (Exception e) {
+      return e;
+    }
+    return null;
   }
 
   @Override

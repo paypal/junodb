@@ -15,7 +15,8 @@ services:
       - 3307:3306
     expose:
       - 3307
-
+    networks:
+      - appnetwork
   adminer:
     command: php -S 0.0.0.0:8080 -t /var/www/html
     depends_on:
@@ -25,15 +26,26 @@ services:
     restart: always
     ports:
       - 8083:8080
+    networks:
+      - appnetwork
 
   employee-app:
     build:
       context: ..
       dockerfile: docker/Dockerfile
-#      dockerfile: docker/all.Dockerfile
+      args:
+        - build
+        - force-recreate
     depends_on:
       - db
     image: emp
     container_name: emp
     ports:
       - 8082:8082
+    networks:
+      - appnetwork
+
+networks:
+  appnetwork:
+    external: true
+    name: ${DOCKER_NETWORK}

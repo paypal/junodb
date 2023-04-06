@@ -18,7 +18,7 @@ import com.paypal.juno.employeedashboardapp.service.JunoCache;
 
 @Controller
 public class EmployeeController {
-  
+
   @Autowired
   private EmployeeService employeeService;
   private static String dbname = "mysql";
@@ -29,15 +29,17 @@ public class EmployeeController {
 
   public static java.util.Date parseDate(String date) {
     try {
-        return  new SimpleDateFormat("yyyy-MM-dd").parse(date);
+      return new SimpleDateFormat("yyyy-MM-dd").parse(date);
     } catch (ParseException e) {
-        return null;
+      return null;
     }
-}
+  }
 
   @GetMapping("/")
   public String viewHomePage(Model model) {
-    // employeeService.saveEmployee(new Employee("Joseph",1,parseDate("2014-02-14"),"808 Sunny Ridge Dr","(532)-334-3434", "josephtony@gmail.com",
+    // employeeService.saveEmployee(new
+    // Employee("Joseph",1,parseDate("2014-02-14"),"808 Sunny Ridge
+    // Dr","(532)-334-3434", "josephtony@gmail.com",
     // 2000,"Austin","FTE"));
     long start = System.currentTimeMillis();
     List<Employee> empList = employeeService.getAllEmployees();
@@ -47,7 +49,7 @@ public class EmployeeController {
     model.addAttribute("timetaken", timetaken);
 
     // for (Employee employee : empList) {
-    //   juno.cacheRecord(employee);
+    // juno.cacheRecord(employee);
     // }
 
     Employee employee = new Employee();
@@ -77,8 +79,14 @@ public class EmployeeController {
   }
 
   @PostMapping("/saveEmp")
-  public String saveEmployee(@ModelAttribute("employee") Employee emp) {
-    employeeService.saveEmployee(emp);
+  public String saveEmployee(@ModelAttribute("employee") Employee emp, Model model) {
+    Exception e = employeeService.saveEmployee(emp);
+    if (e != null) {
+      System.out.println(e.getLocalizedMessage());
+      model.addAttribute("saveEmpStatus", e.getLocalizedMessage());
+      return "save_employee.html";
+    }
+    juno.cacheRecord(emp);
     return "redirect:/";
   }
 
@@ -87,12 +95,12 @@ public class EmployeeController {
     if (emp.getId() > 0) {
       long start = System.currentTimeMillis();
       Employee emp1 = juno.getRecord(emp.getId());
-      if(emp1 != null){
-        model.addAttribute("searchedEmployee",emp1);
+      if (emp1 != null) {
+        model.addAttribute("searchedEmployee", emp1);
         model.addAttribute("datasource", cachename);
-      }else {
+      } else {
         emp1 = employeeService.findEmployee(emp.getId());
-        model.addAttribute("searchedEmployee", emp1 );
+        model.addAttribute("searchedEmployee", emp1);
         model.addAttribute("datasource", dbname);
         juno.cacheRecord(emp1);
       }

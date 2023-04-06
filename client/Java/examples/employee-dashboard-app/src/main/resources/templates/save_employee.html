@@ -14,9 +14,23 @@
 
 <body>
   <div class="container">
-    <h1>Employee</h1>
+    <h1>Add Employee</h1>
     <hr>
+    <!-- DISMISSABLE ALERT -->
+    <div th:if="${saveEmpStatus != null}" class="alert alert-danger alert-dismissible">
+      <button class="close" type="button" data-dismiss="alert">
+        <span>&times;</span>
+      </button>
+      <span class="mr-2 ">
+        <strong class="text-danger font-weight-bold" th:text="${saveEmpStatus}"></strong>
+      </span>
+    </div>
+
     <form action="#" th:action="@{/saveEmp}" th:object="${employee}" method="POST">
+
+      <label for="emp_id">Id</label>
+      <input id="emp_id" type="text" th:field="*{id}" placeholder="Enter Emp Id" class="form-control mb-4 col-4">
+
       <label for="emp_name">Name</label>
       <input id="emp_name" type="text" th:field="*{name}" placeholder="Enter Name" class="form-control mb-4 col-4">
 
@@ -48,7 +62,14 @@
       <a th:href="@{/}" class="btn btn-primary btn-sm mb-3">Back</a>
     </form>
   </div>
+  <div style="margin-top:500px;"></div>
 
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
+    integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+    crossorigin="anonymous"></script>
 </body>
 
 </html>

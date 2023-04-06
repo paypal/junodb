@@ -1,5 +1,12 @@
 # Employee Dashboard App
 
+## Use Case
+To cache employee records for fast Reads
+
+<img
+  src="edp_image.png"
+  style="display: inline-block; margin: 0 auto; max-width: 1000px">
+
 ## Tested Using
 - Maven version 3.8.1
 - Java version 11
@@ -47,6 +54,46 @@ Server: Docker Desktop 4.8.2 (79419)
 docker compose version 
 Docker Compose version v2.5.1
 ```
+
+## Build and Run docker images
+
+- Make sure the juno containers are running for the employee dashboard app to connect to juno cache
+
+```bash
+cd docker
+docker compose up -d
+
+
+# You can also pass the DOCKER_NETWORK=manifest_junonet which is the network created when the juno docker containers are initialized following the instructions at https://github.com/paypal/junodb#run-junodb 
+# here DOCKER_NETWORK env var is setting the network for docker containers to start in same network as juno containers 
+DOCKER_NETWORK=manifest_junonet docker compose up -d 
+
+```
+
+### View running docker containers
+```bash
+
+#junodb containers should also be running for app to enable caching. Observe running containers.
+CONTAINER ID   IMAGE                                                 COMMAND                  CREATED             STATUS                       PORTS                                                                    NAMES
+7f06f13450d7   emp                                                   "java -jar /opt/app/…"   37 minutes ago      Up 37 minutes                8080/tcp, 0.0.0.0:8082->8082/tcp                                         emp
+6d811fd587b9   adminer:4.8.1                                         "entrypoint.sh php -…"   37 minutes ago      Up 37 minutes                0.0.0.0:8083->8080/tcp                                                   adminer
+293872bfd38d   mysql/mysql-server:8.0.32                             "/entrypoint.sh --de…"   37 minutes ago      Up 37 minutes (healthy)      3307/tcp, 33060-33061/tcp, 0.0.0.0:3307->3306/tcp                        mysqldb
+da639483604e   registry.hub.docker.com/juno/junoclient:latest        "tail -f /dev/null"      About an hour ago   Up About an hour (healthy)                                                                            junoclient
+ac004ce80aae   registry.hub.docker.com/juno/junoserv:latest          "bash /opt/juno/bin/…"   About an hour ago   Up About an hour (healthy)   0.0.0.0:5080->5080/tcp, 0.0.0.0:8080->8080/tcp, 0.0.0.0:8088->8088/tcp   proxy
+d76ef3921503   registry.hub.docker.com/juno/junostorageserv:latest   "bash /opt/juno/bin/…"   About an hour ago   Up About an hour (healthy)   0.0.0.0:8089->8089/tcp                                                   storageserv
+70e4aad7634c   registry.hub.docker.com/juno/junoclustercfg:latest    "bash /opt/juno/entr…"   About an hour ago   Up About an hour (healthy)                                                                            clustercfg
+7ddfe2538570   registry.hub.docker.com/juno/junoclusterserv:latest   "bash /opt/juno/entr…"   About an hour ago   Up About an hour (healthy)   2379/tcp                                                                 etcd
+```
+
+
+employee app `emp` is listening on 0.0.0.0:8082
+```bash
+curl 0.0.0.0:8082
+```
+
+
+## To Build Locally
+
 ## Jdk 11 install
 ```bash
 sudo add-apt-repository ppa:openjdk-r/ppa
@@ -63,36 +110,9 @@ sudo apt install maven
 mvn clean package -DskipTests=true
 ```
 
-## Build and Run docker images
-```bash
-cd docker
-docker compose up -d
-```
-
-### View running docker containers
-```bash
-docker ps
-CONTAINER ID   IMAGE                       COMMAND                  CREATED         STATUS                   PORTS                                               NAMES
-f32ec6d0a550   emp                         "java -jar /opt/app/…"   6 minutes ago   Up 6 minutes             0.0.0.0:8082->8080/tcp                              emp
-ea641f047a4f   adminer:4.8.1               "entrypoint.sh php -…"   6 minutes ago   Up 6 minutes             0.0.0.0:8081->8080/tcp                              adminer
-42c851937e42   mysql/mysql-server:8.0.32   "/entrypoint.sh --de…"   6 minutes ago   Up 6 minutes (healthy)   3307/tcp, 33060-33061/tcp, 0.0.0.0:3307->3306/tcp   mysqldb
-```
-
-
-employee app `emp` is listening on 0.0.0.0:8082
-```bash
-curl 0.0.0.0:8082
-```
-
-
-## To Build and Run locally
+## Dependencies
 
 - Make sure mysql is up
-
-## To Build jar
-```bash
-mvn clean package -DskipTests=true
-```
 
 - Check the property `spring.datasource.url` in 'target/classes/application.properties' to be pointing to the correct mysql server
 - To update , make the change in `src/main/resources/application.properties` and build again
