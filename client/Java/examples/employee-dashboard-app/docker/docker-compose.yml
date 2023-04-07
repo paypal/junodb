@@ -1,0 +1,51 @@
+version: "3.3"
+services:
+  db:
+    container_name: mysqldb
+    image: mysql/mysql-server:8.0.32
+    command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_ROOT_HOST: ${MYSQL_ROOT_HOST}
+    volumes:
+      - ./mysql-data/8.0.23:/var/lib/mysql
+    ports:
+      - 3307:3306
+    expose:
+      - 3307
+    networks:
+      - appnetwork
+  adminer:
+    command: php -S 0.0.0.0:8080 -t /var/www/html
+    depends_on:
+      - db
+    container_name: adminer
+    image: adminer:4.8.1
+    restart: always
+    ports:
+      - 8083:8080
+    networks:
+      - appnetwork
+
+  employee-app:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+      args:
+        - build
+        - force-recreate
+    depends_on:
+      - db
+    image: emp
+    container_name: emp
+    ports:
+      - 8082:8082
+    networks:
+      - appnetwork
+
+networks:
+  appnetwork:
+    external: true
+    name: ${DOCKER_NETWORK}

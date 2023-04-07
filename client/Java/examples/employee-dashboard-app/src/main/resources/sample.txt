@@ -1,0 +1,10 @@
+INSERT INTO employee (id,address, dob, email, location, name, phone, salary, type)
+VALUES 
+  ('1','123 Main St', '1990-01-01', 'john.doe@example.com', 'New York', 'John Doe', '555-1234', 50000, 'Full-time'),
+  ('2','456 Elm St', '1985-02-14', 'jane.smith@example.com', 'Los Angeles', 'Jane Smith', '555-5678', 60000, 'Full-time'),
+  ('3','789 Oak St', '1992-05-10', 'bob.jones@example.com', 'Chicago', 'Bob Jones', '555-9012', 55000, 'Part-time'),
+  ('4','321 Maple Ave', '1991-09-22', 'sara.jackson@example.com', 'San Francisco', 'Sara Jackson', '555-3456', 65000, 'Full-time'),
+  ('5','654 Pine St', '1993-12-31', 'mike.johnson@example.com', 'Seattle', 'Mike Johnson', '555-7890', 70000, 'Full-time'),
+  ('6','987 Cedar Rd', '1994-06-15', 'amy.wilson@example.com', 'Dallas', 'Amy Wilson', '555-2345', 45000, 'Part-time'),
+  ('7','246 Walnut St', '1990-03-04', 'tim.brown@example.com', 'Boston', 'Tim Brown', '555-6789', 80000, 'Full-time'),
+  ('8','135 Cherry Ln', '1989-11-27', 'lisa.green@example.com', 'Houston', 'Lisa Green', '555-0123', 60000, 'Part-time');
