@@ -827,18 +827,23 @@ try{
 ## Common errors
 The following are the commonly encountered error's while invoking the API. Juno client will re-try the below errors that are marked as [Can Retry] if retry is enabled with "juno.operation.retry=true".
 ```
-NoKey              - Trying to perform an operation in a key that does not exist in the DB
-UniqueKeyViolation - Trying to create a record with the key which already exists in the DB
-RecordLocked       - [Can Retry] Trying to perform an operation on record that is already locked by another request
-ConditionViolation - Trying to perform compareAndSet on a record with a old requestContext. i.e the record has been updated by some other request, bumping its version to a higher value than the one in this current request.
-TTLExtendFailure   - [Can Retry] Unable to extend TTL for a get operation. Likely the record is locked by some other request.
-```
-The following are the common exception's while invoking the API.
-```
-NoStorage       - [Can Retry] This error happens when the Juno proxy is unable to communicate with the storage sever. 
-IllegalArgument - Error in supplied arguments 
-ResponseTimeout - Response from server timed out
-InternalError   - [Can Retry] Error caused by either Juno server or client while processing.
+| Juno Errors        | Error Codes | Definition                                                                                                        |
+|--------------------|-------------|-------------------------------------------------------------------------------------------------------------------|
+| NoKey              | 	   1       | Trying to perform an operation in a key that does not exist in the DB                                             |
+| Badparam           | 	   2       | Trying an operation with configs that server does not support.                                                    |
+|                    |             | Example: TTL in the client request exceeding the max TTL supported by server                                      |
+| UniqueKeyViolation |     3       | Trying to create a record with the key which already exists in the DB                                             |
+| RecordLocked       | 	   4       | [Can Retry] Trying to perform an operation on record that is already locked by another request                    |
+| IllegalArgument    |     5       | Error in supplied arguments                                                                                       |
+| ConditionViolation |     6       | Trying to perform compareAndSet on a record with a old requestContext. i.e the record has been                    |
+|                    |             | updated by some other request, bumping its version to a higher value than the one in this current request         |
+| InternalError      |     7       | [Can Retry] Error caused by either Juno server or client while processing.                                        |
+| QueueFull          |     8       | [Can Retry] The Client request processing queue is full                                                           |
+| NoStorage          |     9       | [Can Retry] This error happens when the Juno proxy is unable to communicate with the storage sever                |
+| TTLExtendFailure   | 	   10      | [Can Retry] Unable to extend TTL for a get operation. Likely the record is locked by some other request           |
+| ResponseTimeout    | 	   11      | Response from server timed out                                                                                    |
+| ConnectionError    |     12      | [Can Retry] Error in connection between Juno client and server                                                    |
+--------------------------------------------------------------------------------------------------------------------------------------------------------
 ```
 
 A complete list of operation status values that can be returned is available in the OperationStatus.java file.
