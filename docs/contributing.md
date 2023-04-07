@@ -3,6 +3,8 @@
 
 # Contributing to junoDB
 
+We welcome contributions to JunoDB from everyone! By contributing to this project, you agree to abide by the Code of Conduct outlined in the code_of_conduct.md file.
+
 ## Discussions
 
 Our recommendation is to start a discussion as soon as you have an idea for contributing to JunoDB.
@@ -27,17 +29,30 @@ You can also improve our documentation
 
 --------------------------------------------------------------------------------------------------------------------
 
-
 ## Contribution Process
+### Dev Branch
+The dev branch of junodb is where new features are added, bugs are fixed, and improvements are made. We ask that all contributions be made to this branch.
+
+### Forking the Repository
+To contribute to junodb, you'll need to fork the repository to your own GitHub account. You can then make changes to your fork's dev branch.
+
+### Creating a Pull Request
+Once you have made changes to your forked repository, you can create a pull request to merge your changes into the dev branch of the original repository. Before creating a pull request, ensure that your fork is up-to-date with the original repository's development branch. This can be done by syncing your fork with the original repository using the "git fetch" and "git merge" commands.
+
+### Code Review
+All pull requests will be reviewed by our team. We appreciate constructive feedback, and we may ask for changes or further information before merging your pull request.
+
+
+### Steps
 
 * Get your github account.
 * Fork the repo into your account.
-* Create an issue branch using the main branch.
+* Create an issue branch using the dev branch.
 * Make modifications to the code.
 * Ensure code coverage by added test cases.
 * All commits must have the issue ID & summary. Say "[#10] Update readme.md for junoDB".
 * Ensure all your commits are squashed.
-* Make a Pull Request.
+* Make a Pull Request to merge your changes to the dev branch.
 * If there are code review related changes - ensure those commits are also squashed.
 * DO NOT include changes that are not directly related to the issue you are trying to resolve.
 

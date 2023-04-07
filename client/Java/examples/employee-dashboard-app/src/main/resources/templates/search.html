@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css"
+    integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+    integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+  <title>Employee Management</title>
+</head>
+
+<body>
+  <div class="container my-2">
+    <h1>Search Employee Record</h1>
+    <form action="#" th:action="@{/findEmp}" th:object="${employee}" method="GET">
+      <div class="input-group">
+        <label class="form-label my-3 mr-2"><strong> Emp ID</strong></label>
+        <input type="text" th:field="*{id}" placeholder="Emp ID"
+          class="form-control my-2 mr-1 float-sm-right col-sm-4" />
+        <button type="submit" class="btn btn-primary my-2">
+          <i class="fas fa-search"></i>
+        </button>
+      </div>
+    </form>
+    <!-- DISMISSABLE ALERT -->
+    <div class="alert alert-success alert-dismissible">
+      <button class="close" type="button" data-dismiss="alert">
+        <span>&times;</span>
+      </button>
+      <span class="mr-2"> Data Source: <strong class="text-dark" th:text="${datasource}"></strong></span>
+      <span class="mr-2"> Time(ms): <strong class="text-dark" th:text="${timetaken}"></strong></span>
+    </div>
+    <table border="1" class="table table-striped table-responsive-md">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>DOB</th>
+          <th>Address</th>
+          <th>Phone</th>
+          <th>Email</th>
+          <th>Salary</th>
+          <th>Location</th>
+          <th>Type</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="semployee : ${searchedEmployee}">
+          <td th:text="${semployee.id}"></td>
+          <td th:text="${semployee.name}"></td>
+          <td th:text="${semployee.dob}"></td>
+          <td th:text="${semployee.address}"></td>
+          <td th:text="${semployee.phone}"></td>
+          <td th:text="${semployee.email}"></td>
+          <td th:text="${semployee.salary}"></td>
+          <td th:text="${semployee.location}"></td>
+          <td th:text="${semployee.type}"></td>
+        </tr>
+      </tbody>
+    </table>
+    <a th:href="@{/}" class="btn btn-primary btn-sm mb-3">Back</a>
+  </div>
+
+  <div style="margin-top:500px;"></div>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
+    integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>
