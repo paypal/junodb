@@ -78,12 +78,7 @@ public class EmployeeController {
       } else if (juno.getRecord(emp.getId()) != null) {
         throw new Exception( "Employee with id " + emp.getId() + " already exists. Data Source: JunoDB");
       } else {
-        Employee emp1 = employeeService.findEmployee(emp.getId());
-        if (emp1 != null) {
-          employeeService.saveEmployee(emp);
-        } else {
-          employeeService.addEmployee(emp);
-        }
+        employeeService.addEmployee(emp);
         juno.cacheRecord(emp);
       }
     } catch (Exception e) {

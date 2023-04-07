@@ -29,10 +29,11 @@ public class EmployeeServiceImpl implements EmployeeService {
   @Override
   public void addEmployee(Employee emp) throws Exception {
     Optional<Employee> recordInDB = employeeRepository.findById(emp.getId());
-    if(recordInDB.isPresent()){
-      throw new EmployeeAlreadyExistsException("Employee with id " + emp.getId() + " already exists. Data Source: MysqlDB");
-    }else {
-        employeeRepository.save(emp);
+    if (recordInDB.isPresent()) {
+      throw new EmployeeAlreadyExistsException(
+          "Employee with id " + emp.getId() + " already exists. Data Source: MysqlDB");
+    } else {
+      employeeRepository.save(emp);
     }
   }
 
@@ -58,6 +59,5 @@ public class EmployeeServiceImpl implements EmployeeService {
       employeeRepository.deleteById(id);
     }
   }
-
 
 }
