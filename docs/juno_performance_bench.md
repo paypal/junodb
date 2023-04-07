@@ -25,14 +25,14 @@ less than 1G after one hour so the rocksdb compaction is minimum. Two tests with
 * Machine memory: 214G of RAM
 * Rocksdb disk size: 450G Balanced SSD
 
-### Test1: Max 200K connections one juno proxy supports, minimum compaction
+### Test1: Max 200K TLS connections one juno proxy supports, minimum compaction
 #### One proxy, client side response time vs. different connections
 
 <img
   src="15k_fixed_throughput_min_compact.jpg" width="800"
   style="display: inline-block; margin: 0 auto; max-width: 600px">
 
-Fixed 15K requests/sec (2K payload) triggered by [junoload tool](junoload.md) to one proxy, request ratio is C:1,S:1,G:1,U:1,D:1(C-Create,S-Set,G-Get,U-Update,D-Destroy). Ten clients drive connections from 1K to 200K, minimum data compaction on rocksdb (rocksdb size less than 1G after one hour run)
+Fixed 15K requests/sec (2K payload) triggered by [junoload tool](junoload.md) to one proxy, request ratio is C:1,S:1,G:1,U:1,D:1(C-Create,S-Set,G-Get,U-Update,D-Destroy). Ten clients drive TLS connections from 1K to 200K, minimum data compaction on rocksdb (rocksdb size less than 1G after one hour run)
 
 Notes: During the initial connection establishment, it has errors and very long response time. Once all connections are established 
 and become stable, the response time returns to normal and error will be gone
@@ -93,14 +93,14 @@ sleep 3
 ```
 </details>
 
-### Test3: Max 200K Connections one juno proxy supports, more compactions triggered
+### Test3: Max 200K TLS connections one juno proxy supports, more compactions triggered
 #### One proxy, client side response time vs. different connections
 
 <img
   src="15k_fixed_throughput_compact.jpg" width="800"
   style="display: inline-block; margin: 0 auto; max-width: 600px">
 
-Fixed 15K requests/sec (5K payload) triggered by [junoload tool](junoload.md) to one proxy, request ratio is C:10,G:30,D:5(C-Create,G-Get,D-Destroy). Ten clients drive connections from 1K to 200K, some data compaction on rocksdb (rocksdb size 28G after one hour run)
+Fixed 15K requests/sec (5K payload) triggered by [junoload tool](junoload.md) to one proxy, request ratio is C:10,G:30,D:5(C-Create,G-Get,D-Destroy). Ten clients drive tls connections from 1K to 200K, some data compaction on rocksdb (rocksdb size 28G after one hour run)
 
 <details>
   <summary> Sample test profile run on client box (1 out of 10 clients) </summary>
