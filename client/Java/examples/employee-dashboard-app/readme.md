@@ -92,9 +92,6 @@ curl 0.0.0.0:8082
 ```
 
 
-<<<<<<< HEAD
-## To Build and Run locally
-=======
 ## To Build Locally
 
 ## Jdk 11 install
@@ -114,7 +111,6 @@ mvn clean package -DskipTests=true
 ```
 
 ## Dependencies
->>>>>>> 63b47ee (Employee dashboard app update)
 
 - Make sure mysql is up
 
