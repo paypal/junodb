@@ -1,7 +1,8 @@
 ROOT_DIR := $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 GoLangVersion = 1.18.2
-docker_registry = registry.hub.docker.com
-docker_repo = juno
+# docker_registry = registry.hub.docker.com
+docker_registry = ghcr.io
+docker_repo = paypal/junodb
 image_tag = latest
 
 build_image_name = ${docker_registry}/${docker_repo}/juno-build:${image_tag}
@@ -13,7 +14,7 @@ services = $(addprefix juno, serv clusterserv clustercfg storageserv client)
 
 service_build_targets = $(addprefix build_, ${services})
 
-.PHONY: clean fetchsrc build ${service_build_targets} build_services ${xoomservice_build_targets} build_xoomservices
+.PHONY: clean fetchsrc build ${service_build_targets} build_services
 
 all: build_services
 
@@ -63,7 +64,6 @@ build_services: ${service_build_targets}
 
 create-cluster-build-directory: clean-cluster-service-build-dir
 	mkdir -p cluster-service-build && \
-	cp -r default-resources/* cluster-service-build/ && \
 	cp -r service/* cluster-service-build/
 
 clean-cluster-service-build-dir:

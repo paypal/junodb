@@ -4,8 +4,14 @@ FROM  ${BUILD_IMAGE} as juno-build
 ######
 FROM ubuntu:20.04 AS juno-runtime-base
 
-RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get -qq install -y daemontools
-RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -yqq curl dnsutils ed less netcat net-tools sysstat iperf3 iputils-ping tzdata
+# RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -yqq daemontools curl dnsutils ed less netcat net-tools sysstat iperf3 iputils-ping tzdata && \
+#     apt-get autoremove -yqq && \
+#     apt-get clean -yqq && \
+#     rm -rf /var/lib/apt/lists/*
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -yqq daemontools curl dnsutils ed less netcat net-tools sysstat iputils-ping tzdata && \
+    apt-get autoremove -yqq && \
+    apt-get clean -yqq && \
+    rm -rf /var/lib/apt/lists/*
 RUN groupadd -r juno --gid=1000 && useradd -r -g juno --uid=1000 juno 
 
 ######
@@ -95,6 +101,9 @@ COPY \
     /junoserv/config.toml \
     /opt/juno/config/
 
+COPY /secrets \
+    /opt/juno/bin/secrets
+
 USER root
 RUN mkdir -p /opt/juno/cache
 RUN chown -R juno:juno /opt/juno/
@@ -139,9 +148,11 @@ COPY \
 USER root
 RUN mkdir -p /opt/juno/cache
 RUN chown -R juno:juno /opt/juno
+RUN mkdir -p /opt/juno/data
+RUN chown -R juno:juno /opt/juno/data
 
 WORKDIR /opt/juno
-USER juno 
+USER juno
 ENV PATH /opt/juno/bin:$PATH
 
 ENTRYPOINT ["bash","/opt/juno/bin/entrypoint.sh"]
@@ -152,12 +163,23 @@ CMD [ "storageserv", "manager", "-config=/opt/juno/etc/config.toml" ]
 FROM juno-runtime-base AS junoclient
 
 COPY --from=juno-build \
-   /juno/bin/junocli \
-   /juno/bin/junoload \  
-   /opt/juno/
+    /juno/bin/junocli \
+    /juno/bin/junoload \  
+    /opt/juno/
 
+COPY /secrets \
+    /opt/juno/secrets
+
+COPY /client/config.toml \
+    /client/entrypoint.sh \
+    /opt/juno/
+
+USER root
 RUN chmod 755 /opt/juno/junoload /opt/juno/junocli
+RUN chown -R juno:juno /opt/juno
 
 WORKDIR /opt/juno
 USER juno
 ENV PATH /opt/juno:$PATH
+
+ENTRYPOINT ["bash","/opt/juno/entrypoint.sh"]
