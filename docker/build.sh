@@ -29,8 +29,9 @@ cd "$(dirname "$0")"
 
 : ${image_tag:=latest}
 : ${source_branch:=main}
-: ${docker_registry:=registry.hub.docker.com}
-: ${docker_repo:=juno}
+# : ${docker_registry:=registry.hub.docker.com}
+: ${docker_registry:=ghcr.io}
+: ${docker_repo:=paypal/junodb}
 : ${source_repo:=git@github.com:paypal/juno.git}
 : ${GoLangVersion:=1.18.2}
 

@@ -80,6 +80,11 @@ if [ ! -p ${callogdir}/callog.txt ]; then
   mkdir -p ${callogdir} && mkfifo ${callogdir}/callog.txt
 fi
 
+# Generate secrets if not exist
+if [ ! -f /opt/juno/bin/secrets/server.pem ] || [ ! -f /opt/juno/bin/secrets/server.crt ] || [ ! -f /opt/juno/bin/secrets/ca.crt ] || [ ! -f /opt/juno/bin/secrets/keystore.toml ]; then
+    /opt/juno/bin/secrets/gensecrets.sh
+fi
+
 if [ "${1:0:1}" = '-' ]; then
 	set -- proxy "$@"
 fi

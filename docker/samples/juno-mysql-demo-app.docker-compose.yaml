@@ -8,13 +8,13 @@ x-services:
     - "etcd:172.20.0.2"
   networks:
     junonet:
-  env_file:
-    - .env
+  environment:
+    TZ: America/Los_Angeles
 
 services:
   etcd:
     <<: *service_default
-    image: ghcr.io/paypal/junodb/junoclusterserv:${VERSION}
+    image: ghcr.io/paypal/junodb/junoclusterserv:${VERSION:-latest}
     container_name: etcd
     environment:
       CLIENT_PORT: "2379"
@@ -36,7 +36,7 @@ services:
 
   clustercfg:
     <<: *service_default
-    image: ghcr.io/paypal/junodb/junoclustercfg:${VERSION}
+    image: ghcr.io/paypal/junodb/junoclustercfg:${VERSION:-latest}
     container_name: clustercfg
     command:
       [
@@ -60,12 +60,10 @@ services:
       timeout: 5s
       retries: 10
       start_period: 5s
-    # volumes:
-    #   - ${PWD}/config/cluster/config.toml:/opt/juno/config.toml
 
   storageserv:
     <<: *service_default
-    image: ghcr.io/paypal/junodb/junostorageserv:${VERSION}
+    image: ghcr.io/paypal/junodb/junostorageserv:${VERSION:-latest}
     container_name: storageserv
     depends_on:
       clustercfg:
@@ -77,19 +75,18 @@ services:
       retries: 10
       start_period: 10s
     ports:
-      - "${SS_ADMIN_PORT}:8089"
+      - "${SS_ADMIN_PORT:-8089}:8089"
     volumes:
-      - ${PWD}/config/storageserv/config.toml:/opt/juno/config/config.toml
-      - ${PWD}/config/storageserv/data:/opt/juno/data
+      - "storageserv_data:/opt/juno/data:rw"
 
   proxy:
     <<: *service_default
-    image: ghcr.io/paypal/junodb/junoserv:${VERSION}
+    image: ghcr.io/paypal/junodb/junoserv:${VERSION:-latest}
     container_name: proxy
     ports:
-      - "${PROXY_ADMIN_PORT}:8088"
-      - "${PROXY_TCP_PORT}:8080"
-      - "${PROXY_TLS_PORT}:5080"
+      - "${PROXY_ADMIN_PORT:-8088}:8088"
+      - "${PROXY_TCP_PORT:-8080}:8080"
+      - "${PROXY_TLS_PORT:-5080}:5080"
     healthcheck:
       test: "nc -vz 127.0.0.1 5080"
       interval: 5s
@@ -98,13 +95,10 @@ services:
       start_period: 10s
     depends_on:
       - storageserv
-    volumes:
-      - ${PWD}/config/proxy/config.toml:/opt/juno/config/config.toml
-      - ${PWD}/config/secrets:/opt/juno/bin/secrets
 
   junoclient:
     <<: *service_default
-    image: ghcr.io/paypal/junodb/junoclient:${VERSION}
+    image: ghcr.io/paypal/junodb/junoclient:${VERSION:-latest}
     container_name: junoclient
     depends_on:
       - proxy
@@ -114,9 +108,47 @@ services:
       timeout: 5s
       retries: 10
       start_period: 10s
+
+  db:
+    container_name: mysqldb
+    image: mysql/mysql-server:8.0.32
+    command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD:-supersecret}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-sample}
+      MYSQL_ROOT_HOST: ${MYSQL_ROOT_HOST:-%}
     volumes:
-      - ${PWD}/config/client/config.toml:/opt/juno/config.toml
-      - ${PWD}/config/secrets:/opt/juno/secrets
+      - ./mysql-data/8.0.23:/var/lib/mysql
+    ports:
+      - 3307:3306
+    expose:
+      - 3307
+    networks:
+      - junonet
+
+  adminer:
+    command: php -S 0.0.0.0:8080 -t /var/www/html
+    depends_on:
+      - db
+    container_name: adminer
+    image: adminer:4.8.1
+    restart: always
+    ports:
+      - 8083:8080
+    networks:
+      - junonet
+
+  employee-app:
+    depends_on:
+      - db
+      - proxy
+    image: ghcr.io/paypal/junodb/emp-app:latest
+    container_name: emp
+    ports:
+      - 8082:8082
+    networks:
+      - junonet
 
 networks:
   junonet:
@@ -124,3 +156,6 @@ networks:
     ipam:
       config:
         - subnet: 172.20.0.0/16
+
+volumes:
+  storageserv_data: {}
