@@ -91,12 +91,13 @@ public class EmployeeController {
   @PostMapping("/updEmp")
   public String updateEmployee(Model model, @ModelAttribute("employee") Employee emp) {
     try {
-      Employee emp1 = employeeService.findEmployee(emp.getId());
-      if (emp1 != null) {
+      boolean rc = juno.conditionalUpdate(emp);
+      if(rc == true){
         employeeService.saveEmployee(emp);
-      } else {
-        employeeService.addEmployee(emp);
+      }else{
+        throw new Exception( "Employee Record updated already");
       }
+
       juno.cacheRecord(emp);
     } catch (Exception e) {
       model.addAttribute("updateEmpStatus", e.getMessage());
@@ -128,11 +129,24 @@ public class EmployeeController {
 
   @GetMapping("/updateEmp/{id}")
   public String showFormForUpdateEmployee(@PathVariable(value = "id") int id, Model model) {
-    // get the employee
-    Employee employee = employeeService.findEmployee(id);
-    // set the employee as a model attribute to pre-populate the form
-    model.addAttribute("employee", employee);
-    // juno.cacheRecord(employee);
+
+    //Check if the Employee is already present in Cache
+    Employee empLocal = juno.getRecord(id);
+
+    if(empLocal == null){
+      // get the employee from Mysql DB
+      Employee employee = employeeService.findEmployee(id);
+      // Add employee to Cache
+      juno.cacheRecord(employee);
+      // Fetch the record from Juno
+      empLocal = juno.getRecord(id);
+      // set the employee as a model attribute to pre-populate the form
+      model.addAttribute("employee", employee);
+    }else{
+        // set the employee as a model attribute to pre-populate the form
+        model.addAttribute("employee", empLocal);
+    }
+
     return "update_employee.html";
   }
 
