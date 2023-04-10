@@ -1,3 +1,4 @@
+#!/bin/bash
 #  
 #  Copyright 2023 PayPal Inc.
 #  
@@ -16,22 +17,10 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #  
- 
-ClusterName="junoserv"
-LogLevel = "error"
-RootDir = "/opt/juno"
-DbScanPort=26983
-DbWatchEnabled=true
-[Etcd]
-  Endpoints=["etcd:2379"]
 
-[Cal]
-  Enabled = false
+# Generate secrets if not exist
+if [ ! -f /opt/juno/secrets/server.pem ] || [ ! -f /opt/juno/secrets/server.crt ] || [ ! -f /opt/juno/secrets/ca.crt ] || [ ! -f /opt/juno/secrets/keystore.toml ]; then
+    /opt/juno/secrets/gensecrets.sh
+fi
 
-[Sherlock]
-  Enabled = false
-
-[DB]
-  [[DB.DbPaths]]
-    #Path = "/dev/shm/data"
-    Path = "/opt/juno/data"
+tail -f /dev/null

@@ -38,7 +38,7 @@ services:
         - force-recreate
     depends_on:
       - db
-    image: emp
+    image: ghcr.io/paypal/junodb/emp-app:latest
     container_name: emp
     ports:
       - 8082:8082
