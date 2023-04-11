@@ -4,6 +4,7 @@ import com.paypal.juno.client.JunoClient;
 import com.paypal.juno.client.JunoClientFactory;
 import com.paypal.juno.client.io.JunoResponse;
 import com.paypal.juno.client.io.OperationStatus;
+import com.paypal.juno.client.io.RecordContext;
 import com.paypal.juno.employeedashboardapp.model.Employee;
 import com.paypal.juno.exception.JunoException;
 
@@ -15,12 +16,18 @@ import org.springframework.stereotype.Service;
 @Service
 public class JunoCache {
     private JunoClient junoClient;
+    private RecordContext rctx;
+
 
     JunoCache() throws IOException {
         URL url = JunoCache.class.getResource("/application.properties");
         Properties pConfig = new Properties();
         pConfig.load(url.openStream());
         junoClient = JunoClientFactory.newJunoClient(url);
+    }
+
+    public void clearRctx(){
+        rctx = null;
     }
 
     public boolean cacheRecord(Employee emp) {
@@ -68,11 +75,27 @@ public class JunoCache {
         }
     }
 
+    public boolean conditionalUpdate(Employee emp) {
+        try {
+            JunoResponse jr = junoClient.compareAndSet(rctx, Employee.serializeObject(emp),100);
+            if(jr.getStatus() == OperationStatus.Success){
+                return true;
+            }else {
+                return false;
+            }
+        } catch (JunoException je) {
+            return false;
+        } catch (Exception e){
+            return false;
+        }
+    }
+
     public Employee getRecord(int id) {
         try {
             JunoResponse jr = junoClient.get((new Integer(id)).toString().getBytes(),10);
             if(jr.getStatus() == OperationStatus.Success){
                 Employee emp = Employee.deserializeObject(jr.getValue());
+                rctx = jr.getRecordContext();
                 return emp;
             }else {
                 return null;
