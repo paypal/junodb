@@ -17,7 +17,7 @@ JunoDB is PayPal's home-grown Secure, consistent and highly available key-value 
 
 </details>
 
-When a client wants to store a (key, value) pair in JunoDB, Proxy writes the key in 3 out of 5 shards in the storage server. The shard-map is stored in the etcd.
+When a client wants to store a (key, value) pair in JunoDB, Proxy writes the key in 3 out of 5 storage server instances. The shard-map is stored in the etcd.
 
 JunoDB therefore works using three main components, the ETCD, storage server and proxy. 
 
