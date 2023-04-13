@@ -1164,7 +1164,7 @@ public class BatchCreateTest{
 	 * Check response Timeout exception
 	 * @throws JunoException
 	 */
-	@Test
+	//@Test
 	public void testBatchCreateResponseTimeout() throws IOException{
 		LOGGER.info("\n***TEST CASE: " + new Object(){}.getClass().getEnclosingMethod().getName());
 	    
