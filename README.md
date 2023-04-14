@@ -6,24 +6,11 @@
 
 
 ## What is JunoDB
-JunoDB is PayPal's home-grown Secure, consistent and highly available key-value store providing low, single digit millisecond, latency at any scale. 
+JunoDB is PayPal's home-grown secure, consistent and highly available key-value store providing low, single digit millisecond, latency at any scale. 
 
-<details>
-  <summary>JunoDB high level architecture</summary>
-   
-<img
-  src="docs/JunoDBHighLevelArch.png"
-  style="display: inline-block; margin: 0 auto; max-width: 600px">
-
-</details>
-
-When a client wants to store a (key, value) pair in JunoDB, Proxy writes the key in 3 out of 5 storage server instances. The shard-map is stored in the etcd.
-
-JunoDB therefore works using three main components, the ETCD, storage server and proxy. 
-
-</details>
-<br>
-
+  * [High Level Architecture](docs/junodb_arch_overview.md)
+  * [Wire protocol](docs/wireprotocol.md)
+  * [Contributing](docs/contributing.md)
 
 
 ## Getting Started with the JunoDB Server
