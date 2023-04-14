@@ -23,13 +23,14 @@ https://user-images.githubusercontent.com/4778360/231896536-bec45e79-c258-45ae-a
 
 <br>
 
-## Juno Client
+## JunoDB Client
 
 ### Java Client Library
-https://user-images.githubusercontent.com/4778360/231885577-4371c4b2-4aaa-4bc3-b22a-416504ccda7f.mp4
+https://user-images.githubusercontent.com/4778360/232097926-a3760c20-02ec-40b7-93e7-973bb04d1f02.mp4
 
 
 ### Reference App
-https://user-images.githubusercontent.com/4778360/231889609-5f4450bb-1f0a-4bff-8e36-ace8d5487b71.mp4
+https://user-images.githubusercontent.com/4778360/232097995-024fb44b-dc0d-46c2-8a50-bf1d93f5a628.mp4
+
 
 
