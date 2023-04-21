@@ -116,7 +116,7 @@ limitations under the License.
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-core</artifactId>
-      <version>5.3.26</version>
+      <version>5.3.27</version>
     </dependency>
     <dependency>
       <groupId>org.springframework</groupId>
