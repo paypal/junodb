@@ -284,8 +284,8 @@ See instructions for junoload [here](docs/junoload.md)
 ### Run functional tests
 ```bash
 #Assuming user is in $BUILDTOP folder
-script/test/functest/configsetup.sh
-cd script/test/functest
+test/functest/configsetup.sh
+cd test/functest
 $BUILDTOP/release-binary/tool/go/bin/go test -v -config=config.toml
 ```
 <br>
@@ -294,7 +294,7 @@ $BUILDTOP/release-binary/tool/go/bin/go test -v -config=config.toml
 ### Run unit tests
 ```bash
 #Assuming user is in $BUILDTOP folder
-cd script/test/unittest
+cd test/unittest
 $BUILDTOP/release-binary/tool/go/bin/go test -v
 ```
 
