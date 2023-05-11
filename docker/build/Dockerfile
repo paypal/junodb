@@ -1,5 +1,5 @@
 FROM ubuntu:16.04 AS juno-base
-
+USER root
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get -qq install -y \
 	cmake \
 	g++ \
@@ -12,7 +12,7 @@ RUN tar xzvf go${GOLANG_VERSION}.linux-amd64.tar.gz -C /usr/local/
 
 ######
 FROM juno-base as juno-dev-base
-
+USER root
 COPY /src/juno/third_party/rocksdb /vendor/src/rocksdb
 
 WORKDIR /vendor/src/rocksdb
@@ -22,13 +22,13 @@ WORKDIR /
 
 ######
 FROM juno-base as juno-dev
-
+USER root
 COPY --from=juno-dev-base /vendor/rocksdb/include /usr/local/include
 COPY --from=juno-dev-base /vendor/rocksdb/lib /usr/local/lib
 
 ######
 FROM juno-dev as builder 
-
+USER root
 COPY /src/juno /juno
 COPY /build.sh /build.sh
 
