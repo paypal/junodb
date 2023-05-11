@@ -21,7 +21,9 @@ package config
 
 import (
 	"bytes"
+	"errors"
 	"fmt"
+	"io/fs"
 	"math"
 	"os"
 	"path/filepath"
@@ -163,7 +165,7 @@ func LoadConfig(ssConfigFile string) (err error) {
 	if !serverConfig.MicroShardsEnabled && len(serverConfig.DB.DbPaths) >= 1 {
 		tagFile := fmt.Sprintf("%s/microshard_enabled.txt", serverConfig.DB.DbPaths[0].Path)
 		_, err := os.Stat(tagFile)
-		if !os.IsNotExist(err) {
+		if !errors.Is(err, fs.ErrNotExist) {
 			// db was converted by dbcopy tool.
 			serverConfig.MicroShardsEnabled = true
 		}

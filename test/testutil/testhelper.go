@@ -24,7 +24,6 @@ import (
 	"bytes"
 	"crypto/rand"
 	"fmt"
-	"io/ioutil"
 	"net"
 	"os"
 	"os/exec"
@@ -685,7 +684,7 @@ func AddProxyConfig(file string, config string) error {
 }
 
 func RemoveProxyConfig(file string, config string) error {
-	input, err := ioutil.ReadFile(file)
+	input, err := os.ReadFile(file)
 	if err != nil {
 		return fmt.Errorf("not able to read proxy config file: %s", err.Error())
 	}
@@ -698,7 +697,7 @@ func RemoveProxyConfig(file string, config string) error {
 		}
 	}
 	output := strings.Join(lines, "\n")
-	if err = ioutil.WriteFile(file, []byte(output), 0644); err != nil {
+	if err = os.WriteFile(file, []byte(output), 0644); err != nil {
 		return fmt.Errorf("not able to write to file with replaced string: %s", err.Error())
 	}
 	return nil
@@ -725,7 +724,7 @@ func AddRemoveProxyConfigValue(file string, config string, parentConfig string, 
 		lfile = file
 	}
 
-	_, err := ioutil.ReadFile(lfile)
+	_, err := os.ReadFile(lfile)
 	if err != nil {
 		return fmt.Errorf("not able to read proxy config file: %s err: %s", lfile, err.Error())
 	}
@@ -787,7 +786,7 @@ func GetProxyConfigValue(file string, config string, parentConfig string, hostip
 		lfile = file
 	}
 
-	input, err := ioutil.ReadFile(lfile)
+	input, err := os.ReadFile(lfile)
 	if err != nil {
 		return "", fmt.Errorf("not able to read proxy config file: %s", err.Error())
 	}
@@ -845,7 +844,7 @@ func UpdateProxyConfig(file string, old string, new string, parentConfig string,
 		lfile = file
 	}
 
-	input, err := ioutil.ReadFile(lfile)
+	input, err := os.ReadFile(lfile)
 	if err != nil {
 		return fmt.Errorf("not able to read proxy config file: %s err: %s", lfile, err.Error())
 	}
@@ -890,7 +889,7 @@ func UpdateProxyConfig(file string, old string, new string, parentConfig string,
 		return fmt.Errorf("not able to find replaced string in config file or under parent config: %s", err.Error())
 	}
 	output := strings.Join(lines, "\n") //change the file with new config
-	if err = ioutil.WriteFile(lfile, []byte(output), 0644); err != nil {
+	if err = os.WriteFile(lfile, []byte(output), 0644); err != nil {
 		return fmt.Errorf("not able to write to file with replaced string, file is: %s err: %s", lfile, err.Error())
 	}
 

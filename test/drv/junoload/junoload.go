@@ -24,7 +24,6 @@ import (
 	"fmt"
 	"math/rand"
 	"net/http"
-	_ "net/http/pprof"
 	"os"
 	"strings"
 	"sync"

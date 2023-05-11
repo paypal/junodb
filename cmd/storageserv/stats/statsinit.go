@@ -21,7 +21,6 @@ package stats
 
 import (
 	"fmt"
-	"net/http/pprof"
 
 	"juno/third_party/forked/golang/glog"
 
@@ -53,16 +52,11 @@ func initForWorker(isChild bool, workerId int, zoneId uint32, machineIndex uint3
 	HttpServerMux.HandleFunc("/", indexHandler)
 
 	initDbIndexTemplate(workerIdString)
-	initPprofIndexTemplate(workerIdString)
 
 	addPage("/stats", httpStatsHandler)
 
-	addPage("/debug/pprof/", debugPprofHandler)
 	addPage("/debug/dbstats/", httpDebugDbStatsHandler)
 	addPage("/debug/config", debugConfigHandler)
-	addPage("/debug/pprof/profile", pprof.Profile)
-	addPage("/debug/pprof/symbol", pprof.Symbol)
-	addPage("/debug/pprof/trace", pprof.Trace)
 
 	if debug.DEBUG {
 		addPage("/debug/memstats", debugMemStatsHandler)

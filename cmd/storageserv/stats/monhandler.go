@@ -23,7 +23,7 @@ import (
 	"bytes"
 	"fmt"
 	"html/template"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -93,23 +93,7 @@ func (h *HttpHandlerForMonitor) Init(isChild bool, addrs []string) {
 	HttpServerMux.HandleFunc("/", h.httpHandler)
 	HttpServerMux.HandleFunc("/stats/json", h.httpJsonStatsHandler)
 	HttpServerMux.HandleFunc("/stats/text", h.httpTextStatsHandler)
-	//	HttpServerMux.HandleFunc("/debug/pprof/", h.debugPprofHandler)
 	HttpServerMux.HandleFunc("/version", version.HttpHandler)
-}
-
-func (h *HttpHandlerForMonitor) debugPprofHandler(w http.ResponseWriter, r *http.Request) {
-	values := r.URL.Query()
-	if len(values) != 0 {
-		if values.Get("wid") != "" {
-			if body, err := h.getFromWorker(r.URL.Path, values); err == nil {
-				w.Write(body)
-			} else {
-				glog.Errorln(err)
-			}
-			return
-		}
-	}
-	debugPprofHandler(w, r)
 }
 
 func (c *HttpHandlerForMonitor) getFromWorkerWithWorkerId(urlPath string, query url.Values, workerId int) (body []byte, err error) {
@@ -124,7 +108,7 @@ func (c *HttpHandlerForMonitor) getFromWorkerWithWorkerId(urlPath string, query 
 		url += "?" + qstr
 	}
 	if resp, err = http.Get(url); err == nil {
-		body, err = ioutil.ReadAll(resp.Body)
+		body, err = io.ReadAll(resp.Body)
 		resp.Body.Close()
 	} else {
 		glog.Errorln(err)

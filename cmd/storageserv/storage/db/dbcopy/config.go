@@ -20,7 +20,9 @@
 package main
 
 import (
+	"errors"
 	"fmt"
+	"io/fs"
 	"os"
 	"path/filepath"
 
@@ -72,7 +74,7 @@ func LoadConfig(file string) string {
 	if !cfg.MicroShardsEnabled {
 		tagFile := fmt.Sprintf("%s/microshard_enabled.txt", dbPath)
 		_, err := os.Stat(tagFile)
-		if !os.IsNotExist(err) {
+		if !errors.Is(err, fs.ErrNotExist) {
 			// db was converted by dbcopy tool.
 			cfg.MicroShardsEnabled = true
 			cfg.NumMicroShards = 256

@@ -23,6 +23,7 @@ import (
 	"bytes"
 	"errors"
 	"fmt"
+	"io/fs"
 	"math/rand"
 	"os"
 	"path/filepath"
@@ -31,8 +32,9 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/BurntSushi/toml"
 	"juno/third_party/forked/golang/glog"
+
+	"github.com/BurntSushi/toml"
 )
 
 type Cluster struct {
@@ -381,7 +383,7 @@ func (c *Cluster) WriteToCache(cachePath string, cacheName string, version uint3
 	if version > 2 {
 		oldfile := fmt.Sprintf("%s.%d", filePrefix, version-2)
 		err2 := os.Remove(oldfile)
-		if os.IsExist(err2) && err2 != nil {
+		if errors.Is(err2, fs.ErrExist) && err2 != nil {
 			glog.Errorf("%s: %v", oldfile, err2)
 		}
 	}
@@ -389,7 +391,7 @@ func (c *Cluster) WriteToCache(cachePath string, cacheName string, version uint3
 	cname := filepath.Clean(filepath.Join(cachePath, cacheName))
 	// Remove file link
 	err = os.Remove(cname)
-	if os.IsExist(err) && err != nil {
+	if errors.Is(err, fs.ErrExist) && err != nil {
 		glog.Errorf("%v", err)
 		return err
 	}

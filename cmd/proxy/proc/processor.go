@@ -366,7 +366,7 @@ func (p *TwoPhaseProcessor) replyStatusToClient(st proto.OpStatus) {
 		p.commit.noErrResponse.ssRequest.ssRespOpMsg.SetOpStatus(proto.OpStatusInconsistent)
 		payload := p.commit.noErrResponse.ssRequest.ssRespOpMsg.GetPayload()
 		// follow the sendRepairs
-		if payload != nil || payload.GetLength() == 0 {
+		if payload != nil {
 			p.commit.noErrResponse.ssRequest.ssRespOpMsg.SetPayload(p.clientRequest.GetPayload())
 		}
 		p.replyToClient(&p.commit.noErrResponse)

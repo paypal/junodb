@@ -21,7 +21,8 @@ package server
 
 import (
 	"fmt"
-	"io/ioutil"
+	pkgio "io"
+	"juno/third_party/forked/golang/glog"
 	"net"
 	"net/http"
 	"os"
@@ -29,8 +30,6 @@ import (
 	"strconv"
 	"strings"
 	"time"
-
-	"juno/third_party/forked/golang/glog"
 
 	"juno/internal/cli"
 	"juno/pkg/io"
@@ -92,7 +91,7 @@ func (s *ServerBase) init(name string, id uint, ipAddr string, port string, sslE
 		if err != nil {
 			glog.Fatal(err)
 		}
-		s.httpMonAddr = fmt.Sprintf("%s:%d", ipAddr, httpport+1)
+		s.httpMonAddr = net.JoinHostPort(ipAddr, strconv.Itoa(httpport+1))
 	} else {
 		if !strings.Contains(httpMonAddr, ":") {
 			httpMonAddr = ":" + httpMonAddr
@@ -101,7 +100,7 @@ func (s *ServerBase) init(name string, id uint, ipAddr string, port string, sslE
 			if httpHost == "" {
 				httpHost = ipAddr
 			}
-			s.httpMonAddr = fmt.Sprintf("%s:%s", httpHost, httpPort)
+			s.httpMonAddr = net.JoinHostPort(httpHost, httpPort)
 		}
 
 	}
@@ -189,7 +188,7 @@ func (s *Server) Restart() error {
 func (s *Server) IsUp() bool {
 	query := fmt.Sprintf("http://%s/stats?info=get_pid", s.GetHttpMonAddr())
 	if resp, err := http.Get(query); err == nil {
-		if body, err := ioutil.ReadAll(resp.Body); err == nil {
+		if body, err := pkgio.ReadAll(resp.Body); err == nil {
 			pids := strings.Split(string(body), ",")
 			if len(pids) == 0 {
 				return false

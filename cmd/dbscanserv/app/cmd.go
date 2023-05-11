@@ -24,7 +24,6 @@ import (
 	"bytes"
 	"encoding/binary"
 	"encoding/json"
-	"fmt"
 	"os"
 	"strings"
 	"time"
@@ -285,7 +284,7 @@ func GetVersionFromDb(key []byte, zoneid int) (data []byte, valLen int,
 	value, err := handle.Get(ro, key)
 
 	if err != nil {
-		msg = fmt.Sprintf("%s", err)
+		msg = err.Error()
 		return
 	}
 
@@ -300,7 +299,7 @@ func GetVersionFromDb(key []byte, zoneid int) (data []byte, valLen int,
 	}
 
 	if err != nil {
-		msg = fmt.Sprintf("%s", err)
+		msg = err.Error()
 		return
 	}
 

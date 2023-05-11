@@ -21,7 +21,9 @@ package compact
 
 import (
 	"encoding/binary"
+	"errors"
 	"fmt"
+	"io/fs"
 	"os"
 	"path/filepath"
 	"time"
@@ -49,7 +51,7 @@ func fileExist(name string) bool {
 func Watch(zoneid, nodeid int, suspend service.SuspendFunc) {
 
 	dir := "events"
-	if _, err := os.Stat(dir); os.IsNotExist(err) {
+	if _, err := os.Stat(dir); errors.Is(err, fs.ErrNotExist) {
 		os.Mkdir(dir, 0777)
 	}
 

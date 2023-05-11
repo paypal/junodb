@@ -22,7 +22,6 @@ package app
 import (
 	"flag"
 	"fmt"
-	_ "net/http/pprof"
 	"os"
 	"path/filepath"
 	"strings"

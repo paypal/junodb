@@ -20,7 +20,9 @@
 package db
 
 import (
+	"errors"
 	"fmt"
+	"io/fs"
 	"math/rand"
 	"os"
 
@@ -339,7 +341,7 @@ func (cfg *Config) OnLoad() {
 	writeOptions.DisableWAL(cfg.WriteDisableWAL)
 
 	if !cfg.WriteDisableWAL && len(cfg.WalDir) > 0 {
-		if _, err := os.Stat(cfg.WalDir); os.IsNotExist(err) {
+		if _, err := os.Stat(cfg.WalDir); errors.Is(err, fs.ErrNotExist) {
 			err = os.MkdirAll(cfg.WalDir, 0777)
 			if err != nil {
 				glog.Exit("Error : ", err.Error())

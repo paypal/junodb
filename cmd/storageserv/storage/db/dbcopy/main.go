@@ -21,8 +21,10 @@
 package main
 
 import (
+	"errors"
 	"flag"
 	"fmt"
+	"io/fs"
 	"os"
 	"path/filepath"
 	"strconv"
@@ -108,7 +110,7 @@ func getDbSet(dbPath string, tgtPath string, zone, node int, dbRange string) (db
 		}
 
 		target := fmt.Sprintf("%s/%s", tgtPath, filepath.Base(path))
-		if _, err := os.Stat(target); os.IsNotExist(err) {
+		if _, err := os.Stat(target); errors.Is(err, fs.ErrNotExist) {
 			err = os.MkdirAll(target, 0777)
 			if err != nil {
 				glog.Exitf("[ERROR] %s", err)
@@ -205,7 +207,7 @@ func main() {
 	newDir := fmt.Sprintf("%s/dbcopy_%s", filepath.Dir(dbPath), filepath.Base(dbPath))
 	if len(tgtPath) > 0 {
 		_, err := os.Stat(newDir)
-		if !os.IsNotExist(err) {
+		if !errors.Is(err, fs.ErrNotExist) {
 			glog.Exitf("[ERROR] %s from last dbcopy was left over.", newDir)
 		}
 	}
