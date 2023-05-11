@@ -207,7 +207,7 @@ func main() {
 	newDir := fmt.Sprintf("%s/dbcopy_%s", filepath.Dir(dbPath), filepath.Base(dbPath))
 	if len(tgtPath) > 0 {
 		_, err := os.Stat(newDir)
-		if errors.Is(err, fs.ErrNotExist) {
+		if !errors.Is(err, fs.ErrNotExist) {
 			glog.Exitf("[ERROR] %s from last dbcopy was left over.", newDir)
 		}
 	}
