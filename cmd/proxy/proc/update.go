@@ -139,14 +139,14 @@ func (p *UpdateProcessor) prepareSucceeded() bool {
 	if p.clientRequest.IsForReplication() {
 		return (p.prepare.getNumSuccessResponse() >= confNumWrites)
 	} else {
-		return p.prepare.getNumSuccessResponse()-p.numInserting > 0 && (p.prepare.getNumSuccessResponse() >= confNumWrites)
+		return p.prepare.getNumSuccessResponse() > p.numInserting && (p.prepare.getNumSuccessResponse() >= confNumWrites)
 	}
 }
 
 func (p *UpdateProcessor) onCommitSuccess(st *SSRequestContext) {
 	p.TwoPhaseProcessor.onCommitSuccess(st)
 	if p.numBadRequestID > 0 {
-		p.replyStatusToClient(proto.OpStatusInconsistent) ///TODO
+		p.replyStatusToClient(proto.OpStatusInconsistent)
 		return
 	} else {
 		if p.commitSucceeded() {
@@ -170,10 +170,10 @@ func (p *UpdateProcessor) onBadRequestID(rc *SSRequestContext) {
 	//p.p2.numCommitFailure++
 	p.commit.onErrorResponse()
 	if p.commit.getNumSuccessResponse() != 0 {
-		p.replyStatusToClient(proto.OpStatusInconsistent) ///TODO
+		p.replyStatusToClient(proto.OpStatusInconsistent)
 		p.sendRepairs()
 	} else if p.commitFailed() {
-		p.replyStatusToClient(proto.OpStatusCommitFailure) ///TODO
+		p.replyStatusToClient(proto.OpStatusCommitFailure)
 	}
 }
 func (p *UpdateProcessor) setCommitMsg() {
@@ -256,7 +256,7 @@ func (p *UpdateProcessor) setCommitMsg() {
 	p.commit.setFromOpMsg(opMsg)
 }
 
-func (p *UpdateProcessor) OnResponseReceived(rc *SSRequestContext) { ///TODO
+func (p *UpdateProcessor) OnResponseReceived(rc *SSRequestContext) {
 
 	opStatus := rc.ssResponseOpStatus
 
@@ -283,10 +283,8 @@ func (p *UpdateProcessor) OnResponseReceived(rc *SSRequestContext) { ///TODO
 				}
 			}
 			p.onPrepareFailure(rc)
-			///TODO
 		default:
 			//Not expected
-			//TODO...
 			glog.Info("Got unexpected OpStatus: ", rc.ssResponseOpStatus.String())
 			p.onPrepareFailure(rc)
 		}
@@ -312,7 +310,7 @@ func (p *UpdateProcessor) OnResponseReceived(rc *SSRequestContext) { ///TODO
 func (p *UpdateProcessor) OnSSTimeout(rc *SSRequestContext) {
 	switch rc.opCode {
 	case proto.OpCodePrepareUpdate:
-		p.onPrepareFailure(rc) ///TODO proto.OpStatusNoStorageServer)
+		p.onPrepareFailure(rc)
 	case proto.OpCodeCommit:
 		p.onCommitFailure(rc)
 	case proto.OpCodeRepair:
@@ -325,7 +323,7 @@ func (p *UpdateProcessor) OnSSIOError(rc *SSRequestContext) {
 	p.pendingResponses[rc.ssIndex] = nil
 	switch rc.opCode {
 	case proto.OpCodePrepareUpdate:
-		p.onPrepareFailure(rc) ///TODO proto.OpStatusNoStorageServer) ///TODO to a new OpStatus
+		p.onPrepareFailure(rc)
 	case proto.OpCodeCommit:
 		p.onCommitFailure(rc)
 	case proto.OpCodeRepair:

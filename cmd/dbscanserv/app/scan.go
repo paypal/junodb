@@ -160,7 +160,7 @@ func (s *Scanner) ScanAndMerge(rangeid int, jm *prime.JoinMap, rs *prime.Result)
 		return err
 	}
 
-	return err
+	return nil
 }
 
 func (s *Scanner) GetNext(rangeid int, keyList prime.KeyList) *prime.MessageBlock {

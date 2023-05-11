@@ -278,7 +278,6 @@ func (r *replicationProcessorT) replicate(recExpirationTime uint32, msg *proto.R
 			request.Decode(msg)
 			buf := logging.NewKVBuffer()
 			buf.AddOpRequest(&request)
-			//TODO to revisit
 			cal.Event("RR_Drop_QueueFull",
 				request.GetOpCodeText(),
 				cal.StatusWarning,
@@ -302,7 +301,6 @@ func (r *replicationProcessorT) OnConnectError(timeTaken time.Duration, connStr 
 	r.OutboundProcessor.OnConnectError(timeTaken, connStr, err)
 }
 
-//TODO tempory
 func (r *Replicator) GetProcessors() []*replicationProcessorT {
 	return r.processors
 }

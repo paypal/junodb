@@ -34,7 +34,7 @@ type TwoPhaseDestroyProcessor struct {
 	numP1NoKeyResponses int
 	delRequest          RequestAndStats
 	markDelRequest      RequestAndStats
-	noErrMarkDelResp    ResponseWrapper ///TODO refactoring
+	noErrMarkDelResp    ResponseWrapper
 }
 
 func newDestroyRequestProcessor() IRequestProcessor {
@@ -68,7 +68,7 @@ func (p *TwoPhaseDestroyProcessor) sendInitRequests() {
 	p.state = stTwoPhaseProcPrepare
 	if p.self.setInitSSRequest() {
 		if err := p.prepare.setOpCode(p.prepareOpCode); err != nil {
-			p.replyStatusToClient(proto.OpStatusBadMsg) // TODO revisit
+			p.replyStatusToClient(proto.OpStatusBadMsg)
 			return
 		}
 		for i := 0; i < p.ssGroup.numAvailableSSs; i++ {
@@ -82,7 +82,7 @@ func (p *TwoPhaseDestroyProcessor) sendInitRequests() {
 			}
 		}
 	} else {
-		p.replyStatusToClient(proto.OpStatusBadMsg) // TODO revisit
+		p.replyStatusToClient(proto.OpStatusBadMsg)
 	}
 }
 
@@ -98,7 +98,6 @@ func (p *TwoPhaseDestroyProcessor) actIfDoneWithPrepare() {
 			p.setAbortMsg()
 			for i := 0; i < p.prepare.getNumSuccessResponse(); i++ {
 				ssIndex := p.prepare.successResponses[i].ssRequest.ssIndex
-				///TODO valid ssIndex
 				p.sendAbort(ssIndex)
 			}
 			p.replyStatusToClient(p.errorPrepareResponseOpStatus())
@@ -134,7 +133,7 @@ func (p *TwoPhaseDestroyProcessor) markDeleteIfNeeded() {
 			p.sendAbort(ssIndex)
 
 		} else {
-			p.sendMarkDelete(ssIndex) ///TODO valid ssIndex
+			p.sendMarkDelete(ssIndex)
 		}
 	}
 	if numSuccess == p.numP1NoKeyResponses {
@@ -151,7 +150,6 @@ func (p *TwoPhaseDestroyProcessor) actIfDoneWithCommitDeleteRepair() {
 	if p.commit.hasNoPending() && p.delRequest.hasNoPending() {
 		if p.commit.getNumSuccessResponse()+int(p.delRequest.numSuccessResponse) >= confNumWrites {
 			//      Reply Ok to client
-			///TODO to revisit
 			if p.commit.getNumSuccessResponse() != 0 {
 				msgToClient := &p.commit.noErrResponse.ssRequest.ssRespOpMsg
 				if p.prepare.mostUpdatedOkResponse != nil {
@@ -163,7 +161,7 @@ func (p *TwoPhaseDestroyProcessor) actIfDoneWithCommitDeleteRepair() {
 				}
 				p.replyToClient(&p.commit.noErrResponse)
 			} else {
-				p.replyStatusToClient(proto.OpStatusInconsistent) ///TODO: temporary
+				p.replyStatusToClient(proto.OpStatusInconsistent)
 			}
 		} else if p.commit.getNumSuccessResponse()+p.delRequest.getNumSuccessResponse() == 0 {
 			p.replyStatusToClient(proto.OpStatusCommitFailure)
@@ -176,7 +174,7 @@ func (p *TwoPhaseDestroyProcessor) actIfDoneWithCommitDeleteRepair() {
 func (p *TwoPhaseDestroyProcessor) onCommitSuccess(st *SSRequestContext) {
 	p.TwoPhaseProcessor.onCommitSuccess(st)
 	if p.numBadRequestID > 0 {
-		p.replyStatusToClient(proto.OpStatusInconsistent) ///TODO
+		p.replyStatusToClient(proto.OpStatusInconsistent)
 		return
 	}
 	p.actIfDoneWithCommitDeleteRepair()
@@ -187,7 +185,7 @@ func (p *TwoPhaseDestroyProcessor) onCommitFailure(st *SSRequestContext) {
 
 	if p.delRequest.isSet == false {
 		var opMsg proto.OperationalMessage
-		p.setSSOpRequestFromClientRequest(&opMsg, proto.OpCodeDelete, 0, false) ///TODO ### CHECK ### othe meta info...
+		p.setSSOpRequestFromClientRequest(&opMsg, proto.OpCodeDelete, 0, false)
 		p.delRequest.setFromOpMsg(&opMsg)
 	}
 	p.send(&p.delRequest, st.ssIndex)
@@ -289,7 +287,7 @@ func (p *TwoPhaseDestroyProcessor) OnSSIOError(rc *SSRequestContext) {
 	p.pendingResponses[rc.ssIndex] = nil
 	switch rc.opCode {
 	case proto.OpCodePrepareDelete:
-		p.onPrepareFailure(rc) ///TODO to a new OpStatus
+		p.onPrepareFailure(rc)
 	case proto.OpCodeCommit:
 		p.onCommitFailure(rc)
 	case proto.OpCodeRepair:

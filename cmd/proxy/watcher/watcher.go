@@ -135,8 +135,11 @@ func (w *Watcher) Watch() (err error) {
 		if w.etcdcli != nil {
 			val, err := w.etcdcli.GetValue(etcd.TagZoneMarkDown)
 			if err == nil {
-				zoneid, _ := strconv.Atoi(val)
-				markdownobj.MarkDown(int32(zoneid))
+				zoneid, err := strconv.ParseUint(val, 10, 32)
+				if err == nil {
+					markdownobj.MarkDown(int32(zoneid))
+					glog.Infof("markdown: zoneid=%d", zoneid)
+				}
 				glog.Infof("markdown: zoneid=%d", zoneid)
 			}
 			if chMarkDown, err = w.etcdcli.WatchEvt(etcd.TagZoneMarkDown, ctx); err != nil {

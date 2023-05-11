@@ -44,7 +44,7 @@ func (p *DestroyProcessor) sendInitRequests() {
 	raw.ShallowCopy(p.requestContext.GetMessage())
 	proto.SetShardId(raw, p.shardId)
 	if err := p.request.setOpCode(p.ssRequestOpCode); err != nil {
-		p.replyStatusToClient(proto.OpStatusBadMsg) // TODO revisit
+		p.replyStatusToClient(proto.OpStatusBadMsg)
 		return
 	}
 	for i := 0; i < p.ssGroup.numAvailableSSs; i++ {
@@ -93,12 +93,12 @@ func (p *DestroyProcessor) OnResponseReceived(rc *SSRequestContext) {
 }
 
 func (p *DestroyProcessor) OnSSTimeout(rc *SSRequestContext) {
-	p.onFailure(rc) /// TODO proto.OpStatusNoStorageServer)
+	p.onFailure(rc)
 }
 
 func (p *DestroyProcessor) OnSSIOError(rc *SSRequestContext) {
 	p.pendingResponses[rc.ssIndex] = nil
-	p.onFailure(rc) ///TODO proto.OpStatusNoStorageServer)
+	p.onFailure(rc)
 }
 
 func (p *DestroyProcessor) errorResponseOpStatus() (st proto.OpStatus) {
