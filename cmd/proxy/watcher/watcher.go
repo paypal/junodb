@@ -140,7 +140,6 @@ func (w *Watcher) Watch() (err error) {
 					markdownobj.MarkDown(int32(zoneid))
 					glog.Infof("markdown: zoneid=%d", zoneid)
 				}
-				glog.Infof("markdown: zoneid=%d", zoneid)
 			}
 			if chMarkDown, err = w.etcdcli.WatchEvt(etcd.TagZoneMarkDown, ctx); err != nil {
 				glog.Errorln(err)
@@ -183,9 +182,11 @@ func (w *Watcher) Watch() (err error) {
 					glog.Info("etcd connected")
 					val, err := w.etcdcli.GetValue(etcd.TagZoneMarkDown)
 					if err == nil {
-						zoneid, _ := strconv.Atoi(val)
-						markdownobj.MarkDown(int32(zoneid))
-						glog.Infof("markdown: zoneid=%d", zoneid)
+						zoneid, err := strconv.ParseUint(val, 10, 32)
+						if err == nil {
+							markdownobj.MarkDown(int32(zoneid))
+							glog.Infof("markdown: zoneid=%d", zoneid)
+						}
 					}
 					if chMarkDown, err = w.etcdcli.WatchEvt(etcd.TagZoneMarkDown, ctx); err != nil {
 						glog.Errorln(err)
