@@ -25,6 +25,7 @@ import (
 	"net/rpc"
 	"os"
 	"path/filepath"
+	"strconv"
 	"sync"
 	"sync/atomic"
 	"time"
@@ -144,7 +145,7 @@ func IsLocalAddress(ip string, zoneid int) bool {
 }
 
 func GenRemoteAddr(ip string, zoneid int) string {
-	return fmt.Sprintf("%s:%d", ip, getPeerPort(zoneid))
+	return net.JoinHostPort(ip, strconv.Itoa(getPeerPort(zoneid)))
 }
 
 // Start listener

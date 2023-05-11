@@ -22,6 +22,8 @@ package cluster
 import (
 	"errors"
 	"fmt"
+	"net"
+	"strconv"
 )
 
 type Config struct {
@@ -56,7 +58,7 @@ func (c *Config) Validate() error {
 			for i := 0; i < int(c.NumZones); i++ {
 				for _, host := range c.SSHosts[i] {
 					for _, port := range c.SSPorts {
-						c.ConnInfo[i] = append(c.ConnInfo[i], fmt.Sprintf("%s:%d", host, port))
+						c.ConnInfo[i] = append(c.ConnInfo[i], net.JoinHostPort(host, strconv.Itoa(int(port))))
 					}
 				}
 			}

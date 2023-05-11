@@ -92,7 +92,7 @@ func (s *ServerBase) init(name string, id uint, ipAddr string, port string, sslE
 		if err != nil {
 			glog.Fatal(err)
 		}
-		s.httpMonAddr = fmt.Sprintf("%s:%d", ipAddr, httpport+1)
+		s.httpMonAddr = net.JoinHostPort(ipAddr, strconv.Itoa(httpport+1))
 	} else {
 		if !strings.Contains(httpMonAddr, ":") {
 			httpMonAddr = ":" + httpMonAddr
@@ -101,7 +101,7 @@ func (s *ServerBase) init(name string, id uint, ipAddr string, port string, sslE
 			if httpHost == "" {
 				httpHost = ipAddr
 			}
-			s.httpMonAddr = fmt.Sprintf("%s:%s", httpHost, httpPort)
+			s.httpMonAddr = net.JoinHostPort(httpHost, httpPort)
 		}
 
 	}
