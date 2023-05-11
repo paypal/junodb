@@ -22,11 +22,6 @@ package stats
 import (
 	"fmt"
 	"net/http"
-	"net/http/pprof"
-	rpprof "runtime/pprof"
-	"strings"
-
-	"juno/third_party/forked/golang/glog"
 
 	"github.com/BurntSushi/toml"
 
@@ -109,25 +104,6 @@ func httpDebugDbStatsHandler(w http.ResponseWriter, r *http.Request) {
 
 	if err := tmpl.Execute(w, rockdbProperties); err != nil {
 		fmt.Print(err)
-	}
-}
-
-func debugPprofHandler(w http.ResponseWriter, r *http.Request) {
-	if strings.HasPrefix(r.URL.Path, "/debug/pprof/") {
-		name := strings.TrimPrefix(r.URL.Path, "/debug/pprof/")
-		if name != "" {
-			pprof.Handler(name).ServeHTTP(w, r)
-			return
-		}
-	}
-
-	profiles := rpprof.Profiles()
-	tmpl := pprofIndexTmpl
-	if r.URL.Query().Get(kQueryElemKey) == kQueryElemValueMain {
-		tmpl = pprofIndexMainTmpl
-	}
-	if err := tmpl.Execute(w, profiles); err != nil {
-		glog.Error(err)
 	}
 }
 

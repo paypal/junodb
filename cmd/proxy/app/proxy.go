@@ -26,7 +26,6 @@ import (
 	"errors"
 	"fmt"
 	"io/fs"
-	_ "net/http/pprof"
 	"os"
 	"os/exec"
 	"path/filepath"

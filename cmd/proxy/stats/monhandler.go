@@ -104,7 +104,6 @@ func (h *HandlerForMonitor) ListenAndServe(addr string) error {
 	HttpServerMux.HandleFunc("/", h.httpHandler)
 	HttpServerMux.HandleFunc("/stats/json", h.httpJsonStatsHandler)
 	HttpServerMux.HandleFunc("/stats/text", h.httpTextStatsHandler)
-	HttpServerMux.HandleFunc("/debug/pprof/", h.debugPprofHandler)
 	HttpServerMux.HandleFunc("/version", version.HttpHandler)
 
 	HttpServerMux.HandleFunc("/cluster/", h.httpClusterConsoleHandler)
@@ -168,21 +167,6 @@ func (h *HandlerForMonitor) getFromWorkerWithWorkerIdByPost(r *http.Request, wor
 		glog.Errorln(err)
 	}
 	return
-}
-
-func (h *HandlerForMonitor) debugPprofHandler(w http.ResponseWriter, r *http.Request) {
-	values := r.URL.Query()
-	if len(values) != 0 {
-		if values.Get("wid") != "" {
-			if body, err := h.getFromWorker(r.URL.Path, values); err == nil {
-				w.Write(body)
-			} else {
-				glog.Errorln(err)
-			}
-			return
-		}
-	}
-	debugPprofHandler(w, r)
 }
 
 func (h *HandlerForMonitor) httpJsonStatsHandler(w http.ResponseWriter, r *http.Request) {

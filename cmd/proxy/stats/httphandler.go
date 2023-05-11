@@ -22,9 +22,6 @@ package stats
 import (
 	"fmt"
 	"net/http"
-	"net/http/pprof"
-	rpprof "runtime/pprof"
-	"strings"
 
 	//"juno/third_party/forked/golang/glog"
 	"github.com/BurntSushi/toml"
@@ -96,25 +93,6 @@ func debugShardManagerStatsHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func debugPprofHandler(w http.ResponseWriter, r *http.Request) {
-	if strings.HasPrefix(r.URL.Path, "/debug/pprof/") {
-		name := strings.TrimPrefix(r.URL.Path, "/debug/pprof/")
-		if name != "" {
-			pprof.Handler(name).ServeHTTP(w, r)
-			return
-		}
-	}
-
-	profiles := rpprof.Profiles()
-	tmpl := pprofIndexTmpl
-	if r.URL.Query().Get(kQueryElemKey) == kQueryElemValueMain {
-		tmpl = pprofIndexMainTmpl
-	}
-	if err := tmpl.Execute(w, profiles); err != nil {
-		fmt.Fprint(w, err)
-	}
-}
-
 func initStatsForWorker(workerId int) {
 
 	htmlShardMgrStats.AddSection(&htmlSectShardMgrStatsT{})
@@ -134,15 +112,10 @@ func initStatsForWorker(workerId int) {
 	htmlstats.AddSection(&htmlSectClientStatsT{})
 
 	workerIdString = fmt.Sprintf("%d", workerId)
-	initPprofIndexTemplate()
 
 	HttpServerMux.HandleFunc("/", indexHandler)
 
 	addPage("/stats", httpStatsHandler)
-	addPage("/debug/pprof/", debugPprofHandler)
 	addPage("/debug/shardmgr", debugShardManagerStatsHandler)
 	addPage("/debug/config", debugConfigHandler)
-	addPage("/debug/pprof/profile", pprof.Profile)
-	addPage("/debug/pprof/symbol", pprof.Symbol)
-	addPage("/debug/pprof/trace", pprof.Trace)
 }
