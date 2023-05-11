@@ -23,7 +23,6 @@ import (
 	"errors"
 	"fmt"
 	"io/fs"
-	"io/ioutil"
 	"os"
 	"strconv"
 	"strings"
@@ -115,7 +114,7 @@ func (c *Manager) Exec() {
 
 	pidFile := cfg.PidFileName
 
-	if data, err := ioutil.ReadFile(pidFile); err == nil {
+	if data, err := os.ReadFile(pidFile); err == nil {
 		if pid, err := strconv.Atoi(strings.TrimSpace(string(data))); err == nil {
 			if process, err := os.FindProcess(pid); err == nil {
 				if err := process.Signal(syscall.Signal(0)); err == nil {
@@ -125,7 +124,7 @@ func (c *Manager) Exec() {
 			}
 		}
 	}
-	ioutil.WriteFile(pidFile, []byte(fmt.Sprintf("%d\n", os.Getpid())), 0644)
+	os.WriteFile(pidFile, []byte(fmt.Sprintf("%d\n", os.Getpid())), 0644)
 	defer os.Remove(pidFile)
 
 	if len(cfg.LogLevel) == 0 || c.optLogLevel != kDefaultLogLevel {

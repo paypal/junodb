@@ -31,7 +31,6 @@ import (
 	"encoding/pem"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"math/big"
 	mathrand "math/rand"
 	"net"
@@ -162,7 +161,7 @@ func readRequest(r *http.Request) ([]byte, error) {
 	if r.Header.Get("Content-Encoding") == "gzip" {
 		return readGzipBody(r.Body)
 	}
-	return ioutil.ReadAll(r.Body)
+	return io.ReadAll(r.Body)
 }
 
 func readGzipBody(body io.Reader) ([]byte, error) {

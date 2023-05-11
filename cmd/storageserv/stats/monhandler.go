@@ -23,7 +23,7 @@ import (
 	"bytes"
 	"fmt"
 	"html/template"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -124,7 +124,7 @@ func (c *HttpHandlerForMonitor) getFromWorkerWithWorkerId(urlPath string, query 
 		url += "?" + qstr
 	}
 	if resp, err = http.Get(url); err == nil {
-		body, err = ioutil.ReadAll(resp.Body)
+		body, err = io.ReadAll(resp.Body)
 		resp.Body.Close()
 	} else {
 		glog.Errorln(err)

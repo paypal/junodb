@@ -23,7 +23,7 @@ import (
 	"bytes"
 	"fmt"
 	"html/template"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 	"os"
@@ -162,7 +162,7 @@ func (h *HandlerForMonitor) getFromWorkerWithWorkerIdByPost(r *http.Request, wor
 		glog.Infof("Content-Type: %v\n", contents)
 	}
 	if resp, err = http.Post(url, contents, r.Body); err == nil {
-		body, err = ioutil.ReadAll(resp.Body)
+		body, err = io.ReadAll(resp.Body)
 		resp.Body.Close()
 	} else {
 		glog.Errorln(err)
@@ -237,7 +237,7 @@ func (h *HandlerForMonitor) getFromWorkerWithWorkerId(urlPath string, query url.
 		url += "?" + qstr
 	}
 	if resp, err = http.Get(url); err == nil {
-		body, err = ioutil.ReadAll(resp.Body)
+		body, err = io.ReadAll(resp.Body)
 		resp.Body.Close()
 	} else {
 		glog.Errorln(err)

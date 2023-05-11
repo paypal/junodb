@@ -20,7 +20,6 @@
 package sec
 
 import (
-	"io/ioutil"
 	"juno/third_party/forked/golang/glog"
 	"os"
 )
@@ -31,7 +30,7 @@ type localFileProtectedT struct {
 }
 
 func (p *localFileProtectedT) getCertAndKeyPemBlock(cfg *Config) (certPEMBlock []byte, keyPEMBlock []byte, err error) {
-	certPEMBlock, err = ioutil.ReadFile(cfg.CertPemFilePath)
+	certPEMBlock, err = os.ReadFile(cfg.CertPemFilePath)
 	if err != nil {
 		return
 	}
@@ -39,7 +38,7 @@ func (p *localFileProtectedT) getCertAndKeyPemBlock(cfg *Config) (certPEMBlock [
 	if cfg.ClientAuth {
 		if _, err = os.Stat(cfg.CAFilePath); err == nil {
 			var caPEMBlock []byte
-			caPEMBlock, err = ioutil.ReadFile(cfg.CAFilePath)
+			caPEMBlock, err = os.ReadFile(cfg.CAFilePath)
 			if err != nil {
 				glog.Errorln(err)
 				return
@@ -52,7 +51,7 @@ func (p *localFileProtectedT) getCertAndKeyPemBlock(cfg *Config) (certPEMBlock [
 		}
 	}
 
-	keyPEMBlock, err = ioutil.ReadFile(cfg.KeyPemFilePath)
+	keyPEMBlock, err = os.ReadFile(cfg.KeyPemFilePath)
 	if err != nil {
 		return
 	}

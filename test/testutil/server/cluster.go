@@ -21,7 +21,7 @@ package server
 
 import (
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net"
 	"net/http"
 	"net/url"
@@ -464,7 +464,7 @@ func (c *Cluster) IsProxyConnectedWithSS(nodes ...SSNode) bool {
 			query += fmt.Sprintf("&node=%d,%d", ss.Zone, ss.Node)
 		}
 		if resp, err := http.Get(query); err == nil {
-			if body, err := ioutil.ReadAll(resp.Body); err == nil {
+			if body, err := io.ReadAll(resp.Body); err == nil {
 				if strings.EqualFold(string(body), "true") {
 					return true
 				}
@@ -504,7 +504,7 @@ func (c *Cluster) IsProxyNotConnectedWithSS(nodes ...SSNode) bool {
 			query += fmt.Sprintf("&node=%d,%d", ss.Zone, ss.Node)
 		}
 		if resp, err := http.Get(query); err == nil {
-			if body, err := ioutil.ReadAll(resp.Body); err == nil {
+			if body, err := io.ReadAll(resp.Body); err == nil {
 				if strings.EqualFold(string(body), "true") {
 					return true
 				}

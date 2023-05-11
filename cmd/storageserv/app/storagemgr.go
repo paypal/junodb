@@ -23,7 +23,6 @@ import (
 	"errors"
 	"fmt"
 	"io/fs"
-	"io/ioutil"
 	"math"
 	"net"
 	"os"
@@ -121,7 +120,7 @@ func NewServerManager(num int, pidFileName string, path string, args []string,
 func (s *ServerManager) Run() {
 	pidFile := s.pidFileName
 
-	if data, err := ioutil.ReadFile(pidFile); err == nil {
+	if data, err := os.ReadFile(pidFile); err == nil {
 		if pid, err := strconv.Atoi(strings.TrimSpace(string(data))); err == nil {
 			if process, err := os.FindProcess(pid); err == nil {
 				if err := process.Signal(syscall.Signal(0)); err == nil {
@@ -141,7 +140,7 @@ func (s *ServerManager) Run() {
 		}
 	}
 
-	ioutil.WriteFile(pidFile, []byte(fmt.Sprintf("%d\n", os.Getpid())), 0644)
+	os.WriteFile(pidFile, []byte(fmt.Sprintf("%d\n", os.Getpid())), 0644)
 	defer os.Remove(pidFile)
 	defer shmstats.Finalize()
 
