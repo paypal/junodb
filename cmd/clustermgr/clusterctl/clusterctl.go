@@ -20,8 +20,10 @@
 package main
 
 import (
+	"errors"
 	"flag"
 	"fmt"
+	"io/fs"
 	"os"
 	"path/filepath"
 	"strings"
@@ -152,7 +154,7 @@ func defaultConfig(progName string) (config string) {
 	config = fmt.Sprintf("%s/config/config.toml", dirName)
 
 	_, err = os.Stat(config)
-	if os.IsNotExist(err) {
+	if errors.Is(err, fs.ErrNotExist) {
 		glog.Exitf("[ERROR] %s does not exist.", config)
 	}
 

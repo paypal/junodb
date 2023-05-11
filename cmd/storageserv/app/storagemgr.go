@@ -20,7 +20,9 @@
 package app
 
 import (
+	"errors"
 	"fmt"
+	"io/fs"
 	"io/ioutil"
 	"math"
 	"net"
@@ -134,7 +136,7 @@ func (s *ServerManager) Run() {
 	if s.dbScanPort > 0 {
 		cmdPath := fmt.Sprintf("%s/%s", filepath.Dir(s.cmdPath), "dbscanserv")
 		_, err := os.Stat(cmdPath)
-		if os.IsNotExist(err) {
+		if errors.Is(err, fs.ErrNotExist) {
 			glog.Exitf("missing executable file: dbscanserv.")
 		}
 	}

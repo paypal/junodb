@@ -23,7 +23,9 @@ Juno Proxy Server
 package app
 
 import (
+	"errors"
 	"fmt"
+	"io/fs"
 	_ "net/http/pprof"
 	"os"
 	"os/exec"
@@ -95,7 +97,7 @@ USAGE
 		if configFilename == "" {
 			glog.Exitf("\n\n*** missing config option ***\n\n")
 		}
-		if _, err := os.Stat(configFilename); os.IsNotExist(err) {
+		if _, err := os.Stat(configFilename); errors.Is(err, fs.ErrNotExist) {
 			glog.Exitf("\n\n***  config file \"%s\" not found ***\n\n", configFilename)
 		}
 		appName := "[" + progName + "] "

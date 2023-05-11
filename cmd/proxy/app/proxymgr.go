@@ -20,7 +20,9 @@
 package app
 
 import (
+	"errors"
 	"fmt"
+	"io/fs"
 	"io/ioutil"
 	"os"
 	"strconv"
@@ -80,7 +82,7 @@ func (c *CmdProxyCommon) Parse(args []string) (err error) {
 		os.Exit(-1)
 	}
 
-	if _, err := os.Stat(c.optConfigFile); os.IsNotExist(err) {
+	if _, err := os.Stat(c.optConfigFile); errors.Is(err, fs.ErrNotExist) {
 		fmt.Fprintf(os.Stderr, "\n\n***  config file \"%s\" not found ***\n\n", c.optConfigFile)
 		os.Exit(-1)
 	}

@@ -23,6 +23,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"io/fs"
 	"os"
 	"sync/atomic"
 	"time"
@@ -408,7 +409,7 @@ func (r *RocksDB) UpdateRedistShards(shards shard.Map) {
 	glog.Infof("Create New DB with updated redist shards")
 
 	// add new shards
-	//	if _, err := os.Stat(r.dbDir); os.IsNotExist(err) {
+	//	if _, err := os.Stat(r.dbDir); errors.Is(err, fs.ErrNotExist) {
 	//		os.Mkdir(r.dbDir, 0777)
 	//	}
 
@@ -437,7 +438,7 @@ func (r *RocksDB) Setup() {
 		if len(dbpath.Path) == 0 {
 			glog.Exit("Error: DbPaths contains an empty string.")
 		}
-		if _, err := os.Stat(dbpath.Path); os.IsNotExist(err) {
+		if _, err := os.Stat(dbpath.Path); errors.Is(err, fs.ErrNotExist) {
 			err = os.MkdirAll(dbpath.Path, 0777)
 			if err != nil {
 				glog.Exit("Error : ", err.Error())

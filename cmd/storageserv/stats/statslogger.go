@@ -21,8 +21,10 @@ package stats
 
 import (
 	"bytes"
+	"errors"
 	"fmt"
 	goio "io"
+	"io/fs"
 	"os"
 	"path/filepath"
 	"time"
@@ -119,7 +121,7 @@ func (l *statsLoggerT) Init() {
 		}
 		cfg := config.ServerConfig()
 		if cfg.StateLogEnabled {
-			if _, err := os.Stat(cfg.StateLogDir); os.IsNotExist(err) {
+			if _, err := os.Stat(cfg.StateLogDir); errors.Is(err, fs.ErrNotExist) {
 				os.Mkdir(cfg.StateLogDir, 0777)
 			}
 		}
