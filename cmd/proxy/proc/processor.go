@@ -107,7 +107,7 @@ func (p *OnePhaseProcessor) sendInitRequests() {
 
 	if p.self.setInitSSRequest() {
 		if err := p.request.setOpCode(p.ssRequestOpCode); err != nil {
-			p.replyStatusToClient(proto.OpStatusBadMsg) // TODO revisit
+			p.replyStatusToClient(proto.OpStatusBadMsg)
 			return
 		}
 
@@ -122,7 +122,7 @@ func (p *OnePhaseProcessor) sendInitRequests() {
 			}
 		}
 	} else {
-		p.replyStatusToClient(proto.OpStatusBadMsg) // TODO revisit
+		p.replyStatusToClient(proto.OpStatusBadMsg)
 	}
 }
 
@@ -142,7 +142,6 @@ func (p *TwoPhaseProcessor) setInitSSRequest() bool {
 			return false
 		}
 		if err := p.prepare.resetFromOpMsg(&opMsg); err != nil {
-			///TODO log
 			return false
 		}
 	} else {
@@ -157,7 +156,7 @@ func (p *TwoPhaseProcessor) sendInitRequests() {
 	p.state = stTwoPhaseProcPrepare
 	if p.self.setInitSSRequest() {
 		if err := p.prepare.setOpCode(p.prepareOpCode); err != nil {
-			p.replyStatusToClient(proto.OpStatusBadMsg) // TODO revisit
+			p.replyStatusToClient(proto.OpStatusBadMsg)
 			return
 		}
 		for i := 0; i < p.ssGroup.numAvailableSSs && p.numSSRequestSent < confNumWrites && p.prepare.getNumIOAndTimeout() < confNumWrites; i++ {
@@ -167,7 +166,7 @@ func (p *TwoPhaseProcessor) sendInitRequests() {
 			p.replyStatusToClient(proto.OpStatusNoStorageServer)
 		}
 	} else {
-		p.replyStatusToClient(proto.OpStatusBadMsg) // TODO revisit
+		p.replyStatusToClient(proto.OpStatusBadMsg)
 	}
 }
 
@@ -245,7 +244,6 @@ func (p *TwoPhaseProcessor) sendCommit(ssIndex uint32) {
 func (p *TwoPhaseProcessor) sendCommits() {
 	for i := 0; i < p.prepare.getNumSuccessResponse(); i++ {
 		ssIndex := p.prepare.successResponses[i].ssRequest.ssIndex
-		///TODO valid ssIndex
 		p.sendCommit(ssIndex)
 	}
 }
@@ -272,12 +270,12 @@ func (p *TwoPhaseProcessor) sendRepair(ssIndex uint32) {
 		opMsg.SetPayload(p.clientRequest.GetPayload())
 		if err := p.repair.setFromOpMsg(&opMsg); err != nil {
 			glog.Error(err)
-			p.replyStatusToClient(proto.OpStatusInconsistent) // TODO revisit
+			p.replyStatusToClient(proto.OpStatusInconsistent)
 			return
 		}
 	}
 	if p.send(&p.repair, ssIndex) == false {
-		p.replyStatusToClient(proto.OpStatusInconsistent) // TODO revisit
+		p.replyStatusToClient(proto.OpStatusInconsistent)
 	}
 }
 
@@ -356,7 +354,7 @@ func (p *TwoPhaseProcessor) onRepairFailure(rc *SSRequestContext) {
 		if otel.IsEnabled() {
 			otel.RecordCount(otel.ReqProc, []otel.Tags{{otel.Status, kInconsistent}})
 		}
-		p.replyStatusToClient(proto.OpStatusInconsistent) ///TODO
+		p.replyStatusToClient(proto.OpStatusInconsistent)
 	}
 }
 
@@ -375,7 +373,6 @@ func (p *TwoPhaseProcessor) replyStatusToClient(st proto.OpStatus) {
 	}
 }
 
-///TODO to be reviewed
 func recordMostUpdatedThan(m1, m2 *proto.OperationalMessage) bool {
 	lmt1 := m1.GetLastModificationTime()
 	lmt2 := m2.GetLastModificationTime()

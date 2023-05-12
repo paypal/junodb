@@ -133,7 +133,7 @@ func (c *cmdRuntimeConfigSet) Exec() {
 	c.Validate()
 
 	limits, err := c.config.GetConfig("limits")
-	if err != err {
+	if err != nil {
 		fmt.Printf("failed to get limits config. %s\n", err.Error())
 		return
 	}

@@ -218,8 +218,7 @@ func (s *Server) startServer() (err error) {
 		err = s.cmd.Run()
 		if err == nil {
 			return
-		}
-		if err != nil {
+		} else {
 			if frwk.LOG_DEBUG {
 				glog.DebugInfof("%#v", err)
 			}
@@ -229,7 +228,6 @@ func (s *Server) startServer() (err error) {
 			time.Sleep(kRetryBackOff)
 			continue
 		}
-		break
 	}
 	return
 }

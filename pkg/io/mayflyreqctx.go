@@ -45,7 +45,7 @@ type (
 	}
 
 	mayflyInboundResponseContext struct {
-		status uint32 ///TODO
+		status uint32
 		pool   util.BufferPool
 		buf    *util.PPBuffer
 		//conn is not nil only if the connection needs to be closed in OnComplete()
@@ -172,11 +172,11 @@ func (req *mayflyInboundRequestContext) Reply(resp IResponseContext) {
 	mayfly.ToMayflyMsg(&mayflyMsg, &opMsg)
 	pool, buf, err := mayflyMsg.EncodeToPPBuffer()
 	if err != nil {
-		panic("aa") ///TODO
+		panic("aa")
 	}
 	resp.OnComplete()
 	ctx := &mayflyInboundResponseContext{
-		status: uint32(opMsg.GetOpStatus()), ///TODO
+		status: uint32(opMsg.GetOpStatus()),
 		pool:   pool,
 		buf:    buf,
 	}

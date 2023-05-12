@@ -148,7 +148,6 @@ func StartRequestProcessor(
 	return ch
 }
 
-///TODO backoff if connect fails
 func doRequestProcess(
 	server junoio.ServiceEndpoint,
 	sourceName string,
@@ -198,7 +197,7 @@ loop:
 		select {
 		case <-chDone:
 			glog.Verbosef("proc done channel got notified")
-			active.Shutdown() ///TODO to revisit
+			active.Shutdown()
 			break loop
 		case _, ok := <-connRecycleTimer.GetTimeoutCh():
 			if ok {
@@ -257,7 +256,7 @@ loop:
 				sequence++
 				var raw proto.RawMessage
 				if err = req.Encode(&raw); err != nil {
-					glog.Errorf("encoding error %s", err) //TODO revisit. may just call panic
+					glog.Errorf("encoding error %s", err)
 					return
 				}
 				raw.SetOpaque(sequence)
