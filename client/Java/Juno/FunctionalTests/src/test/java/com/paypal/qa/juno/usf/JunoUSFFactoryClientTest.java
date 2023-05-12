@@ -117,8 +117,7 @@ public class JunoUSFFactoryClientTest extends AbstractTestNGSpringContextTests {
 			clock.reset();
 		}
 		//System.out.println("Time per all(create+update+get+delete): " + totalCreateTime / loops + " ms/all");
-		//System.out.println("Total time for " + loops + " loops for all "
-				+ records + "KB of data: " + totalCreateTime / 1000 + " seconds");
+		//System.out.println("Total time for " + loops + " loops for all "+ records + "KB of data: " + totalCreateTime / 1000 + " seconds");
 	}
     
     /**
