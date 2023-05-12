@@ -197,7 +197,7 @@ func (m *workerStatsManagerT) SetStorageStats(src *StorageStats) {
 	}
 }
 
-func (m *workerStatsManagerT) MarshalJSON() ([]byte, error) {
+func (m workerStatsManagerT) MarshalJSON() ([]byte, error) {
 	return json.Marshal(m.stats)
 }
 
