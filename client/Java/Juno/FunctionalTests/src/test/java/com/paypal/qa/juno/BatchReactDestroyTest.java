@@ -291,7 +291,7 @@ public class BatchReactDestroyTest{
 			key[i] = DataGenUtils.createKey(DataGenUtils.rand(r, 1, 128)).getBytes();
 			key[4] = DataGenUtils.createKey(129).getBytes();
 
-			System.out.println("key " + i + "is " + new String(key[i]));
+			//System.out.println("key " + i + "is " + new String(key[i]));
 			payload[i] = DataGenUtils.genBytes(DataGenUtils.rand(r, 1, 1028));	
 			JunoRequest item1 = new JunoRequest(key[i], payload[i], (long)0, (long)0, JunoRequest.OperationType.Destroy);
 			list.add(item1);
@@ -308,7 +308,7 @@ public class BatchReactDestroyTest{
 			int i = 0;
 			for (JunoResponse response: resp) {
 				String mkey = new String(response.getKey());
-				System.out.println("vera mkey is " + mkey + "key 4 is " + (new String(key[4])));
+				//System.out.println("vera mkey is " + mkey + "key 4 is " + (new String(key[4])));
 				if ( mkey.equals(new String(key[4]))) {
 					AssertJUnit.assertEquals (OperationStatus.IllegalArgument, response.getStatus());
 				} else {

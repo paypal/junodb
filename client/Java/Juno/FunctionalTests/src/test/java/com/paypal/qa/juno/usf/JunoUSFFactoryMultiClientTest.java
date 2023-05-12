@@ -90,7 +90,7 @@ public class JunoUSFFactoryMultiClientTest extends AbstractTestNGSpringContextTe
 	//PASS in 6/29 - only 1 connection is seen
 	@Test
 	public void testCreateKey() throws Exception {
-		System.out.println( "\n***TEST CASE: " + new Object(){}.getClass().getEnclosingMethod().getName());
+		//System.out.println( "\n***TEST CASE: " + new Object(){}.getClass().getEnclosingMethod().getName());
 		byte[] key;
 
 		for (int i = 0; i < 100; i++) {
@@ -131,7 +131,7 @@ public class JunoUSFFactoryMultiClientTest extends AbstractTestNGSpringContextTe
 	@Test
 	//Due to recycle, make sure 3 connections are created
 	public void testCreateReadUpdateMultClients() throws Exception {
-		System.out.println( "\n***TEST CASE: " + new Object(){}.getClass().getEnclosingMethod().getName());
+		//System.out.println( "\n***TEST CASE: " + new Object(){}.getClass().getEnclosingMethod().getName());
 		byte[] key = UUID.randomUUID().toString().getBytes();
 
 		String data = "data to store in juno on " + new Date(System.currentTimeMillis()).toString();
@@ -179,7 +179,7 @@ public class JunoUSFFactoryMultiClientTest extends AbstractTestNGSpringContextTe
 	 */
 	@Test
 	public void testCreateCASDestroyMultiClients() throws Exception {
-		System.out.println( "\n***TEST CASE: " + new Object(){}.getClass().getEnclosingMethod().getName());
+		//System.out.println( "\n***TEST CASE: " + new Object(){}.getClass().getEnclosingMethod().getName());
 		LOGGER.info("CorrID : ","id12345");
 
 		byte[] key = DataGenUtils.createKey(64).getBytes();
@@ -223,7 +223,7 @@ public class JunoUSFFactoryMultiClientTest extends AbstractTestNGSpringContextTe
 
         @Test
         public void testCreateCASDestroyMultiCAndRlients() throws Exception {
-                System.out.println( "\n***TEST CASE: " + new Object(){}.getClass().getEnclosingMethod().getName());
+                //System.out.println( "\n***TEST CASE: " + new Object(){}.getClass().getEnclosingMethod().getName());
                 LOGGER.info("CorrID : ","id12345");
 
                 byte[] key = DataGenUtils.createKey(64).getBytes();
@@ -270,7 +270,7 @@ public class JunoUSFFactoryMultiClientTest extends AbstractTestNGSpringContextTe
 
 	@Test
 	public void testGetKey() {	
-		System.out.println( "\n***TEST CASE: " + new Object(){}.getClass().getEnclosingMethod().getName());
+		//System.out.println( "\n***TEST CASE: " + new Object(){}.getClass().getEnclosingMethod().getName());
 
 		byte[] key = "mytesting1234".getBytes();
 

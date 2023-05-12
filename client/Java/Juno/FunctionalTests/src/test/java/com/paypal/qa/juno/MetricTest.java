@@ -105,7 +105,7 @@ public class MetricTest {
 
     @AfterClass
     public void teardown() {
-        System.out.println("Calling teardown");
+        //System.out.println("Calling teardown");
         
         sfxRegistry.close();
         simpleMeterRegistry.close();
@@ -118,7 +118,7 @@ public class MetricTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        System.out.println("Calling BeforeEach");
+        //System.out.println("Calling BeforeEach");
         simpleMeterRegistry = new SimpleMeterRegistry();
         Metrics.globalRegistry.add(simpleMeterRegistry);
     }
@@ -130,7 +130,7 @@ public class MetricTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        System.out.println("Calling AfterEach");
+        //System.out.println("Calling AfterEach");
         simpleMeterRegistry.clear();
         simpleMeterRegistry.close();
         Metrics.globalRegistry.remove(simpleMeterRegistry);

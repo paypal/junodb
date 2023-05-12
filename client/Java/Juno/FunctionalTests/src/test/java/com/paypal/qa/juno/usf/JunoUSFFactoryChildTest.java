@@ -66,7 +66,7 @@ public class JunoUSFFactoryChildTest extends AbstractTestNGSpringContextTests {
      */
     @Test
     public void testCreateWithFieldInjectedClient() {
-        System.out.println( "\n***TEST CASE: " + new Object(){}.getClass().getEnclosingMethod().getName());
+        //System.out.println( "\n***TEST CASE: " + new Object(){}.getClass().getEnclosingMethod().getName());
         String key = UUID.randomUUID().toString();
 
         String data = "data to store in juno on " + new Date(System.currentTimeMillis()).toString();
@@ -95,7 +95,7 @@ public class JunoUSFFactoryChildTest extends AbstractTestNGSpringContextTests {
      */
     @Test
     public void testCreateWithConstructorInjectedClient() {
-        System.out.println( "\n***TEST CASE: " + new Object(){}.getClass().getEnclosingMethod().getName());
+        //System.out.println( "\n***TEST CASE: " + new Object(){}.getClass().getEnclosingMethod().getName());
         String key = UUID.randomUUID().toString();
 
         String data = "data to store in juno on " + new Date(System.currentTimeMillis()).toString();
@@ -125,7 +125,7 @@ public class JunoUSFFactoryChildTest extends AbstractTestNGSpringContextTests {
      */
     @Test
     public void testCreateWithCIOAndReadWithFIO() {
-        System.out.println( "\n***TEST CASE: " + new Object(){}.getClass().getEnclosingMethod().getName());
+        //System.out.println( "\n***TEST CASE: " + new Object(){}.getClass().getEnclosingMethod().getName());
         String key = UUID.randomUUID().toString();
 
         String data = "data to store in juno on " + new Date(System.currentTimeMillis()).toString();

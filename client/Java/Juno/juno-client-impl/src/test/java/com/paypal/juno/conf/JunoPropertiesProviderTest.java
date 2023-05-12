@@ -51,7 +51,7 @@ public class JunoPropertiesProviderTest{
 	
 	@Test
 	public void TestToString(){
-		System.out.println("msg1"+jpp.toString());
+		//System.out.println("msg1"+jpp.toString());
 		assertEquals("JunoPropertiesProvider{ connectionTimeoutMS=1000, connectionPoolSize=1, defaultLifetime=259200, maxLifetime=259200, host='127.0.0.1', port='8090', appName='JunoTest, recordNamespace='JunoTest, useSSL = false, usePayloadCompression =true, responseTimeout = 1000, maxConnectionPoolSize=1, maxConnectionLifetime=30000, maxKeySize=128, maxValueSize=204800, maxLifetime=259200, maxNameSpaceLength=64, operationRetry=true, byPassLTM=true, reconnectOnFail=true}",jpp.toString());
 	}
 	

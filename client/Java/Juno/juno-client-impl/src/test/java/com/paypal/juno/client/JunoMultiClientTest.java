@@ -83,7 +83,7 @@ public class JunoMultiClientTest extends AbstractJUnit4SpringContextTests{
     	try{
     		junoClnt2.create("Joseph".getBytes(), "Antony".getBytes());
     	}catch(Exception e){
-    		System.out.println("Exception123 :"+e.getMessage());
+    		//System.out.println("Exception123 :"+e.getMessage());
     		assertTrue("testJunoSyncClientNotNull test failed",e.getMessage().contains("Connection Error"));
     	}
     }
@@ -95,7 +95,7 @@ public class JunoMultiClientTest extends AbstractJUnit4SpringContextTests{
     	try{
 			junoAsyncClient3.create("Joseph".getBytes(), "Antony".getBytes()).toBlocking().value();
     	}catch(Exception e){
-    		System.out.println("Exception :"+e.getMessage());
+    		//System.out.println("Exception :"+e.getMessage());
     		assertTrue("testJunoAsyncClientNotNull test failed",e.getMessage().contains("Connection Error"));
     	}
     }

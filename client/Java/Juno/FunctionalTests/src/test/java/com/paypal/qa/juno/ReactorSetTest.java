@@ -234,7 +234,7 @@ public class ReactorSetTest{
 		AssertJUnit.assertTrue(2 == junoResponse.getVersion());
 		AssertJUnit.assertEquals(new String(data), new String(junoResponse.getValue()));
 		AssertJUnit.assertTrue(junoResponse.getTtl() >= (prop.getDefaultLifetime() - 4) && junoResponse.getTtl() <= prop.getDefaultLifetime());
-		System.out.println("TTL now is:"+junoResponse.getTtl());
+		//System.out.println("TTL now is:"+junoResponse.getTtl());
 
 		LOGGER.info("0");
 		LOGGER.info("Completed");
@@ -488,7 +488,7 @@ public class ReactorSetTest{
 		AssertJUnit.assertEquals (OperationStatus.Success, mResponse.getStatus());
 		JunoResponse mResponse1 = junoReactClient1.get(key).block();
 		AssertJUnit.assertEquals (OperationStatus.Success, mResponse1.getStatus());
-		System.out.println("lifetime for junoReactClient1 is " + mResponse1.getTtl());
+		//System.out.println("lifetime for junoReactClient1 is " + mResponse1.getTtl());
 		LOGGER.debug("lifetime for junoReactClient1 is " + mResponse1.getTtl() + ", default is " +  prop.getDefaultLifetime());
 		AssertJUnit.assertEquals(1,mResponse1.getVersion());
 		AssertJUnit.assertEquals(data.length, mResponse1.getValue().length);
@@ -1043,7 +1043,7 @@ public class ReactorSetTest{
                 junoResponse = junoReactClient.get(key).block();
                 AssertJUnit.assertEquals (OperationStatus.Success,junoResponse.getStatus());
                 AssertJUnit.assertEquals(key, junoResponse.key());
-		System.out.println ("Vera version is " + junoResponse.getVersion());
+		//System.out.println ("Vera version is " + junoResponse.getVersion());
                 AssertJUnit.assertTrue(1 == junoResponse.getVersion());
                 AssertJUnit.assertEquals(data.length, junoResponse.getValue().length);
                 AssertJUnit.assertEquals(new String(data), new String(junoResponse.getValue()));

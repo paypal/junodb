@@ -124,7 +124,7 @@ public class RequestQueueTest {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                System.out.println("Mock Server Freeze Triggered");
+                //System.out.println("Mock Server Freeze Triggered");
                 mjus.setFreeze(true);
                 unfreeze = true;
             }
@@ -174,7 +174,7 @@ public class RequestQueueTest {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                System.out.println("Mock Server Freeze Triggered");
+                //System.out.println("Mock Server Freeze Triggered");
                 mjus.setFreeze(true);
             }
         };
@@ -224,7 +224,7 @@ public class RequestQueueTest {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                System.out.println("Mock Server Freeze Triggered");
+                //System.out.println("Mock Server Freeze Triggered");
                 mjus.setFreeze(true);
             }
         };
@@ -274,7 +274,7 @@ public class RequestQueueTest {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                System.out.println("Mock Server Freeze Triggered");
+                //System.out.println("Mock Server Freeze Triggered");
                 mjus.setFreeze(true);
             }
         };

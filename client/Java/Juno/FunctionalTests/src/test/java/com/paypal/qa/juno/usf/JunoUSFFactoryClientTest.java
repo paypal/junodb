@@ -109,15 +109,15 @@ public class JunoUSFFactoryClientTest extends AbstractTestNGSpringContextTests {
 			JunoResponse junoResponse = junoClient.get(key[iter].getBytes());
 			AssertJUnit.assertEquals (OperationStatus.Success,junoResponse.getStatus());
 			AssertJUnit.assertEquals(key[iter], new String(junoResponse.key()));
-			System.out.println ("Version: " +  junoResponse.getVersion() );					
+			//System.out.println ("Version: " +  junoResponse.getVersion() );					
 			AssertJUnit.assertEquals(new String(payload1), new String(junoResponse.getValue()));
 			junoClient.delete(key[iter].getBytes());
 			clock.stop();
 			totalCreateTime += clock.getTime();
 			clock.reset();
 		}
-		System.out.println("Time per all(create+update+get+delete): " + totalCreateTime / loops + " ms/all");
-		System.out.println("Total time for " + loops + " loops for all "
+		//System.out.println("Time per all(create+update+get+delete): " + totalCreateTime / loops + " ms/all");
+		//System.out.println("Total time for " + loops + " loops for all "
 				+ records + "KB of data: " + totalCreateTime / 1000 + " seconds");
 	}
     
@@ -128,15 +128,15 @@ public class JunoUSFFactoryClientTest extends AbstractTestNGSpringContextTests {
      */
     @Test
 	public void testLoadAllForOneHundredRecords() throws JunoException,  IOException {
-    		System.out.println( "\n***TEST CASE: " + new Object(){}.getClass().getEnclosingMethod().getName());
+    		//System.out.println( "\n***TEST CASE: " + new Object(){}.getClass().getEnclosingMethod().getName());
     	
 		try{
 			testLoadAll(200, 10);
 		}catch(IllegalArgumentException iaex){
-			System.out.println ("Exception occur: " + iaex.getMessage());
+			//System.out.println ("Exception occur: " + iaex.getMessage());
 			AssertJUnit.assertTrue(iaex.getMessage().contains("Invalid payload size. current payload size=1024000, max payload size=204800"));
 		}catch(Exception e){
-			System.out.println("Exception occured: "+e.getMessage());
+			//System.out.println("Exception occured: "+e.getMessage());
 		}
 	}
 
@@ -145,7 +145,7 @@ public class JunoUSFFactoryClientTest extends AbstractTestNGSpringContextTests {
      */
     @Test
     public void testCreateKey() {
-    	System.out.println( "\n***TEST CASE: " + new Object(){}.getClass().getEnclosingMethod().getName());
+    	//System.out.println( "\n***TEST CASE: " + new Object(){}.getClass().getEnclosingMethod().getName());
         String key = UUID.randomUUID().toString();
 
         String data = "data to store in juno on " + new Date(System.currentTimeMillis()).toString();
@@ -155,13 +155,13 @@ public class JunoUSFFactoryClientTest extends AbstractTestNGSpringContextTests {
         // Check for the record
         response = junoClient.get(key.getBytes());
         String dataOut = new String(response.getValue());
-        System.out.println ("Data: " + dataOut);
+        //System.out.println ("Data: " + dataOut);
         assert (data.equals(dataOut));
 
         JunoResponse rresponse = junoRctClient.create(key.getBytes(), bytes).block();
         rresponse = junoRctClient.get(key.getBytes()).block();
         String rdataOut = new String(rresponse.getValue());
-        System.out.println ("Data from reactClient is : " + rdataOut);
+        //System.out.println ("Data from reactClient is : " + rdataOut);
         assert (data.equals(rdataOut));
 
         LOGGER.info("SUCCESS");
@@ -173,7 +173,7 @@ public class JunoUSFFactoryClientTest extends AbstractTestNGSpringContextTests {
 	 */
 	@Test
 	public void mixedObjectTest() {
-		System.out.println( "\n***TEST CASE: " + new Object(){}.getClass().getEnclosingMethod().getName());
+		//System.out.println( "\n***TEST CASE: " + new Object(){}.getClass().getEnclosingMethod().getName());
 		String key = UUID.randomUUID().toString();
 
 		String data = "data to store in juno by Sync client " + new Date(System.currentTimeMillis()).toString();
@@ -213,7 +213,7 @@ public class JunoUSFFactoryClientTest extends AbstractTestNGSpringContextTests {
 	 */
 	@Test
     public void testNoConnectionToServer() {
-    	System.out.println( "\n***TEST CASE: " + new Object(){}.getClass().getEnclosingMethod().getName());
+    	//System.out.println( "\n***TEST CASE: " + new Object(){}.getClass().getEnclosingMethod().getName());
         String key = UUID.randomUUID().toString();
 
         String data = "data to store in juno on " + new Date(System.currentTimeMillis()).toString();
@@ -224,7 +224,7 @@ public class JunoUSFFactoryClientTest extends AbstractTestNGSpringContextTests {
         	AssertJUnit.assertFalse("Exception not seen for No connection to server Test", false);
         }catch(JunoException e){
         	AssertJUnit.assertTrue("testNoConnectionToServer failed",e.getMessage().contains("Connection Error"));
-        	System.out.println(" Exception1 is:"+e.getMessage());
+        	//System.out.println(" Exception1 is:"+e.getMessage());
         }finally {
 			LOGGER.info("SUCCESS");
 			LOGGER.info("Completed");
@@ -235,7 +235,7 @@ public class JunoUSFFactoryClientTest extends AbstractTestNGSpringContextTests {
                 AssertJUnit.assertFalse("Exception not seen for No connection to server Test", false);
         }catch(JunoException e){
                 AssertJUnit.assertTrue("testNoConnectionToServer failed",e.getMessage().contains("Connection Error"));
-                System.out.println(" Exception1 is:"+e.getMessage());
+                //System.out.println(" Exception1 is:"+e.getMessage());
         }finally {
                         LOGGER.info("SUCCESS");
                         LOGGER.info("Completed");
@@ -248,7 +248,7 @@ public class JunoUSFFactoryClientTest extends AbstractTestNGSpringContextTests {
 			junoClient6.doBatch(list);
 			AssertJUnit.assertFalse("Exception not seen for No connection to server Test", false);
         }catch(JunoException e){
-			System.out.println(" Exception2 is:"+e.getMessage());
+			//System.out.println(" Exception2 is:"+e.getMessage());
         	AssertJUnit.assertTrue("testNoConnectionToServer failed",e.getCause().getMessage().contains("Connection Error"));
         }finally {
 			LOGGER.info("SUCCESS");
@@ -262,7 +262,7 @@ public class JunoUSFFactoryClientTest extends AbstractTestNGSpringContextTests {
                         junoRTimeoutClient.doBatch(list).toIterable();
                         AssertJUnit.assertFalse("Exception not seen for No connection to server Test", false);
         }catch(JunoException e){
-                        System.out.println(" Exception2 is:"+e.getMessage());
+                        //System.out.println(" Exception2 is:"+e.getMessage());
                 AssertJUnit.assertTrue("testNoConnectionToServer failed",e.getCause().getMessage().contains("No Connection to server"));
         }finally {
                         LOGGER.info("SUCCESS");
@@ -279,36 +279,36 @@ public class JunoUSFFactoryClientTest extends AbstractTestNGSpringContextTests {
      */
 	@Test
 	public void testCreateChineseKeyForCpp() throws JunoException, IOException{
-		System.out.println( "\n***TEST CASE: " + new Object(){}.getClass().getEnclosingMethod().getName());
+		//System.out.println( "\n***TEST CASE: " + new Object(){}.getClass().getEnclosingMethod().getName());
 		byte[] key = "Q:������������A:���. Q:����� A:������������  Q:�".getBytes(); 
 		byte[] data = "Q:���������������������������������������������".getBytes("UTF-8");
-		System.out.println ("Destroy the key first");
+		//System.out.println ("Destroy the key first");
 		junoClient.delete(key);
 		junoClient.create(key, data, 6L);		
 		JunoResponse junoResponse = junoReactClient.get(key, (long)0).block();
 		AssertJUnit.assertEquals (OperationStatus.Success,junoResponse.getStatus());
-		System.out.println ("Version: " + junoResponse.getVersion());
-		System.out.println ("Key: " + junoResponse.key() );
-		System.out.println ("Data: " + new String(junoResponse.getValue()));
+		//System.out.println ("Version: " + junoResponse.getVersion());
+		//System.out.println ("Key: " + junoResponse.key() );
+		//System.out.println ("Data: " + new String(junoResponse.getValue()));
 		AssertJUnit.assertEquals(1, junoResponse.getVersion());
 		AssertJUnit.assertEquals(data.length, junoResponse.getValue().length);
 		AssertJUnit.assertEquals(new String(data), new String(junoResponse.getValue()));
 		
-		System.out.println ("\nUpdate key: ");
+		//System.out.println ("\nUpdate key: ");
 		byte[] data1 = "Q:������������������������������������A:���������������������������".getBytes("UTF-8");
 		long lifetime1 = 12L;
 		JunoResponse junoResponse1 = junoReactClient.update(key, data1, lifetime1).block();
-		System.out.println ("New Data1: " + new String(junoResponse.getValue()));
-		System.out.println ("Version: " + junoResponse1.getVersion());
+		//System.out.println ("New Data1: " + new String(junoResponse.getValue()));
+		//System.out.println ("Version: " + junoResponse1.getVersion());
 		AssertJUnit.assertEquals(key, junoResponse1.key());	
 		junoResponse1 = junoClient.get(key);
 		AssertJUnit.assertEquals(data1.length, junoResponse1.getValue().length);
 		AssertJUnit.assertEquals(new String(data1), new String(junoResponse1.getValue()));
 		
-		System.out.println ("\nConditional Update: ");
+		//System.out.println ("\nConditional Update: ");
 		byte[] data2 = "Q:������������������������������������A:���������������������������123".getBytes("UTF-8");
 		JunoResponse junoResponse2 = junoClient.compareAndSet(junoResponse1.getRecordContext(), data2, (long)6L);
-		System.out.println ("Version: " + junoResponse2.getVersion());
+		//System.out.println ("Version: " + junoResponse2.getVersion());
 		AssertJUnit.assertEquals(key, junoResponse2.key());		
 		junoResponse2 = junoClient.get(key);
 		AssertJUnit.assertEquals(data2.length, junoResponse2.getValue().length);

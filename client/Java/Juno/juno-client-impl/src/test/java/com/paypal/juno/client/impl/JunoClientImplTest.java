@@ -122,8 +122,8 @@ public class JunoClientImplTest {
 	  
 	  resp = client2.get("compressTest1".getBytes()); // Read with compression disabled
 	  assertEquals(OperationStatus.Success, resp.getStatus());
-//	  System.out.println("Create:"+String.format("%x", new BigInteger(1,value)));
-//	  System.out.println("Get:"+String.format("%x", new BigInteger(1,resp.getValue())));
+//	  //System.out.println("Create:"+String.format("%x", new BigInteger(1,value)));
+//	  //System.out.println("Get:"+String.format("%x", new BigInteger(1,resp.getValue())));
 	  assertTrue(Arrays.equals(value, resp.getValue()));
 	  
 	  resp = client2.create("compressTest2".getBytes(),value); // Create with compression disabled
@@ -133,7 +133,7 @@ public class JunoClientImplTest {
 	  assertEquals(OperationStatus.Success, resp.getStatus());
 	  assertTrue(Arrays.equals(value, resp.getValue()));
 	  
-	  System.out.println("Test with uncompressable data.");
+	  //System.out.println("Test with uncompressable data.");
 	  //Compression on uncompressable data - Check the CAL log for result
 	  byte [] value1 = DataGenUtils.genBytes(1025);
 	  resp = client1.create("compressTest3".getBytes(), value1);
