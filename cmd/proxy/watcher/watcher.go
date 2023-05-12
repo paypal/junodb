@@ -233,7 +233,7 @@ func (w *Watcher) onMarkDownEvent(ev *clientv3.Event) {
 		glog.Infof("markdown: zoneid=%d", zoneid)
 		markdownobj.MarkDown(int32(zoneid))
 	} else {
-		glog.Errorf("markdown failed. Error:", err.Error())
+		glog.Errorf("markdown failed. Error: %s Value: %s", err.Error(), string(ev.Kv.Value))
 	}
 }
 
