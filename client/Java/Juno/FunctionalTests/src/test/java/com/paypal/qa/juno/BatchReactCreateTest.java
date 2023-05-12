@@ -177,10 +177,10 @@ public class BatchReactCreateTest{
 		try {
 			Iterable<JunoResponse> batchResp = null;
                         if (syncFlag.reactSync.ordinal() == flag) {     //sync react call
-				LOGGER.debug("come into sync batch create -- vera");
+				LOGGER.debug("come into sync batch create");
                                 batchResp = junoActClient.doBatch(list).toIterable();
                         } else {        //async react call
-				LOGGER.debug("come into async batch create -- vera");
+				LOGGER.debug("come into async batch create");
                                 batchResp = BatchReactSubscriber.async_dobatch(junoActClient, list);
                         }
 			int i = 0;
@@ -206,10 +206,10 @@ public class BatchReactCreateTest{
 		try {
 			LOGGER.debug("before blocking mode batch get " + System.currentTimeMillis());
                         if (syncFlag.reactSync.ordinal() == flag) {     //sync react call
-				LOGGER.debug("come into sync batch create -- vera");
+				LOGGER.debug("come into sync batch create");
                                 getBatchResp = junoActClient.doBatch(list1).toIterable();
                         } else {        //async react call
-				LOGGER.debug("come into async batch get -- vera");
+				LOGGER.debug("come into async batch get");
                                 getBatchResp = BatchReactSubscriber.async_dobatch(junoActClient, list1);
                         }
 			LOGGER.debug("after batch get " + System.currentTimeMillis());
@@ -800,9 +800,9 @@ public class BatchReactCreateTest{
 			ttl[1] = 259201;	
 			hmap.put(new String(key[i]), payload[i]);
 			hmapTTL.put(new String(key[i]), ttl[i]);
-			LOGGER.error( "Vera: added ttl haha1" + ttl[i]);		
+			LOGGER.error( " added ttl " + ttl[i]);		
 			JunoRequest item = new JunoRequest(key[i], payload[i], (long)0, ttl[i], JunoRequest.OperationType.Create);
-			LOGGER.error( "Vera: added ttl haha2" + ttl[i]);
+			LOGGER.error( " added ttl " + ttl[i]);
 			list.add(item);
 		}
 		LOGGER.debug("\n===Batch Create is sent ");
@@ -1087,7 +1087,7 @@ public class BatchReactCreateTest{
                         }
 			int i = 0;
 			for (JunoResponse mResponse: batchResp) {				
-				LOGGER.debug("Key: haha" + i + ": "+ mResponse.getKey());
+				LOGGER.debug("Key" + i + ": "+ mResponse.getKey());
 				AssertJUnit.assertTrue(1 == mResponse.getVersion());
 				AssertJUnit.assertEquals (OperationStatus.Success,mResponse.getStatus());
 				i++;

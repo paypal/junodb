@@ -1017,7 +1017,7 @@ public class SetTest{
         /**
          * Send a set request with 150K byte payload which will trigger compression, data can be read 
          * by mayfly java client testGetFromJunoInsert func or junocli, junocli command is:
-         * ./junocli -s host:port -ssl -c config.toml get -ns "NS1" vera_testSetWithCompressionCrossRead
+         * ./junocli -s host:port -ssl -c config.toml get -ns "NS1" _testSetWithCompressionCrossRead
          * exception
          * @throws Exception
          */
@@ -1026,7 +1026,7 @@ public class SetTest{
                 LOGGER.info("\n***TEST CASE: " + new Object(){}.getClass().getEnclosingMethod().getName());
                 LOGGER.info("CorrID : ",Integer.toHexString((new Random()).nextInt(0x10000000) + 3846));
                 byte[] data = DataGenUtils.createCompressablePayload(150000).getBytes();
-                byte[] key = new String("vera_testSetWithCompressionCrossRead").getBytes();
+                byte[] key = new String("_testSetWithCompressionCrossRead").getBytes();
                 long lifetime = 2500;
 
                 JunoPropertiesProvider prop = new JunoPropertiesProvider(pConfig2);
