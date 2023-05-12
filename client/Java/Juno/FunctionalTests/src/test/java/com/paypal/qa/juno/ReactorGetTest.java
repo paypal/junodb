@@ -339,7 +339,7 @@ public class ReactorGetTest{
 		AssertJUnit.assertEquals(new String(data), new String(junoResponse.getValue()));
 
 		Thread.sleep(3000);
-		LOGGER.debug("Update key with new timeline vera add" );
+		LOGGER.debug("Update key with new timeline  add" );
 		JunoResponse junoResponse1;
 		try {
 			junoResponse1 = junoReactClient.get(key, (long)5).block();

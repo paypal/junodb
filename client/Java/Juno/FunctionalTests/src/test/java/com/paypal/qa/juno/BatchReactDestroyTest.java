@@ -308,7 +308,7 @@ public class BatchReactDestroyTest{
 			int i = 0;
 			for (JunoResponse response: resp) {
 				String mkey = new String(response.getKey());
-				//System.out.println("vera mkey is " + mkey + "key 4 is " + (new String(key[4])));
+				//System.out.println(" mkey is " + mkey + "key 4 is " + (new String(key[4])));
 				if ( mkey.equals(new String(key[4]))) {
 					AssertJUnit.assertEquals (OperationStatus.IllegalArgument, response.getStatus());
 				} else {
