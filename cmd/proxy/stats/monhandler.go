@@ -315,7 +315,8 @@ func (h *HandlerForMonitor) handleQuery(w http.ResponseWriter, urlPath string, v
 			}
 			w.Write([]byte(str))
 		default:
-			w.Write([]byte(fmt.Sprintf("key: %s not supported", key)))
+			// w.Write([]byte(fmt.Sprintf("key: %s not supported", key)))
+			fmt.Fprintf(w, "key: %s not supported", key)
 		}
 	} else {
 		w.Write([]byte("query not supported"))
