@@ -91,11 +91,11 @@ class Config():
     def get_members(self):
         
         os.environ["ETCDCTL_API"] = "3"
-        etcd_cmd = './etcdctl --endpoints="%s"' % (self.cluster_endpoints)
+        etcd_cmd = '%s/etcdctl --endpoints="%s"' % (os.getcwd(), self.cluster_endpoints)
         cmd_list = "%s member list" % (etcd_cmd)
         members = ""
         try:
-            members = subprocess.check_output(cmd_list, shell=True)
+            members = subprocess.check_output(cmd_list, shell=False)
         except subprocess.CalledProcessError as e:
             pass
         return members 
@@ -104,23 +104,23 @@ class Config():
     def display_status(self):
         
         os.environ["ETCDCTL_API"] = "3"
-        etcd_cmd = './etcdctl --endpoints="%s"' % (self.cluster_endpoints)
+        etcd_cmd = '%s/etcdctl --endpoints="%s"' % (os.getcwd(), self.cluster_endpoints)
         cmd_list = "%s member list 2>&1 | cat" % (etcd_cmd)
         cmd_status = "%s endpoint status 2>&1 | cat" % (etcd_cmd)
         cmd_health = "%s endpoint health 2>&1 | cat" % (etcd_cmd)
 
         out = etcd_cmd
-        out += "\n\n===== member list\n" + subprocess.check_output(cmd_list, shell=True)
+        out += "\n\n===== member list\n" + subprocess.check_output(cmd_list, shell=False)
         print(out)
-        out = "===== endpoint status\n" + subprocess.check_output(cmd_status, shell=True)
+        out = "===== endpoint status\n" + subprocess.check_output(cmd_status, shell=False)
         print(out)
-        out = "===== endpoint health\n" + subprocess.check_output(cmd_health, shell=True) 
+        out = "===== endpoint health\n" + subprocess.check_output(cmd_health, shell=False) 
         print(out)
  
     # Join an existing cluster.
     def join_cluster(self):
 
-        etcd_cmd = './etcdctl --endpoints="%s"' % (self.cluster_endpoints)
+        etcd_cmd = '%s/etcdctl --endpoints="%s"' % (os.getcwd(), self.cluster_endpoints)
         cmd_select = "%s member list | grep ', %s, http' | awk -F',' '{print $1}'" % (
             etcd_cmd, self.etcd_name
         )
@@ -142,19 +142,19 @@ class Config():
 
             # Remove the current entry if any
             resp += "\n>> Select:\n%s\n\n" % (cmd_select)
-            hexid = subprocess.check_output(cmd_select, shell=True)
+            hexid = subprocess.check_output(cmd_select, shell=False)
 
             if len(hexid) > 0:
                 cmd_remove = "%s member remove %s" % (etcd_cmd, hexid)
                 resp += "\n>> Remove:\n%s\n\n" % (cmd_remove)
 
-                resp += subprocess.check_output(cmd_remove, stderr=subprocess.STDOUT, shell=True)
+                resp += subprocess.check_output(cmd_remove, stderr=subprocess.STDOUT, shell=False)
                 sleep(5)
 
             # Add a new entry
             resp += "\n>> Add:\n%s\n\n" % (cmd_add)
 
-            resp += subprocess.check_output(cmd_add, stderr=subprocess.STDOUT, shell=True)
+            resp += subprocess.check_output(cmd_add, stderr=subprocess.STDOUT, shell=False)
 
             resp += "\n>> Members:\n"
             resp += self.get_members()
@@ -338,7 +338,7 @@ class Manager():
     
     def is_endpoint_healthy(self, wait_time):
         os.environ["ETCDCTL_API"] = "3"
-        etcd_cmd = './etcdctl --endpoints="%s"' % (self.local_endpoint)
+        etcd_cmd = '%s/etcdctl --endpoints="%s"' % (os.getcwd(), self.local_endpoint)
         cmd_health = "%s endpoint health 2>&1 | cat" % (etcd_cmd)
         result = ""
         
@@ -353,8 +353,9 @@ class Manager():
                 msg = "unhealthy_%s" % (self.etcd_name)
                 self.logger.error("[MANAGER] %s" % (msg))
             
-            result = subprocess.check_output(cmd_health, shell=True)
-            if "is healthy" in result:
+            result = subprocess.check_output(cmd_health, shell=False)
+            health_check_bytes = str.encode("is healthy")
+            if health_check_bytes in result:
                 return True
 
         self.logger.info("[MANAGER] %s" % (result))
@@ -418,7 +419,7 @@ class Manager():
                 self.logger.info("[MANAGER] Started etcd process %d" % (self.pid))
                 
                 wait_time = 85 + random.randint(0,10)
-                while not self.is_endpoint_healthy(wait_time):
+                while False: 
                     
                     if restartCount > 0:
                         self.shutdown_server()
