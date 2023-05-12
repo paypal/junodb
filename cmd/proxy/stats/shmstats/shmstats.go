@@ -418,7 +418,7 @@ func (m *workerStatsManagerT) GetInboundConnStatsPtr() []*InboundConnStats {
 	return m.connStats
 }
 
-func (m *workerStatsManagerT) MarshalJSON() ([]byte, error) {
+func (m workerStatsManagerT) MarshalJSON() ([]byte, error) {
 	var buf bytes.Buffer
 	buf.WriteByte('{')
 	if s := m.stats; s != nil {
@@ -503,7 +503,7 @@ func (m *workerStatsManagerT) size() int {
 
 	return sz
 }
-func (s *serverStatsManagerT) MarshalJSON() ([]byte, error) {
+func (s serverStatsManagerT) MarshalJSON() ([]byte, error) {
 	var buf bytes.Buffer
 	buf.WriteByte('{')
 	if stats := s.stats; stats != nil {
