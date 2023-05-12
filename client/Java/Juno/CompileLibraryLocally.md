@@ -248,7 +248,7 @@ We do however want juno-client-impl to point to the juno-client-api we have comp
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
-			<version>5.3.23</version>
+			<version>5.3.27</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -285,7 +285,7 @@ We do however want juno-client-impl to point to the juno-client-api we have comp
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-beans</artifactId>
-			<version>5.3.23</version>
+			<version>5.3.27</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-codec</groupId>
@@ -305,7 +305,7 @@ We do however want juno-client-impl to point to the juno-client-api we have comp
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
-			<version>5.3.23</version>
+			<version>5.3.27</version>
 		</dependency>
 		<dependency>
 			<groupId>io.micrometer</groupId>
