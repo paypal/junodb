@@ -389,7 +389,7 @@ public class JunoAsyncClientImplTest {
 			 client.create("InsertNegative".getBytes(), "InsertNegativeValue".getBytes(),0).toBlocking().value();
 			 AssertJUnit.assertTrue ("Exception not seen for 0 TTL", false);
 		 }catch(JunoException e){
-			// System.out.println("Error is:"+e.getCause().getMessage());
+			// //System.out.println("Error is:"+e.getCause().getMessage());
 			 assertEquals(OperationStatus.IllegalArgument.getErrorText(),e.getMessage());
 			 assertTrue(e.getCause() instanceof IllegalArgumentException);
 			 assertEquals(e.getCause().getMessage(),"The Document's TTL cannot be 0 or negative.");
@@ -430,7 +430,7 @@ public class JunoAsyncClientImplTest {
 		 try{
 			 client.get("getNegative".getBytes(),900000000).toBlocking().value();
 		 }catch(JunoException e){
-			 System.out.println("get Error is:"+e.getCause().getMessage());
+			 //System.out.println("get Error is:"+e.getCause().getMessage());
 			 assertEquals(OperationStatus.IllegalArgument.getErrorText(),e.getMessage());
 			 assertTrue(e.getCause() instanceof IllegalArgumentException);
 			 assertEquals(e.getCause().getMessage(),"Invalid lifetime. current lifetime=900000000, max configured lifetime=259200");
@@ -443,7 +443,7 @@ public class JunoAsyncClientImplTest {
 		  client.update("UpdateNegative".getBytes(), "UpdateNegativeValue".getBytes(),-1).toBlocking().value();
 		  AssertJUnit.assertTrue ("Exception not seen for negative TTL", false);
 	  }catch(JunoException e){
-		  System.out.println("update1 Error is:"+e.getCause().getMessage());
+		  //System.out.println("update1 Error is:"+e.getCause().getMessage());
 		  assertEquals(OperationStatus.IllegalArgument.getErrorText(),e.getMessage());
 		  assertTrue(e.getCause() instanceof IllegalArgumentException);
 		  assertEquals(e.getCause().getMessage(),"The Document's TTL cannot be negative. Current lifetime=-1");
@@ -453,7 +453,7 @@ public class JunoAsyncClientImplTest {
 		  client.update("".getBytes(), "UpdateNegativeValue".getBytes()).toBlocking().value();
 		  AssertJUnit.assertTrue ("Exception not seen for empty key", false);
 	  }catch(JunoException e){
-		  System.out.println("update2 Error is:"+e.getCause().getMessage());
+		  //System.out.println("update2 Error is:"+e.getCause().getMessage());
 		  assertEquals(OperationStatus.IllegalArgument.getErrorText(),e.getMessage());
 		  assertTrue(e.getCause() instanceof IllegalArgumentException);
 		  assertEquals(e.getCause().getMessage(),"The Document key must not be null or empty");
@@ -471,7 +471,7 @@ public class JunoAsyncClientImplTest {
 	  try{
 		  client.update("UpdateNegative".getBytes(), new String(new char[204900]).replace('\0', 'a').getBytes()).toBlocking().value();
 	  }catch(JunoException e){
-		  System.out.println("update3 Error is:"+e.getCause().getMessage());
+		  //System.out.println("update3 Error is:"+e.getCause().getMessage());
 		  assertEquals(OperationStatus.IllegalArgument.getErrorText(),e.getMessage());
 		  assertTrue(e.getCause() instanceof IllegalArgumentException);
 		  assertEquals(e.getCause().getMessage(),"The Document Value must not be larger than 204800 bytes. Current value size=204900");
@@ -481,7 +481,7 @@ public class JunoAsyncClientImplTest {
 		  client.update("".getBytes(), "UpdateNegativeValue".getBytes(),10).toBlocking().value();
 		  AssertJUnit.assertTrue ("Exception not seen for empty key", false);
 	  }catch(JunoException e){
-		  System.out.println("update4 Error is:"+e.getCause().getMessage());
+		  //System.out.println("update4 Error is:"+e.getCause().getMessage());
 		  assertEquals(OperationStatus.IllegalArgument.getErrorText(),e.getMessage());
 		  assertTrue(e.getCause() instanceof IllegalArgumentException);
 		  assertEquals(e.getCause().getMessage(),"The Document key must not be null or empty");
@@ -490,7 +490,7 @@ public class JunoAsyncClientImplTest {
 	  try{
 		  client.update("UpdateNegative".getBytes(), new String(new char[204900]).replace('\0', 'a').getBytes(),0).toBlocking().value();
 	  }catch(JunoException e) {
-		  System.out.println("update5 Error is:" + e.getCause().getMessage());
+		  //System.out.println("update5 Error is:" + e.getCause().getMessage());
 		  assertEquals(OperationStatus.IllegalArgument.getErrorText(), e.getMessage());
 		  assertTrue(e.getCause() instanceof IllegalArgumentException);
 		  assertEquals(e.getCause().getMessage(), "The Document Value must not be larger than 204800 bytes. Current value size=204900");
@@ -575,7 +575,7 @@ public class JunoAsyncClientImplTest {
 			client.compareAndSet(null, "CompareAndSetKeyNotInDb".getBytes(),1200).toBlocking().value();
 			AssertJUnit.assertTrue ("Exception not seen for null ctx", false);
 		}catch(JunoException e){
-			System.out.println("Error :"+e.getCause().getMessage());
+			//System.out.println("Error :"+e.getCause().getMessage());
 			assertEquals(OperationStatus.IllegalArgument.getErrorText(),e.getMessage());
 			 assertTrue(e.getCause() instanceof IllegalArgumentException);
 			 assertEquals(e.getCause().getMessage(),"Record Context cannot be null");
@@ -635,7 +635,7 @@ public class JunoAsyncClientImplTest {
 		 client.doBatch(list).toBlocking();
 		 AssertJUnit.assertTrue ("Exception not seen for null request list", false);
 	 }catch(JunoException e){
-		 System.out.println("Error1 :"+e.getCause().getMessage());
+		 //System.out.println("Error1 :"+e.getCause().getMessage());
 		 assertTrue(e.getCause() instanceof IllegalArgumentException);
 		 assertEquals(OperationStatus.IllegalArgument.getErrorText(),e.getMessage());
 		 assertEquals(e.getCause().getMessage(),"Request argument is null");
@@ -646,7 +646,7 @@ public class JunoAsyncClientImplTest {
 		 client.doBatch(list).toBlocking();
 		 AssertJUnit.assertTrue ("Exception not seen for empty request list", false);
 	 }catch(JunoException e){
-		 System.out.println("Error2 :"+e.getCause().getMessage());
+		 //System.out.println("Error2 :"+e.getCause().getMessage());
 		 assertTrue(e.getCause() instanceof IllegalArgumentException);
 		 assertEquals(OperationStatus.IllegalArgument.getErrorText(),e.getMessage());
 		 assertEquals(e.getCause().getMessage(),"Empty request list supplied");
@@ -658,11 +658,11 @@ public class JunoAsyncClientImplTest {
 		 list.add(item);
 		 Iterable<JunoResponse> batchResp = client.doBatch(list).toBlocking().toIterable();
 		 for (JunoResponse mResponse: batchResp) {	
-			 System.out.println("Resp :"+mResponse.getStatus().getErrorText());
+			 //System.out.println("Resp :"+mResponse.getStatus().getErrorText());
 			 assertEquals(OperationStatus.IllegalArgument,mResponse.getStatus());
 		 }
 	 }catch(JunoException e){
-		 System.out.println("Exceprtion:"+e.getMessage());
+		 //System.out.println("Exceprtion:"+e.getMessage());
 		 assertEquals(OperationStatus.InternalError.getErrorText(),e.getMessage());
 	 }
 	 
@@ -676,11 +676,11 @@ public class JunoAsyncClientImplTest {
 			 JunoRequest item = new JunoRequest(key[i], payload[i], (long)0, 180, System.currentTimeMillis(), JunoRequest.OperationType.Create);
 			 list.add(item);
 		 }
-		 System.out.println("Calling do batch");
+		 //System.out.println("Calling do batch");
 		 client.doBatch(list).toBlocking().toIterable();
 		 //AssertJUnit.assertTrue ("Exception not seen for empty request list", false);
 	 }catch(JunoException e){
-		 System.out.println("Error4 :"+e.getCause().getMessage());
+		 //System.out.println("Error4 :"+e.getCause().getMessage());
 		 assertTrue(e.getCause() instanceof IllegalArgumentException);
 		 assertEquals(OperationStatus.IllegalArgument.getErrorText(),e.getMessage());
 		 assertEquals(e.getCause().getMessage(),"Empty request list supplied");
@@ -857,7 +857,7 @@ public class JunoAsyncClientImplTest {
 		  }
 		  
 	  }catch(Exception e){
-		  System.out.println("Error invoking validateInput : validateInputEmptyPayload");
+		  //System.out.println("Error invoking validateInput : validateInputEmptyPayload");
 	  }
   }
   
@@ -898,7 +898,7 @@ public class JunoAsyncClientImplTest {
 			  assertEquals(e.getCause().getMessage(),"The Document key must not be larger than 128 bytes");
 		  }
 	  }catch(Exception e){
-		  System.out.println("Error invoking validateInput : validateInputMaxKeySize");
+		  //System.out.println("Error invoking validateInput : validateInputMaxKeySize");
 	  }
   }
   

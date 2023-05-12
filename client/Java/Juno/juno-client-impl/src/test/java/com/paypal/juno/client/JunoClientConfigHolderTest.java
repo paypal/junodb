@@ -249,7 +249,7 @@ public class JunoClientConfigHolderTest {
 			new JunoClientConfigHolder(jpp);
 		}catch(JunoException e){
 			assertTrue(e instanceof JunoClientConfigException);
-			System.out.println("msg1 :"+e.getMessage());
+			//System.out.println("msg1 :"+e.getMessage());
 			assertEquals(e.getMessage(),"Juno configuration value for property juno.response.timeout_msec cannot be less than 1");
 		}
 		

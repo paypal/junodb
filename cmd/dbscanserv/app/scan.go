@@ -156,11 +156,7 @@ func (s *Scanner) ScanAndMerge(rangeid int, jm *prime.JoinMap, rs *prime.Result)
 	}
 
 	err := s.merge(rangeid, jm, rs)
-	if err != nil {
-		return err
-	}
-
-	return nil
+	return err
 }
 
 func (s *Scanner) GetNext(rangeid int, keyList prime.KeyList) *prime.MessageBlock {

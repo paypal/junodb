@@ -228,10 +228,13 @@ func (w *Watcher) onMarkDownEvent(ev *clientv3.Event) {
 		markdownobj.Reset()
 		return
 	}
-
-	zoneid, _ := strconv.Atoi(string(ev.Kv.Value))
-	glog.Infof("markdown: zoneid=%d", zoneid)
-	markdownobj.MarkDown(int32(zoneid))
+	zoneid, err := strconv.ParseUint(string(ev.Kv.Value), 10, 32)
+	if err == nil {
+		glog.Infof("markdown: zoneid=%d", zoneid)
+		markdownobj.MarkDown(int32(zoneid))
+	} else {
+		glog.Errorf("markdown failed. Error: %s Value: %s", err.Error(), string(ev.Kv.Value))
+	}
 }
 
 func (w *Watcher) Stop() {

@@ -118,9 +118,9 @@ public class RequestTest {
 		assertEquals(req2.getTimeToLiveSec(),new Long(10));
 		assertEquals(req2.getType(),JunoRequest.OperationType.Get);
 		assertFalse(req1.equals(req2));
-		System.out.println("hash code :"+req2.hashCode());
+		//System.out.println("hash code :"+req2.hashCode());
 		assertEquals(-247185975,req2.hashCode());
-		System.out.println("String value of req1:"+req2.toString());
+		//System.out.println("String value of req1:"+req2.toString());
 	}
 }
 

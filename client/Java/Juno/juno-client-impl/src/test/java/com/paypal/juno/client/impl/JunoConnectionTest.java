@@ -71,7 +71,7 @@ public class JunoConnectionTest {
 			client.create("insertTest1".getBytes(), "Antony".getBytes(),40);
 			 AssertJUnit.assertTrue ("Exception not seen for No connection", false);
 		}catch(JunoException e){
-			System.out.println("Exception:"+e.getMessage());
+			//System.out.println("Exception:"+e.getMessage());
 			assertEquals(e.getMessage(), "Response Timed out");
 		}
 	 }
@@ -99,7 +99,7 @@ public class JunoConnectionTest {
 			Thread.sleep(1000);
 			//assertEquals(resp.getStatus(),);
 		}catch(JunoException e){
-			System.out.println("==============================Exception:"+e.getMessage());
+			//System.out.println("==============================Exception:"+e.getMessage());
 			assertEquals(e.getMessage(), "Response Timed out");
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block

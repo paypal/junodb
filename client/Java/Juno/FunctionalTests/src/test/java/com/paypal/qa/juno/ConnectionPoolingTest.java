@@ -75,7 +75,7 @@ public class ConnectionPoolingTest{
 		try{
 			junoClient6 = JunoClientFactory.newJunoClient(new JunoPropertiesProvider(pConfig), SSLUtil.getSSLContext());
 		}catch(Exception e){
-			System.out.println("Exception in constructor :"+e.getMessage());
+			//System.out.println("Exception in constructor :"+e.getMessage());
 		}
 		
 		pConfig.setProperty(JunoProperties.PORT, "8080");
