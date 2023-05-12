@@ -37,7 +37,7 @@ import (
  ***************************************************/
 func TestCreateNormal(t *testing.T) {
 	key := testutil.GenerateRandomKey(32)
-	cvalue := []byte("Haha, the first Create test")
+	cvalue := []byte(" the first Create test")
 	glog.Debug("request key is " + util.ToPrintableAndHexString(key) + " data is " + string(cvalue))
 	if err := testutil.CreateAndValidate(proxyClient, key, cvalue, 1000, nil); err != nil {
 		t.Error(err)
@@ -49,7 +49,7 @@ func TestCreateNormal(t *testing.T) {
  *  Insert NULL key record, get BadParam error
  ***************************************************/
 func TestCreateNullKey(t *testing.T) {
-	cvalue := []byte("Haha, the null key/ns/app Create test")
+	cvalue := []byte(" the null key/ns/app Create test")
 
 	_, err := proxyClient.Create(nil, cvalue, client.WithTTL(10))
 	if err != client.ErrBadParam {
@@ -63,7 +63,7 @@ func TestCreateNullKey(t *testing.T) {
  ****************************************************************/
 func TestCreateMaxLenKey(t *testing.T) {
 	key := testutil.GenerateRandomKey(128) //this is set by config prop file
-	cvalue := []byte("Haha, the max key length test")
+	cvalue := []byte(" the max key length test")
 	glog.Debug("length of key is " + strconv.Itoa(len(key)))
 
 	if err := testutil.CreateAndValidate(proxyClient, key, cvalue, 20, nil); err != nil {
@@ -77,7 +77,7 @@ func TestCreateMaxLenKey(t *testing.T) {
  ***********************************************************/
 func TestCreateExceedsMaxLenKey(t *testing.T) {
 	key := testutil.GenerateRandomKey(257)
-	cvalue := []byte("Haha, longer than max key length test")
+	cvalue := []byte(" longer than max key length test")
 	glog.Debug("length of key is " + strconv.Itoa(len(key)))
 
 	if err := testutil.CreateAndValidate(proxyClient, key, cvalue, 20, client.ErrBadParam); err != nil {
@@ -97,7 +97,7 @@ func TestCreateSpecialCharNSKey(t *testing.T) {
 	NS1 := "Q:你好嗎？A:<?xml version=\"1.0en=\"UTF-8\"" + "id=\"1@@#$%^&*()_+?"
 	glog.Debug("length of key is " + strconv.Itoa(len(key)) + "length of NS1 is" + strconv.Itoa(len(NS1)))
 
-	cvalue := []byte("Haha, the max key length test")
+	cvalue := []byte(" the max key length test")
 	glog.Debug("cfgshare address is ", cfgShare.Server)
 	cfgShare.Namespace = "NS"
 	cfgShare.Appname = "APP"
@@ -256,7 +256,7 @@ func TestCreateExceedsMaxLenPayload(t *testing.T) {
 func TestCreateDefaultLifeTime(t *testing.T) {
 	defaultTTL := uint32(1800)
 	key := testutil.GenerateRandomKey(32)
-	cvalue := []byte("Haha, the max key length test")
+	cvalue := []byte(" the max key length test")
 
 	if err := testutil.CreateAndValidate(proxyClient, key, cvalue, 0, nil); err != nil {
 		t.Error(err)
@@ -272,7 +272,7 @@ func TestCreateDefaultLifeTime(t *testing.T) {
  *****************************************************************/
 func TestCreateMaxLifetime(t *testing.T) {
 	key := testutil.GenerateRandomKey(32)
-	cvalue := []byte("haha, max lifetime this time")
+	cvalue := []byte(" max lifetime this time")
 
 	//this is a configurate value
 	if err := testutil.CreateAndValidate(proxyClient, key, cvalue, 86400, nil); err != nil {

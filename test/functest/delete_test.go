@@ -33,7 +33,7 @@ import (
  ************************************************************************/
 func TestDeleteBasic(t *testing.T) {
 	key := testutil.GenerateRandomKey(32)
-	cvalue := []byte("Haha, the first delete test")
+	cvalue := []byte(" the first delete test")
 
 	if err := testutil.CreateAndValidate(proxyClient, key, cvalue, 100, nil); err != nil {
 		t.Error(err)

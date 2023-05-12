@@ -374,7 +374,7 @@ public class ReactorDestroyTest{
 		LOGGER.info("CorrID : ",Integer.toHexString((new Random()).nextInt(0x10000000) + 3846));	
 		  
 		byte[] key = DataGenUtils.genBytes(64);
-		String key1 = new String("haha, nohaoma");
+		String key1 = new String(" nohaoma");
 		String key2 = new String("Q:������������������������������������A:���");
 		
 		JunoResponse deleteResponse = junoReactClient.delete(key).block();

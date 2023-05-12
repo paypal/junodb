@@ -37,7 +37,7 @@ import (
  ***********************************************************************/
 func TestGetAfterSleep(t *testing.T) {
 	key := testutil.GenerateRandomKey(32)
-	cvalue := []byte("Haha, the first get test")
+	cvalue := []byte(" the first get test")
 	glog.Debug("request key is " + util.ToPrintableAndHexString(key) + " data is " + string(cvalue))
 
 	if err := testutil.CreateAndValidate(proxyClient, key, cvalue, 10, nil); err != nil {

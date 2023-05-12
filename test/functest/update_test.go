@@ -39,7 +39,7 @@ import (
 func TestUpdateNormal(t *testing.T) {
 	key := testutil.GenerateRandomKey(32)
 	key1 := testutil.GenerateRandomKey(32)
-	cvalue := []byte("Haha, the first Update test")
+	cvalue := []byte(" the first Update test")
 
 	if err := testutil.CreateAndValidate(proxyClient, key, cvalue, 10, nil); err != nil {
 		t.Error(err)
@@ -94,7 +94,7 @@ func TestUpdateNormal(t *testing.T) {
 func TestUpdateCreateDupKey(t *testing.T) {
 	key := testutil.GenerateRandomKey(32)
 	key1 := testutil.GenerateRandomKey(32)
-	cvalue := []byte("Haha, the first Update test")
+	cvalue := []byte(" the first Update test")
 
 	if err := testutil.CreateAndValidate(proxyClient, key, cvalue, 10, nil); err != nil {
 		t.Error(err)
@@ -176,7 +176,7 @@ func TestUpdateNullKey(t *testing.T) {
 func TestUpdateEmptyKeyNSAppname(t *testing.T) {
 	nsKey := testutil.GenerateRandomKey(32)
 	appKey := testutil.GenerateRandomKey(32)
-	cvalue := []byte("Haha, the empty key Update test")
+	cvalue := []byte(" the empty key Update test")
 
 	cfgShare.Namespace = ""
 	cfgShare.Appname = "APP1"
@@ -210,7 +210,7 @@ func TestUpdateEmptyKeyNSAppname(t *testing.T) {
  ****************************************************************/
 func TestUpdateMaxLenKey(t *testing.T) {
 	key := testutil.GenerateRandomKey(128) //this is set by config prop file
-	cvalue := []byte("Haha, the max key length test")
+	cvalue := []byte(" the max key length test")
 
 	if err := testutil.SetAndValidate(proxyClient, key, cvalue, 20, nil); err != nil {
 		t.Error(err)
@@ -230,7 +230,7 @@ func TestUpdateMaxLenKey(t *testing.T) {
  ****************************************************************/
 func TestUpdateExceedsMaxLenKey(t *testing.T) {
 	key := testutil.GenerateRandomKey(257)
-	cvalue := []byte("Haha, longer than max key length test")
+	cvalue := []byte(" longer than max key length test")
 
 	if err := testutil.UpdateAndValidate(proxyClient, key, cvalue, 20, client.ErrBadParam); err != nil {
 		t.Error(err)
@@ -247,7 +247,7 @@ func TestUpdateSpecialCharNSKey(t *testing.T) {
 	key := []byte("Q:你好嗎？A:我很好.  <?xml version=\"1.0\" encoding=\"UTF-8\"?><Sample_A" +
 		"ST id=\"1@@#$%^&*()_+?>,<|}{[]~abc780=.")
 	NS := "Q:你好嗎？A:<?xml version=\"1.0en=\"UTF-8\"" + "id=\"1@@#$%^&*()_+?"
-	cvalue := []byte("Haha, the max key length test")
+	cvalue := []byte(" the max key length test")
 
 	cfgShare.Namespace = NS
 	cfgShare.Appname = "APP1"
@@ -268,10 +268,10 @@ func TestUpdateSpecialCharNSKey(t *testing.T) {
 		if err := testutil.CreateAndValidate(client1, key, cvalue, 10, nil); err != nil {
 			t.Error(err)
 		}
-		if err := testutil.UpdateAndValidate(client1, key, []byte("key haha"), 10, nil); err != nil {
+		if err := testutil.UpdateAndValidate(client1, key, []byte("key "), 10, nil); err != nil {
 			t.Error(err)
 		}
-		if err := testutil.GetRecord(client1, key, []byte("key haha"), 10, 2, nil, 0); err != nil {
+		if err := testutil.GetRecord(client1, key, []byte("key "), 10, 2, nil, 0); err != nil {
 			t.Error(err)
 		}
 	}
@@ -396,7 +396,7 @@ func TestUpdateExceedsMaxLenPayload(t *testing.T) {
  ***********************************************************/
 func TestUpdateDefaultLifeTime(t *testing.T) {
 	key := testutil.GenerateRandomKey(32)
-	cvalue := []byte("Haha, the max key length test")
+	cvalue := []byte(" the max key length test")
 
 	if err := testutil.CreateAndValidate(proxyClient, key, cvalue, 100, nil); err != nil {
 		t.Error(err)
@@ -422,7 +422,7 @@ func TestUpdateDefaultLifeTime(t *testing.T) {
  *****************************************************************/
 func TestUpdateMaxLifetime(t *testing.T) {
 	key := testutil.GenerateRandomKey(32)
-	cvalue := []byte("haha, max lifetime this time")
+	cvalue := []byte(" max lifetime this time")
 
 	//1 day is the max lifetime here
 	if err := testutil.CreateAndValidate(proxyClient, key, cvalue, 86400, nil); err != nil {

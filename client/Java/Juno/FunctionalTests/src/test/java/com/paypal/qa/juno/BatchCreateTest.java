@@ -1072,7 +1072,7 @@ public class BatchCreateTest{
 			}
 			int i = 0;
 			for (JunoResponse mResponse: batchResp) {				
-				LOGGER.debug("Key: haha" + i + ": "+ mResponse.getKey());
+				LOGGER.debug("Key" + i + ": "+ mResponse.getKey());
 				AssertJUnit.assertTrue(1 == mResponse.getVersion());
 				AssertJUnit.assertEquals (OperationStatus.Success,mResponse.getStatus());
 				i++;

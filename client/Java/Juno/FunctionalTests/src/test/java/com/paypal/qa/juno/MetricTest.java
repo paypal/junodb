@@ -89,7 +89,7 @@ public class MetricTest {
         port = pConfig.getProperty("juno.server.port");
         InetAddress address = InetAddress.getByName(ip);
         ipAddr = address.getHostAddress();
-        LOGGER.error( "Vera: juno ip is " + ip + " juno port is " + port + ", ipaddr is " + ipAddr);
+        LOGGER.error( " juno ip is " + ip + " juno port is " + port + ", ipaddr is " + ipAddr);
 
         try{
             junoClient = JunoClientFactory.newJunoClient(new JunoPropertiesProvider(pConfig), SSLUtil.getSSLContext());
