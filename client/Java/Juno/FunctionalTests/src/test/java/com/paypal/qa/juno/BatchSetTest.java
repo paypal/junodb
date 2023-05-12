@@ -210,13 +210,13 @@ public class BatchSetTest{
                         key[9] = "".getBytes();
 			String str = "Hello Testing testing " + i;
 			payload[i] = str.getBytes();
-			System.out.println("Vera: i is " + i + ", key[i] is " + new String(key[i]));	
+			//System.out.println("Vera: i is " + i + ", key[i] is " + new String(key[i]));	
 			JunoRequest item = new JunoRequest(key[i], payload[i], (long)0, ttl[i], JunoRequest.OperationType.Set);
 			list.add(item);
 		}
 		try{
 			for (int i = 0; i < numKeys; i ++) {
-				System.out.println("Vera2: i is " + i + ", key[i] is " + new String(key[i]));
+				//System.out.println("Vera2: i is " + i + ", key[i] is " + new String(key[i]));
 			}
 			LOGGER.debug("\n===Batch Set is sent ");
                         Iterable<JunoResponse> batchResp;
@@ -227,7 +227,7 @@ public class BatchSetTest{
 			}
                         for (JunoResponse response: batchResp) {
                             if (response != null && response.getKey() != null && response.getKey() != key[9]) {
-				System.out.println("Vera: mkey is " + new String(response.getKey()));
+				//System.out.println("Vera: mkey is " + new String(response.getKey()));
                                 AssertJUnit.assertEquals (OperationStatus.Success, response.getStatus());
                             } else {
                                 AssertJUnit.assertEquals (OperationStatus.IllegalArgument, response.getStatus());
@@ -822,7 +822,7 @@ public class BatchSetTest{
 			AssertJUnit.assertTrue(1 == response.getVersion());
 			AssertJUnit.assertEquals (OperationStatus.Success, response.getStatus());
 			AssertJUnit.assertEquals (new String(payload[i]), new String (response.getValue()));
-			System.out.println("TTL in Response :"+response.getTtl());
+			//System.out.println("TTL in Response :"+response.getTtl());
 			AssertJUnit.assertTrue (1800 - 8 <= response.getTtl() && response.getTtl() <= 1800);
 		}
 		LOGGER.info("0");

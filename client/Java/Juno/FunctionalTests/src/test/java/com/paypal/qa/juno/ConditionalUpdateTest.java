@@ -457,7 +457,7 @@ public class ConditionalUpdateTest{
 			AssertJUnit.assertTrue ("Exception is NOT seen for when lifetime is set to > 3 days", false);
 		}catch(Exception mex){
 			LOGGER.debug(mex.getCause().getMessage());
-			System.out.println("Exception :"+mex.getCause().getMessage());
+			//System.out.println("Exception :"+mex.getCause().getMessage());
 			AssertJUnit.assertTrue(mex.getCause().getMessage().contains("Invalid lifetime. current lifetime=259201, max configured lifetime=259200"));
 			LOGGER.info("Exception", mex.getMessage());
 			LOGGER.info("ERROR");

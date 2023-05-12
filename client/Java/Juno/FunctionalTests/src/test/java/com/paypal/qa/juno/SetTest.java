@@ -223,7 +223,7 @@ public class SetTest{
 		junoResponse = junoClient.get(key); // It will show that 10 sec has elapsed from original TTL
 		AssertJUnit.assertEquals(OperationStatus.Success, junoResponse.getStatus());
 		AssertJUnit.assertTrue(junoResponse.getTtl() >= (prop.getDefaultLifetime()-14) && (junoResponse.getTtl() <= prop.getDefaultLifetime()-10));
-		System.out.println("TTL now is:"+junoResponse.getTtl());
+		//System.out.println("TTL now is:"+junoResponse.getTtl());
 
 		junoResponse = junoClient.set(key, data);
 		AssertJUnit.assertEquals(OperationStatus.Success, junoResponse.getStatus());
@@ -233,7 +233,7 @@ public class SetTest{
 		AssertJUnit.assertTrue(2 == junoResponse.getVersion());
 		AssertJUnit.assertEquals(new String(data), new String(junoResponse.getValue()));
 		AssertJUnit.assertTrue(junoResponse.getTtl() >= (prop.getDefaultLifetime() - 4) && junoResponse.getTtl() <= prop.getDefaultLifetime());
-		System.out.println("TTL now is:"+junoResponse.getTtl());
+		//System.out.println("TTL now is:"+junoResponse.getTtl());
 
 		LOGGER.info("0");
 		LOGGER.info("Completed");
@@ -485,7 +485,7 @@ public class SetTest{
 		AssertJUnit.assertEquals(OperationStatus.Success, mResponse1.getStatus());
 		mResponse1 = junoClient1.get(key);
 		AssertJUnit.assertEquals(OperationStatus.Success, mResponse1.getStatus());
-		System.out.println("lifetime for junoClient1 is " + mResponse1.getTtl());
+		//System.out.println("lifetime for junoClient1 is " + mResponse1.getTtl());
 		LOGGER.debug("lifetime for junoClient1 is " + mResponse1.getTtl() + ", default is " +  prop.getDefaultLifetime());
 		AssertJUnit.assertEquals(1,mResponse1.getVersion());
 		AssertJUnit.assertEquals(data.length, mResponse1.getValue().length);

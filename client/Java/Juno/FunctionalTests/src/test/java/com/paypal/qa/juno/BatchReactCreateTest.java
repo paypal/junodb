@@ -819,7 +819,7 @@ public class BatchReactCreateTest{
 				if ( mkey.equals(new String(key[1]))) {
 					AssertJUnit.assertEquals (OperationStatus.IllegalArgument, mResponse.getStatus());
 				} else {
-					System.out.println("Record version:"+mResponse.getVersion());
+					//System.out.println("Record version:"+mResponse.getVersion());
 					//AssertJUnit.assertTrue(1 == mResponse.getVersion());
 					AssertJUnit.assertEquals (OperationStatus.Success,mResponse.getStatus());
 					i++;

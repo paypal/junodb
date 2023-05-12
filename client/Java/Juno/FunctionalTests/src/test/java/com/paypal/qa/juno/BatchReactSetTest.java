@@ -876,7 +876,7 @@ public class BatchReactSetTest{
 			AssertJUnit.assertTrue(1 == response.getVersion());
 			AssertJUnit.assertEquals (OperationStatus.Success, response.getStatus());
 			AssertJUnit.assertEquals (new String(payload[i]), new String (response.getValue()));
-			System.out.println("TTL in Response :"+response.getTtl());
+			//System.out.println("TTL in Response :"+response.getTtl());
 			AssertJUnit.assertTrue (1800 - 8 <= response.getTtl() && response.getTtl() <= 1800);
 		}
 		LOGGER.info("0");

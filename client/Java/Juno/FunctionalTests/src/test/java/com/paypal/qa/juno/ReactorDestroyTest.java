@@ -381,7 +381,7 @@ public class ReactorDestroyTest{
 		AssertJUnit.assertEquals(OperationStatus.Success, deleteResponse.getStatus());
 		JunoResponse deleteResponse1 = junoReactClient.delete(key1.getBytes()).block();
 		AssertJUnit.assertEquals(OperationStatus.Success, deleteResponse1.getStatus());
-		System.out.println("Key size:"+key2.getBytes().length);
+		//System.out.println("Key size:"+key2.getBytes().length);
 		JunoResponse deleteResponse2 = junoReactClient.delete(key2.getBytes()).block();
 		AssertJUnit.assertEquals (OperationStatus.Success, deleteResponse2.getStatus());
 		AssertJUnit.assertEquals(key, deleteResponse.getKey());
