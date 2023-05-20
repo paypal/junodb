@@ -67,25 +67,6 @@ func (n *SSNode) Delete(namespace string, key []byte) (err error) {
 	return c.Delete(key)
 }
 
-//func (n *SSNode) Start() {
-//	if n.Server != nil {
-//		n.Server.Start()
-//	}
-//}
-//
-//func (n *SSNode) Stop() {
-//	if n.Server != nil {
-//		n.Server.Stop()
-//	}
-//}
-//
-//func (n *SSNode) Restart() {
-//	if n.Server != nil {
-//		n.Server.Stop()
-//		n.Server.Start()
-//	}
-//}
-
 func (n *SSNode) String() string {
 	if n.Server == nil {
 		glog.Error("SSNode.Server is null")
