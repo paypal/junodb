@@ -38,15 +38,6 @@ func (u *CounterUDF) Call(key []byte, value []byte, params []byte) (res []byte, 
 	return res, nil
 }
 
-// not all interface functions are implemented
-//func (u *CounterUDF) GetVersion() uint32 {
-//	return 1
-//}
-
-//func (u *CounterUDF) GetName() string {
-//	return "counter"
-//}
-
 func GetUDFInterface() (f interface{}, err error) {
 	f = &CounterUDF{}
 	return
