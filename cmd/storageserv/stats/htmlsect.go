@@ -25,8 +25,8 @@ import (
 	"html/template"
 	"time"
 
-	"juno/cmd/storageserv/stats/shmstats"
-	"juno/pkg/stats"
+	"github.com/paypal/junodb/cmd/storageserv/stats/shmstats"
+	"github.com/paypal/junodb/pkg/stats"
 )
 
 type (

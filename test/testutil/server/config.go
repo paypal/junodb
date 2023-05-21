@@ -20,11 +20,11 @@
 package server
 
 import (
-	"juno/cmd/proxy/config"
-	"juno/pkg/io"
-	cal "juno/pkg/logging/cal/config"
-	"juno/pkg/sec"
-	"juno/pkg/util"
+	"github.com/paypal/junodb/cmd/proxy/config"
+	"github.com/paypal/junodb/pkg/io"
+	cal "github.com/paypal/junodb/pkg/logging/cal/config"
+	"github.com/paypal/junodb/pkg/sec"
+	"github.com/paypal/junodb/pkg/util"
 )
 
 type ServerDef struct {

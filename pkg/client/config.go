@@ -22,8 +22,8 @@ import (
 	"fmt"
 	"time"
 
-	"juno/pkg/io"
-	"juno/pkg/util"
+	"github.com/paypal/junodb/pkg/io"
+	"github.com/paypal/junodb/pkg/util"
 )
 
 // Duration is a type alias for util.Duration.
@@ -59,7 +59,7 @@ func SetDefaultTimeToLive(ttl int) {
 	defaultConfig.DefaultTimeToLive = ttl
 }
 
-//  SetDefaultTimeout sets the default timeout durations for the configuration.
+// SetDefaultTimeout sets the default timeout durations for the configuration.
 func SetDefaultTimeout(connect, read, write, request, connRecycle time.Duration) {
 	defaultConfig.ConnectTimeout.Duration = connect
 	defaultConfig.ReadTimeout.Duration = read
@@ -89,4 +89,3 @@ func (c *Config) validate() error {
 	// TODO to validate others
 	return nil
 }
-

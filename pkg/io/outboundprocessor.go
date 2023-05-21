@@ -28,14 +28,14 @@ import (
 	"sync/atomic"
 	"time"
 
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 
-	"juno/pkg/errors"
-	"juno/pkg/logging"
-	"juno/pkg/logging/cal"
-	"juno/pkg/logging/otel"
-	"juno/pkg/proto"
-	"juno/pkg/util"
+	"github.com/paypal/junodb/pkg/errors"
+	"github.com/paypal/junodb/pkg/logging"
+	"github.com/paypal/junodb/pkg/logging/cal"
+	"github.com/paypal/junodb/pkg/logging/otel"
+	"github.com/paypal/junodb/pkg/proto"
+	"github.com/paypal/junodb/pkg/util"
 )
 
 type (
@@ -114,9 +114,7 @@ func (p *OutboundProcessor) GetRequestCh() chan IRequestContext {
 	return p.reqCh
 }
 
-//
 // Non-blocking send
-//
 func (p *OutboundProcessor) sendRequest(req IRequestContext) (err *errors.Error) {
 	// send request
 	select {

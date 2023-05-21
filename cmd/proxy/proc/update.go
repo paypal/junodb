@@ -22,11 +22,11 @@ package proc
 import (
 	"time"
 
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 
-	"juno/pkg/logging"
-	"juno/pkg/logging/cal"
-	"juno/pkg/proto"
+	"github.com/paypal/junodb/pkg/logging"
+	"github.com/paypal/junodb/pkg/logging/cal"
+	"github.com/paypal/junodb/pkg/proto"
 )
 
 var _ ITwoPhaseProcessor = (*UpdateProcessor)(nil)

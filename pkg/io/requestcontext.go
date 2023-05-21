@@ -26,11 +26,11 @@ import (
 	"io"
 	"time"
 
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 
-	"juno/pkg/proto"
-	"juno/pkg/proto/mayfly"
-	"juno/pkg/util"
+	"github.com/paypal/junodb/pkg/proto"
+	"github.com/paypal/junodb/pkg/proto/mayfly"
+	"github.com/paypal/junodb/pkg/util"
 )
 
 var oResponsePool = util.NewChanPool(10000, func() interface{} {

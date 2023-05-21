@@ -19,7 +19,7 @@
 
 package main
 
-import "juno/cmd/storageserv/app"
+import "github.com/paypal/junodb/cmd/storageserv/app"
 
 func main() {
 	app.Main()

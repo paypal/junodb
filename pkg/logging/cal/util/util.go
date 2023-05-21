@@ -22,13 +22,14 @@ package util
 import (
 	"fmt"
 	"hash/fnv"
-	"juno/pkg/logging/cal/net/protocol"
 	"net"
 	"os"
 	"path"
 	"runtime"
 	"strconv"
 	"time"
+
+	"github.com/paypal/junodb/pkg/logging/cal/net/protocol"
 )
 
 const (

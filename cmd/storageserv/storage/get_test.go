@@ -25,8 +25,8 @@ package storage
 import (
 	"testing"
 
-	"juno/pkg/proto"
-	"juno/test/testutil"
+	"github.com/paypal/junodb/pkg/proto"
+	"github.com/paypal/junodb/test/testutil"
 )
 
 var (

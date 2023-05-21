@@ -23,13 +23,13 @@ import (
 	"fmt"
 	"net/http"
 
-	//"juno/third_party/forked/golang/glog"
+	//"github.com/paypal/junodb/third_party/forked/golang/glog"
 	"github.com/BurntSushi/toml"
 
-	"juno/cmd/proxy/config"
-	"juno/cmd/proxy/stats/qry"
-	"juno/pkg/stats"
-	"juno/pkg/version"
+	"github.com/paypal/junodb/cmd/proxy/config"
+	"github.com/paypal/junodb/cmd/proxy/stats/qry"
+	"github.com/paypal/junodb/pkg/stats"
+	"github.com/paypal/junodb/pkg/version"
 )
 
 var (

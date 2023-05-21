@@ -20,8 +20,9 @@
 package redist
 
 import (
-	"juno/third_party/forked/golang/glog"
 	"time"
+
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 )
 
 // A variantion of token bucket algorithm

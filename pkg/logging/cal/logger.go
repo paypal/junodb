@@ -27,11 +27,11 @@ import (
 	"strings"
 	"time"
 
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 
-	"juno/pkg/logging/cal/config"
-	"juno/pkg/logging/cal/net/io"
-	"juno/pkg/logging/cal/net/protocol"
+	"github.com/paypal/junodb/pkg/logging/cal/config"
+	"github.com/paypal/junodb/pkg/logging/cal/net/io"
+	"github.com/paypal/junodb/pkg/logging/cal/net/protocol"
 )
 
 // CAL message Status field values
@@ -126,7 +126,7 @@ func LogAtomicTransaction(txnType, eventName, status string, duration time.Durat
 	client.Send(msg)
 }
 
-//SendEvent logs an event of eventType with a sub-classification of
+// SendEvent logs an event of eventType with a sub-classification of
 // eventName.  The event may optionally contain extra eventData.
 func LogEvent(eventType, eventName, status string, eventData map[string]interface{}) {
 	// TODO guard against bad eventType/eventName (perhaps in NewMsg())

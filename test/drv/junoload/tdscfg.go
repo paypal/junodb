@@ -20,9 +20,9 @@
 package main
 
 import (
-	"juno/pkg/client"
-	"juno/pkg/logging/cal/config"
-	"juno/pkg/sec"
+	"github.com/paypal/junodb/pkg/client"
+	"github.com/paypal/junodb/pkg/logging/cal/config"
+	"github.com/paypal/junodb/pkg/sec"
 )
 
 type (

@@ -20,21 +20,21 @@
 package main
 
 import (
-	"juno/pkg/logging/cal"
-	logger "juno/pkg/logging/cal"
-	"juno/pkg/logging/cal/config"
+	"github.com/paypal/junodb/pkg/logging/cal"
+	logger "github.com/paypal/junodb/pkg/logging/cal"
+	"github.com/paypal/junodb/pkg/logging/cal/config"
 
 	"github.com/BurntSushi/toml"
 
-	//"juno/pkg/logging/cal/config"
+	//"github.com/paypal/junodb/pkg/logging/cal/config"
 	"flag"
 	"fmt"
 
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 
 	//"io"
 	//	"log"
-	//"juno/pkg/logging/cal/net/protocol"
+	//"github.com/paypal/junodb/pkg/logging/cal/net/protocol"
 	//"os"
 	//	"runtime"
 	//	"net/http"

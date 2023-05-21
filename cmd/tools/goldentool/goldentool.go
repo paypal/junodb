@@ -25,8 +25,8 @@ import (
 	"os"
 	"path/filepath"
 
-	"juno/cmd/tools/goldendata"
-	"juno/third_party/forked/golang/glog"
+	gld "github.com/paypal/junodb/cmd/tools/goldendata"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 )
 
 func main() {

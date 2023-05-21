@@ -22,8 +22,9 @@ package main
 import (
 	"flag"
 	"fmt"
-	"juno/test/testutil/mock"
-	"juno/third_party/forked/golang/glog"
+
+	"github.com/paypal/junodb/test/testutil/mock"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 )
 
 func main() {

@@ -23,9 +23,9 @@ import (
 	"encoding/binary"
 	"net"
 
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 
-	"juno/pkg/proto"
+	"github.com/paypal/junodb/pkg/proto"
 )
 
 func opCodeToJuno(mfop OpCode) (opcode proto.OpCode, err error) {
@@ -69,7 +69,7 @@ func toMayflyOpCode(jop proto.OpCode) (opcode OpCode, err error) {
 	return
 }
 
-///TODO to be reviewed
+// /TODO to be reviewed
 var opStatusJunoToMayflyMapping []OpStatus = []OpStatus{
 	OpStatusdNoError,             //Ok,                   0
 	OpStatusBadMsg,               //BadMsg,               1

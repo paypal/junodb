@@ -21,14 +21,15 @@ package unittest
 
 import (
 	"fmt"
-	"juno/pkg/client"
-	"juno/pkg/proto"
-	"juno/test/testutil"
-	"juno/test/testutil/mock"
 	"strconv"
 	"testing"
 
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/pkg/client"
+	"github.com/paypal/junodb/pkg/proto"
+	"github.com/paypal/junodb/test/testutil"
+	"github.com/paypal/junodb/test/testutil/mock"
+
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 )
 
 var createStatusArray [7]uint8

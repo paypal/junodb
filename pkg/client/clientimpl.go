@@ -24,12 +24,12 @@ import (
 	"fmt"
 	"runtime"
 
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 
-	"juno/internal/cli"
-	"juno/pkg/io"
-	"juno/pkg/logging"
-	"juno/pkg/proto"
+	"github.com/paypal/junodb/internal/cli"
+	"github.com/paypal/junodb/pkg/io"
+	"github.com/paypal/junodb/pkg/logging"
+	"github.com/paypal/junodb/pkg/proto"
 )
 
 // clientImplT is the default implementation of the IClient interface.

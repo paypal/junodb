@@ -27,12 +27,12 @@ import (
 	"testing"
 	"time"
 
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 
-	"juno/cmd/storageserv/storage/db"
-	"juno/pkg/io"
-	"juno/pkg/proto"
-	"juno/pkg/shard"
+	"github.com/paypal/junodb/cmd/storageserv/storage/db"
+	"github.com/paypal/junodb/pkg/io"
+	"github.com/paypal/junodb/pkg/proto"
+	"github.com/paypal/junodb/pkg/shard"
 )
 
 const (

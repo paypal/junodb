@@ -24,12 +24,12 @@ import (
 	"io"
 	"net"
 
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 
-	"juno/internal/cli"
-	"juno/pkg/client"
-	"juno/pkg/proto"
-	"juno/pkg/util"
+	"github.com/paypal/junodb/internal/cli"
+	"github.com/paypal/junodb/pkg/client"
+	"github.com/paypal/junodb/pkg/proto"
+	"github.com/paypal/junodb/pkg/util"
 )
 
 type Record struct {

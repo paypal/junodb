@@ -34,12 +34,12 @@ import (
 	"unsafe"
 
 	//	"github.com/BurntSushi/toml"
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 
-	"juno/cmd/proxy/config"
-	"juno/pkg/io"
-	"juno/pkg/stats"
-	"juno/pkg/util"
+	"github.com/paypal/junodb/cmd/proxy/config"
+	"github.com/paypal/junodb/pkg/io"
+	"github.com/paypal/junodb/pkg/stats"
+	"github.com/paypal/junodb/pkg/util"
 )
 
 const (
@@ -944,7 +944,7 @@ func GetListenerStats() (stats []ListenerStats) {
 	return
 }
 
-//TODO make sure shmStats has been initialized....
+// TODO make sure shmStats has been initialized....
 func GetCurrentWorkerStatsManager() *workerStatsManagerT {
 	return shmStats.current
 }

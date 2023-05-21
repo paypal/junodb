@@ -27,14 +27,14 @@ import (
 	"sync"
 	"time"
 
-	"juno/third_party/forked/golang/glog"
-	"juno/third_party/forked/tecbot/gorocksdb"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/tecbot/gorocksdb"
 
-	"juno/cmd/dbscanserv/config"
-	"juno/cmd/dbscanserv/prime"
-	"juno/cmd/storageserv/storage/db"
-	"juno/pkg/proto"
-	"juno/pkg/util"
+	"github.com/paypal/junodb/cmd/dbscanserv/config"
+	"github.com/paypal/junodb/cmd/dbscanserv/prime"
+	"github.com/paypal/junodb/cmd/storageserv/storage/db"
+	"github.com/paypal/junodb/pkg/proto"
+	"github.com/paypal/junodb/pkg/util"
 )
 
 type CmdUpdatePatch struct {

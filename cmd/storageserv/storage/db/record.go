@@ -22,39 +22,38 @@ Package db implements Juno storage interfaces with gorocksdb.
 
 Record Encoding Format
 
-   Offset | Field                           | Size
-  --------+---------------------------------+---------------
-        0 | encoding version                | 1 byte
-  --------+---------------------------------+---------------
-        1 | flag                            | 1 byte
-  --------+---------------------------------+---------------
-        2 | reserved                        | 2 bytes
-  --------+---------------------------------+---------------
-        4 | expiration time                 | 4 bytes
-  --------+---------------------------------+---------------
-        8 | version                         | 4 bytes
-  --------+---------------------------------+---------------
-       12 | creation time                   | 4 bytes
-  --------+---------------------------------+---------------
-       16 | last modification time          | 8 bytes
-  --------+---------------------------------+---------------
-       24 | request Id of the last modifier | 16 bytes
-  --------+---------------------------------+---------------
-       40 | request Id of the originator    | 16 bytes
-  --------+---------------------------------+---------------
-       56 | encapsulating payload           | ...
+	 Offset | Field                           | Size
+	--------+---------------------------------+---------------
+	      0 | encoding version                | 1 byte
+	--------+---------------------------------+---------------
+	      1 | flag                            | 1 byte
+	--------+---------------------------------+---------------
+	      2 | reserved                        | 2 bytes
+	--------+---------------------------------+---------------
+	      4 | expiration time                 | 4 bytes
+	--------+---------------------------------+---------------
+	      8 | version                         | 4 bytes
+	--------+---------------------------------+---------------
+	     12 | creation time                   | 4 bytes
+	--------+---------------------------------+---------------
+	     16 | last modification time          | 8 bytes
+	--------+---------------------------------+---------------
+	     24 | request Id of the last modifier | 16 bytes
+	--------+---------------------------------+---------------
+	     40 | request Id of the originator    | 16 bytes
+	--------+---------------------------------+---------------
+	     56 | encapsulating payload           | ...
 
-  Record Flag
-    bit |           0|           1|           2|           3|           4|           5|           6|           7
-  ------+------------+------------+------------+------------+------------+------------+------------+------------+
-        | MarkDelete |
-
+	Record Flag
+	  bit |           0|           1|           2|           3|           4|           5|           6|           7
+	------+------------+------------+------------+------------+------------+------------+------------+------------+
+	      | MarkDelete |
 
 Storage Key Format
 
-  ----------------------------+----------- +--------
-    namespace length (1 byte) |  namespace |  key
-  ----------------------------+----------- +--------
+	----------------------------+----------- +--------
+	  namespace length (1 byte) |  namespace |  key
+	----------------------------+----------- +--------
 */
 package db
 
@@ -66,12 +65,12 @@ import (
 	"io"
 	"time"
 
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 
-	"juno/pkg/logging"
-	"juno/pkg/proto"
-	"juno/pkg/shard"
-	"juno/pkg/util"
+	"github.com/paypal/junodb/pkg/logging"
+	"github.com/paypal/junodb/pkg/proto"
+	"github.com/paypal/junodb/pkg/shard"
+	"github.com/paypal/junodb/pkg/util"
 )
 
 const (
@@ -234,7 +233,7 @@ func (rec *Record) EncodeToBuffer(buffer *bytes.Buffer) error {
 	return nil
 }
 
-///TODO validation. the slices
+// /TODO validation. the slices
 func (rec *Record) Decode(data []byte) error {
 	if data == nil || len(data) < kSzHeader {
 		return errors.New("Decoding error: empty")

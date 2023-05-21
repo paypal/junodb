@@ -25,11 +25,11 @@ import (
 
 	"github.com/BurntSushi/toml"
 
-	"juno/cmd/proxy/stats/qry"
-	"juno/cmd/storageserv/config"
-	"juno/cmd/storageserv/storage/db"
-	"juno/pkg/stats"
-	"juno/pkg/version"
+	"github.com/paypal/junodb/cmd/proxy/stats/qry"
+	"github.com/paypal/junodb/cmd/storageserv/config"
+	"github.com/paypal/junodb/cmd/storageserv/storage/db"
+	"github.com/paypal/junodb/pkg/stats"
+	"github.com/paypal/junodb/pkg/version"
 )
 
 var (

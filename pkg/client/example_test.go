@@ -22,7 +22,7 @@ package client_test
 import (
 	"fmt"
 
-	"juno/pkg/client"
+	"github.com/paypal/junodb/pkg/client"
 )
 
 func Example_config() {

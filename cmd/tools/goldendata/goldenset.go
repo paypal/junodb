@@ -21,7 +21,8 @@ package gld
 
 import (
 	"fmt"
-	"juno/pkg/util"
+
+	"github.com/paypal/junodb/pkg/util"
 )
 
 type KEY []byte

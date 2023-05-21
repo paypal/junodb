@@ -25,10 +25,10 @@ import (
 	"sync/atomic"
 	"time"
 
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 
-	"juno/cmd/dbscanserv/prime"
-	"juno/pkg/logging"
+	"github.com/paypal/junodb/cmd/dbscanserv/prime"
+	"github.com/paypal/junodb/pkg/logging"
 )
 
 type Collector struct {
