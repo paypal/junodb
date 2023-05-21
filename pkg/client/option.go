@@ -17,16 +17,19 @@
 //  limitations under the License.
 //
 
+// Package client provides functionalities for client configurations.
 package client
 
 import ()
 
+// optionData struct contains client options.
 type optionData struct {
-	ttl           uint32
-	context       IContext
-	correlationId string
+	ttl           uint32  // Time to live value.
+	context       IContext  // Client context.
+	correlationId string  // Correlation ID for tracking.
 }
 
+// IOption type represents a function that applies options on optionData.
 //type IOption interface {
 //	Apply(data *optionData) error
 //}
@@ -46,34 +49,41 @@ type optionData struct {
 
 type IOption func(data interface{})
 
+// WithTTL function returns an IOption that sets a TTL value.
 func WithTTL(ttl uint32) IOption {
 	return func(i interface{}) {
+		// Check if the passed interface can be casted to *optionData
 		if data, ok := i.(*optionData); ok {
-			data.ttl = ttl
+			data.ttl = ttl  // Set the TTL value.
 		}
 	}
 }
 
+// WithCond function returns an IOption that sets a context.
 func WithCond(context IContext) IOption {
 	return func(i interface{}) {
+		// Check if the passed interface can be casted to *optionData
 		if data, ok := i.(*optionData); ok {
-			data.context = context
+			data.context = context  // Set the context.
 		}
 	}
 }
 
+// WithCorrelationId function returns an IOption that sets a correlationId.
 func WithCorrelationId(id string) IOption {
 	return func(i interface{}) {
+		// Check if the passed interface can be casted to *optionData
 		if data, ok := i.(*optionData); ok {
-			data.correlationId = id
+			data.correlationId = id  // Set the correlation ID.
 		}
 	}
 }
 
+// newOptionData function applies the options passed in and returns an initialized optionData.
 func newOptionData(opts ...IOption) *optionData {
-	data := &optionData{}
+	data := &optionData{}  // Initialize a new optionData.
 	for _, op := range opts {
-		op(data)
+		op(data)  // Apply each option on the optionData.
 	}
-	return data
+	return data  // Return the initialized optionData.
 }
