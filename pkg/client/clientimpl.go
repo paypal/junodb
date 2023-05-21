@@ -17,6 +17,7 @@
 //  limitations under the License.
 //
 
+// Package client provides interfaces and implementations for communicating with a Juno server.
 package client
 
 import (
@@ -31,6 +32,7 @@ import (
 	"juno/pkg/proto"
 )
 
+// clientImplT is the default implementation of the IClient interface.
 type clientImplT struct {
 	config    Config
 	appName   string
@@ -38,6 +40,7 @@ type clientImplT struct {
 	processor *cli.Processor
 }
 
+// newProcessorWithConfig initializes a new Processor with the given configuration.
 func newProcessorWithConfig(conf *Config) *cli.Processor {
 	if conf == nil {
 		return nil
@@ -51,6 +54,7 @@ func newProcessorWithConfig(conf *Config) *cli.Processor {
 	return c
 }
 
+// New initializes a new IClient with the given configuration. Returns an error if configuration validation fails.
 func New(conf Config) (IClient, error) {
 	if err := conf.validate(); err != nil {
 		return nil, err
@@ -68,6 +72,7 @@ func New(conf Config) (IClient, error) {
 	return client, nil
 }
 
+// NewClient initializes a new IClient with the provided server address, namespace and app name.
 func NewClient(server string, ns string, app string) (IClient, error) {
 	c := &clientImplT{
 		config: Config{
@@ -99,6 +104,8 @@ func NewClient(server string, ns string, app string) (IClient, error) {
 }
 
 ///TODO to revisit
+
+// Close closes the client and cleans up resources.
 func (c *clientImplT) Close() {
 	if c.processor != nil {
 		c.processor.Close()
@@ -106,6 +113,7 @@ func (c *clientImplT) Close() {
 	}
 }
 
+// getOptions collects all provided options into an optionData object.
 func (c *clientImplT) getOptions(opts ...IOption) *optionData {
 	data := &optionData{}
 	for _, op := range opts {
@@ -114,12 +122,14 @@ func (c *clientImplT) getOptions(opts ...IOption) *optionData {
 	return data
 }
 
+// newContext creates a new context from the provided operational message.
 func newContext(resp *proto.OperationalMessage) IContext {
 	recInfo := &cli.RecordInfo{}
 	recInfo.SetFromOpMsg(resp)
 	return recInfo
 }
 
+// Create sends a Create operation request to the server.
 func (c *clientImplT) Create(key []byte, value []byte, opts ...IOption) (context IContext, err error) {
 	glog.Verbosef("Create ")
 	var resp *proto.OperationalMessage
@@ -138,6 +148,7 @@ func (c *clientImplT) Create(key []byte, value []byte, opts ...IOption) (context
 	return
 }
 
+// Get sends a Get operation request to the server.
 func (c *clientImplT) Get(key []byte, opts ...IOption) (value []byte, context IContext, err error) {
 	var resp *proto.OperationalMessage
 	options := newOptionData(opts...)
@@ -161,6 +172,7 @@ func (c *clientImplT) Get(key []byte, opts ...IOption) (value []byte, context IC
 	return
 }
 
+// Update sends an Update operation request to the server.
 func (c *clientImplT) Update(key []byte, value []byte, opts ...IOption) (context IContext, err error) {
 	var resp *proto.OperationalMessage
 	options := newOptionData(opts...)
@@ -183,6 +195,7 @@ func (c *clientImplT) Update(key []byte, value []byte, opts ...IOption) (context
 	return
 }
 
+// Set sends a Set operation request to the server.
 func (c *clientImplT) Set(key []byte, value []byte, opts ...IOption) (context IContext, err error) {
 	var resp *proto.OperationalMessage
 	options := newOptionData(opts...)
@@ -200,6 +213,7 @@ func (c *clientImplT) Set(key []byte, value []byte, opts ...IOption) (context IC
 	return
 }
 
+// Destroy sends a Destroy operation request to the server.
 func (c *clientImplT) Destroy(key []byte, opts ...IOption) (err error) {
 	var resp *proto.OperationalMessage
 	options := newOptionData(opts...)
@@ -215,6 +229,7 @@ func (c *clientImplT) Destroy(key []byte, opts ...IOption) (err error) {
 	return
 }
 
+// UDFGet sends a UDFGet operation request to the server.
 func (c *clientImplT) UDFGet(key []byte, fname []byte, params []byte, opts ...IOption) (value []byte, context IContext, err error) {
 	var resp *proto.OperationalMessage
 	options := newOptionData(opts...)
@@ -239,6 +254,7 @@ func (c *clientImplT) UDFGet(key []byte, fname []byte, params []byte, opts ...IO
 	return
 }
 
+// UDFSet sends a UDFSet operation request to the server.
 func (c *clientImplT) UDFSet(key []byte, fname []byte, params []byte, opts ...IOption) (context IContext, err error) {
 	var resp *proto.OperationalMessage
 	options := newOptionData(opts...)
@@ -258,10 +274,13 @@ func (c *clientImplT) UDFSet(key []byte, fname []byte, params []byte, opts ...IO
 }
 
 ///TODO temporary
+
+// Batch sends a batch of operation requests to the server.
 func (c *clientImplT) Batch(requests []*proto.OperationalMessage) (responses []*proto.OperationalMessage, err error) {
 	return c.processor.ProcessBatchRequests(requests)
 }
 
+// NewRequest creates a new OperationalMessage with the provided parameters.
 func (c *clientImplT) NewRequest(op proto.OpCode, key []byte, value []byte, ttl uint32) (request *proto.OperationalMessage) {
 	///TODO: validate op
 	request = &proto.OperationalMessage{}
@@ -272,6 +291,7 @@ func (c *clientImplT) NewRequest(op proto.OpCode, key []byte, value []byte, ttl 
 	return
 }
 
+// NewUDFRequest creates a new UDF OperationalMessage with the provided parameters.
 func (c *clientImplT) NewUDFRequest(op proto.OpCode, key []byte, fname []byte, params []byte, ttl uint32) (request *proto.OperationalMessage) {
 	///TODO: validate op
 	request = &proto.OperationalMessage{}
@@ -284,6 +304,7 @@ func (c *clientImplT) NewUDFRequest(op proto.OpCode, key []byte, fname []byte, p
 	return
 }
 
+// checkResponse validates the response from the server against the original request.
 func checkResponse(request *proto.OperationalMessage, response *proto.OperationalMessage, recInfo *cli.RecordInfo) (err error) {
 	opCode := request.GetOpCode()
 	if opCode != response.GetOpCode() {
