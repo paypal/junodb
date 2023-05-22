@@ -49,15 +49,12 @@ func (rh *RequestHandler) GetReqCtxCreator() io.InboundRequestContextCreator {
 }
 
 func (rh *RequestHandler) Process(reqCtx io.IRequestContext) error {
-
 	glog.Verbosef("Process")
-	if rh.cnt.Get() < rh.maxConcurrentRequests {
-		rh.cnt.Add(1)
+	if rh.cnt.Add(1) < rh.maxConcurrentRequests {
 		proc := rh.procPool.Get()
 		proc.Process(reqCtx)
-
-		rh.cnt.Add(-1)
 	}
+	rh.cnt.Add(-1)
 
 	return nil
 }
