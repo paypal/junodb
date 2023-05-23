@@ -35,7 +35,8 @@ public class JunoMessage {
 	private ServerOperationStatus status;
 	private long creationTime;
 	private long reqStartTime;
-	private long reqHandlingTime; 
+	private long reqHandlingTime; // millisecond duration on JunoServ
+	
 	private long messageSize;
 	private UUID reqId;
 	private boolean isPayloadCompressed;
@@ -54,7 +55,12 @@ public class JunoMessage {
 		private final int code;
 		private final String opType;
 		
-		
+		/**
+		 * Constructor
+		 * 
+		 * @param code
+		 * @param opText Type
+		 */
 		OperationType(int code, String opText) {
 			this.code = code;
 			this.opType = opText;
