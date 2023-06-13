@@ -18,6 +18,8 @@
 #  limitations under the License.
 #  
  
+set -eo pipefail
+cd "$(dirname "$0")"
 
 export CGO_CFLAGS="-I/usr/local/include"
 export CGO_LDFLAGS="-L/usr/local/lib -lrocksdb -lstdc++ -lm -lrt -lpthread -ldl"
