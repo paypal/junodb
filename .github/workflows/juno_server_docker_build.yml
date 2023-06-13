@@ -18,7 +18,7 @@ jobs:
   build-juno-docker:
     strategy:
       matrix:
-        os: [ubuntu-latest]
+        os: [ubuntu-latest, macos-latest]
     runs-on: ${{ matrix.os }}
     env:
       PROXY_TLS_PORT: 5080
@@ -28,14 +28,14 @@ jobs:
     steps:
       - name: Get code
         uses: actions/checkout@v3.5.2
-      - name: Install dependencies
+      - name: Check openssl version dependencies
         run: |
-          sudo apt install openssl -y
           echo "Openssl Version:" `openssl version`
+      - name: Set up Docker
+        uses: docker-practice/actions-setup-docker@master
+        if: ${{ matrix.os == 'macos-latest' }}
       - name: Docker Version Check
         run: docker version
-      # - name: Expose GitHub Runtime
-      #   uses: crazy-max/ghaction-github-runtime@v2
       - name: Build docker containers
         run: docker/build.sh
       - name: Start juno containers
