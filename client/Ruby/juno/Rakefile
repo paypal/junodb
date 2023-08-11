@@ -1,0 +1,36 @@
+# frozen_string_literal: true
+
+require 'bundler/gem_tasks'
+require 'rspec/core/rake_task'
+require 'rubocop/rake_task'
+require 'yard'
+
+task default: :spec
+
+RSpec::Core::RakeTask.new(:spec) do |t|
+  t.pattern = Dir.glob('spec/**/*_spec.rb')
+  t.rspec_opts = ['--format html', '--out juno_spec_results.html']
+end
+
+RuboCop::RakeTask.new(:lint) do |task|
+  task.patterns = ['lib/**/*.rb']
+  task.options = ['--autocorrect', '--fail-level', 'error']
+end
+
+namespace :yard do
+  task :before_yard do
+    FileUtils.rm_rf('../docs') if Dir.exist?('../docs')
+    FileUtils.rm_rf('doc') if Dir.exist?('doc')
+  end
+
+  task :after_yard do
+    FileUtils.mv('doc', '../docs')
+    FileUtils.rm_rf('.yardoc')
+  end
+
+  YARD::Rake::YardocTask.new(:document) do |task|
+    task.files = ['lib/**/*.rb']
+    task.before = -> { Rake::Task['yard:before_yard'].invoke }
+    task.after = -> { Rake::Task['yard:after_yard'].invoke }
+  end
+end
