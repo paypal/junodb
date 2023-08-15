@@ -25,10 +25,10 @@ import (
 	"os"
 	"time"
 
-	"juno/pkg/logging/cal"
-	"juno/pkg/logging/otel"
-	"juno/pkg/util"
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/pkg/logging/cal"
+	"github.com/paypal/junodb/pkg/logging/otel"
+	"github.com/paypal/junodb/pkg/util"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 )
 
 const (

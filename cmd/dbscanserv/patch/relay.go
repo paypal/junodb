@@ -22,12 +22,12 @@ package patch
 import (
 	"time"
 
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 
-	"juno/cmd/dbscanserv/app"
-	"juno/cmd/dbscanserv/config"
-	"juno/cmd/storageserv/storage/db"
-	"juno/pkg/proto"
+	"github.com/paypal/junodb/cmd/dbscanserv/app"
+	"github.com/paypal/junodb/cmd/dbscanserv/config"
+	"github.com/paypal/junodb/cmd/storageserv/storage/db"
+	"github.com/paypal/junodb/pkg/proto"
 )
 
 // Called by storageserv.

@@ -1,0 +1,2381 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Class: Juno::Config
+  
+    &mdash; Documentation by YARD 0.9.34
+  
+</title>
+
+  <link rel="stylesheet" href="../css/style.css" type="text/css" />
+
+  <link rel="stylesheet" href="../css/common.css" type="text/css" />
+
+<script type="text/javascript">
+  pathId = "Juno::Config";
+  relpath = '../';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="../class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="../_index.html">Index (C)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../Juno.html" title="Juno (module)">Juno</a></span></span>
+     &raquo; 
+    <span class="title">Config</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><h1>Class: Juno::Config
+  
+  
+  
+</h1>
+<div class="box_info">
+  
+  <dl>
+    <dt>Inherits:</dt>
+    <dd>
+      <span class="inheritName">Object</span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next">Juno::Config</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+    </dd>
+  </dl>
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>lib/juno/Config/config.rb</dd>
+  </dl>
+  
+</div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    
+<p>Juno.configure do |config|</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_record_namespace'>record_namespace</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>kk</span><span class='tstring_end'>&quot;</span></span>
+<span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_host'>host</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>10.138.38.83</span><span class='tstring_end'>&#39;</span></span>
+<span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_port'>port</span> <span class='op'>=</span> <span class='int'>5080</span>
+<span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_app_name'>app_name</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>TestApp</span><span class='tstring_end'>&quot;</span></span>
+<span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_file_path'>file_path</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span>
+<span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_url'>url</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span>
+</code></pre>
+
+<p>end</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><h2>Defined Under Namespace</h2>
+<p class="children">
+  
+    
+  
+    
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Config/Source.html" title="Juno::Config::Source (class)">Source</a></span>
+    
+  
+</p>
+
+  
+    <h2>
+      Constant Summary
+      <small><a href="#" class="constants_summary_toggle">collapse</a></small>
+    </h2>
+
+    <dl class="constants">
+      
+        <dt id="REQUIRED_PROPERTIES-constant" class="">REQUIRED_PROPERTIES =
+          
+        </dt>
+        <dd><pre class="code"><span class='qsymbols_beg'>%i[</span><span class='tstring_content'>host</span><span class='words_sep'> </span><span class='tstring_content'>port</span><span class='words_sep'> </span><span class='tstring_content'>app_name</span><span class='words_sep'> </span><span class='tstring_content'>record_namespace</span><span class='words_sep'> </span><span class='tstring_content'>log_file</span><span class='tstring_end'>]</span></span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span></pre></dd>
+      
+    </dl>
+  
+
+
+
+
+  <h2>Instance Attribute Summary <small><a href="#" class="summary_toggle">collapse</a></small></h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#app_name-instance_method" title="#app_name (instance method)">#<strong>app_name</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute app_name.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#bypass_ltm-instance_method" title="#bypass_ltm (instance method)">#<strong>bypass_ltm</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute bypass_ltm.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#config_prefix-instance_method" title="#config_prefix (instance method)">#<strong>config_prefix</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute config_prefix.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#connection_lifetime-instance_method" title="#connection_lifetime (instance method)">#<strong>connection_lifetime</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute connection_lifetime.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#connection_pool_size-instance_method" title="#connection_pool_size (instance method)">#<strong>connection_pool_size</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute connection_pool_size.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#connection_timeout-instance_method" title="#connection_timeout (instance method)">#<strong>connection_timeout</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute connection_timeout.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#default_lifetime-instance_method" title="#default_lifetime (instance method)">#<strong>default_lifetime</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute default_lifetime.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#host-instance_method" title="#host (instance method)">#<strong>host</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute host.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#log_file-instance_method" title="#log_file (instance method)">#<strong>log_file</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute log_file.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#max_connection_lifetime-instance_method" title="#max_connection_lifetime (instance method)">#<strong>max_connection_lifetime</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute max_connection_lifetime.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#max_connection_pool_size-instance_method" title="#max_connection_pool_size (instance method)">#<strong>max_connection_pool_size</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute max_connection_pool_size.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#max_connection_timeout-instance_method" title="#max_connection_timeout (instance method)">#<strong>max_connection_timeout</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute max_connection_timeout.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#max_key_size-instance_method" title="#max_key_size (instance method)">#<strong>max_key_size</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute max_key_size.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#max_lifetime-instance_method" title="#max_lifetime (instance method)">#<strong>max_lifetime</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute max_lifetime.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#max_namespace_length-instance_method" title="#max_namespace_length (instance method)">#<strong>max_namespace_length</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute max_namespace_length.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#max_response_timeout-instance_method" title="#max_response_timeout (instance method)">#<strong>max_response_timeout</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute max_response_timeout.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#max_value_size-instance_method" title="#max_value_size (instance method)">#<strong>max_value_size</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute max_value_size.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#operation_retry-instance_method" title="#operation_retry (instance method)">#<strong>operation_retry</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute operation_retry.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#port-instance_method" title="#port (instance method)">#<strong>port</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute port.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#reconnect_on_fail-instance_method" title="#reconnect_on_fail (instance method)">#<strong>reconnect_on_fail</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute reconnect_on_fail.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#record_namespace-instance_method" title="#record_namespace (instance method)">#<strong>record_namespace</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute record_namespace.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#response_timeout-instance_method" title="#response_timeout (instance method)">#<strong>response_timeout</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute response_timeout.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#ssl_cert_file-instance_method" title="#ssl_cert_file (instance method)">#<strong>ssl_cert_file</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute ssl_cert_file.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#ssl_key_file-instance_method" title="#ssl_key_file (instance method)">#<strong>ssl_key_file</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute ssl_key_file.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#use_payload_compression-instance_method" title="#use_payload_compression (instance method)">#<strong>use_payload_compression</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute use_payload_compression.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#use_ssl-instance_method" title="#use_ssl (instance method)">#<strong>use_ssl</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute use_ssl.</p>
+</div></span>
+  
+</li>
+
+    
+  </ul>
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(config_provider, log_file:, ssl_cert_file: nil, ssl_key_file: nil)  &#x21d2; Config </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>A new instance of Config.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#read_all-instance_method" title="#read_all (instance method)">#<strong>read_all</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Function to map all properties read from config file to variables.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#validate!-instance_method" title="#validate! (instance method)">#<strong>validate!</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+<div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <h3 class="signature first" id="initialize-instance_method">
+  
+    #<strong>initialize</strong>(config_provider, log_file:, ssl_cert_file: nil, ssl_key_file: nil)  &#x21d2; <tt><span class='object_link'><a href="" title="Juno::Config (class)">Config</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns a new instance of Config.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+22
+23
+24
+25
+26
+27
+28
+29
+30</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/Config/config.rb', line 22</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_config_provider'>config_provider</span><span class='comma'>,</span> <span class='label'>log_file:</span><span class='comma'>,</span> <span class='label'>ssl_cert_file:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>ssl_key_file:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+  <span class='ivar'>@PROG_NAME</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span>
+  <span class='ivar'>@log_file</span> <span class='op'>=</span> <span class='id identifier rubyid_log_file'>log_file</span>
+  <span class='ivar'>@ssl_cert_file</span> <span class='op'>=</span> <span class='id identifier rubyid_ssl_cert_file'>ssl_cert_file</span>
+  <span class='ivar'>@ssl_key_file</span> <span class='op'>=</span> <span class='id identifier rubyid_ssl_key_file'>ssl_key_file</span>
+  <span class='ivar'>@config</span> <span class='op'>=</span> <span class='id identifier rubyid_config_provider'>config_provider</span>
+  <span class='id identifier rubyid_read_all'>read_all</span>
+  <span class='id identifier rubyid_validate!'>validate!</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+  <div id="instance_attr_details" class="attr_details">
+    <h2>Instance Attribute Details</h2>
+    
+      
+      <span id=""></span>
+      <div class="method_details first">
+  <h3 class="signature first" id="app_name-instance_method">
+  
+    #<strong>app_name</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute app_name.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+14
+15
+16</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/Config/config.rb', line 14</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_app_name'>app_name</span>
+  <span class='ivar'>@app_name</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="bypass_ltm-instance_method">
+  
+    #<strong>bypass_ltm</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute bypass_ltm.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+14
+15
+16</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/Config/config.rb', line 14</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_bypass_ltm'>bypass_ltm</span>
+  <span class='ivar'>@bypass_ltm</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="config_prefix-instance_method">
+  
+    #<strong>config_prefix</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute config_prefix.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+14
+15
+16</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/Config/config.rb', line 14</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_config_prefix'>config_prefix</span>
+  <span class='ivar'>@config_prefix</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="connection_lifetime-instance_method">
+  
+    #<strong>connection_lifetime</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute connection_lifetime.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+14
+15
+16</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/Config/config.rb', line 14</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_connection_lifetime'>connection_lifetime</span>
+  <span class='ivar'>@connection_lifetime</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="connection_pool_size-instance_method">
+  
+    #<strong>connection_pool_size</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute connection_pool_size.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+14
+15
+16</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/Config/config.rb', line 14</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_connection_pool_size'>connection_pool_size</span>
+  <span class='ivar'>@connection_pool_size</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="connection_timeout-instance_method">
+  
+    #<strong>connection_timeout</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute connection_timeout.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+14
+15
+16</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/Config/config.rb', line 14</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_connection_timeout'>connection_timeout</span>
+  <span class='ivar'>@connection_timeout</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="default_lifetime-instance_method">
+  
+    #<strong>default_lifetime</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute default_lifetime.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+14
+15
+16</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/Config/config.rb', line 14</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_default_lifetime'>default_lifetime</span>
+  <span class='ivar'>@default_lifetime</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="host-instance_method">
+  
+    #<strong>host</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute host.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+14
+15
+16</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/Config/config.rb', line 14</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_host'>host</span>
+  <span class='ivar'>@host</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="log_file-instance_method">
+  
+    #<strong>log_file</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute log_file.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+14
+15
+16</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/Config/config.rb', line 14</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_log_file'>log_file</span>
+  <span class='ivar'>@log_file</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="max_connection_lifetime-instance_method">
+  
+    #<strong>max_connection_lifetime</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute max_connection_lifetime.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+14
+15
+16</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/Config/config.rb', line 14</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_max_connection_lifetime'>max_connection_lifetime</span>
+  <span class='ivar'>@max_connection_lifetime</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="max_connection_pool_size-instance_method">
+  
+    #<strong>max_connection_pool_size</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute max_connection_pool_size.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+14
+15
+16</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/Config/config.rb', line 14</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_max_connection_pool_size'>max_connection_pool_size</span>
+  <span class='ivar'>@max_connection_pool_size</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="max_connection_timeout-instance_method">
+  
+    #<strong>max_connection_timeout</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute max_connection_timeout.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+14
+15
+16</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/Config/config.rb', line 14</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_max_connection_timeout'>max_connection_timeout</span>
+  <span class='ivar'>@max_connection_timeout</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="max_key_size-instance_method">
+  
+    #<strong>max_key_size</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute max_key_size.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+14
+15
+16</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/Config/config.rb', line 14</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_max_key_size'>max_key_size</span>
+  <span class='ivar'>@max_key_size</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="max_lifetime-instance_method">
+  
+    #<strong>max_lifetime</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute max_lifetime.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+14
+15
+16</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/Config/config.rb', line 14</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_max_lifetime'>max_lifetime</span>
+  <span class='ivar'>@max_lifetime</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="max_namespace_length-instance_method">
+  
+    #<strong>max_namespace_length</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute max_namespace_length.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+14
+15
+16</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/Config/config.rb', line 14</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_max_namespace_length'>max_namespace_length</span>
+  <span class='ivar'>@max_namespace_length</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="max_response_timeout-instance_method">
+  
+    #<strong>max_response_timeout</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute max_response_timeout.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+14
+15
+16</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/Config/config.rb', line 14</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_max_response_timeout'>max_response_timeout</span>
+  <span class='ivar'>@max_response_timeout</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="max_value_size-instance_method">
+  
+    #<strong>max_value_size</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute max_value_size.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+14
+15
+16</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/Config/config.rb', line 14</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_max_value_size'>max_value_size</span>
+  <span class='ivar'>@max_value_size</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="operation_retry-instance_method">
+  
+    #<strong>operation_retry</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute operation_retry.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+14
+15
+16</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/Config/config.rb', line 14</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_operation_retry'>operation_retry</span>
+  <span class='ivar'>@operation_retry</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="port-instance_method">
+  
+    #<strong>port</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute port.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+14
+15
+16</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/Config/config.rb', line 14</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_port'>port</span>
+  <span class='ivar'>@port</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="reconnect_on_fail-instance_method">
+  
+    #<strong>reconnect_on_fail</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute reconnect_on_fail.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+14
+15
+16</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/Config/config.rb', line 14</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_reconnect_on_fail'>reconnect_on_fail</span>
+  <span class='ivar'>@reconnect_on_fail</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="record_namespace-instance_method">
+  
+    #<strong>record_namespace</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute record_namespace.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+14
+15
+16</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/Config/config.rb', line 14</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_record_namespace'>record_namespace</span>
+  <span class='ivar'>@record_namespace</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="response_timeout-instance_method">
+  
+    #<strong>response_timeout</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute response_timeout.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+14
+15
+16</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/Config/config.rb', line 14</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_response_timeout'>response_timeout</span>
+  <span class='ivar'>@response_timeout</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="ssl_cert_file-instance_method">
+  
+    #<strong>ssl_cert_file</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute ssl_cert_file.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+14
+15
+16</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/Config/config.rb', line 14</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_ssl_cert_file'>ssl_cert_file</span>
+  <span class='ivar'>@ssl_cert_file</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="ssl_key_file-instance_method">
+  
+    #<strong>ssl_key_file</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute ssl_key_file.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+14
+15
+16</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/Config/config.rb', line 14</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_ssl_key_file'>ssl_key_file</span>
+  <span class='ivar'>@ssl_key_file</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="use_payload_compression-instance_method">
+  
+    #<strong>use_payload_compression</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute use_payload_compression.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+14
+15
+16</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/Config/config.rb', line 14</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_use_payload_compression'>use_payload_compression</span>
+  <span class='ivar'>@use_payload_compression</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="use_ssl-instance_method">
+  
+    #<strong>use_ssl</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute use_ssl.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+14
+15
+16</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/Config/config.rb', line 14</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_use_ssl'>use_ssl</span>
+  <span class='ivar'>@use_ssl</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="read_all-instance_method">
+  
+    #<strong>read_all</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Function to map all properties read from config file to variables</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/Config/config.rb', line 33</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_read_all'>read_all</span>
+  <span class='ivar'>@response_timeout</span> <span class='op'>=</span> <span class='ivar'>@config</span><span class='period'>.</span><span class='id identifier rubyid_get_property'>get_property</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Juno.html" title="Juno (module)">Juno</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Properties.html" title="Juno::Properties (class)">Properties</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Properties.html#RESPONSE_TIMEOUT-constant" title="Juno::Properties::RESPONSE_TIMEOUT (constant)">RESPONSE_TIMEOUT</a></span></span><span class='comma'>,</span>
+                                           <span class='const'><span class='object_link'><a href="../Juno.html" title="Juno (module)">Juno</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="DefaultProperties.html" title="Juno::DefaultProperties (class)">DefaultProperties</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="DefaultProperties.html#RESPONSE_TIMEOUT_MS-constant" title="Juno::DefaultProperties::RESPONSE_TIMEOUT_MS (constant)">RESPONSE_TIMEOUT_MS</a></span></span><span class='rparen'>)</span>
+  <span class='ivar'>@connection_timeout</span> <span class='op'>=</span> <span class='ivar'>@config</span><span class='period'>.</span><span class='id identifier rubyid_get_property'>get_property</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Juno.html" title="Juno (module)">Juno</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Properties.html" title="Juno::Properties (class)">Properties</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Properties.html#CONNECTION_TIMEOUT-constant" title="Juno::Properties::CONNECTION_TIMEOUT (constant)">CONNECTION_TIMEOUT</a></span></span><span class='comma'>,</span>
+                                             <span class='const'><span class='object_link'><a href="../Juno.html" title="Juno (module)">Juno</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="DefaultProperties.html" title="Juno::DefaultProperties (class)">DefaultProperties</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="DefaultProperties.html#CONNECTION_TIMEOUT_MS-constant" title="Juno::DefaultProperties::CONNECTION_TIMEOUT_MS (constant)">CONNECTION_TIMEOUT_MS</a></span></span><span class='rparen'>)</span>
+  <span class='ivar'>@connection_pool_size</span> <span class='op'>=</span> <span class='ivar'>@config</span><span class='period'>.</span><span class='id identifier rubyid_get_property'>get_property</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Juno.html" title="Juno (module)">Juno</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Properties.html" title="Juno::Properties (class)">Properties</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Properties.html#CONNECTION_POOLSIZE-constant" title="Juno::Properties::CONNECTION_POOLSIZE (constant)">CONNECTION_POOLSIZE</a></span></span><span class='comma'>,</span>
+                                               <span class='const'><span class='object_link'><a href="../Juno.html" title="Juno (module)">Juno</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="DefaultProperties.html" title="Juno::DefaultProperties (class)">DefaultProperties</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="DefaultProperties.html#CONNECTION_POOLSIZE-constant" title="Juno::DefaultProperties::CONNECTION_POOLSIZE (constant)">CONNECTION_POOLSIZE</a></span></span><span class='rparen'>)</span>
+  <span class='ivar'>@connection_lifetime</span> <span class='op'>=</span> <span class='ivar'>@config</span><span class='period'>.</span><span class='id identifier rubyid_get_property'>get_property</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Juno.html" title="Juno (module)">Juno</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Properties.html" title="Juno::Properties (class)">Properties</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Properties.html#CONNECTION_LIFETIME-constant" title="Juno::Properties::CONNECTION_LIFETIME (constant)">CONNECTION_LIFETIME</a></span></span><span class='comma'>,</span>
+                                              <span class='const'><span class='object_link'><a href="../Juno.html" title="Juno (module)">Juno</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="DefaultProperties.html" title="Juno::DefaultProperties (class)">DefaultProperties</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="DefaultProperties.html#CONNECTION_LIFETIME_MS-constant" title="Juno::DefaultProperties::CONNECTION_LIFETIME_MS (constant)">CONNECTION_LIFETIME_MS</a></span></span><span class='rparen'>)</span>
+  <span class='ivar'>@default_lifetime</span> <span class='op'>=</span> <span class='ivar'>@config</span><span class='period'>.</span><span class='id identifier rubyid_get_property'>get_property</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Juno.html" title="Juno (module)">Juno</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Properties.html" title="Juno::Properties (class)">Properties</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Properties.html#DEFAULT_LIFETIME-constant" title="Juno::Properties::DEFAULT_LIFETIME (constant)">DEFAULT_LIFETIME</a></span></span><span class='comma'>,</span>
+                                           <span class='const'><span class='object_link'><a href="../Juno.html" title="Juno (module)">Juno</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="DefaultProperties.html" title="Juno::DefaultProperties (class)">DefaultProperties</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="DefaultProperties.html#DEFAULT_LIFETIME_S-constant" title="Juno::DefaultProperties::DEFAULT_LIFETIME_S (constant)">DEFAULT_LIFETIME_S</a></span></span><span class='rparen'>)</span>
+  <span class='ivar'>@max_response_timeout</span> <span class='op'>=</span> <span class='ivar'>@config</span><span class='period'>.</span><span class='id identifier rubyid_get_property'>get_property</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Juno.html" title="Juno (module)">Juno</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Properties.html" title="Juno::Properties (class)">Properties</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Properties.html#MAX_RESPONSE_TIMEOUT-constant" title="Juno::Properties::MAX_RESPONSE_TIMEOUT (constant)">MAX_RESPONSE_TIMEOUT</a></span></span><span class='comma'>,</span>
+                                               <span class='const'><span class='object_link'><a href="../Juno.html" title="Juno (module)">Juno</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="DefaultProperties.html" title="Juno::DefaultProperties (class)">DefaultProperties</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="DefaultProperties.html#MAX_RESPONSE_TIMEOUT_MS-constant" title="Juno::DefaultProperties::MAX_RESPONSE_TIMEOUT_MS (constant)">MAX_RESPONSE_TIMEOUT_MS</a></span></span><span class='rparen'>)</span>
+  <span class='ivar'>@max_connection_timeout</span> <span class='op'>=</span> <span class='ivar'>@config</span><span class='period'>.</span><span class='id identifier rubyid_get_property'>get_property</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Juno.html" title="Juno (module)">Juno</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Properties.html" title="Juno::Properties (class)">Properties</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Properties.html#MAX_CONNECTION_TIMEOUT-constant" title="Juno::Properties::MAX_CONNECTION_TIMEOUT (constant)">MAX_CONNECTION_TIMEOUT</a></span></span><span class='comma'>,</span>
+                                                 <span class='const'><span class='object_link'><a href="../Juno.html" title="Juno (module)">Juno</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="DefaultProperties.html" title="Juno::DefaultProperties (class)">DefaultProperties</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="DefaultProperties.html#MAX_CONNECTION_TIMEOUT_MS-constant" title="Juno::DefaultProperties::MAX_CONNECTION_TIMEOUT_MS (constant)">MAX_CONNECTION_TIMEOUT_MS</a></span></span><span class='rparen'>)</span>
+  <span class='ivar'>@max_connection_pool_size</span> <span class='op'>=</span> <span class='ivar'>@config</span><span class='period'>.</span><span class='id identifier rubyid_get_property'>get_property</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Juno.html" title="Juno (module)">Juno</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Properties.html" title="Juno::Properties (class)">Properties</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Properties.html#MAX_CONNECTION_POOL_SIZE-constant" title="Juno::Properties::MAX_CONNECTION_POOL_SIZE (constant)">MAX_CONNECTION_POOL_SIZE</a></span></span><span class='comma'>,</span>
+                                                   <span class='const'><span class='object_link'><a href="../Juno.html" title="Juno (module)">Juno</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="DefaultProperties.html" title="Juno::DefaultProperties (class)">DefaultProperties</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="DefaultProperties.html#MAX_CONNECTION_POOL_SIZE-constant" title="Juno::DefaultProperties::MAX_CONNECTION_POOL_SIZE (constant)">MAX_CONNECTION_POOL_SIZE</a></span></span><span class='rparen'>)</span>
+  <span class='ivar'>@max_connection_lifetime</span> <span class='op'>=</span> <span class='ivar'>@config</span><span class='period'>.</span><span class='id identifier rubyid_get_property'>get_property</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Juno.html" title="Juno (module)">Juno</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Properties.html" title="Juno::Properties (class)">Properties</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Properties.html#MAX_CONNECTION_LIFETIME-constant" title="Juno::Properties::MAX_CONNECTION_LIFETIME (constant)">MAX_CONNECTION_LIFETIME</a></span></span><span class='comma'>,</span>
+                                                  <span class='const'><span class='object_link'><a href="../Juno.html" title="Juno (module)">Juno</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="DefaultProperties.html" title="Juno::DefaultProperties (class)">DefaultProperties</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="DefaultProperties.html#MAX_CONNECTION_LIFETIME_MS-constant" title="Juno::DefaultProperties::MAX_CONNECTION_LIFETIME_MS (constant)">MAX_CONNECTION_LIFETIME_MS</a></span></span><span class='rparen'>)</span>
+  <span class='ivar'>@max_lifetime</span> <span class='op'>=</span> <span class='ivar'>@config</span><span class='period'>.</span><span class='id identifier rubyid_get_property'>get_property</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Juno.html" title="Juno (module)">Juno</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Properties.html" title="Juno::Properties (class)">Properties</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Properties.html#MAX_LIFETIME-constant" title="Juno::Properties::MAX_LIFETIME (constant)">MAX_LIFETIME</a></span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../Juno.html" title="Juno (module)">Juno</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="DefaultProperties.html" title="Juno::DefaultProperties (class)">DefaultProperties</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="DefaultProperties.html#MAX_LIFETIME_S-constant" title="Juno::DefaultProperties::MAX_LIFETIME_S (constant)">MAX_LIFETIME_S</a></span></span><span class='rparen'>)</span>
+  <span class='ivar'>@max_key_size</span> <span class='op'>=</span> <span class='ivar'>@config</span><span class='period'>.</span><span class='id identifier rubyid_get_property'>get_property</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Juno.html" title="Juno (module)">Juno</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Properties.html" title="Juno::Properties (class)">Properties</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Properties.html#MAX_KEY_SIZE-constant" title="Juno::Properties::MAX_KEY_SIZE (constant)">MAX_KEY_SIZE</a></span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../Juno.html" title="Juno (module)">Juno</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="DefaultProperties.html" title="Juno::DefaultProperties (class)">DefaultProperties</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="DefaultProperties.html#MAX_KEY_SIZE_B-constant" title="Juno::DefaultProperties::MAX_KEY_SIZE_B (constant)">MAX_KEY_SIZE_B</a></span></span><span class='rparen'>)</span>
+  <span class='ivar'>@max_value_size</span> <span class='op'>=</span> <span class='ivar'>@config</span><span class='period'>.</span><span class='id identifier rubyid_get_property'>get_property</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Juno.html" title="Juno (module)">Juno</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Properties.html" title="Juno::Properties (class)">Properties</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Properties.html#MAX_VALUE_SIZE-constant" title="Juno::Properties::MAX_VALUE_SIZE (constant)">MAX_VALUE_SIZE</a></span></span><span class='comma'>,</span>
+                                         <span class='const'><span class='object_link'><a href="../Juno.html" title="Juno (module)">Juno</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="DefaultProperties.html" title="Juno::DefaultProperties (class)">DefaultProperties</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="DefaultProperties.html#MAX_VALUE_SIZE_B-constant" title="Juno::DefaultProperties::MAX_VALUE_SIZE_B (constant)">MAX_VALUE_SIZE_B</a></span></span><span class='rparen'>)</span>
+  <span class='ivar'>@max_namespace_length</span> <span class='op'>=</span> <span class='ivar'>@config</span><span class='period'>.</span><span class='id identifier rubyid_get_property'>get_property</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Juno.html" title="Juno (module)">Juno</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Properties.html" title="Juno::Properties (class)">Properties</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Properties.html#MAX_NAMESPACE_LENGTH-constant" title="Juno::Properties::MAX_NAMESPACE_LENGTH (constant)">MAX_NAMESPACE_LENGTH</a></span></span><span class='comma'>,</span>
+                                               <span class='const'><span class='object_link'><a href="../Juno.html" title="Juno (module)">Juno</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="DefaultProperties.html" title="Juno::DefaultProperties (class)">DefaultProperties</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="DefaultProperties.html#MAX_NAMESPACE_LENGTH-constant" title="Juno::DefaultProperties::MAX_NAMESPACE_LENGTH (constant)">MAX_NAMESPACE_LENGTH</a></span></span><span class='rparen'>)</span>
+  <span class='ivar'>@host</span> <span class='op'>=</span> <span class='ivar'>@config</span><span class='period'>.</span><span class='id identifier rubyid_get_property'>get_property</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Juno.html" title="Juno (module)">Juno</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Properties.html" title="Juno::Properties (class)">Properties</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Properties.html#HOST-constant" title="Juno::Properties::HOST (constant)">HOST</a></span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../Juno.html" title="Juno (module)">Juno</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="DefaultProperties.html" title="Juno::DefaultProperties (class)">DefaultProperties</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="DefaultProperties.html#HOST-constant" title="Juno::DefaultProperties::HOST (constant)">HOST</a></span></span><span class='rparen'>)</span>
+  <span class='ivar'>@port</span> <span class='op'>=</span> <span class='ivar'>@config</span><span class='period'>.</span><span class='id identifier rubyid_get_property'>get_property</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Juno.html" title="Juno (module)">Juno</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Properties.html" title="Juno::Properties (class)">Properties</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Properties.html#PORT-constant" title="Juno::Properties::PORT (constant)">PORT</a></span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../Juno.html" title="Juno (module)">Juno</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="DefaultProperties.html" title="Juno::DefaultProperties (class)">DefaultProperties</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="DefaultProperties.html#PORT-constant" title="Juno::DefaultProperties::PORT (constant)">PORT</a></span></span><span class='rparen'>)</span>
+  <span class='ivar'>@app_name</span> <span class='op'>=</span> <span class='ivar'>@config</span><span class='period'>.</span><span class='id identifier rubyid_get_property'>get_property</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Juno.html" title="Juno (module)">Juno</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Properties.html" title="Juno::Properties (class)">Properties</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Properties.html#APP_NAME-constant" title="Juno::Properties::APP_NAME (constant)">APP_NAME</a></span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../Juno.html" title="Juno (module)">Juno</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="DefaultProperties.html" title="Juno::DefaultProperties (class)">DefaultProperties</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="DefaultProperties.html#APP_NAME-constant" title="Juno::DefaultProperties::APP_NAME (constant)">APP_NAME</a></span></span><span class='rparen'>)</span>
+  <span class='ivar'>@record_namespace</span> <span class='op'>=</span> <span class='ivar'>@config</span><span class='period'>.</span><span class='id identifier rubyid_get_property'>get_property</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Juno.html" title="Juno (module)">Juno</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Properties.html" title="Juno::Properties (class)">Properties</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Properties.html#RECORD_NAMESPACE-constant" title="Juno::Properties::RECORD_NAMESPACE (constant)">RECORD_NAMESPACE</a></span></span><span class='comma'>,</span>
+                                           <span class='const'><span class='object_link'><a href="../Juno.html" title="Juno (module)">Juno</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="DefaultProperties.html" title="Juno::DefaultProperties (class)">DefaultProperties</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="DefaultProperties.html#RECORD_NAMESPACE-constant" title="Juno::DefaultProperties::RECORD_NAMESPACE (constant)">RECORD_NAMESPACE</a></span></span><span class='rparen'>)</span>
+  <span class='ivar'>@use_ssl</span> <span class='op'>=</span> <span class='ivar'>@config</span><span class='period'>.</span><span class='id identifier rubyid_get_property'>get_property</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Juno.html" title="Juno (module)">Juno</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Properties.html" title="Juno::Properties (class)">Properties</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Properties.html#USE_SSL-constant" title="Juno::Properties::USE_SSL (constant)">USE_SSL</a></span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../Juno.html" title="Juno (module)">Juno</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="DefaultProperties.html" title="Juno::DefaultProperties (class)">DefaultProperties</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="DefaultProperties.html#USE_SSL-constant" title="Juno::DefaultProperties::USE_SSL (constant)">USE_SSL</a></span></span><span class='rparen'>)</span>
+  <span class='ivar'>@use_payload_compression</span> <span class='op'>=</span> <span class='ivar'>@config</span><span class='period'>.</span><span class='id identifier rubyid_get_property'>get_property</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Juno.html" title="Juno (module)">Juno</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Properties.html" title="Juno::Properties (class)">Properties</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Properties.html#USE_PAYLOAD_COMPRESSION-constant" title="Juno::Properties::USE_PAYLOAD_COMPRESSION (constant)">USE_PAYLOAD_COMPRESSION</a></span></span><span class='comma'>,</span>
+                                                  <span class='const'><span class='object_link'><a href="../Juno.html" title="Juno (module)">Juno</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="DefaultProperties.html" title="Juno::DefaultProperties (class)">DefaultProperties</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="DefaultProperties.html#USE_PAYLOAD_COMPRESSION-constant" title="Juno::DefaultProperties::USE_PAYLOAD_COMPRESSION (constant)">USE_PAYLOAD_COMPRESSION</a></span></span><span class='rparen'>)</span>
+  <span class='ivar'>@operation_retry</span> <span class='op'>=</span> <span class='ivar'>@config</span><span class='period'>.</span><span class='id identifier rubyid_get_property'>get_property</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Juno.html" title="Juno (module)">Juno</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Properties.html" title="Juno::Properties (class)">Properties</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Properties.html#ENABLE_RETRY-constant" title="Juno::Properties::ENABLE_RETRY (constant)">ENABLE_RETRY</a></span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../Juno.html" title="Juno (module)">Juno</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="DefaultProperties.html" title="Juno::DefaultProperties (class)">DefaultProperties</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="DefaultProperties.html#OPERATION_RETRY-constant" title="Juno::DefaultProperties::OPERATION_RETRY (constant)">OPERATION_RETRY</a></span></span><span class='rparen'>)</span>
+  <span class='ivar'>@bypass_ltm</span> <span class='op'>=</span> <span class='ivar'>@config</span><span class='period'>.</span><span class='id identifier rubyid_get_property'>get_property</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Juno.html" title="Juno (module)">Juno</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Properties.html" title="Juno::Properties (class)">Properties</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Properties.html#BYPASS_LTM-constant" title="Juno::Properties::BYPASS_LTM (constant)">BYPASS_LTM</a></span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../Juno.html" title="Juno (module)">Juno</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="DefaultProperties.html" title="Juno::DefaultProperties (class)">DefaultProperties</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="DefaultProperties.html#BYPASS_LTM-constant" title="Juno::DefaultProperties::BYPASS_LTM (constant)">BYPASS_LTM</a></span></span><span class='rparen'>)</span>
+  <span class='ivar'>@reconnect_on_fail</span> <span class='op'>=</span> <span class='ivar'>@config</span><span class='period'>.</span><span class='id identifier rubyid_get_property'>get_property</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Juno.html" title="Juno (module)">Juno</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Properties.html" title="Juno::Properties (class)">Properties</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Properties.html#RECONNECT_ON_FAIL-constant" title="Juno::Properties::RECONNECT_ON_FAIL (constant)">RECONNECT_ON_FAIL</a></span></span><span class='comma'>,</span>
+                                            <span class='const'><span class='object_link'><a href="../Juno.html" title="Juno (module)">Juno</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="DefaultProperties.html" title="Juno::DefaultProperties (class)">DefaultProperties</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="DefaultProperties.html#RECONNECT_ON_FAIL-constant" title="Juno::DefaultProperties::RECONNECT_ON_FAIL (constant)">RECONNECT_ON_FAIL</a></span></span><span class='rparen'>)</span>
+  <span class='ivar'>@config_prefix</span> <span class='op'>=</span> <span class='ivar'>@config</span><span class='period'>.</span><span class='id identifier rubyid_get_property'>get_property</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Juno.html" title="Juno (module)">Juno</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Properties.html" title="Juno::Properties (class)">Properties</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Properties.html#CONFIG_PREFIX-constant" title="Juno::Properties::CONFIG_PREFIX (constant)">CONFIG_PREFIX</a></span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../Juno.html" title="Juno (module)">Juno</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="DefaultProperties.html" title="Juno::DefaultProperties (class)">DefaultProperties</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="DefaultProperties.html#CONFIG_PREFIX-constant" title="Juno::DefaultProperties::CONFIG_PREFIX (constant)">CONFIG_PREFIX</a></span></span><span class='rparen'>)</span>
+  <span class='kw'>nil</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="validate!-instance_method">
+  
+    #<strong>validate!</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/Config/config.rb', line 74</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_validate!'>validate!</span>
+  <span class='id identifier rubyid_missing_properties'>missing_properties</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='const'><span class='object_link'><a href="#REQUIRED_PROPERTIES-constant" title="Juno::Config::REQUIRED_PROPERTIES (constant)">REQUIRED_PROPERTIES</a></span></span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_property'>property</span><span class='op'>|</span>
+    <span class='id identifier rubyid_missing_properties'>missing_properties</span><span class='period'>.</span><span class='id identifier rubyid_push'>push</span><span class='lparen'>(</span><span class='id identifier rubyid_property'>property</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='id identifier rubyid_property'>property</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+  <span class='kw'>end</span>
+
+  <span class='kw'>if</span> <span class='ivar'>@use_ssl</span>
+    <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>ssl_cert_file</span><span class='words_sep'> </span><span class='tstring_content'>ssl_key_file</span><span class='tstring_end'>]</span></span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_property'>property</span><span class='op'>|</span>
+      <span class='id identifier rubyid_missing_properties'>missing_properties</span><span class='period'>.</span><span class='id identifier rubyid_push'>push</span><span class='lparen'>(</span><span class='id identifier rubyid_property'>property</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='id identifier rubyid_property'>property</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+
+  <span class='kw'>if</span> <span class='id identifier rubyid_missing_properties'>missing_properties</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span><span class='period'>.</span><span class='id identifier rubyid_positive?'>positive?</span>
+    <span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Please provide a value for the required property(s) </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_missing_properties'>missing_properties</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>, </span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'>.</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>end</span>
+
+  <span class='kw'>if</span> <span class='ivar'>@use_ssl</span>
+    <span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>SSL Certificate file not found</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>unless</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_exist?'>exist?</span><span class='lparen'>(</span><span class='ivar'>@ssl_cert_file</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>SSL Key file not found</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>unless</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_exist?'>exist?</span><span class='lparen'>(</span><span class='ivar'>@ssl_key_file</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+
+  <span class='kw'>nil</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+      <div id="footer">
+  Generated on Fri Aug 11 11:39:55 2023 by
+  <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.34 (ruby-3.0.0).
+</div>
+
+    </div>
+  </body>
+</html>

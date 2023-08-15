@@ -34,17 +34,17 @@ import (
 	"testing"
 	"time"
 
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 
-	"juno/cmd/proxy/config"
-	"juno/internal/cli"
-	"juno/pkg/client"
-	"juno/pkg/cluster"
-	"juno/pkg/etcd"
-	"juno/pkg/io"
-	"juno/pkg/util"
-	"juno/test/testutil/mock"
-	"juno/test/testutil/server"
+	"github.com/paypal/junodb/cmd/proxy/config"
+	"github.com/paypal/junodb/internal/cli"
+	"github.com/paypal/junodb/pkg/client"
+	"github.com/paypal/junodb/pkg/cluster"
+	"github.com/paypal/junodb/pkg/etcd"
+	"github.com/paypal/junodb/pkg/io"
+	"github.com/paypal/junodb/pkg/util"
+	"github.com/paypal/junodb/test/testutil/mock"
+	"github.com/paypal/junodb/test/testutil/server"
 )
 
 type KVMap map[string]string
@@ -227,7 +227,7 @@ func ApproxEqual(v1 uint32, v2 uint32, epsilon uint32) bool {
 	return (v2 - v1) <= epsilon
 }
 
-//This function has to be called right after getting RecordInfo
+// This function has to be called right after getting RecordInfo
 func VerifyRecordInfo(recInfo client.IContext, ver uint32, ttl uint32, creationTime uint32) error {
 	if recInfo == nil {
 		return fmt.Errorf("nil recInfo")
@@ -958,7 +958,7 @@ func LoadInitConfig(hostip string) {
 	time.Sleep(3 * time.Second)
 }
 
-//temporally create redist info
+// temporally create redist info
 func UpdateRedistConfig(t *testing.T, hostip string, connNo string, configFile string) {
 	var cmd string
 	var cmd1 string
@@ -989,7 +989,7 @@ func UpdateRedistConfig(t *testing.T, hostip string, connNo string, configFile s
 	time.Sleep(3 * time.Second)
 }
 
-//start redist
+// start redist
 func StartRedistConfig(t *testing.T, hostip string, markdown string) {
 	var localIp bool = false
 	var cmd string
@@ -1009,7 +1009,7 @@ func StartRedistConfig(t *testing.T, hostip string, markdown string) {
 	}
 }
 
-//start auto redistribution
+// start auto redistribution
 func StartAutoRedistConfig(t *testing.T, hostip string, markdown string) {
 	var localIp bool = false
 	var cmd string
@@ -1027,7 +1027,7 @@ func StartAutoRedistConfig(t *testing.T, hostip string, markdown string) {
 	exec.Command("bash", "-c", cmd).Output()
 }
 
-//temporally check forward finish, all zones are snapshot_finish
+// temporally check forward finish, all zones are snapshot_finish
 func FinishForwardCheck(t *testing.T, hostip string) {
 	var cmd string
 	if ResolveHostIp() != hostip {
@@ -1044,7 +1044,7 @@ func FinishForwardCheck(t *testing.T, hostip string) {
 	}
 }
 
-//resume the aborted redistribution
+// resume the aborted redistribution
 func ResumeAbortedReq(t *testing.T, hostip string) {
 	var cmd string
 	if ResolveHostIp() != hostip {
@@ -1058,7 +1058,7 @@ func ResumeAbortedReq(t *testing.T, hostip string) {
 	exec.Command("bash", "-c", cmd).Output()
 }
 
-//commit the new change
+// commit the new change
 func FinalizeConfig(t *testing.T, hostip string) {
 	var cmd string
 	if ResolveHostIp() != hostip {
@@ -1164,7 +1164,7 @@ func ReInitializeCluster(config server.ClusterConfig) (c *server.Cluster) {
 	return server.NewClusterWithConfig(&config)
 }
 
-//This definitely will be deleted as it's a temporally workaround for shutdown issue
+// This definitely will be deleted as it's a temporally workaround for shutdown issue
 func SSShutdown(hostip string, secondhost bool) {
 	var cmd string
 	if ResolveHostIp() != hostip {

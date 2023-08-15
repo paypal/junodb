@@ -26,8 +26,8 @@ import (
 	"math/rand"
 	"os"
 
-	"juno/third_party/forked/golang/glog"
-	"juno/third_party/forked/tecbot/gorocksdb"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/tecbot/gorocksdb"
 )
 
 ///TODO need to add validation
@@ -242,7 +242,7 @@ var defaultFlashConfig = Config{
 
 var DBConfig = defaultFlashConfig
 
-//Note: rocksdb C binding does not support getters for option types
+// Note: rocksdb C binding does not support getters for option types
 func NewRocksDBptions() *gorocksdb.Options {
 	options := gorocksdb.NewDefaultOptions()
 

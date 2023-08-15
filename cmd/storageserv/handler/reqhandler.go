@@ -20,12 +20,12 @@
 package handler
 
 import (
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 
-	"juno/cmd/storageserv/config"
-	"juno/cmd/storageserv/storage"
-	"juno/pkg/io"
-	"juno/pkg/util"
+	"github.com/paypal/junodb/cmd/storageserv/config"
+	"github.com/paypal/junodb/cmd/storageserv/storage"
+	"github.com/paypal/junodb/pkg/io"
+	"github.com/paypal/junodb/pkg/util"
 )
 
 var _ io.IRequestHandler = (*RequestHandler)(nil)

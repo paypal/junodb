@@ -26,11 +26,11 @@ import (
 	"os"
 	"time"
 
-	"juno/cmd/proxy/config"
-	"juno/pkg/cfg"
-	"juno/pkg/client"
-	"juno/pkg/cmd"
-	"juno/pkg/etcd"
+	"github.com/paypal/junodb/cmd/proxy/config"
+	"github.com/paypal/junodb/pkg/cfg"
+	"github.com/paypal/junodb/pkg/client"
+	"github.com/paypal/junodb/pkg/cmd"
+	"github.com/paypal/junodb/pkg/etcd"
 )
 
 const (

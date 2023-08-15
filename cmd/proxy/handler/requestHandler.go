@@ -22,15 +22,15 @@ package handler
 import (
 	"os"
 
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 
-	"juno/cmd/proxy/config"
-	"juno/cmd/proxy/proc"
-	"juno/cmd/proxy/stats"
-	"juno/pkg/io"
-	"juno/pkg/net/netutil"
-	"juno/pkg/proto"
-	"juno/pkg/service"
+	"github.com/paypal/junodb/cmd/proxy/config"
+	"github.com/paypal/junodb/cmd/proxy/proc"
+	"github.com/paypal/junodb/cmd/proxy/stats"
+	"github.com/paypal/junodb/pkg/io"
+	"github.com/paypal/junodb/pkg/net/netutil"
+	"github.com/paypal/junodb/pkg/proto"
+	"github.com/paypal/junodb/pkg/service"
 )
 
 var _ io.IRequestHandler = (*RequestHandler)(nil)

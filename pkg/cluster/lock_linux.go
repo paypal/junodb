@@ -20,8 +20,9 @@
 package cluster
 
 import (
-	"juno/third_party/forked/golang/glog"
 	"syscall"
+
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 )
 
 func lockFile(fd int, mode int) bool {

@@ -18,22 +18,24 @@
 #  limitations under the License.
 #  
  
+set -eo pipefail
+cd "$(dirname "$0")"
 
 export CGO_CFLAGS="-I/usr/local/include"
 export CGO_LDFLAGS="-L/usr/local/lib -lrocksdb -lstdc++ -lm -lrt -lpthread -ldl"
 
 juno_executables="\
-        juno/cmd/proxy \
-        juno/cmd/storageserv \
-        juno/cmd/clustermgr/clusterctl \
-        juno/cmd/dbscanserv \
-        juno/cmd/dbscanserv/junoctl \
-        juno/cmd/tools/junostats \
-        juno/cmd/tools/junocfg \
-        juno/cmd/tools/junocli \
-        juno/test/drv/junoload \
-        juno/test/drv/bulkload \
-        juno/cmd/storageserv/storage/db/dbcopy \
+        github.com/paypal/junodb/cmd/proxy \
+        github.com/paypal/junodb/cmd/storageserv \
+        github.com/paypal/junodb/cmd/clustermgr/clusterctl \
+        github.com/paypal/junodb/cmd/dbscanserv \
+        github.com/paypal/junodb/cmd/dbscanserv/junoctl \
+        github.com/paypal/junodb/cmd/tools/junostats \
+        github.com/paypal/junodb/cmd/tools/junocfg \
+        github.com/paypal/junodb/cmd/tools/junocli \
+        github.com/paypal/junodb/test/drv/junoload \
+        github.com/paypal/junodb/test/drv/bulkload \
+        github.com/paypal/junodb/cmd/storageserv/storage/db/dbcopy \
         "
 
 export PATH=/usr/local/go/bin:$PATH

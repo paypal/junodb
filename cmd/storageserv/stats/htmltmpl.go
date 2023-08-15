@@ -23,7 +23,7 @@ import (
 	"fmt"
 	"html/template"
 
-	"juno/pkg/stats"
+	"github.com/paypal/junodb/pkg/stats"
 )
 
 var (

@@ -22,8 +22,9 @@ package db
 import (
 	"bytes"
 	"fmt"
-	"juno/pkg/shard"
 	"testing"
+
+	"github.com/paypal/junodb/pkg/shard"
 )
 
 func TestNoMicroShard(t *testing.T) {

@@ -23,7 +23,7 @@ import (
 	"fmt"
 	"sort"
 
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 )
 
 // Node class represent a logic node

@@ -24,11 +24,11 @@ import (
 	"sync/atomic"
 	"time"
 
-	"juno/third_party/forked/golang/glog"
-	"juno/third_party/forked/tecbot/gorocksdb"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/tecbot/gorocksdb"
 
-	"juno/cmd/dbscanserv/prime"
-	"juno/cmd/storageserv/storage/db"
+	"github.com/paypal/junodb/cmd/dbscanserv/prime"
+	"github.com/paypal/junodb/cmd/storageserv/storage/db"
 )
 
 // Map from zoneid, shardid to Scanner

@@ -23,10 +23,10 @@ import (
 	"io"
 	"time"
 
-	"juno/third_party/forked/tecbot/gorocksdb"
+	"github.com/paypal/junodb/third_party/forked/tecbot/gorocksdb"
 
-	"juno/cmd/storageserv/redist"
-	"juno/pkg/shard"
+	"github.com/paypal/junodb/cmd/storageserv/redist"
+	"github.com/paypal/junodb/pkg/shard"
 )
 
 type IDBSharding interface {

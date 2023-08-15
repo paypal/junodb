@@ -20,9 +20,9 @@
 package cli
 
 import (
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 
-	"juno/pkg/proto"
+	"github.com/paypal/junodb/pkg/proto"
 )
 
 //GetResponse() != nil and GetError() != nil are mutually exclusive

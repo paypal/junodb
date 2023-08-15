@@ -17,61 +17,66 @@
 //  limitations under the License.
 //
 
+// client is a package that handles various error situations in the Juno application.
 package client
 
 import (
-	"juno/internal/cli"
-	"juno/pkg/proto"
+	"github.com/paypal/junodb/internal/cli"
+	"github.com/paypal/junodb/pkg/proto"
 )
 
+// Error variables for different scenarios in the application.
 var (
-	ErrNoKey              error
-	ErrUniqueKeyViolation error
-	ErrBadParam           error
-	ErrConditionViolation error
+	ErrNoKey              error // Error when no key is found.
+	ErrUniqueKeyViolation error // Error when there is a violation of a unique key.
+	ErrBadParam           error // Error when a bad parameter is provided.
+	ErrConditionViolation error // Error when a condition violation occurs.
 
-	ErrBadMsg           error
-	ErrNoStorage        error
-	ErrRecordLocked     error
-	ErrTTLExtendFailure error
-	ErrBusy             error
+	ErrBadMsg           error // Error when a bad message is encountered.
+	ErrNoStorage        error // Error when no storage is available.
+	ErrRecordLocked     error // Error when a record is locked.
+	ErrTTLExtendFailure error // Error when TTL extension fails.
+	ErrBusy             error // Error when the server is busy.
 
-	ErrWriteFailure   error
-	ErrInternal       error
-	ErrOpNotSupported error
+	ErrWriteFailure   error // Error when a write operation fails.
+	ErrInternal       error // Error when an internal problem occurs.
+	ErrOpNotSupported error // Error when the operation is not supported.
 )
 
+// errorMapping is a map between different operation status and their corresponding errors.
 var errorMapping map[proto.OpStatus]error
 
+// init function initializes the error variables and the errorMapping map.
 func init() {
-	ErrNoKey = &cli.Error{"no key"}
-	ErrUniqueKeyViolation = &cli.Error{"unique key violation"}
-	ErrBadParam = &cli.Error{"bad parameter"}
-	ErrConditionViolation = &cli.Error{"condition violation"} //version too old
-	ErrTTLExtendFailure = &cli.Error{"fail to extend TTL"}
+	ErrNoKey = &cli.Error{"no key"}                            // Error when the key does not exist.
+	ErrUniqueKeyViolation = &cli.Error{"unique key violation"} // Error when unique key constraint is violated.
+	ErrBadParam = &cli.Error{"bad parameter"}                  // Error when a bad parameter is passed.
+	ErrConditionViolation = &cli.Error{"condition violation"}  // Error when there is a condition violation.
+	ErrTTLExtendFailure = &cli.Error{"fail to extend TTL"}     // Error when TTL extension fails.
 
-	ErrBadMsg = &cli.RetryableError{"bad message"}
-	ErrNoStorage = &cli.RetryableError{"no storage"}
-	ErrRecordLocked = &cli.RetryableError{"record locked"}
-	ErrBusy = &cli.RetryableError{"server busy"}
+	ErrBadMsg = &cli.RetryableError{"bad message"}         // Error when an inappropriate message is received.
+	ErrNoStorage = &cli.RetryableError{"no storage"}       // Error when there is no storage available.
+	ErrRecordLocked = &cli.RetryableError{"record locked"} // Error when a record is locked.
+	ErrBusy = &cli.RetryableError{"server busy"}           // Error when the server is busy.
 
-	ErrWriteFailure = &cli.Error{"write failure"}
-	ErrInternal = &cli.Error{"internal error"}
-	ErrOpNotSupported = &cli.Error{"Op not supported"}
+	ErrWriteFailure = &cli.Error{"write failure"}      // Error when a write operation fails.
+	ErrInternal = &cli.Error{"internal error"}         // Error when an internal error occurs.
+	ErrOpNotSupported = &cli.Error{"Op not supported"} // Error when the operation is not supported.
 
+	// Mapping between the operation status and the corresponding errors.
 	errorMapping = map[proto.OpStatus]error{
-		proto.OpStatusNoError:            nil,
-		proto.OpStatusInconsistent:       nil,
-		proto.OpStatusBadMsg:             ErrBadMsg,
-		proto.OpStatusNoKey:              ErrNoKey,
-		proto.OpStatusDupKey:             ErrUniqueKeyViolation,
-		proto.OpStatusNoStorageServer:    ErrNoStorage,
-		proto.OpStatusBadParam:           ErrBadParam,
-		proto.OpStatusRecordLocked:       ErrRecordLocked,
-		proto.OpStatusVersionConflict:    ErrConditionViolation,
-		proto.OpStatusSSReadTTLExtendErr: ErrTTLExtendFailure,
-		proto.OpStatusCommitFailure:      ErrWriteFailure,
-		proto.OpStatusBusy:               ErrBusy,
-		proto.OpStatusNotSupported:       ErrOpNotSupported,
+		proto.OpStatusNoError:            nil,                   // Status when there is no error.
+		proto.OpStatusInconsistent:       nil,                   // Status when there is an inconsistency.
+		proto.OpStatusBadMsg:             ErrBadMsg,             // Status when a bad message is received.
+		proto.OpStatusNoKey:              ErrNoKey,              // Status when the key is not present.
+		proto.OpStatusDupKey:             ErrUniqueKeyViolation, // Status when unique key constraint is violated.
+		proto.OpStatusNoStorageServer:    ErrNoStorage,          // Status when there is no storage server available.
+		proto.OpStatusBadParam:           ErrBadParam,           // Status when a bad parameter is passed.
+		proto.OpStatusRecordLocked:       ErrRecordLocked,       // Status when a record is locked.
+		proto.OpStatusVersionConflict:    ErrConditionViolation, // Status when there is a version conflict.
+		proto.OpStatusSSReadTTLExtendErr: ErrTTLExtendFailure,   // Status when TTL extension fails.
+		proto.OpStatusCommitFailure:      ErrWriteFailure,       // Status when a commit operation fails.
+		proto.OpStatusBusy:               ErrBusy,               // Status when the server is busy.
+		proto.OpStatusNotSupported:       ErrOpNotSupported,     // Status when the operation is not supported.
 	}
 }

@@ -1,0 +1,95 @@
+PATH
+  remote: .
+  specs:
+    juno (1.0.0)
+      bindata (~> 2.4.15)
+      concurrent-ruby (~> 1.2.2)
+      configatron (~> 4.5.1)
+      eventmachine (~> 1.2.7)
+      json (~> 2.5.1)
+      logger (~> 1.2.7)
+      openssl (~> 2.2.0)
+      snappy (~> 0.3.0)
+      uri (~> 0.12.2)
+      uuidtools (~> 2.2.0)
+      yaml (~> 0.1.1)
+
+GEM
+  remote: http://rubygems.org/
+  specs:
+    ast (2.4.2)
+    bindata (2.4.15)
+    concurrent-ruby (1.2.2)
+    configatron (4.5.1)
+    diff-lcs (1.5.0)
+    eventmachine (1.2.7)
+    ffi (1.15.5)
+    get_process_mem (0.2.7)
+      ffi (~> 1.0)
+    ipaddr (1.2.5)
+    json (2.5.1)
+    language_server-protocol (3.17.0.3)
+    logger (1.2.8.1)
+    openssl (2.2.3)
+      ipaddr
+    parallel (1.23.0)
+    parser (3.2.2.3)
+      ast (~> 2.4.1)
+      racc
+    racc (1.7.1)
+    rainbow (3.1.1)
+    rake (13.0.6)
+    regexp_parser (2.8.1)
+    rexml (3.2.6)
+    rspec (3.12.0)
+      rspec-core (~> 3.12.0)
+      rspec-expectations (~> 3.12.0)
+      rspec-mocks (~> 3.12.0)
+    rspec-core (3.12.2)
+      rspec-support (~> 3.12.0)
+    rspec-expectations (3.12.3)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.12.0)
+    rspec-html-formatter (0.0.1)
+    rspec-mocks (3.12.6)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.12.0)
+    rspec-support (3.12.1)
+    rubocop (1.55.0)
+      json (~> 2.3)
+      language_server-protocol (>= 3.17.0)
+      parallel (~> 1.10)
+      parser (>= 3.2.2.3)
+      rainbow (>= 2.2.2, < 4.0)
+      regexp_parser (>= 1.8, < 3.0)
+      rexml (>= 3.2.5, < 4.0)
+      rubocop-ast (>= 1.28.1, < 2.0)
+      ruby-progressbar (~> 1.7)
+      unicode-display_width (>= 2.4.0, < 3.0)
+    rubocop-ast (1.29.0)
+      parser (>= 3.2.1.0)
+    ruby-prof (1.6.3)
+    ruby-progressbar (1.13.0)
+    snappy (0.3.0)
+    unicode-display_width (2.4.2)
+    uri (0.12.2)
+    uuidtools (2.2.0)
+    yaml (0.1.1)
+    yard (0.9.34)
+
+PLATFORMS
+  arm64-darwin-21
+
+DEPENDENCIES
+  bundler
+  get_process_mem
+  juno!
+  rake
+  rspec
+  rspec-html-formatter
+  rubocop
+  ruby-prof
+  yard
+
+BUNDLED WITH
+   2.2.3

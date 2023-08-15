@@ -23,10 +23,10 @@ import (
 	"bytes"
 	"io"
 
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 
-	"juno/pkg/debug"
-	"juno/pkg/util"
+	"github.com/paypal/junodb/pkg/debug"
+	"github.com/paypal/junodb/pkg/util"
 )
 
 type RawMessage struct {
@@ -95,9 +95,7 @@ func (m *RawMessage) allocateBuffer(size int) {
 	m.body = m.buf.Bytes()
 }
 
-//
 // Note: read timeout is set at conn level
-//
 func (msg *RawMessage) Read(r io.Reader) (n int, err error) {
 
 	var hBuffer [kMessageHeaderSize]byte
@@ -152,9 +150,7 @@ func (msg *RawMessage) ReadWithHeader(header []byte, r io.Reader) (n int, err er
 	return
 }
 
-//
 // Note: this api is not thread safe
-//
 func (m *RawMessage) Write(w io.Writer) (n int, err error) {
 	var mheader [kMessageHeaderSize]byte
 	raw := mheader[:]

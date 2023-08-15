@@ -24,9 +24,9 @@ import (
 	"math"
 	"sync"
 
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 
-	"juno/pkg/cfg"
+	"github.com/paypal/junodb/pkg/cfg"
 )
 
 var (

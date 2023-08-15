@@ -23,7 +23,7 @@ import (
 	"bytes"
 	"testing"
 
-	"juno/pkg/util"
+	"github.com/paypal/junodb/pkg/util"
 )
 
 func testRequestResponse(t *testing.T, rawRequest []byte, rawResponse []byte) {

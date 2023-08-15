@@ -24,12 +24,12 @@ import (
 	"runtime"
 	"time"
 
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 
-	"juno/internal/cli"
-	"juno/pkg/io"
-	"juno/pkg/proto"
-	"juno/pkg/sec"
+	"github.com/paypal/junodb/internal/cli"
+	"github.com/paypal/junodb/pkg/io"
+	"github.com/paypal/junodb/pkg/proto"
+	"github.com/paypal/junodb/pkg/sec"
 )
 
 var (

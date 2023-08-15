@@ -23,9 +23,9 @@ import (
 	"math"
 	"time"
 
-	"juno/pkg/io"
-	"juno/pkg/service"
-	"juno/pkg/util"
+	"github.com/paypal/junodb/pkg/io"
+	"github.com/paypal/junodb/pkg/service"
+	"github.com/paypal/junodb/pkg/util"
 )
 
 type SSConfig struct {

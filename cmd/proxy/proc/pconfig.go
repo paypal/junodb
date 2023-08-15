@@ -22,12 +22,12 @@ package proc
 import (
 	"time"
 
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 
-	"juno/cmd/proxy/config"
-	"juno/pkg/cfg"
-	"juno/pkg/io"
-	"juno/pkg/proto"
+	"github.com/paypal/junodb/cmd/proxy/config"
+	"github.com/paypal/junodb/pkg/cfg"
+	"github.com/paypal/junodb/pkg/io"
+	"github.com/paypal/junodb/pkg/proto"
 )
 
 var (

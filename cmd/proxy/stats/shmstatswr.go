@@ -25,9 +25,9 @@ import (
 	"time"
 	"unsafe"
 
-	"juno/cmd/proxy/stats/shmstats"
-	"juno/pkg/logging/cal"
-	"juno/pkg/stats"
+	"github.com/paypal/junodb/cmd/proxy/stats/shmstats"
+	"github.com/paypal/junodb/pkg/logging/cal"
+	"github.com/paypal/junodb/pkg/stats"
 )
 
 var (

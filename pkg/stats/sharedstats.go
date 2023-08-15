@@ -23,9 +23,9 @@ import (
 	"fmt"
 	"os"
 
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 
-	"juno/pkg/shm"
+	"github.com/paypal/junodb/pkg/shm"
 )
 
 type (

@@ -22,7 +22,7 @@ package io
 import (
 	"time"
 
-	"juno/pkg/util"
+	"github.com/paypal/junodb/pkg/util"
 )
 
 var (
