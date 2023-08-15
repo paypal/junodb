@@ -24,7 +24,9 @@ import (
 	"fmt"
 	"math/rand"
 	"net/http"
+	_ "net/http/pprof"
 	"os"
+	"strconv"
 	"strings"
 	"sync"
 	"time"
@@ -37,6 +39,7 @@ import (
 	"github.com/paypal/junodb/pkg/cmd"
 	"github.com/paypal/junodb/pkg/logging/cal"
 	"github.com/paypal/junodb/pkg/sec"
+  "github.com/paypal/junodb/pkg/util"
 	"github.com/paypal/junodb/pkg/version"
 )
 
@@ -75,6 +78,8 @@ type (
 		logLevel        string
 		isVariable      bool
 		disableGetTTL   bool
+		keys            string
+		randomize       bool
 	}
 )
 
@@ -96,6 +101,7 @@ const (
 
 func (d *SyncTestDriver) setDefaultConfig() {
 	d.config.SetDefault()
+
 	d.config.Sec = sec.DefaultConfig
 	d.config.Cal.Default()
 	d.config.Cal.Poolname = "junoload"
@@ -112,6 +118,9 @@ func (d *SyncTestDriver) setDefaultConfig() {
 	d.config.StatOutputRate = kDefaultStatOutputRate
 	d.config.isVariable = false
 	d.config.disableGetTTL = false
+	d.config.sKey = -1
+	d.config.eKey = -1
+	d.config.randomize = false
 }
 
 func (d *SyncTestDriver) Init(name string, desc string) {
@@ -141,6 +150,8 @@ func (d *SyncTestDriver) Init(name string, desc string) {
 	d.StringOption(&d.cmdOpts.dbpath, "dbpath", "", "to display rocksdb stats")
 	d.StringOption(&d.cmdOpts.logLevel, "log-level", "info", "specify log level")
 	d.BoolOption(&d.cmdOpts.disableGetTTL, "disableGetTTL", false, "not use random ttl for get operation")
+	d.StringOption(&d.cmdOpts.keys, "keys", "", "key strange, separated with ,")
+	d.BoolOption(&d.cmdOpts.randomize, "r|randomize", false, "randomize, get/update/delete")
 
 	t := &SyncTestDriver{}
 	t.setDefaultConfig()
@@ -160,7 +171,28 @@ func (d *SyncTestDriver) Init(name string, desc string) {
 	d.AddExample(name+" -s 127.0.0.1:8080 -ssl",
 		"\trun the driver with SSL")
 	d.AddExample(name+" -c config.toml", "\trun the driver with options specified in config.toml")
+}
 
+func parseKeys(key string) (start int, last int) {
+	var err error
+	list := strings.Split(key, ",")
+	start, err = strconv.Atoi(list[0])
+	if err != nil {
+		glog.Exitf("%s", err)
+	}
+
+	if len(list) < 2 {
+		last = start + 1
+	} else {
+		last, err = strconv.Atoi(list[1])
+		if err != nil {
+			glog.Exitf("%s", err)
+		}
+	}
+	if start < 0 || last < 0 {
+		glog.Exitf("Negative range params are not allowed.")
+	}
+	return
 }
 
 func (d *SyncTestDriver) Parse(args []string) (err error) {
@@ -235,6 +267,14 @@ func (d *SyncTestDriver) Parse(args []string) (err error) {
 		d.config.HttpMonAddr = ":" + d.config.HttpMonAddr
 	}
 
+	if d.cmdOpts.keys != "" {
+		start, end := parseKeys(d.cmdOpts.keys)
+		d.config.sKey = int64(start)
+		d.config.eKey = int64(end)
+	}
+
+	d.config.randomize = d.cmdOpts.randomize
+
 	d.config.Cal.Default()
 
 	if d.config.Cal.Enabled {
@@ -303,6 +343,10 @@ func (d *SyncTestDriver) Exec() {
 	var wg sync.WaitGroup
 	chDone := make(chan bool)
 
+	var numRunningExecutors util.AtomicCounter
+	numRunningExecutors.Reset()
+	numRunningExecutors.Add(int32(d.config.NumExecutor))
+
 	if d.config.NumExecutor > 0 {
 		wg.Add(1)
 		go func() {
@@ -322,9 +366,14 @@ func (d *SyncTestDriver) Exec() {
 				case <-ticker.C:
 					d.movingStats.PrettyPrint(os.Stdout)
 					d.movingStats.Reset()
+					if numRunningExecutors.Get() == 0 {
+						timer.Stop()
+						ticker.Stop()
+						close(chDone)
+						break loop
+					}
 				}
 			}
-
 		}()
 	} else {
 		glog.Errorf("number of executor specified is zero")
@@ -333,15 +382,17 @@ func (d *SyncTestDriver) Exec() {
 	d.tmStart = time.Now()
 	d.stats.Init()
 	d.movingStats.Init()
-	for i := 0; i < d.config.NumExecutor; i++ {
-		size := d.cmdOpts.numKeys / 2
-		num := size / d.config.NumExecutor
-		offGet := i*num + size
+	var start int = -1
+	var end int = -1
 
-		if size > MaxDeletes {
-			size = MaxDeletes
+	for i := 0; i < d.config.NumExecutor; i++ {
+		if d.config.sKey >= 0 && d.config.eKey > d.config.sKey {
+			range_size := (d.config.eKey - d.config.sKey + int64(d.config.NumExecutor-1)) / int64(d.config.NumExecutor)
+
+			start = i*int(range_size) + int(d.config.sKey)
+			end = start + int(range_size) - 1 //pad
 		}
-		offDel := i * (size / d.config.NumExecutor)
+		//fmt.Printf("s=%d, e=%d\n", start, end)
 		cli, err := client.New(d.config.Config)
 		if err != nil {
 			glog.Error(err)
@@ -350,15 +401,18 @@ func (d *SyncTestDriver) Exec() {
 		eng := &TestEngine{
 			rdgen: d.randgen,
 			recStore: RecordStore{
-				numKeys:   num,
-				offsetDel: offDel,
-				offsetGet: offGet},
+				nextKey:   int(start),
+				sKey:      int(start),
+				eKey:      int(end),
+				randomize: d.config.randomize,
+			},
 			reqSequence: d.reqSequence,
 			//			chDone:      chDone,
 			client:          cli,
 			stats:           &d.stats,
 			movingStats:     &d.movingStats,
 			numReqPerSecond: d.config.NumReqPerSecond,
+			numRunningExec:  &numRunningExecutors,
 		}
 		eng.Init()
 		wg.Add(1)
