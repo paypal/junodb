@@ -1,0 +1,1536 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Class: Juno::Net::IOProcessor
+  
+    &mdash; Documentation by YARD 0.9.34
+  
+</title>
+
+  <link rel="stylesheet" href="../../css/style.css" type="text/css" />
+
+  <link rel="stylesheet" href="../../css/common.css" type="text/css" />
+
+<script type="text/javascript">
+  pathId = "Juno::Net::IOProcessor";
+  relpath = '../../';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="../../class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="../../_index.html">Index (I)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../../Juno.html" title="Juno (module)">Juno</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../Net.html" title="Juno::Net (module)">Net</a></span></span>
+     &raquo; 
+    <span class="title">IOProcessor</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../../class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><h1>Class: Juno::Net::IOProcessor
+  
+  
+  
+</h1>
+<div class="box_info">
+  
+  <dl>
+    <dt>Inherits:</dt>
+    <dd>
+      <span class="inheritName"><span class='object_link'><a href="BaseProcessor.html" title="Juno::Net::BaseProcessor (class)">BaseProcessor</a></span></span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next"><span class='object_link'><a href="BaseProcessor.html" title="Juno::Net::BaseProcessor (class)">BaseProcessor</a></span></li>
+          
+            <li class="next">Juno::Net::IOProcessor</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+    </dd>
+  </dl>
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>lib/juno/Net/io_processor.rb</dd>
+  </dl>
+  
+</div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    
+<p>Module to handle connections to server, reading/writing requests from request queue</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+  
+    <h2>
+      Constant Summary
+      <small><a href="#" class="constants_summary_toggle">collapse</a></small>
+    </h2>
+
+    <dl class="constants">
+      
+        <dt id="INITIAL_BYPASSLTM_RETRY_INTERVAL-constant" class="">INITIAL_BYPASSLTM_RETRY_INTERVAL =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>337_500</span></pre></dd>
+      
+        <dt id="MAX_BYPASSLTM_RETRY_INTERVAL-constant" class="">MAX_BYPASSLTM_RETRY_INTERVAL =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>86_400_000</span></pre></dd>
+      
+        <dt id="INIT_WAIT_TIME-constant" class="">INIT_WAIT_TIME =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>200</span></pre></dd>
+      
+        <dt id="MAX_WAIT_TIME-constant" class="">MAX_WAIT_TIME =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>60_000</span></pre></dd>
+      
+        <dt id="counter-classvariable" class="">@@counter =
+          <div class="docstring">
+  <div class="discussion">
+    
+<p>class variable to count messages sent using send_data</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='const'>Concurrent</span><span class='op'>::</span><span class='const'>AtomicFixnum</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='int'>0</span><span class='rparen'>)</span></pre></dd>
+      
+    </dl>
+  
+
+
+
+
+
+
+
+  
+    <h2>
+      Class Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#send_count-class_method" title="send_count (class method)">.<strong>send_count</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+    </ul>
+  
+    <h2>
+      Instance Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#bypass_ltm_disabled%3F-instance_method" title="#bypass_ltm_disabled? (instance method)">#<strong>bypass_ltm_disabled?</strong>  &#x21d2; Boolean </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#connection_lifetime-instance_method" title="#connection_lifetime (instance method)">#<strong>connection_lifetime</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#disconnect_channel-instance_method" title="#disconnect_channel (instance method)">#<strong>disconnect_channel</strong>(channel)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#host-instance_method" title="#host (instance method)">#<strong>host</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(request_queue, opaque_resp_queue_map)  &#x21d2; IOProcessor </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>A new instance of IOProcessor.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initiate_bypass_ltm-instance_method" title="#initiate_bypass_ltm (instance method)">#<strong>initiate_bypass_ltm</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#juno_connect-instance_method" title="#juno_connect (instance method)">#<strong>juno_connect</strong>(recycle = false)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Method to handle connections creation, re-attempts on failure, initiates connection refresh and connection to Proxy.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#port-instance_method" title="#port (instance method)">#<strong>port</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#put_response-instance_method" title="#put_response (instance method)">#<strong>put_response</strong>(operation_message)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#reset_connections-instance_method" title="#reset_connections (instance method)">#<strong>reset_connections</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#run-instance_method" title="#run (instance method)">#<strong>run</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Event loop to continously check for requests in @request_queue.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#send_ping_message-instance_method" title="#send_ping_message (instance method)">#<strong>send_ping_message</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Sends ping message to LoadBalancer to get ProxyIP.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#set_recycle_timer-instance_method" title="#set_recycle_timer (instance method)">#<strong>set_recycle_timer</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#stop-instance_method" title="#stop (instance method)">#<strong>stop</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#use_ltm%3F-instance_method" title="#use_ltm? (instance method)">#<strong>use_ltm?</strong>  &#x21d2; Boolean </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#use_ssl%3F-instance_method" title="#use_ssl? (instance method)">#<strong>use_ssl?</strong>  &#x21d2; Boolean </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods inherited from <span class='object_link'><a href="BaseProcessor.html" title="Juno::Net::BaseProcessor (class)">BaseProcessor</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="BaseProcessor.html#clear_ping_queue-instance_method" title="Juno::Net::BaseProcessor#clear_ping_queue (method)">#clear_ping_queue</a></span>, <span class='object_link'><a href="BaseProcessor.html#ping_ip-instance_method" title="Juno::Net::BaseProcessor#ping_ip (method)">#ping_ip</a></span>, <span class='object_link'><a href="BaseProcessor.html#ping_ip=-instance_method" title="Juno::Net::BaseProcessor#ping_ip= (method)">#ping_ip=</a></span></p>
+<div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <h3 class="signature first" id="initialize-instance_method">
+  
+    #<strong>initialize</strong>(request_queue, opaque_resp_queue_map)  &#x21d2; <tt><span class='object_link'><a href="" title="Juno::Net::IOProcessor (class)">IOProcessor</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns a new instance of IOProcessor.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>request_queue</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="RequestQueue.html" title="Juno::Net::RequestQueue (class)">Juno::Net::RequestQueue</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>opaque_resp_queue_map</span>
+      
+      
+        <span class='type'>(<tt>Concurrent::Map</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><ul><li>
+<p>map containing opaque as key and value as Response queue corresponding to opaque</p>
+</li></ul>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/Net/io_processor.rb', line 20</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_request_queue'>request_queue</span><span class='comma'>,</span> <span class='id identifier rubyid_opaque_resp_queue_map'>opaque_resp_queue_map</span><span class='rparen'>)</span>
+  <span class='kw'>super</span><span class='lparen'>(</span><span class='rparen'>)</span>
+  <span class='ivar'>@PROG_NAME</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span>
+  <span class='ivar'>@LOGGER</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../Juno.html" title="Juno (module)">Juno</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Logger.html" title="Juno::Logger (class)">Logger</a></span></span><span class='period'>.</span><span class='id identifier rubyid_instance'><span class='object_link'><a href="../Logger.html#instance-class_method" title="Juno::Logger.instance (method)">instance</a></span></span>
+  <span class='ivar'>@stop</span> <span class='op'>=</span> <span class='kw'>false</span>
+  <span class='ivar'>@request_queue</span> <span class='op'>=</span> <span class='id identifier rubyid_request_queue'>request_queue</span>
+  <span class='ivar'>@opaque_resp_queue_map</span> <span class='op'>=</span> <span class='id identifier rubyid_opaque_resp_queue_map'>opaque_resp_queue_map</span>
+  <span class='ivar'>@ctx</span> <span class='op'>=</span> <span class='kw'>nil</span> <span class='comment'>## changed
+</span>  <span class='ivar'>@handshake_failed_attempts</span> <span class='op'>=</span> <span class='int'>0</span>
+  <span class='ivar'>@reconnect_wait_time</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="#INIT_WAIT_TIME-constant" title="Juno::Net::IOProcessor::INIT_WAIT_TIME (constant)">INIT_WAIT_TIME</a></span></span>
+  <span class='ivar'>@shift</span> <span class='op'>=</span> <span class='int'>5</span> <span class='comment'># seconds
+</span>  <span class='ivar'>@next_bypass_ltm_check_time</span> <span class='op'>=</span> <span class='const'>Time</span><span class='period'>.</span><span class='id identifier rubyid_now'>now</span>
+  <span class='ivar'>@bypass_ltm_retry_interval</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="#INITIAL_BYPASSLTM_RETRY_INTERVAL-constant" title="Juno::Net::IOProcessor::INITIAL_BYPASSLTM_RETRY_INTERVAL (constant)">INITIAL_BYPASSLTM_RETRY_INTERVAL</a></span></span>
+  <span class='comment'># @config = config
+</span>  <span class='ivar'>@channel</span> <span class='op'>=</span> <span class='kw'>nil</span>
+  <span class='ivar'>@next_reconnect_due</span> <span class='op'>=</span> <span class='const'>Float</span><span class='op'>::</span><span class='const'>INFINITY</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+
+  <div id="class_method_details" class="method_details_list">
+    <h2>Class Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="send_count-class_method">
+  
+    .<strong>send_count</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+14
+15
+16</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/Net/io_processor.rb', line 14</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_send_count'>send_count</span>
+  <span class='cvar'>@@counter</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="bypass_ltm_disabled?-instance_method">
+  
+    #<strong>bypass_ltm_disabled?</strong>  &#x21d2; <tt>Boolean</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+202
+203
+204
+205
+206
+207
+208</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/Net/io_processor.rb', line 202</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_bypass_ltm_disabled?'>bypass_ltm_disabled?</span>
+  <span class='kw'>if</span> <span class='const'>Time</span><span class='period'>.</span><span class='id identifier rubyid_now'>now</span> <span class='op'>&gt;</span> <span class='ivar'>@next_bypass_ltm_check_time</span> <span class='op'>&amp;&amp;</span> <span class='ivar'>@bypass_ltm_retry_interval</span> <span class='op'>&lt;</span> <span class='const'><span class='object_link'><a href="#MAX_BYPASSLTM_RETRY_INTERVAL-constant" title="Juno::Net::IOProcessor::MAX_BYPASSLTM_RETRY_INTERVAL (constant)">MAX_BYPASSLTM_RETRY_INTERVAL</a></span></span>
+    <span class='kw'>return</span> <span class='kw'>false</span>
+  <span class='kw'>end</span>
+
+  <span class='kw'>true</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="connection_lifetime-instance_method">
+  
+    #<strong>connection_lifetime</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+38
+39
+40</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/Net/io_processor.rb', line 38</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_connection_lifetime'>connection_lifetime</span>
+  <span class='const'><span class='object_link'><a href="../../Juno.html" title="Juno (module)">Juno</a></span></span><span class='period'>.</span><span class='id identifier rubyid_juno_config'><span class='object_link'><a href="../../Juno.html#juno_config-class_method" title="Juno.juno_config (method)">juno_config</a></span></span><span class='period'>.</span><span class='id identifier rubyid_connection_lifetime'>connection_lifetime</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="disconnect_channel-instance_method">
+  
+    #<strong>disconnect_channel</strong>(channel)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+63
+64
+65
+66
+67</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/Net/io_processor.rb', line 63</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_disconnect_channel'>disconnect_channel</span><span class='lparen'>(</span><span class='id identifier rubyid_channel'>channel</span><span class='rparen'>)</span>
+  <span class='const'>EventMachine</span><span class='op'>::</span><span class='const'>Timer</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='int'>2</span> <span class='op'>*</span> <span class='const'><span class='object_link'><a href="../../Juno.html" title="Juno (module)">Juno</a></span></span><span class='period'>.</span><span class='id identifier rubyid_juno_config'><span class='object_link'><a href="../../Juno.html#juno_config-class_method" title="Juno.juno_config (method)">juno_config</a></span></span><span class='period'>.</span><span class='id identifier rubyid_max_response_timeout'>max_response_timeout</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span> <span class='op'>/</span> <span class='int'>1000</span><span class='rparen'>)</span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_channel'>channel</span><span class='op'>&amp;.</span><span class='id identifier rubyid_close_connection_after_writing'>close_connection_after_writing</span> <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_channel'>channel</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_channel'>channel</span><span class='period'>.</span><span class='id identifier rubyid_is_connected?'>is_connected?</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="host-instance_method">
+  
+    #<strong>host</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+190
+191
+192</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/Net/io_processor.rb', line 190</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_host'>host</span>
+  <span class='const'><span class='object_link'><a href="../../Juno.html" title="Juno (module)">Juno</a></span></span><span class='period'>.</span><span class='id identifier rubyid_juno_config'><span class='object_link'><a href="../../Juno.html#juno_config-class_method" title="Juno.juno_config (method)">juno_config</a></span></span><span class='period'>.</span><span class='id identifier rubyid_host'>host</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="initiate_bypass_ltm-instance_method">
+  
+    #<strong>initiate_bypass_ltm</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/Net/io_processor.rb', line 75</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_initiate_bypass_ltm'>initiate_bypass_ltm</span>
+  <span class='id identifier rubyid_send_ping_message'>send_ping_message</span>
+  <span class='const'>EventMachine</span><span class='op'>::</span><span class='const'>Timer</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../Juno.html" title="Juno (module)">Juno</a></span></span><span class='period'>.</span><span class='id identifier rubyid_juno_config'><span class='object_link'><a href="../../Juno.html#juno_config-class_method" title="Juno.juno_config (method)">juno_config</a></span></span><span class='period'>.</span><span class='id identifier rubyid_response_timeout'>response_timeout</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span> <span class='op'>/</span> <span class='int'>1000</span><span class='rparen'>)</span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_ip'>ip</span> <span class='op'>=</span> <span class='id identifier rubyid_ping_ip'>ping_ip</span>
+    <span class='kw'>unless</span> <span class='id identifier rubyid_ip'>ip</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+      <span class='id identifier rubyid_new_channel'>new_channel</span> <span class='op'>=</span> <span class='const'>EventMachine</span><span class='period'>.</span><span class='id identifier rubyid_connect'>connect</span><span class='lparen'>(</span><span class='id identifier rubyid_ip'>ip</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../../Juno.html" title="Juno (module)">Juno</a></span></span><span class='period'>.</span><span class='id identifier rubyid_juno_config'><span class='object_link'><a href="../../Juno.html#juno_config-class_method" title="Juno.juno_config (method)">juno_config</a></span></span><span class='period'>.</span><span class='id identifier rubyid_port'>port</span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="ClientHandler.html" title="Juno::Net::ClientHandler (class)">ClientHandler</a></span></span><span class='comma'>,</span> <span class='kw'>self</span><span class='rparen'>)</span>
+      <span class='const'>EventMachine</span><span class='op'>::</span><span class='const'>Timer</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../Juno.html" title="Juno (module)">Juno</a></span></span><span class='period'>.</span><span class='id identifier rubyid_juno_config'><span class='object_link'><a href="../../Juno.html#juno_config-class_method" title="Juno.juno_config (method)">juno_config</a></span></span><span class='period'>.</span><span class='id identifier rubyid_connection_timeout'>connection_timeout</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span> <span class='op'>/</span> <span class='int'>1000</span><span class='rparen'>)</span> <span class='kw'>do</span>
+        <span class='kw'>if</span> <span class='id identifier rubyid_new_channel'>new_channel</span><span class='period'>.</span><span class='id identifier rubyid_is_connected?'>is_connected?</span>
+          <span class='ivar'>@LOGGER</span><span class='period'>.</span><span class='id identifier rubyid_info'>info</span><span class='lparen'>(</span><span class='ivar'>@PROG_NAME</span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>conncected to Proxy </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_ip'>ip</span><span class='embexpr_end'>}</span><span class='tstring_content'>:</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="../../Juno.html" title="Juno (module)">Juno</a></span></span><span class='period'>.</span><span class='id identifier rubyid_juno_config'><span class='object_link'><a href="../../Juno.html#juno_config-class_method" title="Juno.juno_config (method)">juno_config</a></span></span><span class='period'>.</span><span class='id identifier rubyid_port'>port</span><span class='embexpr_end'>}</span><span class='tstring_content'> </span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
+          <span class='id identifier rubyid_old_channel'>old_channel</span> <span class='op'>=</span> <span class='ivar'>@channel</span>
+          <span class='ivar'>@channel</span> <span class='op'>=</span> <span class='id identifier rubyid_new_channel'>new_channel</span>
+          <span class='id identifier rubyid_disconnect_channel'>disconnect_channel</span><span class='lparen'>(</span><span class='id identifier rubyid_old_channel'>old_channel</span><span class='rparen'>)</span>
+        <span class='kw'>else</span>
+          <span class='ivar'>@LOGGER</span><span class='period'>.</span><span class='id identifier rubyid_info'>info</span><span class='lparen'>(</span><span class='ivar'>@PROG_NAME</span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>could not conncect to Proxy </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_ip'>ip</span><span class='embexpr_end'>}</span><span class='tstring_content'>:</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="../../Juno.html" title="Juno (module)">Juno</a></span></span><span class='period'>.</span><span class='id identifier rubyid_juno_config'><span class='object_link'><a href="../../Juno.html#juno_config-class_method" title="Juno.juno_config (method)">juno_config</a></span></span><span class='period'>.</span><span class='id identifier rubyid_port'>port</span><span class='embexpr_end'>}</span><span class='tstring_content'> </span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
+        <span class='kw'>end</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="juno_connect-instance_method">
+  
+    #<strong>juno_connect</strong>(recycle = false)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Method to handle connections creation, re-attempts on failure, initiates connection refresh and connection to Proxy</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>recycle</span>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>false</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><ul><li>
+<p>True if connection refresh request (optional, default: false)</p>
+</li></ul>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/Net/io_processor.rb', line 107</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_juno_connect'>juno_connect</span><span class='lparen'>(</span><span class='id identifier rubyid_recycle'>recycle</span> <span class='op'>=</span> <span class='kw'>false</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_recycle'>recycle</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='ivar'>@channel</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='op'>&amp;&amp;</span> <span class='ivar'>@channel</span><span class='period'>.</span><span class='id identifier rubyid_is_connected?'>is_connected?</span>
+
+  <span class='id identifier rubyid_new_channel'>new_channel</span> <span class='op'>=</span> <span class='const'>EventMachine</span><span class='period'>.</span><span class='id identifier rubyid_connect'>connect</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../Juno.html" title="Juno (module)">Juno</a></span></span><span class='period'>.</span><span class='id identifier rubyid_juno_config'><span class='object_link'><a href="../../Juno.html#juno_config-class_method" title="Juno.juno_config (method)">juno_config</a></span></span><span class='period'>.</span><span class='id identifier rubyid_host'>host</span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../../Juno.html" title="Juno (module)">Juno</a></span></span><span class='period'>.</span><span class='id identifier rubyid_juno_config'><span class='object_link'><a href="../../Juno.html#juno_config-class_method" title="Juno.juno_config (method)">juno_config</a></span></span><span class='period'>.</span><span class='id identifier rubyid_port'>port</span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="ClientHandler.html" title="Juno::Net::ClientHandler (class)">ClientHandler</a></span></span><span class='comma'>,</span> <span class='kw'>self</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_new_channel'>new_channel</span><span class='period'>.</span><span class='id identifier rubyid_pending_connect_timeout'>pending_connect_timeout</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../Juno.html" title="Juno (module)">Juno</a></span></span><span class='period'>.</span><span class='id identifier rubyid_juno_config'><span class='object_link'><a href="../../Juno.html#juno_config-class_method" title="Juno.juno_config (method)">juno_config</a></span></span><span class='period'>.</span><span class='id identifier rubyid_connection_lifetime'>connection_lifetime</span>
+  <span class='const'>EventMachine</span><span class='op'>::</span><span class='const'>Timer</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../Juno.html" title="Juno (module)">Juno</a></span></span><span class='period'>.</span><span class='id identifier rubyid_juno_config'><span class='object_link'><a href="../../Juno.html#juno_config-class_method" title="Juno.juno_config (method)">juno_config</a></span></span><span class='period'>.</span><span class='id identifier rubyid_connection_timeout'>connection_timeout</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span> <span class='op'>/</span> <span class='int'>1000</span><span class='rparen'>)</span> <span class='kw'>do</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_new_channel'>new_channel</span><span class='period'>.</span><span class='id identifier rubyid_is_connected?'>is_connected?</span>
+      <span class='ivar'>@LOGGER</span><span class='period'>.</span><span class='id identifier rubyid_info'>info</span><span class='lparen'>(</span><span class='ivar'>@PROG_NAME</span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>conncected to </span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="../../Juno.html" title="Juno (module)">Juno</a></span></span><span class='period'>.</span><span class='id identifier rubyid_juno_config'><span class='object_link'><a href="../../Juno.html#juno_config-class_method" title="Juno.juno_config (method)">juno_config</a></span></span><span class='period'>.</span><span class='id identifier rubyid_host'>host</span><span class='embexpr_end'>}</span><span class='tstring_content'>:</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="../../Juno.html" title="Juno (module)">Juno</a></span></span><span class='period'>.</span><span class='id identifier rubyid_juno_config'><span class='object_link'><a href="../../Juno.html#juno_config-class_method" title="Juno.juno_config (method)">juno_config</a></span></span><span class='period'>.</span><span class='id identifier rubyid_port'>port</span><span class='embexpr_end'>}</span><span class='tstring_content'> </span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
+      <span class='kw'>if</span> <span class='id identifier rubyid_recycle'>recycle</span>
+        <span class='id identifier rubyid_old_channel'>old_channel</span> <span class='op'>=</span> <span class='ivar'>@channel</span>
+        <span class='ivar'>@channel</span> <span class='op'>=</span> <span class='id identifier rubyid_new_channel'>new_channel</span>
+        <span class='id identifier rubyid_disconnect_channel'>disconnect_channel</span><span class='lparen'>(</span><span class='id identifier rubyid_old_channel'>old_channel</span><span class='rparen'>)</span>
+      <span class='kw'>else</span>
+        <span class='ivar'>@channel</span> <span class='op'>=</span> <span class='id identifier rubyid_new_channel'>new_channel</span>
+      <span class='kw'>end</span>
+      <span class='id identifier rubyid_initiate_bypass_ltm'>initiate_bypass_ltm</span> <span class='kw'>if</span> <span class='id identifier rubyid_use_ltm?'>use_ltm?</span>
+      <span class='id identifier rubyid_set_recycle_timer'>set_recycle_timer</span>
+    <span class='kw'>else</span>
+      <span class='ivar'>@recycle_timer</span><span class='op'>&amp;.</span><span class='id identifier rubyid_cancel'>cancel</span>
+      <span class='id identifier rubyid_new_channel'>new_channel</span><span class='op'>&amp;.</span><span class='id identifier rubyid_close_connection'>close_connection</span> <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_new_channel'>new_channel</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_new_channel'>new_channel</span><span class='period'>.</span><span class='id identifier rubyid_is_connected?'>is_connected?</span>
+      <span class='ivar'>@LOGGER</span><span class='period'>.</span><span class='id identifier rubyid_info'>info</span><span class='lparen'>(</span><span class='ivar'>@PROG_NAME</span><span class='rparen'>)</span> <span class='kw'>do</span>
+        <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Could not conncect to </span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="../../Juno.html" title="Juno (module)">Juno</a></span></span><span class='period'>.</span><span class='id identifier rubyid_juno_config'><span class='object_link'><a href="../../Juno.html#juno_config-class_method" title="Juno.juno_config (method)">juno_config</a></span></span><span class='period'>.</span><span class='id identifier rubyid_host'>host</span><span class='embexpr_end'>}</span><span class='tstring_content'>:</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="../../Juno.html" title="Juno (module)">Juno</a></span></span><span class='period'>.</span><span class='id identifier rubyid_juno_config'><span class='object_link'><a href="../../Juno.html#juno_config-class_method" title="Juno.juno_config (method)">juno_config</a></span></span><span class='period'>.</span><span class='id identifier rubyid_port'>port</span><span class='embexpr_end'>}</span><span class='tstring_content'>\n Retrying in </span><span class='embexpr_beg'>#{</span><span class='ivar'>@reconnect_wait_time</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span> <span class='op'>/</span> <span class='int'>1000</span><span class='embexpr_end'>}</span><span class='tstring_content'>ms </span><span class='tstring_end'>&quot;</span></span>
+      <span class='kw'>end</span>
+      <span class='const'>EventMachine</span><span class='op'>::</span><span class='const'>Timer</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='ivar'>@reconnect_wait_time</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span> <span class='op'>/</span> <span class='int'>1000</span><span class='rparen'>)</span> <span class='kw'>do</span>
+        <span class='ivar'>@reconnect_wait_time</span> <span class='op'>*=</span> <span class='int'>2</span>
+        <span class='ivar'>@reconnect_wait_time</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="#MAX_WAIT_TIME-constant" title="Juno::Net::IOProcessor::MAX_WAIT_TIME (constant)">MAX_WAIT_TIME</a></span></span> <span class='kw'>if</span> <span class='ivar'>@reconnect_wait_time</span> <span class='op'>&gt;</span> <span class='const'><span class='object_link'><a href="#MAX_WAIT_TIME-constant" title="Juno::Net::IOProcessor::MAX_WAIT_TIME (constant)">MAX_WAIT_TIME</a></span></span>
+        <span class='ivar'>@reconnect_wait_time</span> <span class='op'>*=</span> <span class='lparen'>(</span><span class='int'>1</span> <span class='op'>+</span> <span class='float'>0.3</span> <span class='op'>*</span> <span class='id identifier rubyid_rand'>rand</span><span class='rparen'>)</span>
+        <span class='id identifier rubyid_juno_connect'>juno_connect</span><span class='lparen'>(</span><span class='id identifier rubyid_recycle'>recycle</span><span class='rparen'>)</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="port-instance_method">
+  
+    #<strong>port</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+194
+195
+196</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/Net/io_processor.rb', line 194</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_port'>port</span>
+  <span class='const'><span class='object_link'><a href="../../Juno.html" title="Juno (module)">Juno</a></span></span><span class='period'>.</span><span class='id identifier rubyid_juno_config'><span class='object_link'><a href="../../Juno.html#juno_config-class_method" title="Juno.juno_config (method)">juno_config</a></span></span><span class='period'>.</span><span class='id identifier rubyid_port'>port</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="put_response-instance_method">
+  
+    #<strong>put_response</strong>(operation_message)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/Net/io_processor.rb', line 42</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_put_response'>put_response</span><span class='lparen'>(</span><span class='id identifier rubyid_operation_message'>operation_message</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_operation_message'>operation_message</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+
+  <span class='kw'>unless</span> <span class='const'><span class='object_link'><a href="../../Juno.html" title="Juno (module)">Juno</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Net.html" title="Juno::Net (module)">Net</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="PingMessage.html" title="Juno::Net::PingMessage (class)">PingMessage</a></span></span><span class='period'>.</span><span class='id identifier rubyid_ping_response?'><span class='object_link'><a href="PingMessage.html#ping_response%3F-class_method" title="Juno::Net::PingMessage.ping_response? (method)">ping_response?</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_operation_message'>operation_message</span><span class='comma'>,</span> <span class='kw'>self</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_opaque'>opaque</span> <span class='op'>=</span> <span class='id identifier rubyid_operation_message'>operation_message</span><span class='op'>&amp;.</span><span class='id identifier rubyid_protocol_header'>protocol_header</span><span class='op'>&amp;.</span><span class='id identifier rubyid_opaque'>opaque</span>
+    <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_opaque'>opaque</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+
+    <span class='id identifier rubyid_resp_queue'>resp_queue</span> <span class='op'>=</span> <span class='ivar'>@opaque_resp_queue_map</span><span class='period'>.</span><span class='id identifier rubyid_get_and_set'>get_and_set</span><span class='lparen'>(</span><span class='id identifier rubyid_opaque'>opaque</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+    <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_resp_queue'>resp_queue</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+      <span class='kw'>begin</span>
+        <span class='id identifier rubyid_resp_queue'>resp_queue</span><span class='period'>.</span><span class='id identifier rubyid_push'>push</span><span class='lparen'>(</span><span class='id identifier rubyid_operation_message'>operation_message</span><span class='rparen'>)</span>
+      <span class='kw'>rescue</span> <span class='const'>ThreadError</span>
+        <span class='ivar'>@LOGGER</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span><span class='lparen'>(</span><span class='ivar'>@PROG_NAME</span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>response queue for </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_opaque'>opaque</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span><span class='embexpr_end'>}</span><span class='tstring_content'> is full</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
+      <span class='kw'>end</span>
+    <span class='kw'>else</span>
+      <span class='ivar'>@LOGGER</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span><span class='lparen'>(</span><span class='ivar'>@PROG_NAME</span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>resp_queue nil for </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_opaque'>opaque</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+  <span class='kw'>nil</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="reset_connections-instance_method">
+  
+    #<strong>reset_connections</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+181
+182
+183
+184</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/Net/io_processor.rb', line 181</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_reset_connections'>reset_connections</span>
+  <span class='ivar'>@recycle_timer</span><span class='op'>&amp;.</span><span class='id identifier rubyid_cancel'>cancel</span>
+  <span class='id identifier rubyid_disconnect_channel'>disconnect_channel</span><span class='lparen'>(</span><span class='ivar'>@channel</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="run-instance_method">
+  
+    #<strong>run</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Event loop to continously check for requests in @request_queue</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/Net/io_processor.rb', line 145</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_run'>run</span>
+  <span class='const'>EventMachine</span><span class='period'>.</span><span class='id identifier rubyid_run'>run</span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_juno_connect'>juno_connect</span>
+    <span class='const'>EventMachine</span><span class='period'>.</span><span class='id identifier rubyid_tick_loop'>tick_loop</span> <span class='kw'>do</span>
+      <span class='kw'>if</span> <span class='op'>!</span><span class='ivar'>@channel</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='op'>&amp;&amp;</span> <span class='ivar'>@channel</span><span class='period'>.</span><span class='id identifier rubyid_is_connected?'>is_connected?</span>
+        <span class='comment'># key = &quot;19key#{rand(100) + rand(1_000_000)}&quot;
+</span>        <span class='id identifier rubyid_item'>item</span> <span class='op'>=</span> <span class='ivar'>@request_queue</span><span class='period'>.</span><span class='id identifier rubyid_pop'>pop</span>
+        <span class='kw'>unless</span> <span class='id identifier rubyid_item'>item</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+          <span class='cvar'>@@counter</span><span class='period'>.</span><span class='id identifier rubyid_increment'>increment</span>
+          <span class='ivar'>@channel</span><span class='period'>.</span><span class='id identifier rubyid_send_data'>send_data</span><span class='lparen'>(</span><span class='id identifier rubyid_item'>item</span><span class='period'>.</span><span class='id identifier rubyid_msg_buffer'>msg_buffer</span><span class='rparen'>)</span>
+        <span class='kw'>end</span>
+      <span class='kw'>end</span>
+      <span class='symbol'>:stop</span> <span class='kw'>if</span> <span class='ivar'>@stop</span> <span class='op'>==</span> <span class='kw'>true</span>
+    <span class='kw'>rescue</span> <span class='const'>Exception</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
+      <span class='ivar'>@LOGGER</span><span class='period'>.</span><span class='id identifier rubyid_error'>error</span><span class='lparen'>(</span><span class='ivar'>@PROG_NAME</span><span class='rparen'>)</span> <span class='kw'>do</span>
+        <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Error in tick_loop: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_message'>message</span><span class='embexpr_end'>}</span><span class='tstring_content'>. Stopping tick_loop</span><span class='tstring_end'>&quot;</span></span>
+      <span class='kw'>end</span>
+      <span class='symbol'>:stop</span>
+    <span class='kw'>end</span><span class='period'>.</span><span class='id identifier rubyid_on_stop'>on_stop</span> <span class='kw'>do</span>
+      <span class='ivar'>@LOGGER</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span><span class='lparen'>(</span><span class='ivar'>@PROG_NAME</span><span class='rparen'>)</span> <span class='kw'>do</span>
+        <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>tick loop stopped. Stop initiated by client </span><span class='embexpr_beg'>#{</span><span class='ivar'>@stop</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+      <span class='kw'>end</span>
+      <span class='id identifier rubyid_reset_connections'>reset_connections</span>
+      <span class='const'>EventMachine</span><span class='op'>::</span><span class='const'>Timer</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='int'>2</span> <span class='op'>*</span> <span class='const'><span class='object_link'><a href="../../Juno.html" title="Juno (module)">Juno</a></span></span><span class='period'>.</span><span class='id identifier rubyid_juno_config'><span class='object_link'><a href="../../Juno.html#juno_config-class_method" title="Juno.juno_config (method)">juno_config</a></span></span><span class='period'>.</span><span class='id identifier rubyid_connection_timeout'>connection_timeout</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span> <span class='op'>/</span> <span class='int'>1000</span><span class='rparen'>)</span> <span class='kw'>do</span>
+        <span class='const'>EventMachine</span><span class='period'>.</span><span class='id identifier rubyid_stop'>stop</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+  <span class='kw'>rescue</span> <span class='const'>Exception</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
+    <span class='ivar'>@LOGGER</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span><span class='lparen'>(</span><span class='ivar'>@PROG_NAME</span><span class='rparen'>)</span> <span class='kw'>do</span>
+      <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>EventMachine Fatal Exception </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_message'>message</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>end</span>
+    <span class='id identifier rubyid_reset_connections'>reset_connections</span>
+    <span class='const'>EventMachine</span><span class='period'>.</span><span class='id identifier rubyid_stop'>stop</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="send_ping_message-instance_method">
+  
+    #<strong>send_ping_message</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Sends ping message to LoadBalancer to get ProxyIP</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="PingMessage.html" title="Juno::Net::PingMessage (class)">PingMessage</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+97
+98
+99
+100
+101
+102
+103</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/Net/io_processor.rb', line 97</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_send_ping_message'>send_ping_message</span>
+  <span class='id identifier rubyid_ping_message'>ping_message</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../Juno.html" title="Juno (module)">Juno</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Net.html" title="Juno::Net (module)">Net</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="PingMessage.html" title="Juno::Net::PingMessage (class)">PingMessage</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="PingMessage.html#initialize-instance_method" title="Juno::Net::PingMessage#initialize (method)">new</a></span></span>
+  <span class='id identifier rubyid_buff'>buff</span> <span class='op'>=</span> <span class='const'>StringIO</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+  <span class='id identifier rubyid_ping_message'>ping_message</span><span class='period'>.</span><span class='id identifier rubyid_write'>write</span><span class='lparen'>(</span><span class='id identifier rubyid_buff'>buff</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_request_uuid'>request_uuid</span> <span class='op'>=</span> <span class='id identifier rubyid_ping_message'>ping_message</span><span class='op'>&amp;.</span><span class='id identifier rubyid_operation_message'>operation_message</span><span class='op'>&amp;.</span><span class='id identifier rubyid_metadata_component'>metadata_component</span><span class='op'>&amp;.</span><span class='id identifier rubyid_request_uuid'>request_uuid</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
+  <span class='ivar'>@request_queue</span><span class='period'>.</span><span class='id identifier rubyid_push'>push</span><span class='lparen'>(</span><span class='id identifier rubyid_buff'>buff</span><span class='period'>.</span><span class='id identifier rubyid_string'>string</span><span class='comma'>,</span> <span class='id identifier rubyid_request_uuid'>request_uuid</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="set_recycle_timer-instance_method">
+  
+    #<strong>set_recycle_timer</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+69
+70
+71
+72
+73</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/Net/io_processor.rb', line 69</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_set_recycle_timer'>set_recycle_timer</span>
+  <span class='ivar'>@recycle_timer</span> <span class='op'>=</span> <span class='const'>EventMachine</span><span class='op'>::</span><span class='const'>Timer</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../Juno.html" title="Juno (module)">Juno</a></span></span><span class='period'>.</span><span class='id identifier rubyid_juno_config'><span class='object_link'><a href="../../Juno.html#juno_config-class_method" title="Juno.juno_config (method)">juno_config</a></span></span><span class='period'>.</span><span class='id identifier rubyid_connection_lifetime'>connection_lifetime</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span> <span class='op'>/</span> <span class='int'>1000</span><span class='rparen'>)</span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_juno_connect'>juno_connect</span><span class='lparen'>(</span><span class='kw'>true</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="stop-instance_method">
+  
+    #<strong>stop</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+140
+141
+142</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/Net/io_processor.rb', line 140</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_stop'>stop</span>
+  <span class='ivar'>@stop</span> <span class='op'>=</span> <span class='kw'>true</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="use_ltm?-instance_method">
+  
+    #<strong>use_ltm?</strong>  &#x21d2; <tt>Boolean</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+198
+199
+200</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/Net/io_processor.rb', line 198</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_use_ltm?'>use_ltm?</span>
+  <span class='id identifier rubyid_host'>host</span> <span class='op'>!=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>127.0.0.1</span><span class='tstring_end'>&#39;</span></span> <span class='op'>&amp;&amp;</span> <span class='const'><span class='object_link'><a href="../../Juno.html" title="Juno (module)">Juno</a></span></span><span class='period'>.</span><span class='id identifier rubyid_juno_config'><span class='object_link'><a href="../../Juno.html#juno_config-class_method" title="Juno.juno_config (method)">juno_config</a></span></span><span class='period'>.</span><span class='id identifier rubyid_bypass_ltm'>bypass_ltm</span> <span class='comment'># boolean
+</span><span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="use_ssl?-instance_method">
+  
+    #<strong>use_ssl?</strong>  &#x21d2; <tt>Boolean</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+186
+187
+188</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/Net/io_processor.rb', line 186</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_use_ssl?'>use_ssl?</span>
+  <span class='const'><span class='object_link'><a href="../../Juno.html" title="Juno (module)">Juno</a></span></span><span class='period'>.</span><span class='id identifier rubyid_juno_config'><span class='object_link'><a href="../../Juno.html#juno_config-class_method" title="Juno.juno_config (method)">juno_config</a></span></span><span class='period'>.</span><span class='id identifier rubyid_use_ssl'>use_ssl</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+      <div id="footer">
+  Generated on Fri Aug 11 11:39:55 2023 by
+  <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.34 (ruby-3.0.0).
+</div>
+
+    </div>
+  </body>
+</html>

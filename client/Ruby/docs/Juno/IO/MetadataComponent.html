@@ -1,0 +1,2518 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Class: Juno::IO::MetadataComponent
+  
+    &mdash; Documentation by YARD 0.9.34
+  
+</title>
+
+  <link rel="stylesheet" href="../../css/style.css" type="text/css" />
+
+  <link rel="stylesheet" href="../../css/common.css" type="text/css" />
+
+<script type="text/javascript">
+  pathId = "Juno::IO::MetadataComponent";
+  relpath = '../../';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="../../class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="../../_index.html">Index (M)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../../Juno.html" title="Juno (module)">Juno</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../IO.html" title="Juno::IO (module)">IO</a></span></span>
+     &raquo; 
+    <span class="title">MetadataComponent</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../../class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><h1>Class: Juno::IO::MetadataComponent
+  
+  
+  
+</h1>
+<div class="box_info">
+  
+  <dl>
+    <dt>Inherits:</dt>
+    <dd>
+      <span class="inheritName">Object</span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next">Juno::IO::MetadataComponent</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+    </dd>
+  </dl>
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>lib/juno/IO/MetadataComponent.rb</dd>
+  </dl>
+  
+</div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    
+<p>Wrapper class for MetadataComponentTemplate</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><h2>Defined Under Namespace</h2>
+<p class="children">
+  
+    
+  
+    
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="MetadataComponent/MetadataField.html" title="Juno::IO::MetadataComponent::MetadataField (class)">MetadataField</a></span>, <span class='object_link'><a href="MetadataComponent/TagAndType.html" title="Juno::IO::MetadataComponent::TagAndType (class)">TagAndType</a></span>
+    
+  
+</p>
+
+
+
+
+  <h2>Instance Attribute Summary <small><a href="#" class="summary_toggle">collapse</a></small></h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#app_name-instance_method" title="#app_name (instance method)">#<strong>app_name</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute app_name.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#correlation_id-instance_method" title="#correlation_id (instance method)">#<strong>correlation_id</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute correlation_id.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#creation_time-instance_method" title="#creation_time (instance method)">#<strong>creation_time</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute creation_time.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#expiration_time-instance_method" title="#expiration_time (instance method)">#<strong>expiration_time</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute expiration_time.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#ip-instance_method" title="#ip (instance method)">#<strong>ip</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute ip.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#last_modification-instance_method" title="#last_modification (instance method)">#<strong>last_modification</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute last_modification.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#metadata_field_list-instance_method" title="#metadata_field_list (instance method)">#<strong>metadata_field_list</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute metadata_field_list.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#originator_request_id-instance_method" title="#originator_request_id (instance method)">#<strong>originator_request_id</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute originator_request_id.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#port-instance_method" title="#port (instance method)">#<strong>port</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute port.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#request_handling_time-instance_method" title="#request_handling_time (instance method)">#<strong>request_handling_time</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute request_handling_time.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#request_uuid-instance_method" title="#request_uuid (instance method)">#<strong>request_uuid</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute request_uuid.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#time_to_live-instance_method" title="#time_to_live (instance method)">#<strong>time_to_live</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute time_to_live.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#version-instance_method" title="#version (instance method)">#<strong>version</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute version.</p>
+</div></span>
+  
+</li>
+
+    
+  </ul>
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#add_field-instance_method" title="#add_field (instance method)">#<strong>add_field</strong>(field)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Function to add feild to the list.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>  &#x21d2; MetadataComponent </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>A new instance of MetadataComponent.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#num_bytes-instance_method" title="#num_bytes (instance method)">#<strong>num_bytes</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>function to calculate size of metadata component.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#read-instance_method" title="#read (instance method)">#<strong>read</strong>(io)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Function to de-serialize Component to buffer.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#set_correlation_id-instance_method" title="#set_correlation_id (instance method)">#<strong>set_correlation_id</strong>(input_uuid_byte_string = nil)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>if not provided, creates a uuid itself.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#set_creation_time-instance_method" title="#set_creation_time (instance method)">#<strong>set_creation_time</strong>(data)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#set_expiration_time-instance_method" title="#set_expiration_time (instance method)">#<strong>set_expiration_time</strong>(data)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#set_last_modification-instance_method" title="#set_last_modification (instance method)">#<strong>set_last_modification</strong>(data)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#set_originator_request_id-instance_method" title="#set_originator_request_id (instance method)">#<strong>set_originator_request_id</strong>(input_uuid_byte_string = nil)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>if not provided, creates a uuid itself.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#set_request_handling_time-instance_method" title="#set_request_handling_time (instance method)">#<strong>set_request_handling_time</strong>(data)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#set_request_uuid-instance_method" title="#set_request_uuid (instance method)">#<strong>set_request_uuid</strong>(input_uuid_byte_string = nil)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>if not provided, creates a uuid itself.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#set_source_info-instance_method" title="#set_source_info (instance method)">#<strong>set_source_info</strong>(app_name:, ip:, port:)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>SourceInfoField.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#set_time_to_live-instance_method" title="#set_time_to_live (instance method)">#<strong>set_time_to_live</strong>(ttl)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#set_version-instance_method" title="#set_version (instance method)">#<strong>set_version</strong>(data)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#write-instance_method" title="#write (instance method)">#<strong>write</strong>(io)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Function to serialize Component to buffer.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+<div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <h3 class="signature first" id="initialize-instance_method">
+  
+    #<strong>initialize</strong>  &#x21d2; <tt><span class='object_link'><a href="" title="Juno::IO::MetadataComponent (class)">MetadataComponent</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns a new instance of MetadataComponent.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+94
+95
+96
+97
+98
+99</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/IO/MetadataComponent.rb', line 94</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span>
+  <span class='ivar'>@PROG_NAME</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span>
+  <span class='comment'># @LOGGER = Juno::Logger.instance
+</span>  <span class='comment'># @metadata_field_list [Array&lt;MetadataField&gt;]
+</span>  <span class='ivar'>@metadata_field_list</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+  <div id="instance_attr_details" class="attr_details">
+    <h2>Instance Attribute Details</h2>
+    
+      
+      <span id=""></span>
+      <div class="method_details first">
+  <h3 class="signature first" id="app_name-instance_method">
+  
+    #<strong>app_name</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute app_name.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+91
+92
+93</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/IO/MetadataComponent.rb', line 91</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_app_name'>app_name</span>
+  <span class='ivar'>@app_name</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="correlation_id-instance_method">
+  
+    #<strong>correlation_id</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute correlation_id.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+91
+92
+93</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/IO/MetadataComponent.rb', line 91</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_correlation_id'>correlation_id</span>
+  <span class='ivar'>@correlation_id</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="creation_time-instance_method">
+  
+    #<strong>creation_time</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute creation_time.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+91
+92
+93</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/IO/MetadataComponent.rb', line 91</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_creation_time'>creation_time</span>
+  <span class='ivar'>@creation_time</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="expiration_time-instance_method">
+  
+    #<strong>expiration_time</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute expiration_time.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+91
+92
+93</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/IO/MetadataComponent.rb', line 91</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_expiration_time'>expiration_time</span>
+  <span class='ivar'>@expiration_time</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="ip-instance_method">
+  
+    #<strong>ip</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute ip.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+91
+92
+93</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/IO/MetadataComponent.rb', line 91</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_ip'>ip</span>
+  <span class='ivar'>@ip</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="last_modification-instance_method">
+  
+    #<strong>last_modification</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute last_modification.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+91
+92
+93</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/IO/MetadataComponent.rb', line 91</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_last_modification'>last_modification</span>
+  <span class='ivar'>@last_modification</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="metadata_field_list-instance_method">
+  
+    #<strong>metadata_field_list</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute metadata_field_list.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+91
+92
+93</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/IO/MetadataComponent.rb', line 91</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_metadata_field_list'>metadata_field_list</span>
+  <span class='ivar'>@metadata_field_list</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="originator_request_id-instance_method">
+  
+    #<strong>originator_request_id</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute originator_request_id.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+91
+92
+93</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/IO/MetadataComponent.rb', line 91</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_originator_request_id'>originator_request_id</span>
+  <span class='ivar'>@originator_request_id</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="port-instance_method">
+  
+    #<strong>port</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute port.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+91
+92
+93</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/IO/MetadataComponent.rb', line 91</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_port'>port</span>
+  <span class='ivar'>@port</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="request_handling_time-instance_method">
+  
+    #<strong>request_handling_time</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute request_handling_time.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+91
+92
+93</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/IO/MetadataComponent.rb', line 91</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_request_handling_time'>request_handling_time</span>
+  <span class='ivar'>@request_handling_time</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="request_uuid-instance_method">
+  
+    #<strong>request_uuid</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute request_uuid.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+91
+92
+93</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/IO/MetadataComponent.rb', line 91</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_request_uuid'>request_uuid</span>
+  <span class='ivar'>@request_uuid</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="time_to_live-instance_method">
+  
+    #<strong>time_to_live</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute time_to_live.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+91
+92
+93</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/IO/MetadataComponent.rb', line 91</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_time_to_live'>time_to_live</span>
+  <span class='ivar'>@time_to_live</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="version-instance_method">
+  
+    #<strong>version</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute version.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+91
+92
+93</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/IO/MetadataComponent.rb', line 91</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_version'>version</span>
+  <span class='ivar'>@version</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="add_field-instance_method">
+  
+    #<strong>add_field</strong>(field)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Function to add feild to the list</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>field</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="MetadataComponent/MetadataField.html" title="Juno::IO::MetadataComponent::MetadataField (class)">MetadataField</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>(required)</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+202
+203
+204</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/IO/MetadataComponent.rb', line 202</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_add_field'>add_field</span><span class='lparen'>(</span><span class='id identifier rubyid_field'>field</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_metadata_field_list'>metadata_field_list</span><span class='period'>.</span><span class='id identifier rubyid_push'>push</span><span class='lparen'>(</span><span class='id identifier rubyid_field'>field</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="num_bytes-instance_method">
+  
+    #<strong>num_bytes</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>function to calculate size of metadata component</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+207
+208
+209
+210
+211</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/IO/MetadataComponent.rb', line 207</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_num_bytes'>num_bytes</span>
+  <span class='id identifier rubyid_io'>io</span> <span class='op'>=</span> <span class='const'>StringIO</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+  <span class='id identifier rubyid_write'>write</span><span class='lparen'>(</span><span class='id identifier rubyid_io'>io</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_io'>io</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="read-instance_method">
+  
+    #<strong>read</strong>(io)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Function to de-serialize Component to buffer</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>io</span>
+      
+      
+        <span class='type'>(<tt>StringIO</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>(required)</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/IO/MetadataComponent.rb', line 238</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_read'>read</span><span class='lparen'>(</span><span class='id identifier rubyid_io'>io</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_metadata_component'>metadata_component</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="MetadataComponentTemplate.html" title="Juno::IO::MetadataComponentTemplate (class)">MetadataComponentTemplate</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+  <span class='id identifier rubyid_metadata_component'>metadata_component</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span><span class='lparen'>(</span><span class='id identifier rubyid_io'>io</span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_body_buffer'>body_buffer</span> <span class='op'>=</span> <span class='const'>StringIO</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_metadata_component'>metadata_component</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_metadata_component'>metadata_component</span><span class='period'>.</span><span class='id identifier rubyid_metadata_fields'>metadata_fields</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_field'>field</span><span class='op'>|</span>
+    <span class='kw'>case</span> <span class='id identifier rubyid_field'>field</span><span class='period'>.</span><span class='id identifier rubyid_field_tag'>field_tag</span>
+    <span class='kw'>when</span> <span class='const'><span class='object_link'><a href="MetadataComponent/TagAndType.html" title="Juno::IO::MetadataComponent::TagAndType (class)">TagAndType</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="MetadataComponent/TagAndType.html#TimeToLive-constant" title="Juno::IO::MetadataComponent::TagAndType::TimeToLive (constant)">TimeToLive</a></span></span><span class='lbracket'>[</span><span class='symbol'>:tag</span><span class='rbracket'>]</span>
+      <span class='id identifier rubyid_ttl_byte_string'>ttl_byte_string</span> <span class='op'>=</span> <span class='id identifier rubyid_body_buffer'>body_buffer</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span><span class='lparen'>(</span><span class='int'>1</span> <span class='op'>&lt;&lt;</span> <span class='lparen'>(</span><span class='int'>1</span> <span class='op'>+</span> <span class='const'><span class='object_link'><a href="MetadataComponent/TagAndType.html" title="Juno::IO::MetadataComponent::TagAndType (class)">TagAndType</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="MetadataComponent/TagAndType.html#TimeToLive-constant" title="Juno::IO::MetadataComponent::TagAndType::TimeToLive (constant)">TimeToLive</a></span></span><span class='lbracket'>[</span><span class='symbol'>:size_type</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_set_time_to_live'>set_time_to_live</span><span class='lparen'>(</span><span class='id identifier rubyid_ttl_byte_string'>ttl_byte_string</span><span class='period'>.</span><span class='id identifier rubyid_unpack1'>unpack1</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="OffsetWidth.html" title="Juno::IO::OffsetWidth (class)">OffsetWidth</a></span></span><span class='period'>.</span><span class='const'>UINT32</span><span class='rparen'>)</span><span class='rparen'>)</span>
+
+    <span class='kw'>when</span> <span class='const'><span class='object_link'><a href="MetadataComponent/TagAndType.html" title="Juno::IO::MetadataComponent::TagAndType (class)">TagAndType</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="MetadataComponent/TagAndType.html#Version-constant" title="Juno::IO::MetadataComponent::TagAndType::Version (constant)">Version</a></span></span><span class='lbracket'>[</span><span class='symbol'>:tag</span><span class='rbracket'>]</span>
+      <span class='id identifier rubyid_version_byte_string'>version_byte_string</span> <span class='op'>=</span> <span class='id identifier rubyid_body_buffer'>body_buffer</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span><span class='lparen'>(</span><span class='int'>1</span> <span class='op'>&lt;&lt;</span> <span class='lparen'>(</span><span class='int'>1</span> <span class='op'>+</span> <span class='const'><span class='object_link'><a href="MetadataComponent/TagAndType.html" title="Juno::IO::MetadataComponent::TagAndType (class)">TagAndType</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="MetadataComponent/TagAndType.html#Version-constant" title="Juno::IO::MetadataComponent::TagAndType::Version (constant)">Version</a></span></span><span class='lbracket'>[</span><span class='symbol'>:size_type</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_set_version'>set_version</span><span class='lparen'>(</span><span class='id identifier rubyid_version_byte_string'>version_byte_string</span><span class='period'>.</span><span class='id identifier rubyid_unpack1'>unpack1</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="OffsetWidth.html" title="Juno::IO::OffsetWidth (class)">OffsetWidth</a></span></span><span class='period'>.</span><span class='const'>UINT32</span><span class='rparen'>)</span><span class='rparen'>)</span>
+
+    <span class='kw'>when</span> <span class='const'><span class='object_link'><a href="MetadataComponent/TagAndType.html" title="Juno::IO::MetadataComponent::TagAndType (class)">TagAndType</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="MetadataComponent/TagAndType.html#CreationTime-constant" title="Juno::IO::MetadataComponent::TagAndType::CreationTime (constant)">CreationTime</a></span></span><span class='lbracket'>[</span><span class='symbol'>:tag</span><span class='rbracket'>]</span>
+      <span class='id identifier rubyid_creation_time_byte_string'>creation_time_byte_string</span> <span class='op'>=</span> <span class='id identifier rubyid_body_buffer'>body_buffer</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span><span class='lparen'>(</span><span class='int'>1</span> <span class='op'>&lt;&lt;</span> <span class='lparen'>(</span><span class='int'>1</span> <span class='op'>+</span> <span class='const'><span class='object_link'><a href="MetadataComponent/TagAndType.html" title="Juno::IO::MetadataComponent::TagAndType (class)">TagAndType</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="MetadataComponent/TagAndType.html#CreationTime-constant" title="Juno::IO::MetadataComponent::TagAndType::CreationTime (constant)">CreationTime</a></span></span><span class='lbracket'>[</span><span class='symbol'>:size_type</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_set_creation_time'>set_creation_time</span><span class='lparen'>(</span><span class='id identifier rubyid_creation_time_byte_string'>creation_time_byte_string</span><span class='period'>.</span><span class='id identifier rubyid_unpack1'>unpack1</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="OffsetWidth.html" title="Juno::IO::OffsetWidth (class)">OffsetWidth</a></span></span><span class='period'>.</span><span class='const'>UINT32</span><span class='rparen'>)</span><span class='rparen'>)</span>
+
+    <span class='kw'>when</span> <span class='const'><span class='object_link'><a href="MetadataComponent/TagAndType.html" title="Juno::IO::MetadataComponent::TagAndType (class)">TagAndType</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="MetadataComponent/TagAndType.html#RequestUUID-constant" title="Juno::IO::MetadataComponent::TagAndType::RequestUUID (constant)">RequestUUID</a></span></span><span class='lbracket'>[</span><span class='symbol'>:tag</span><span class='rbracket'>]</span>
+      <span class='id identifier rubyid_request_uuid_byte_string'>request_uuid_byte_string</span> <span class='op'>=</span> <span class='id identifier rubyid_body_buffer'>body_buffer</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span><span class='lparen'>(</span><span class='int'>1</span> <span class='op'>&lt;&lt;</span> <span class='lparen'>(</span><span class='int'>1</span> <span class='op'>+</span> <span class='const'><span class='object_link'><a href="MetadataComponent/TagAndType.html" title="Juno::IO::MetadataComponent::TagAndType (class)">TagAndType</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="MetadataComponent/TagAndType.html#RequestUUID-constant" title="Juno::IO::MetadataComponent::TagAndType::RequestUUID (constant)">RequestUUID</a></span></span><span class='lbracket'>[</span><span class='symbol'>:size_type</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_set_request_uuid'>set_request_uuid</span><span class='lparen'>(</span><span class='id identifier rubyid_request_uuid_byte_string'>request_uuid_byte_string</span><span class='rparen'>)</span>
+
+    <span class='kw'>when</span> <span class='const'><span class='object_link'><a href="MetadataComponent/TagAndType.html" title="Juno::IO::MetadataComponent::TagAndType (class)">TagAndType</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="MetadataComponent/TagAndType.html#SourceInfo-constant" title="Juno::IO::MetadataComponent::TagAndType::SourceInfo (constant)">SourceInfo</a></span></span><span class='lbracket'>[</span><span class='symbol'>:tag</span><span class='rbracket'>]</span>
+      <span class='id identifier rubyid_source_info'>source_info</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="MetadataComponentTemplate.html" title="Juno::IO::MetadataComponentTemplate (class)">MetadataComponentTemplate</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="MetadataComponentTemplate/SourceInfoField.html" title="Juno::IO::MetadataComponentTemplate::SourceInfoField (class)">SourceInfoField</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+      <span class='id identifier rubyid_source_info'>source_info</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span><span class='lparen'>(</span><span class='id identifier rubyid_body_buffer'>body_buffer</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_set_source_info'>set_source_info</span><span class='lparen'>(</span><span class='label'>app_name:</span> <span class='id identifier rubyid_source_info'>source_info</span><span class='period'>.</span><span class='id identifier rubyid_app_name'>app_name</span><span class='comma'>,</span> <span class='label'>ip:</span> <span class='const'>IPAddr</span><span class='period'>.</span><span class='id identifier rubyid_new_ntoh'>new_ntoh</span><span class='lparen'>(</span><span class='id identifier rubyid_source_info'>source_info</span><span class='period'>.</span><span class='id identifier rubyid_ip'>ip</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='label'>port:</span> <span class='id identifier rubyid_source_info'>source_info</span><span class='period'>.</span><span class='id identifier rubyid_port'>port</span><span class='rparen'>)</span>
+
+    <span class='kw'>when</span> <span class='const'><span class='object_link'><a href="MetadataComponent/TagAndType.html" title="Juno::IO::MetadataComponent::TagAndType (class)">TagAndType</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="MetadataComponent/TagAndType.html#LastModification-constant" title="Juno::IO::MetadataComponent::TagAndType::LastModification (constant)">LastModification</a></span></span><span class='lbracket'>[</span><span class='symbol'>:tag</span><span class='rbracket'>]</span>
+      <span class='id identifier rubyid_last_modification_byte_string'>last_modification_byte_string</span> <span class='op'>=</span> <span class='id identifier rubyid_body_buffer'>body_buffer</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span><span class='lparen'>(</span><span class='int'>1</span> <span class='op'>&lt;&lt;</span> <span class='lparen'>(</span><span class='int'>1</span> <span class='op'>+</span> <span class='const'><span class='object_link'><a href="MetadataComponent/TagAndType.html" title="Juno::IO::MetadataComponent::TagAndType (class)">TagAndType</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="MetadataComponent/TagAndType.html#LastModification-constant" title="Juno::IO::MetadataComponent::TagAndType::LastModification (constant)">LastModification</a></span></span><span class='lbracket'>[</span><span class='symbol'>:size_type</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_set_last_modification'>set_last_modification</span><span class='lparen'>(</span><span class='id identifier rubyid_last_modification_byte_string'>last_modification_byte_string</span><span class='period'>.</span><span class='id identifier rubyid_unpack1'>unpack1</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="OffsetWidth.html" title="Juno::IO::OffsetWidth (class)">OffsetWidth</a></span></span><span class='period'>.</span><span class='const'>UINT64</span><span class='rparen'>)</span><span class='rparen'>)</span>
+
+    <span class='kw'>when</span> <span class='const'><span class='object_link'><a href="MetadataComponent/TagAndType.html" title="Juno::IO::MetadataComponent::TagAndType (class)">TagAndType</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="MetadataComponent/TagAndType.html#ExpirationTime-constant" title="Juno::IO::MetadataComponent::TagAndType::ExpirationTime (constant)">ExpirationTime</a></span></span><span class='lbracket'>[</span><span class='symbol'>:tag</span><span class='rbracket'>]</span>
+      <span class='id identifier rubyid_expiration_time_byte_string'>expiration_time_byte_string</span> <span class='op'>=</span> <span class='id identifier rubyid_body_buffer'>body_buffer</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span><span class='lparen'>(</span><span class='int'>1</span> <span class='op'>&lt;&lt;</span> <span class='lparen'>(</span><span class='int'>1</span> <span class='op'>+</span> <span class='const'><span class='object_link'><a href="MetadataComponent/TagAndType.html" title="Juno::IO::MetadataComponent::TagAndType (class)">TagAndType</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="MetadataComponent/TagAndType.html#ExpirationTime-constant" title="Juno::IO::MetadataComponent::TagAndType::ExpirationTime (constant)">ExpirationTime</a></span></span><span class='lbracket'>[</span><span class='symbol'>:size_type</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_set_expiration_time'>set_expiration_time</span><span class='lparen'>(</span><span class='id identifier rubyid_expiration_time_byte_string'>expiration_time_byte_string</span><span class='period'>.</span><span class='id identifier rubyid_unpack1'>unpack1</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="OffsetWidth.html" title="Juno::IO::OffsetWidth (class)">OffsetWidth</a></span></span><span class='period'>.</span><span class='const'>UINT32</span><span class='rparen'>)</span><span class='rparen'>)</span>
+
+    <span class='kw'>when</span> <span class='const'><span class='object_link'><a href="MetadataComponent/TagAndType.html" title="Juno::IO::MetadataComponent::TagAndType (class)">TagAndType</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="MetadataComponent/TagAndType.html#OriginatorRequestID-constant" title="Juno::IO::MetadataComponent::TagAndType::OriginatorRequestID (constant)">OriginatorRequestID</a></span></span><span class='lbracket'>[</span><span class='symbol'>:tag</span><span class='rbracket'>]</span>
+      <span class='id identifier rubyid_originator_request_id_byte_string'>originator_request_id_byte_string</span> <span class='op'>=</span> <span class='id identifier rubyid_body_buffer'>body_buffer</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span><span class='lparen'>(</span><span class='int'>1</span> <span class='op'>&lt;&lt;</span> <span class='lparen'>(</span><span class='int'>1</span> <span class='op'>+</span> <span class='const'><span class='object_link'><a href="MetadataComponent/TagAndType.html" title="Juno::IO::MetadataComponent::TagAndType (class)">TagAndType</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="MetadataComponent/TagAndType.html#OriginatorRequestID-constant" title="Juno::IO::MetadataComponent::TagAndType::OriginatorRequestID (constant)">OriginatorRequestID</a></span></span><span class='lbracket'>[</span><span class='symbol'>:size_type</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_set_originator_request_id'>set_originator_request_id</span><span class='lparen'>(</span><span class='id identifier rubyid_originator_request_id_byte_string'>originator_request_id_byte_string</span><span class='rparen'>)</span>
+    <span class='comment'># when TagAndType::CorrelationID[:tag]
+</span>
+    <span class='kw'>when</span> <span class='const'><span class='object_link'><a href="MetadataComponent/TagAndType.html" title="Juno::IO::MetadataComponent::TagAndType (class)">TagAndType</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="MetadataComponent/TagAndType.html#RequestHandlingTime-constant" title="Juno::IO::MetadataComponent::TagAndType::RequestHandlingTime (constant)">RequestHandlingTime</a></span></span><span class='lbracket'>[</span><span class='symbol'>:tag</span><span class='rbracket'>]</span>
+      <span class='id identifier rubyid_request_handling_time_byte_string'>request_handling_time_byte_string</span> <span class='op'>=</span> <span class='id identifier rubyid_body_buffer'>body_buffer</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span><span class='lparen'>(</span><span class='int'>1</span> <span class='op'>&lt;&lt;</span> <span class='lparen'>(</span><span class='int'>1</span> <span class='op'>+</span> <span class='const'><span class='object_link'><a href="MetadataComponent/TagAndType.html" title="Juno::IO::MetadataComponent::TagAndType (class)">TagAndType</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="MetadataComponent/TagAndType.html#RequestHandlingTime-constant" title="Juno::IO::MetadataComponent::TagAndType::RequestHandlingTime (constant)">RequestHandlingTime</a></span></span><span class='lbracket'>[</span><span class='symbol'>:size_type</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_set_request_handling_time'>set_request_handling_time</span><span class='lparen'>(</span><span class='id identifier rubyid_request_handling_time_byte_string'>request_handling_time_byte_string</span><span class='period'>.</span><span class='id identifier rubyid_unpack1'>unpack1</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="OffsetWidth.html" title="Juno::IO::OffsetWidth (class)">OffsetWidth</a></span></span><span class='period'>.</span><span class='const'>UINT32</span><span class='rparen'>)</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="set_correlation_id-instance_method">
+  
+    #<strong>set_correlation_id</strong>(input_uuid_byte_string = nil)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>if not provided, creates a uuid itself</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>input_uuid_byte_string</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>(optional)</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/IO/MetadataComponent.rb', line 180</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_set_correlation_id'>set_correlation_id</span><span class='lparen'>(</span><span class='id identifier rubyid_input_uuid_byte_string'>input_uuid_byte_string</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+  <span class='ivar'>@correlation_id</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_input_uuid_byte_string'>input_uuid_byte_string</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+                      <span class='const'>UUIDTools</span><span class='op'>::</span><span class='const'>UUID</span><span class='period'>.</span><span class='id identifier rubyid_random_create'>random_create</span>
+                    <span class='kw'>else</span>
+                      <span class='const'>UUIDTools</span><span class='op'>::</span><span class='const'>UUID</span><span class='period'>.</span><span class='id identifier rubyid_parse_raw'>parse_raw</span><span class='lparen'>(</span><span class='id identifier rubyid_input_uuid_byte_string'>input_uuid_byte_string</span><span class='rparen'>)</span>
+                    <span class='kw'>end</span>
+  <span class='id identifier rubyid_field'>field</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="MetadataComponentTemplate.html" title="Juno::IO::MetadataComponentTemplate (class)">MetadataComponentTemplate</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="MetadataComponentTemplate/CorrelationIDField.html" title="Juno::IO::MetadataComponentTemplate::CorrelationIDField (class)">CorrelationIDField</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+  <span class='id identifier rubyid_field'>field</span><span class='period'>.</span><span class='id identifier rubyid_correlation_id'>correlation_id</span> <span class='op'>=</span> <span class='ivar'>@correlation_id</span><span class='period'>.</span><span class='id identifier rubyid_raw'>raw</span>
+  <span class='id identifier rubyid_str_io'>str_io</span> <span class='op'>=</span> <span class='const'>StringIO</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+  <span class='id identifier rubyid_field'>field</span><span class='period'>.</span><span class='id identifier rubyid_write'>write</span><span class='lparen'>(</span><span class='id identifier rubyid_str_io'>str_io</span><span class='rparen'>)</span>
+  <span class='comment'># puts field
+</span>  <span class='id identifier rubyid_add_field'>add_field</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="MetadataComponent/MetadataField.html" title="Juno::IO::MetadataComponent::MetadataField (class)">MetadataField</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="MetadataComponent/MetadataField.html#initialize-instance_method" title="Juno::IO::MetadataComponent::MetadataField#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='int'>0x09</span><span class='comma'>,</span> <span class='int'>0x0</span><span class='comma'>,</span> <span class='id identifier rubyid_str_io'>str_io</span><span class='period'>.</span><span class='id identifier rubyid_string'>string</span><span class='rparen'>)</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="set_creation_time-instance_method">
+  
+    #<strong>set_creation_time</strong>(data)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>creation_time</span>
+      
+      
+        <span class='type'>(<tt>Integer</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><ul><li>
+<p>Unix timestamp (required)</p>
+</li></ul>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+119
+120
+121
+122
+123</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/IO/MetadataComponent.rb', line 119</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_set_creation_time'>set_creation_time</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='rparen'>)</span>
+  <span class='ivar'>@creation_time</span> <span class='op'>=</span> <span class='id identifier rubyid_data'>data</span>
+  <span class='id identifier rubyid_creation_time_bytes_string'>creation_time_bytes_string</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_data'>data</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_pack'>pack</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="OffsetWidth.html" title="Juno::IO::OffsetWidth (class)">OffsetWidth</a></span></span><span class='period'>.</span><span class='const'>UINT32</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_add_field'>add_field</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="MetadataComponent/MetadataField.html" title="Juno::IO::MetadataComponent::MetadataField (class)">MetadataField</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="MetadataComponent/MetadataField.html#initialize-instance_method" title="Juno::IO::MetadataComponent::MetadataField#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='int'>0x03</span><span class='comma'>,</span> <span class='int'>0x01</span><span class='comma'>,</span> <span class='id identifier rubyid_creation_time_bytes_string'>creation_time_bytes_string</span><span class='rparen'>)</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="set_expiration_time-instance_method">
+  
+    #<strong>set_expiration_time</strong>(data)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+125
+126
+127
+128
+129</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/IO/MetadataComponent.rb', line 125</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_set_expiration_time'>set_expiration_time</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='rparen'>)</span>
+  <span class='ivar'>@expiration_time</span> <span class='op'>=</span> <span class='id identifier rubyid_data'>data</span>
+  <span class='id identifier rubyid_expiration_time_bytes_string'>expiration_time_bytes_string</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_data'>data</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_pack'>pack</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="OffsetWidth.html" title="Juno::IO::OffsetWidth (class)">OffsetWidth</a></span></span><span class='period'>.</span><span class='const'>UINT32</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_add_field'>add_field</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="MetadataComponent/MetadataField.html" title="Juno::IO::MetadataComponent::MetadataField (class)">MetadataField</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="MetadataComponent/MetadataField.html#initialize-instance_method" title="Juno::IO::MetadataComponent::MetadataField#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='int'>0x04</span><span class='comma'>,</span> <span class='int'>0x01</span><span class='comma'>,</span> <span class='id identifier rubyid_expiration_time_bytes_string'>expiration_time_bytes_string</span><span class='rparen'>)</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="set_last_modification-instance_method">
+  
+    #<strong>set_last_modification</strong>(data)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+160
+161
+162
+163
+164</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/IO/MetadataComponent.rb', line 160</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_set_last_modification'>set_last_modification</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='rparen'>)</span>
+  <span class='ivar'>@last_modification</span> <span class='op'>=</span> <span class='id identifier rubyid_data'>data</span>
+  <span class='id identifier rubyid_last_modification_bytes_string'>last_modification_bytes_string</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_data'>data</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_pack'>pack</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="OffsetWidth.html" title="Juno::IO::OffsetWidth (class)">OffsetWidth</a></span></span><span class='period'>.</span><span class='const'>UINT64</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_add_field'>add_field</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="MetadataComponent/MetadataField.html" title="Juno::IO::MetadataComponent::MetadataField (class)">MetadataField</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="MetadataComponent/MetadataField.html#initialize-instance_method" title="Juno::IO::MetadataComponent::MetadataField#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='int'>0x07</span><span class='comma'>,</span> <span class='int'>0x02</span><span class='comma'>,</span> <span class='id identifier rubyid_last_modification_bytes_string'>last_modification_bytes_string</span><span class='rparen'>)</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="set_originator_request_id-instance_method">
+  
+    #<strong>set_originator_request_id</strong>(input_uuid_byte_string = nil)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>if not provided, creates a uuid itself</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>input_uuid_byte_string</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>(optional)</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+168
+169
+170
+171
+172
+173
+174
+175
+176</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/IO/MetadataComponent.rb', line 168</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_set_originator_request_id'>set_originator_request_id</span><span class='lparen'>(</span><span class='id identifier rubyid_input_uuid_byte_string'>input_uuid_byte_string</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+  <span class='ivar'>@originator_request_id</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_input_uuid_byte_string'>input_uuid_byte_string</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+                             <span class='const'>UUIDTools</span><span class='op'>::</span><span class='const'>UUID</span><span class='period'>.</span><span class='id identifier rubyid_random_create'>random_create</span>
+                           <span class='kw'>else</span>
+                             <span class='const'>UUIDTools</span><span class='op'>::</span><span class='const'>UUID</span><span class='period'>.</span><span class='id identifier rubyid_parse_raw'>parse_raw</span><span class='lparen'>(</span><span class='id identifier rubyid_input_uuid_byte_string'>input_uuid_byte_string</span><span class='rparen'>)</span>
+                           <span class='kw'>end</span>
+  <span class='id identifier rubyid_add_field'>add_field</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="MetadataComponent/MetadataField.html" title="Juno::IO::MetadataComponent::MetadataField (class)">MetadataField</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="MetadataComponent/MetadataField.html#initialize-instance_method" title="Juno::IO::MetadataComponent::MetadataField#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='int'>0x08</span><span class='comma'>,</span> <span class='int'>0x03</span><span class='comma'>,</span> <span class='ivar'>@originator_request_id</span><span class='period'>.</span><span class='id identifier rubyid_raw'>raw</span><span class='rparen'>)</span><span class='rparen'>)</span>
+  <span class='ivar'>@originator_request_id</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="set_request_handling_time-instance_method">
+  
+    #<strong>set_request_handling_time</strong>(data)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+194
+195
+196
+197
+198</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/IO/MetadataComponent.rb', line 194</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_set_request_handling_time'>set_request_handling_time</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='rparen'>)</span>
+  <span class='ivar'>@request_handling_time</span> <span class='op'>=</span> <span class='id identifier rubyid_data'>data</span>
+  <span class='id identifier rubyid_request_handling_time_bytes_string'>request_handling_time_bytes_string</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_data'>data</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_pack'>pack</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="OffsetWidth.html" title="Juno::IO::OffsetWidth (class)">OffsetWidth</a></span></span><span class='period'>.</span><span class='const'>UINT32</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_add_field'>add_field</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="MetadataComponent/MetadataField.html" title="Juno::IO::MetadataComponent::MetadataField (class)">MetadataField</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="MetadataComponent/MetadataField.html#initialize-instance_method" title="Juno::IO::MetadataComponent::MetadataField#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='int'>0x0A</span><span class='comma'>,</span> <span class='int'>0x01</span><span class='comma'>,</span> <span class='id identifier rubyid_request_handling_time_bytes_string'>request_handling_time_bytes_string</span><span class='rparen'>)</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="set_request_uuid-instance_method">
+  
+    #<strong>set_request_uuid</strong>(input_uuid_byte_string = nil)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>if not provided, creates a uuid itself</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>input_uuid_byte_string</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><ul><li>
+<p>Record Time to live (optional)</p>
+</li></ul>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+133
+134
+135
+136
+137
+138
+139
+140
+141</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/IO/MetadataComponent.rb', line 133</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_set_request_uuid'>set_request_uuid</span><span class='lparen'>(</span><span class='id identifier rubyid_input_uuid_byte_string'>input_uuid_byte_string</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+  <span class='ivar'>@request_uuid</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_input_uuid_byte_string'>input_uuid_byte_string</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+                    <span class='const'>UUIDTools</span><span class='op'>::</span><span class='const'>UUID</span><span class='period'>.</span><span class='id identifier rubyid_random_create'>random_create</span>
+                  <span class='kw'>else</span>
+                    <span class='const'>UUIDTools</span><span class='op'>::</span><span class='const'>UUID</span><span class='period'>.</span><span class='id identifier rubyid_parse_raw'>parse_raw</span><span class='lparen'>(</span><span class='id identifier rubyid_input_uuid_byte_string'>input_uuid_byte_string</span><span class='rparen'>)</span>
+                  <span class='kw'>end</span>
+  <span class='id identifier rubyid_add_field'>add_field</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="MetadataComponent/MetadataField.html" title="Juno::IO::MetadataComponent::MetadataField (class)">MetadataField</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="MetadataComponent/MetadataField.html#initialize-instance_method" title="Juno::IO::MetadataComponent::MetadataField#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='int'>0x05</span><span class='comma'>,</span> <span class='int'>0x03</span><span class='comma'>,</span> <span class='ivar'>@request_uuid</span><span class='period'>.</span><span class='id identifier rubyid_raw'>raw</span><span class='rparen'>)</span><span class='rparen'>)</span>
+  <span class='ivar'>@request_uuid</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="set_source_info-instance_method">
+  
+    #<strong>set_source_info</strong>(app_name:, ip:, port:)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>SourceInfoField</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>app_name</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><ul><li>
+<p>Record Time to live (required)</p>
+</li></ul>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>ip</span>
+      
+      
+        <span class='type'>(<tt>IPAddr</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><ul><li>
+<p>ip address for component (required)</p>
+</li></ul>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>port</span>
+      
+      
+        <span class='type'>(<tt>Integer</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>(required)</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/IO/MetadataComponent.rb', line 147</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_set_source_info'>set_source_info</span><span class='lparen'>(</span><span class='label'>app_name:</span><span class='comma'>,</span> <span class='label'>ip:</span><span class='comma'>,</span> <span class='label'>port:</span><span class='rparen'>)</span>
+  <span class='ivar'>@ip</span> <span class='op'>=</span> <span class='id identifier rubyid_ip'>ip</span>
+  <span class='ivar'>@port</span> <span class='op'>=</span> <span class='id identifier rubyid_port'>port</span>
+  <span class='ivar'>@app_name</span> <span class='op'>=</span> <span class='id identifier rubyid_app_name'>app_name</span>
+  <span class='id identifier rubyid_data'>data</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="MetadataComponentTemplate.html" title="Juno::IO::MetadataComponentTemplate (class)">MetadataComponentTemplate</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="MetadataComponentTemplate/SourceInfoField.html" title="Juno::IO::MetadataComponentTemplate::SourceInfoField (class)">SourceInfoField</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+  <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_app_name'>app_name</span> <span class='op'>=</span> <span class='id identifier rubyid_app_name'>app_name</span>
+  <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_ip'>ip</span> <span class='op'>=</span> <span class='id identifier rubyid_ip'>ip</span><span class='period'>.</span><span class='id identifier rubyid_hton'>hton</span>
+  <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_port'>port</span> <span class='op'>=</span> <span class='id identifier rubyid_port'>port</span>
+  <span class='id identifier rubyid_str_io'>str_io</span> <span class='op'>=</span> <span class='const'>StringIO</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+  <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_write'>write</span><span class='lparen'>(</span><span class='id identifier rubyid_str_io'>str_io</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_add_field'>add_field</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="MetadataComponent/MetadataField.html" title="Juno::IO::MetadataComponent::MetadataField (class)">MetadataField</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="MetadataComponent/MetadataField.html#initialize-instance_method" title="Juno::IO::MetadataComponent::MetadataField#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='int'>0x06</span><span class='comma'>,</span> <span class='int'>0x00</span><span class='comma'>,</span> <span class='id identifier rubyid_str_io'>str_io</span><span class='period'>.</span><span class='id identifier rubyid_string'>string</span><span class='rparen'>)</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="set_time_to_live-instance_method">
+  
+    #<strong>set_time_to_live</strong>(ttl)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>ttl</span>
+      
+      
+        <span class='type'>(<tt>Integer</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><ul><li>
+<p>Record Time to live</p>
+</li></ul>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>ArgumentError</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+102
+103
+104
+105
+106
+107
+108
+109</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/IO/MetadataComponent.rb', line 102</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_set_time_to_live'>set_time_to_live</span><span class='lparen'>(</span><span class='id identifier rubyid_ttl'>ttl</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_ttl'>ttl</span> <span class='op'>=</span> <span class='id identifier rubyid_ttl'>ttl</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span>
+  <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>TTL should be &gt; 0</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_ttl'>ttl</span><span class='period'>.</span><span class='id identifier rubyid_positive?'>positive?</span>
+
+  <span class='ivar'>@time_to_live</span> <span class='op'>=</span> <span class='id identifier rubyid_ttl'>ttl</span>
+  <span class='id identifier rubyid_ttl'>ttl</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_ttl'>ttl</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_pack'>pack</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="OffsetWidth.html" title="Juno::IO::OffsetWidth (class)">OffsetWidth</a></span></span><span class='period'>.</span><span class='const'>UINT32</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_add_field'>add_field</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="MetadataComponent/MetadataField.html" title="Juno::IO::MetadataComponent::MetadataField (class)">MetadataField</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="MetadataComponent/MetadataField.html#initialize-instance_method" title="Juno::IO::MetadataComponent::MetadataField#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='int'>0x01</span><span class='comma'>,</span> <span class='int'>0x01</span><span class='comma'>,</span> <span class='id identifier rubyid_ttl'>ttl</span><span class='rparen'>)</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="set_version-instance_method">
+  
+    #<strong>set_version</strong>(data)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>version</span>
+      
+      
+        <span class='type'>(<tt>Integer</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><ul><li>
+<p>Record version</p>
+</li></ul>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+112
+113
+114
+115
+116</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/IO/MetadataComponent.rb', line 112</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_set_version'>set_version</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='rparen'>)</span>
+  <span class='ivar'>@version</span> <span class='op'>=</span> <span class='id identifier rubyid_data'>data</span>
+  <span class='id identifier rubyid_version_bytes_string'>version_bytes_string</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_data'>data</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_pack'>pack</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="OffsetWidth.html" title="Juno::IO::OffsetWidth (class)">OffsetWidth</a></span></span><span class='period'>.</span><span class='const'>UINT32</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_add_field'>add_field</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="MetadataComponent/MetadataField.html" title="Juno::IO::MetadataComponent::MetadataField (class)">MetadataField</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="MetadataComponent/MetadataField.html#initialize-instance_method" title="Juno::IO::MetadataComponent::MetadataField#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='int'>0x02</span><span class='comma'>,</span> <span class='int'>0x01</span><span class='comma'>,</span> <span class='id identifier rubyid_version_bytes_string'>version_bytes_string</span><span class='rparen'>)</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="write-instance_method">
+  
+    #<strong>write</strong>(io)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Function to serialize Component to buffer</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>io</span>
+      
+      
+        <span class='type'>(<tt>StringIO</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>(required)</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/IO/MetadataComponent.rb', line 215</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_write'>write</span><span class='lparen'>(</span><span class='id identifier rubyid_io'>io</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_buffer'>buffer</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="MetadataComponentTemplate.html" title="Juno::IO::MetadataComponentTemplate (class)">MetadataComponentTemplate</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+  <span class='id identifier rubyid_buffer'>buffer</span><span class='period'>.</span><span class='id identifier rubyid_number_of_fields'>number_of_fields</span> <span class='op'>=</span> <span class='id identifier rubyid_metadata_field_list'>metadata_field_list</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span>
+  <span class='id identifier rubyid_metadata_field_list'>metadata_field_list</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_field'>field</span><span class='op'>|</span>
+    <span class='id identifier rubyid_f'>f</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="MetadataComponentTemplate.html" title="Juno::IO::MetadataComponentTemplate (class)">MetadataComponentTemplate</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="MetadataComponentTemplate/MetadataHeaderField.html" title="Juno::IO::MetadataComponentTemplate::MetadataHeaderField (class)">MetadataHeaderField</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+    <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_size_type'>size_type</span> <span class='op'>=</span> <span class='id identifier rubyid_field'>field</span><span class='period'>.</span><span class='id identifier rubyid_size_type'>size_type</span>
+    <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_field_tag'>field_tag</span> <span class='op'>=</span> <span class='id identifier rubyid_field'>field</span><span class='period'>.</span><span class='id identifier rubyid_tag'>tag</span>
+    <span class='id identifier rubyid_buffer'>buffer</span><span class='period'>.</span><span class='id identifier rubyid_metadata_fields'>metadata_fields</span><span class='period'>.</span><span class='id identifier rubyid_push'>push</span><span class='lparen'>(</span><span class='id identifier rubyid_f'>f</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_body'>body</span> <span class='op'>=</span> <span class='const'>StringIO</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+  <span class='id identifier rubyid_metadata_field_list'>metadata_field_list</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_field'>field</span><span class='op'>|</span>
+    <span class='id identifier rubyid_body'>body</span><span class='period'>.</span><span class='id identifier rubyid_write'>write</span><span class='lparen'>(</span><span class='id identifier rubyid_field'>field</span><span class='period'>.</span><span class='id identifier rubyid_data'>data</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+  <span class='id identifier rubyid_padding_size'>padding_size</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='int'>8</span> <span class='op'>-</span> <span class='id identifier rubyid_body'>body</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span> <span class='op'>%</span> <span class='int'>8</span><span class='rparen'>)</span> <span class='op'>%</span> <span class='int'>8</span>
+  <span class='id identifier rubyid_body'>body</span><span class='period'>.</span><span class='id identifier rubyid_write'>write</span><span class='lparen'>(</span><span class='const'>Array</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='int'>0</span><span class='comma'>,</span> <span class='id identifier rubyid_padding_size'>padding_size</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_pack'>pack</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="OffsetWidth.html" title="Juno::IO::OffsetWidth (class)">OffsetWidth</a></span></span><span class='period'>.</span><span class='const'>UINT8</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>*</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='rparen'>)</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_padding_size'>padding_size</span><span class='period'>.</span><span class='id identifier rubyid_positive?'>positive?</span>
+  <span class='id identifier rubyid_buffer'>buffer</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span> <span class='op'>=</span> <span class='id identifier rubyid_body'>body</span><span class='period'>.</span><span class='id identifier rubyid_string'>string</span>
+
+  <span class='id identifier rubyid_buffer'>buffer</span><span class='period'>.</span><span class='id identifier rubyid_write'>write</span><span class='lparen'>(</span><span class='id identifier rubyid_io'>io</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+      <div id="footer">
+  Generated on Fri Aug 11 11:39:56 2023 by
+  <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.34 (ruby-3.0.0).
+</div>
+
+    </div>
+  </body>
+</html>
