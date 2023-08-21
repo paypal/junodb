@@ -31,6 +31,7 @@ import (
 	"juno/pkg/client"
 	"juno/pkg/cmd"
 	"juno/pkg/etcd"
+	"juno/pkg/util"
 )
 
 const (
@@ -78,7 +79,10 @@ func (c *cmdRuntimeConfig) Parse(args []string) (err error) {
 			return
 		}
 	}
-	c.clientConfig.SetDefault()
+	c.clientConfig.DefaultTimeToLive = 1800
+	c.clientConfig.ConnPoolSize = 1
+	c.clientConfig.ConnectTimeout = util.Duration{1000 * time.Millisecond}
+	c.clientConfig.ResponseTimeout = util.Duration{1000 * time.Millisecond}
 
 	if cfg, e := c.config.GetConfig("Juno"); e == nil {
 		cfg.WriteTo(&c.clientConfig)

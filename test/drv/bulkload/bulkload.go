@@ -74,13 +74,9 @@ func (c *CmdLine) Init(server string, ns string, prefix string, payloadLen int, 
 
 	var err error
 	c.clientCfg = client.Config{
-		RetryCount:         1,
-		DefaultTimeToLive:  ttl,
-		ConnectTimeout:     Duration{500 * time.Millisecond},
-		ReadTimeout:        Duration{500 * time.Millisecond},
-		WriteTimeout:       Duration{500 * time.Millisecond},
-		RequestTimeout:     Duration{500 * time.Millisecond},
-		ConnRecycleTimeout: Duration{300 * time.Second},
+		DefaultTimeToLive: ttl,
+		ConnectTimeout:    Duration{500 * time.Millisecond},
+		ResponseTimeout:   Duration{500 * time.Millisecond},
 	}
 	c.clientCfg.Server.Addr = server
 	c.clientCfg.Appname = "bulkload"

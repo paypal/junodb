@@ -20,9 +20,13 @@
 package cli
 
 import (
+	"crypto/tls"
 	"io"
+
+	"math/rand"
 	"net"
 	"os"
+	"sync/atomic"
 	"syscall"
 	"time"
 
@@ -41,6 +45,14 @@ type (
 		beingRecycle     bool
 	}
 )
+
+var (
+	connCount int64
+)
+
+func init() {
+	rand.Seed(time.Now().UTC().UnixNano())
+}
 
 func (c *Connection) Close() {
 	if c.conn != nil {
@@ -72,6 +84,8 @@ func (c *Connection) Shutdown() {
 			c.conn.Close()
 		}
 		c.conn = nil
+		c.beingRecycle = false
+		glog.Debugf("Close connCount=%d", atomic.AddInt64(&connCount, -1))
 	}
 }
 
@@ -137,53 +151,79 @@ func startResponseReader(r io.ReadCloser) <-chan *ReaderResponse {
 func StartRequestProcessor(
 	server junoio.ServiceEndpoint,
 	sourceName string,
+	connDone chan<- bool,
+	connIndex int,
 	connectTimeout time.Duration,
-	requestTimeout time.Duration,
-	connRecycleTimeout time.Duration,
+	responseTimeout time.Duration,
+	getTLSConfig func() *tls.Config,
 	chDone <-chan bool,
 	chRequest <-chan *RequestContext) (chProcessorDone <-chan bool) {
 
 	ch := make(chan bool)
-	go doRequestProcess(server, sourceName, connectTimeout, requestTimeout, connRecycleTimeout, chDone, ch, chRequest)
+	go doRequestProcess(server, sourceName, connDone, connIndex,
+		connectTimeout, responseTimeout, getTLSConfig, chDone, ch, chRequest)
+
 	return ch
+}
+
+func resetRecycleTimer(
+	server junoio.ServiceEndpoint,
+	connIndex int,
+	responseTimeout time.Duration,
+	connRecycleTimer *util.TimerWrapper) {
+	if connRecycleTimeout <= 0 {
+		return
+	}
+
+	t := connRecycleTimeout
+	// Reduced by a random value between 0 to 20%.
+	t = t * time.Duration(1000-rand.Intn(200)) / 1000
+	if t < 2*responseTimeout {
+		t = 2 * responseTimeout
+	}
+	glog.Debugf("connection=%d addr=%s", connIndex, server.Addr)
+	connRecycleTimer.Reset(t)
 }
 
 func doRequestProcess(
 	server junoio.ServiceEndpoint,
 	sourceName string,
+	connDone chan<- bool,
+	connIndex int,
 	connectTimeout time.Duration,
-	requestTimeout time.Duration,
-	connRecycleTimeout time.Duration,
+	responseTimeout time.Duration,
+	getTLSConfig func() *tls.Config,
 	chDone <-chan bool,
 	chDoneNotify chan<- bool,
 	chRequest <-chan *RequestContext) {
 
-	if connRecycleTimeout != 0 {
-		if connRecycleTimeout < requestTimeout+requestTimeout {
-			connRecycleTimeout = requestTimeout + requestTimeout
-			glog.Infof("conntion recycle timeout adjusted to be %s", connRecycleTimeout)
-		}
-	}
+	glog.Debugf("Start connection %d", connIndex)
+
 	connRecycleTimer := util.NewTimerWrapper(connRecycleTimeout)
 	active := &Connection{}
 	recycled := &Connection{}
 
-	connect := func() (err error) {
+	connect := func() error {
 		var conn net.Conn
-		conn, err = junoio.Connect(&server, connectTimeout)
+		var err error
+		if server.SSLEnabled && getTLSConfig != nil {
+			conn, err = Dial(server.Addr, connectTimeout, getTLSConfig)
+		} else {
+			conn, err = junoio.Connect(&server, connectTimeout)
+		}
 		if err != nil {
-			return
+			return err
 		}
 		active.conn = conn
-		active.tracker = newPendingTracker(requestTimeout)
+		active.tracker = newPendingTracker(responseTimeout)
 		active.chReaderResponse = startResponseReader(conn)
-		if connRecycleTimeout != 0 {
-			glog.Debugf("connection recycle in %s", connRecycleTimeout)
-			connRecycleTimer.Reset(connRecycleTimeout)
-		} else {
-			glog.Debugf("connection won't be recycled")
-		}
-		return
+		resetRecycleTimer(
+			server,
+			connIndex,
+			responseTimeout,
+			connRecycleTimer)
+		glog.Debugf("Open connCount=%d", atomic.AddInt64(&connCount, 1))
+		return nil
 	}
 
 	var sequence uint32
@@ -191,24 +231,37 @@ func doRequestProcess(
 
 	var err error
 	connect()
+	connDone <- true
 
-loop:
 	for {
 		select {
 		case <-chDone:
 			glog.Verbosef("proc done channel got notified")
-			active.Shutdown()
-			break loop
+			active.Shutdown() ///TODO to revisit
+			return
 		case _, ok := <-connRecycleTimer.GetTimeoutCh():
+			connRecycleTimer.Stop()
 			if ok {
 				glog.Debug("connection recycle timer fired")
-				connRecycleTimer.Stop()
+				recycled.Shutdown()
 				recycled = active
-				recycled.beingRecycle = true
 				active = &Connection{}
 				err = connect()
 				if err != nil {
 					glog.Error(err)
+					active = recycled // reuse current one.
+					recycled = &Connection{}
+					resetRecycleTimer(
+						server,
+						connIndex,
+						responseTimeout,
+						connRecycleTimer)
+				} else {
+					recycled.beingRecycle = true
+					if recycled.tracker != nil &&
+						len(recycled.tracker.pendingQueue) == 0 {
+						recycled.Shutdown()
+					}
 				}
 			} else {
 				glog.Errorf("connection recycle timer not ok")
@@ -224,7 +277,7 @@ loop:
 			if ok {
 				recycled.tracker.OnTimeout(now)
 				if len(recycled.tracker.pendingQueue) == 0 {
-					glog.Debugf("close write for the recybled connection as it has handled all the pending request(s)")
+					// close write for the recybled connection as it has handled all the pending request(s)")
 					recycled.Shutdown()
 				} else {
 					glog.Debugf("being recycled request timeout")
@@ -235,10 +288,10 @@ loop:
 			}
 
 		case r, ok := <-chRequest:
-			if !ok { // shouldn't happen as it won't be closed
-				break loop
+			if !ok { // shouldn't happen
+				continue // ignore
 			}
-			glog.Verbosef("processor got request")
+			glog.Debugf("connection %d got request", connIndex)
 			var err error
 
 			if active.conn == nil {
@@ -250,14 +303,14 @@ loop:
 				req := r.GetRequest()
 				if req == nil {
 					glog.Error("nil request")
-					return
+					continue // ignore
 				}
 				req.SetSource(saddr.IP, uint16(saddr.Port), []byte(sourceName))
 				sequence++
 				var raw proto.RawMessage
 				if err = req.Encode(&raw); err != nil {
 					glog.Errorf("encoding error %s", err)
-					return
+					continue // ignore
 				}
 				raw.SetOpaque(sequence)
 
@@ -268,7 +321,8 @@ loop:
 					active.Close()
 				}
 			} else {
-				r.ReplyError(err)
+				ErrConnect.SetError(err.Error())
+				r.ReplyError(ErrConnect)
 			}
 		case readerResp, ok := <-active.chReaderResponse:
 			if ok {
