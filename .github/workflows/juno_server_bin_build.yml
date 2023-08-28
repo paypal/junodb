@@ -23,7 +23,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - name: Get code
-        uses: actions/checkout@v3.5.2
+        uses: actions/checkout@v3.6.0
       - name: Install golang
         uses: actions/setup-go@v4.0.1
         with:
