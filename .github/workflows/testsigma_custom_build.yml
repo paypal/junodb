@@ -48,15 +48,18 @@ jobs:
         run: |
             sed -i 's/SSHosts = \[.*\]/SSHosts = \["junodb-storageserv-staging-0"\]/' docker/service/junoclustercfg/config.toml
             sed -i 's/Endpoints = \[.*\]/Endpoints = \["junodb-etcd-staging-service:2379"\]/' docker/service/junoclustercfg/config.toml
-            cat docker/service/junoclustercfg/config.toml
 
             sed -i 's/Endpoints = \[.*\]/Endpoints = \["junodb-etcd-staging-service:2379"\]/' docker/service/junostorageserv/config.toml
-            cat docker/service/junostorageserv/config.toml
 
             sed -i 's/Endpoints = \[.*\]/Endpoints = \["junodb-etcd-staging-service:2379"\]/' docker/service/junoserv/config.toml
-            cat docker/service/junoserv/config.toml
 
             sed -i 's/MaxKeyLength = 128/MaxKeyLength = 4096/' docker/service/junoserv/default.toml
+      
+      - name: Print config.toml properties
+        run: |
+            cat docker/service/junoclustercfg/config.toml
+            cat docker/service/junostorageserv/config.toml
+            cat docker/service/junoserv/config.toml
             cat docker/service/junoserv/default.toml
 
       - name: Docker Version Check
