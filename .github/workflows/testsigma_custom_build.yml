@@ -1,0 +1,140 @@
+name: JunoDB Testsigma Custom Build
+
+on:
+  workflow_dispatch:
+    inputs:
+      Environment:
+        description: 'Environment'
+        required: true
+        type: choice
+        options:
+          - production
+          - staging
+
+jobs:
+  build-juno-docker:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get code
+        uses: actions/checkout@v3.5.2
+
+      - name: SSH repo access
+        uses: webfactory/ssh-agent@v0.5.4
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY}}
+      
+      - name: Set environment variables
+        run: |
+          echo "AWS_DEFAULT_REGION=us-east-1" >> $GITHUB_ENV
+          echo "AWS_DEFAULT_OUTPUT=json" >> $GITHUB_ENV
+          if [[ ${{ github.event.inputs.Environment }} == production ]]; then
+            echo "AWS_ACCESS_KEY_ID=${{ secrets.APP_AWS_ACCESS_KEY_ID }}" >> $GITHUB_ENV
+            echo "AWS_SECRET_ACCESS_KEY=${{ secrets.APP_AWS_SECRET_ACCESS_KEY }}" >> $GITHUB_ENV
+            echo "BUCKET=static.testsigma.com" >> $GITHUB_ENV
+            echo "REPO_NAME=junodb-production" >> $GITHUB_ENV
+          else
+            echo "AWS_ACCESS_KEY_ID=${{ secrets.STAGING_AWS_ACCESS_KEY_ID }}" >> $GITHUB_ENV
+            echo "AWS_SECRET_ACCESS_KEY=${{ secrets.STAGING_AWS_SECRET_ACCESS_KEY }}" >> $GITHUB_ENV
+            echo "BUCKET=static-staging.testsigma.com" >> $GITHUB_ENV
+            echo "REPO_NAME=junodb-staging" >> $GITHUB_ENV
+            echo "ECR_URL=689825544450.dkr.ecr.us-east-1.amazonaws.com" >> $GITHUB_ENV
+          fi
+  
+      - name: Check openssl version dependencies
+        run: |
+          echo "Openssl Version:" `openssl version`
+    
+      - name: Replace config.toml properties
+        run: |
+            sed -i 's/SSHosts = \[.*\]/SSHosts = \["junodb-storageserv-staging-0"\]/' docker/service/junoclustercfg/config.toml
+            sed -i 's/Endpoints = \[.*\]/Endpoints = \["junodb-etcd-staging-service:2379"\]/' docker/service/junoclustercfg/config.toml
+            cat docker/service/junoclustercfg/config.toml
+
+            sed -i 's/Endpoints = \[.*\]/Endpoints = \["junodb-etcd-staging-service:2379"\]/' docker/service/junostorageserv/config.toml
+            cat docker/service/junostorageserv/config.toml
+
+            sed -i 's/Endpoints = \[.*\]/Endpoints = \["junodb-etcd-staging-service:2379"\]/' docker/service/junoserv/config.toml
+            cat docker/service/junoserv/config.toml
+
+            sed -i 's/MaxKeyLength = 128/MaxKeyLength = 4096/' docker/service/junoserv/default.toml
+            cat docker/service/junoserv/default.toml
+
+      - name: Docker Version Check
+        run: docker version
+
+      - name: Build docker containers
+        run: | 
+          docker/build.sh
+
+      - name: Print Juno Docker Images/containers Status
+        run: |
+          docker images ls
+          docker container ls
+    
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+            aws-access-key-id: ${{ env.AWS_ACCESS_KEY_ID }}
+            aws-secret-access-key: ${{ env.AWS_SECRET_ACCESS_KEY }}
+            aws-region: ${{ env.AWS_DEFAULT_REGION }}
+    
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+        
+      - name: Push docker image to Amazon ECR
+        run: |  
+            GIT_HASH=`git rev-parse --short HEAD`
+            echo $GIT_HASH
+            
+            docker tag ghcr.io/paypal/junodb/junoclusterserv:latest ${{ env.ECR_URL }}/junodb-etcd-${{ env.REPO_NAME }}:latest
+            docker push ${{ env.ECR_URL }}/junodb-etcd-${{ env.REPO_NAME }}:latest
+
+            docker tag ghcr.io/paypal/junodb/junoclustercfg:latest ${{ env.ECR_URL }}/junodb-clustercfg-${{ env.REPO_NAME }}:latest
+            docker push ${{ env.ECR_URL }}/junodb-clustercfg-${{ env.REPO_NAME }}:latest
+
+            docker tag ghcr.io/paypal/junodb/junostorageserv:latest ${{ env.ECR_URL }}/junodb-storageserv-${{ env.REPO_NAME }}:latest
+            docker push ${{ env.ECR_URL }}/junodb-storageserv-${{ env.REPO_NAME }}:latest
+
+            docker tag ghcr.io/paypal/junodb/proxy:latest ${{ env.ECR_URL }}/junodb-proxy-${{ env.REPO_NAME }}:latest
+            docker push ${{ env.ECR_URL }}/junodb-proxy-${{ env.REPO_NAME }}:latest
+
+      - name: Commit in devops helm repo
+        run: |
+            set -xs
+            
+            sudo wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64
+            sudo chmod a+x /usr/local/bin/yq
+            
+            ENVIRONMENT=${{ github.event.inputs.Environment }}
+            
+            APP_CURRENT_GIT_HASH=`git rev-parse --short HEAD`
+            git clone git@github.com:TestsigmaInc/devops-helm.git
+            cd devops-helm
+
+            if [[ "$ENVIRONMENT" == "production"* ]]; then
+                git checkout main
+                GIT_BRANCH=main
+            elif [[ "$ENVIRONMENT" == "staging"* ]]; then
+                git checkout staging
+                GIT_BRANCH=staging
+            VALUES_FILE=${{ github.event.inputs.Environment }}-values.yaml
+
+            cd testsigma-junodb
+            APP_PREV_GIT_HASH=$(yq '.Deployments.junodb.containers.version' $VALUES_FILE)
+            echo 'App Current git hash ...... $APP_CURRENT_GIT_HASH' 
+            echo 'App Previous git hash ...... $APP_PREV_GIT_HASH'
+
+            if [[ $APP_PREV_GIT_HASH == tag-$APP_CURRENT_GIT_HASH ]]; then
+                echo "Previous deployed and current build hash are equals, so there is no code change detected...Skipping deployment"
+                exit 0
+            else
+                yq e -i '.Deployments.junodb.containers.version = "'tag-$APP_CURRENT_GIT_HASH'"' $VALUES_FILE
+                yq e -i '.configMap.webapp.nginx.servername.junodb.proxyPass = "'$APP_CURRENT_GIT_HASH'"' $VALUES_FILE
+                git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+                git config --global user.name "${{ github.actor }}"
+                git add .
+                git commit -a -m "Updated junodb server build version for deployment"
+                git push origin $GIT_BRANCH
+            fi
+        
