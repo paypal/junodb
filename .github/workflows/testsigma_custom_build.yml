@@ -31,12 +31,12 @@ jobs:
             echo "AWS_ACCESS_KEY_ID=${{ secrets.APP_AWS_ACCESS_KEY_ID }}" >> $GITHUB_ENV
             echo "AWS_SECRET_ACCESS_KEY=${{ secrets.APP_AWS_SECRET_ACCESS_KEY }}" >> $GITHUB_ENV
             echo "BUCKET=static.testsigma.com" >> $GITHUB_ENV
-            echo "REPO_NAME=junodb-production" >> $GITHUB_ENV
+            echo "REPO_NAME=production" >> $GITHUB_ENV
           else
             echo "AWS_ACCESS_KEY_ID=${{ secrets.STAGING_AWS_ACCESS_KEY_ID }}" >> $GITHUB_ENV
             echo "AWS_SECRET_ACCESS_KEY=${{ secrets.STAGING_AWS_SECRET_ACCESS_KEY }}" >> $GITHUB_ENV
             echo "BUCKET=static-staging.testsigma.com" >> $GITHUB_ENV
-            echo "REPO_NAME=junodb-staging" >> $GITHUB_ENV
+            echo "REPO_NAME=staging" >> $GITHUB_ENV
             echo "ECR_URL=689825544450.dkr.ecr.us-east-1.amazonaws.com" >> $GITHUB_ENV
           fi
   
