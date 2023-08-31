@@ -91,16 +91,24 @@ jobs:
             echo $GIT_HASH
             
             docker tag ghcr.io/paypal/junodb/junoclusterserv:latest ${{ env.ECR_URL }}/junodb-etcd-${{ env.REPO_NAME }}:latest
+            docker tag ghcr.io/paypal/junodb/junoclusterserv:latest ${{ env.ECR_URL }}/junodb-etcd-${{ env.REPO_NAME }}:tag-$GIT_HASH
             docker push ${{ env.ECR_URL }}/junodb-etcd-${{ env.REPO_NAME }}:latest
+            docker push ${{ env.ECR_URL }}/junodb-etcd-${{ env.REPO_NAME }}:tag-$GIT_HASH
 
             docker tag ghcr.io/paypal/junodb/junoclustercfg:latest ${{ env.ECR_URL }}/junodb-clustercfg-${{ env.REPO_NAME }}:latest
+            docker tag ghcr.io/paypal/junodb/junoclustercfg:latest ${{ env.ECR_URL }}/junodb-clustercfg-${{ env.REPO_NAME }}:tag-$GIT_HASH
             docker push ${{ env.ECR_URL }}/junodb-clustercfg-${{ env.REPO_NAME }}:latest
+            docker push ${{ env.ECR_URL }}/junodb-clustercfg-${{ env.REPO_NAME }}:tag-$GIT_HASH
 
             docker tag ghcr.io/paypal/junodb/junostorageserv:latest ${{ env.ECR_URL }}/junodb-storageserv-${{ env.REPO_NAME }}:latest
+            docker tag ghcr.io/paypal/junodb/junostorageserv:latest ${{ env.ECR_URL }}/junodb-storageserv-${{ env.REPO_NAME }}:tag-$GIT_HASH
             docker push ${{ env.ECR_URL }}/junodb-storageserv-${{ env.REPO_NAME }}:latest
+            docker push ${{ env.ECR_URL }}/junodb-storageserv-${{ env.REPO_NAME }}:tag-$GIT_HASH
 
             docker tag ghcr.io/paypal/junodb/junoserv:latest ${{ env.ECR_URL }}/junodb-proxy-${{ env.REPO_NAME }}:latest
+            docker tag ghcr.io/paypal/junodb/junoserv:latest ${{ env.ECR_URL }}/junodb-proxy-${{ env.REPO_NAME }}:tag-$GIT_HASH
             docker push ${{ env.ECR_URL }}/junodb-proxy-${{ env.REPO_NAME }}:latest
+            docker push ${{ env.ECR_URL }}/junodb-proxy-${{ env.REPO_NAME }}:tag-$GIT_HASH
 
       - name: Commit in devops helm repo
         run: |
