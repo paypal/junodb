@@ -99,7 +99,7 @@ jobs:
             docker tag ghcr.io/paypal/junodb/junostorageserv:latest ${{ env.ECR_URL }}/junodb-storageserv-${{ env.REPO_NAME }}:latest
             docker push ${{ env.ECR_URL }}/junodb-storageserv-${{ env.REPO_NAME }}:latest
 
-            docker tag ghcr.io/paypal/junodb/proxy:latest ${{ env.ECR_URL }}/junodb-proxy-${{ env.REPO_NAME }}:latest
+            docker tag ghcr.io/paypal/junodb/junoserv:latest ${{ env.ECR_URL }}/junodb-proxy-${{ env.REPO_NAME }}:latest
             docker push ${{ env.ECR_URL }}/junodb-proxy-${{ env.REPO_NAME }}:latest
 
       - name: Commit in devops helm repo
