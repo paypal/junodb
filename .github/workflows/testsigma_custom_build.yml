@@ -131,8 +131,8 @@ jobs:
                 GIT_BRANCH=staging
             VALUES_FILE=${{ github.event.inputs.Environment }}-values.yaml
 
-            cd testsigma-junodb
-            APP_PREV_GIT_HASH=$(yq '.Deployments.junodb.containers.version' $VALUES_FILE)
+            cd junodb-primary
+            APP_PREV_GIT_HASH=$(yq '.Deployments.etcd.containers.version' $VALUES_FILE)
             echo 'App Current git hash ...... $APP_CURRENT_GIT_HASH' 
             echo 'App Previous git hash ...... $APP_PREV_GIT_HASH'
 
@@ -140,8 +140,11 @@ jobs:
                 echo "Previous deployed and current build hash are equals, so there is no code change detected...Skipping deployment"
                 exit 0
             else
-                yq e -i '.Deployments.junodb.containers.version = "'tag-$APP_CURRENT_GIT_HASH'"' $VALUES_FILE
-                yq e -i '.configMap.webapp.nginx.servername.junodb.proxyPass = "'$APP_CURRENT_GIT_HASH'"' $VALUES_FILE
+                yq e -i '.Deployments.etcd.containers.version = "'tag-$APP_CURRENT_GIT_HASH'"' $VALUES_FILE
+                yq e -i '.Deployments.clustercfg.containers.version = "'tag-$APP_CURRENT_GIT_HASH'"' $VALUES_FILE
+                yq e -i '.Deployments.storageserv.containers.version = "'tag-$APP_CURRENT_GIT_HASH'"' $VALUES_FILE
+                yq e -i '.Deployments.proxy.containers.version = "'tag-$APP_CURRENT_GIT_HASH'"' $VALUES_FILE
+                yq e -i '.configMap.junodb.nginx.servername.etcd.proxyPass = "'$APP_CURRENT_GIT_HASH'"' $VALUES_FILE
                 git config --global user.email "${{ github.actor }}@users.noreply.github.com"
                 git config --global user.name "${{ github.actor }}"
                 git add .
