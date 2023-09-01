@@ -19,6 +19,7 @@
 #  
 
 set -e
+set -x
 
 prefix=/opt/juno
 
