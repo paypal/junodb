@@ -23,7 +23,7 @@ RootDir = "/opt/juno"
 DbScanPort=26983
 DbWatchEnabled=true
 [Etcd]
-  Endpoints=["etcd:2379"]
+  Endpoints=["junodb-etcd-staging-service:2379"]
 
 [Cal]
   Enabled = false

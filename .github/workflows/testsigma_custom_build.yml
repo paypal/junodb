@@ -44,16 +44,16 @@ jobs:
         run: |
           echo "Openssl Version:" `openssl version`
     
-      - name: Replace config.toml properties
-        run: |
-            sed -i 's/SSHosts = \[.*\]/SSHosts = \["junodb-storageserv-staging-0"\]/' docker/service/junoclustercfg/config.toml
-            sed -i 's/Endpoints = \[.*\]/Endpoints = \["junodb-etcd-staging-service:2379"\]/' docker/service/junoclustercfg/config.toml
+      # - name: Replace config.toml properties
+      #   run: |
+      #       sed -i 's/SSHosts = \[.*\]/SSHosts = \["junodb-storageserv-staging-0"\]/' docker/service/junoclustercfg/config.toml
+      #       sed -i 's/Endpoints = \[.*\]/Endpoints = \["junodb-etcd-staging-service:2379"\]/' docker/service/junoclustercfg/config.toml
 
-            sed -i 's/Endpoints=\[.*\]/Endpoints=\["junodb-etcd-staging-service:2379"\]/' docker/service/junostorageserv/config.toml
+      #       sed -i 's/Endpoints=\[.*\]/Endpoints=\["junodb-etcd-staging-service:2379"\]/' docker/service/junostorageserv/config.toml
 
-            sed -i 's/Endpoints=\[.*\]/Endpoints=\["junodb-etcd-staging-service:2379"\]/' docker/service/junoserv/config.toml
+      #       sed -i 's/Endpoints=\[.*\]/Endpoints=\["junodb-etcd-staging-service:2379"\]/' docker/service/junoserv/config.toml
 
-            sed -i 's/MaxKeyLength = 128/MaxKeyLength = 4096/' docker/service/junoserv/default.toml
+      #       sed -i 's/MaxKeyLength = 128/MaxKeyLength = 4096/' docker/service/junoserv/default.toml
       
       - name: Print config.toml properties
         run: |
