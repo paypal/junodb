@@ -144,8 +144,8 @@ jobs:
           else
               yq e -i '.Deployments.etcd.containers.version = "tag-'$APP_CURRENT_GIT_HASH'"' "$VALUES_FILE"
               yq e -i '.Deployments.clustercfg.containers.version = "tag-'$APP_CURRENT_GIT_HASH'"' "$VALUES_FILE"
-              yq e -i '.Deployments.storageserv.containers.version = "tag-'$APP_CURRENT_GIT_HASH'"' "$VALUES_FILE"
-              yq e -i '.Deployments.proxy.containers.version = "tag-'$APP_CURRENT_GIT_HASH'"' "$VALUES_FILE"
+              # yq e -i '.Deployments.storageserv.containers.version = "tag-'$APP_CURRENT_GIT_HASH'"' "$VALUES_FILE"
+              # yq e -i '.Deployments.proxy.containers.version = "tag-'$APP_CURRENT_GIT_HASH'"' "$VALUES_FILE"
               yq e -i '.configMap.junodb.nginx.servername.etcd.proxyPass = "'$APP_CURRENT_GIT_HASH'"' "$VALUES_FILE"
               git config --global user.email "${{ github.actor }}@users.noreply.github.com"
               git config --global user.name "${{ github.actor }}"
