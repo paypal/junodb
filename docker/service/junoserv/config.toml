@@ -44,4 +44,4 @@ DefaultTimeToLive = 1800
   Enabled = false
 
 [Etcd]
-  Endpoints=["junodb-etcd-staging-service:2379"]
+  Endpoints=["junodb-etcd-primary-production-service:2379"]
