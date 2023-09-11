@@ -27,7 +27,7 @@ jobs:
       STORAGE_MON_PORT: 8089
     steps:
       - name: Get code
-        uses: actions/checkout@v3.5.2
+        uses: actions/checkout@v4.0.0
       - name: Check openssl version dependencies
         run: |
           echo "Openssl Version:" `openssl version`
