@@ -19,6 +19,9 @@
 
 package cli
 
+
+// For TLS serevr, need to provide server.crt and server.pem.
+// See main_test.go: cert, err := tls.LoadX509KeyPair("./server.crt", "./server.pem")
 var ( // Change ip:port to that of JunoDB proxy service
 	serverAddr    = "127.0.0.1:8080" // TCP 
 	serverTls     = "127.0.0.1:5080" // TLS
