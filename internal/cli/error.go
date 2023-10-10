@@ -19,7 +19,10 @@
 
 package cli
 
-import ()
+import (
+	"errors"
+	"sync"
+)
 
 type IRetryable interface {
 	Retryable() bool
@@ -27,6 +30,20 @@ type IRetryable interface {
 
 type Error struct {
 	What string
+}
+
+var (
+	ErrConnect         = &Error{"connection error"}
+	ErrResponseTimeout = &Error{"response timeout"}
+	rwMutex            sync.RWMutex
+)
+
+func specialError(err error) bool {
+	if errors.Is(err, ErrConnect) ||
+		errors.Is(err, ErrResponseTimeout) {
+		return true
+	}
+	return false
 }
 
 func (e *Error) Retryable() bool { return false }
@@ -38,11 +55,19 @@ type RetryableError struct {
 func (e *RetryableError) Retryable() bool { return true }
 
 func (e *Error) Error() string {
+	rwMutex.RLock()
+	defer rwMutex.RUnlock()
 	return "error: " + e.What
 }
 
 func (e *RetryableError) Error() string {
 	return "error: " + e.What
+}
+
+func (e *Error) SetError(v string) {
+	rwMutex.Lock()
+	e.What = v
+	rwMutex.Unlock()
 }
 
 func NewError(err error) *Error {
@@ -52,7 +77,7 @@ func NewError(err error) *Error {
 }
 
 func NewErrorWithString(err string) *Error {
-	return &Error{err}
+	return &Error{What: err}
 }
 
 /*

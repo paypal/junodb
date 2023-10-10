@@ -143,7 +143,8 @@ func (s *ServerBase) IsUp() bool {
 	if frwk.LOG_DEBUG {
 		glog.DebugInfof("Testing if %s is up", s.Address())
 	}
-	clientProcessor := cli.NewProcessor(io.ServiceEndpoint{Addr: s.Address(), SSLEnabled: s.IsSSLEnabled()}, "testFramework", s.startWaitTime, s.startWaitTime, 0)
+	clientProcessor := cli.NewProcessor(io.ServiceEndpoint{Addr: s.Address(), SSLEnabled: s.IsSSLEnabled()}, "testFramework", 1,
+		s.startWaitTime, s.startWaitTime, nil)
 	clientProcessor.Start()
 	defer clientProcessor.Close()
 	request := &proto.OperationalMessage{}

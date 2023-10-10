@@ -86,12 +86,12 @@ func (p *PendingTracker) OnTimeout(now time.Time) {
 				} else {
 					//				st.cancelFunc()
 					seq := pr.sequence
-					err := fmt.Errorf("request timeout")
+					err := ErrResponseTimeout
 					if _, found := p.mapRequestsSent[seq]; found {
 						req := pr.reqCtx.request
 						if req != nil {
-							glog.Warningf("Timeout <- server: %s elapsed=%d,rid=%s",
-								req.GetOpCode(), now.Sub(pr.timeSent), pr.reqCtx.request.GetRequestIDString())
+							glog.Debugf("Timeout <- server: %s elapsed=%dns,rid=%s",
+								req.GetOpCode(), now.Sub(pr.timeSent).Nanoseconds(), pr.reqCtx.request.GetRequestIDString())
 						}
 						pr.reqCtx.ReplyError(err)
 						delete(p.mapRequestsSent, seq)
@@ -119,7 +119,7 @@ func (p *PendingTracker) OnResonseReceived(readerResp *ReaderResponse) {
 			pending.reqCtx.Reply(resp)
 			pending.reqCtx = nil
 		} else {
-			glog.Warningf("no pending response found. seq:%d,rid=%s\n", connSequence, resp.GetRequestIDString())
+			glog.Debugf("No pending response found. seq:%d,rid=%s", connSequence, resp.GetRequestIDString())
 		}
 	} else {
 		p.responseTimer.Stop() ///TODO

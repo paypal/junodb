@@ -95,9 +95,7 @@ func mainSetup() {
 		Namespace:         "ns",
 		DefaultTimeToLive: 3600,
 		ConnectTimeout:    util.Duration{4000 * time.Millisecond},
-		ReadTimeout:       util.Duration{1500 * time.Millisecond},
-		WriteTimeout:      util.Duration{1500 * time.Millisecond},
-		RequestTimeout:    util.Duration{3000 * time.Millisecond},
+		ResponseTimeout:   util.Duration{3000 * time.Millisecond},
 	}
 	Mockclient = mock.NewMockClient(config.Conf.ClusterInfo.ConnInfo, cliCfg)
 }

@@ -35,6 +35,7 @@ import (
 	"github.com/BurntSushi/toml"
 
 	"juno/cmd/proxy/config"
+	"juno/internal/cli"
 	"juno/pkg/client"
 	"juno/pkg/cluster"
 	"juno/pkg/etcd"
@@ -72,20 +73,12 @@ var (
 	defaultClientConfig = client.Config{
 		DefaultTimeToLive: 1800,
 		ConnectTimeout:    util.Duration{4000 * time.Millisecond},
-		ReadTimeout:       util.Duration{1500 * time.Millisecond},
-		WriteTimeout:      util.Duration{1500 * time.Millisecond},
-		RequestTimeout:    util.Duration{3000 * time.Millisecond},
+		ResponseTimeout:   util.Duration{3000 * time.Millisecond},
 	}
 )
 
 func setup() {
 
-	client.SetDefaultTimeToLive(defaultClientConfig.DefaultTimeToLive)
-	client.SetDefaultTimeout(defaultClientConfig.ConnectTimeout.Duration,
-		defaultClientConfig.ReadTimeout.Duration,
-		defaultClientConfig.WriteTimeout.Duration,
-		defaultClientConfig.RequestTimeout.Duration,
-		defaultClientConfig.ConnRecycleTimeout.Duration)
 	sigs := make(chan os.Signal)
 	signal.Notify(sigs, syscall.SIGINT, syscall.SIGTERM)
 	go func(sigCh chan os.Signal) {
@@ -176,6 +169,7 @@ func TestMain(m *testing.M) {
 		cal.InitWithConfig(&testConfig.CAL)
 	}
 
+	cli.SetConnectRecycleTimeout(time.Duration(0 * time.Second))
 	sec.Initialize(&testConfig.Sec, sec.KFlagClientTlsEnabled|sec.KFlagEncryptionEnabled)
 
 	ProxyAddr = testConfig.ProxyAddress

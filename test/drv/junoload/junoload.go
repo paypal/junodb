@@ -35,6 +35,7 @@ import (
 
 	"github.com/BurntSushi/toml"
 
+	"juno/internal/cli"
 	"juno/pkg/client"
 	"juno/pkg/cmd"
 	"juno/pkg/logging/cal"
@@ -62,24 +63,25 @@ type (
 	CmdOptions struct {
 		cfgFile string
 
-		server          string
-		requestPattern  string
-		sslEnabled      bool
-		numExecutor     int
-		payloadLen      int
-		numReqPerSecond int
-		runningTime     int
-		statOutputRate  int
-		timeToLive      int
-		httpMonAddr     string
-		version         bool
-		numKeys         int
-		dbpath          string
-		logLevel        string
-		isVariable      bool
-		disableGetTTL   bool
-		keys            string
-		randomize       bool
+		server             string
+		requestPattern     string
+		sslEnabled         bool
+		numExecutor        int
+		payloadLen         int
+		numReqPerSecond    int
+		runningTime        int
+		statOutputRate     int
+		connRecycleTimeout int
+		timeToLive         int
+		httpMonAddr        string
+		version            bool
+		numKeys            int
+		dbpath             string
+		logLevel           string
+		isVariable         bool
+		disableGetTTL      bool
+		keys               string
+		randomize          bool
 	}
 )
 
@@ -100,7 +102,11 @@ const (
 )
 
 func (d *SyncTestDriver) setDefaultConfig() {
-	d.config.SetDefault()
+
+	d.config.DefaultTimeToLive = 1800
+	d.config.ConnPoolSize = 1
+	d.config.ConnectTimeout = util.Duration{1000 * time.Millisecond}
+	d.config.ResponseTimeout = util.Duration{1000 * time.Millisecond}
 
 	d.config.Sec = sec.DefaultConfig
 	d.config.Cal.Default()
@@ -145,6 +151,7 @@ func (d *SyncTestDriver) Init(name string, desc string) {
 	d.IntOption(&d.cmdOpts.runningTime, "t|running-time", kDefaultRunningTime, "specify driver's running time in second")
 	d.IntOption(&d.cmdOpts.timeToLive, "ttl|record-time-to-live", kDefaultRecordTimeToLive, "specify record TTL in second")
 	d.IntOption(&d.cmdOpts.statOutputRate, "o|stat-output-rate", kDefaultStatOutputRate, "specify how often to output statistic information in second\n\tfor the period of time.")
+	d.IntOption(&d.cmdOpts.connRecycleTimeout, "rt", 0, "connection recycle timeout")
 	d.StringOption(&d.cmdOpts.httpMonAddr, "mon-addr|monitoring-address", "", "specify the http monitoring address. \n\toverride HttpMonAddr in config file")
 	d.BoolOption(&d.cmdOpts.version, "version", false, "display version information.")
 	d.StringOption(&d.cmdOpts.dbpath, "dbpath", "", "to display rocksdb stats")
@@ -200,6 +207,7 @@ func (d *SyncTestDriver) Parse(args []string) (err error) {
 		return
 	}
 	d.setDefaultConfig()
+	cli.SetConnectRecycleTimeout(time.Duration(d.cmdOpts.connRecycleTimeout) * time.Second)
 
 	if len(d.cmdOpts.cfgFile) != 0 {
 		if _, err := toml.DecodeFile(d.cmdOpts.cfgFile, &d.config); err != nil {

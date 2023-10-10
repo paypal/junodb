@@ -16,46 +16,39 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 //
-package client
+
+package cli
 
 import (
-	"fmt"
+	"testing"
 
-	"juno/internal/cli"
-	"juno/pkg/io"
-	cal "juno/pkg/logging/cal/config"
-	"juno/pkg/util"
+	"juno/pkg/client"
+	"juno/third_party/forked/golang/glog"
 )
 
-type Duration = util.Duration
+func TestCond(t *testing.T) {
+	glog.Info("")
+	glog.Info("=== TestCond")
 
-type Config struct {
-	Server    io.ServiceEndpoint
-	Appname   string
-	Namespace string
+	server, _ = NewCmdWithConfig(serverAddr, 5)
 
-	DefaultTimeToLive int
-	ConnPoolSize      int
-	ConnectTimeout    Duration
-	ResponseTimeout   Duration
-	Cal               cal.Config
-}
-
-func (c *Config) validate(useGetTLS bool) error {
-	if err := c.Server.Validate(); err != nil {
-		return err
+	if server == nil {
+		t.Errorf("Failed to init")
+		return
 	}
-	if len(c.Appname) == 0 {
-		return fmt.Errorf("Config.AppName not specified.")
+	for i := 100; i < 105; i++ {
+		ctx, err := server.createKey(i)
+		if err != nil {
+			t.Errorf("Create failed")
+		}
+		_, err = server.updateKeyWithCond(i, ctx)
+		if err != nil {
+			t.Errorf("Update WithCond failed")
+			continue
+		}
+		_, err = server.updateKeyWithCond(i, ctx)
+		if err == nil || err != client.ErrConditionViolation {
+			t.Errorf("Expected condition violation")
+		}
 	}
-	if len(c.Namespace) == 0 {
-		return fmt.Errorf("Config.Namespace not specified.")
-	}
-	if c.DefaultTimeToLive < 0 {
-		return fmt.Errorf("Config.DefaultTimeToLive is negative.")
-	}
-	if c.Server.SSLEnabled && !useGetTLS && !cli.TLSInitialized() {
-		return fmt.Errorf("getTLSConfig is nil.")
-	}
-	return nil
 }

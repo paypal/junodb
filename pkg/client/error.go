@@ -16,7 +16,6 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 //
-
 package client
 
 import (
@@ -25,6 +24,9 @@ import (
 )
 
 var (
+	ErrConnect         error
+	ErrResponseTimeout error
+
 	ErrNoKey              error
 	ErrUniqueKeyViolation error
 	ErrBadParam           error
@@ -44,6 +46,9 @@ var (
 var errorMapping map[proto.OpStatus]error
 
 func init() {
+	ErrResponseTimeout = cli.ErrResponseTimeout
+	ErrConnect = cli.ErrConnect
+
 	ErrNoKey = &cli.Error{"no key"}
 	ErrUniqueKeyViolation = &cli.Error{"unique key violation"}
 	ErrBadParam = &cli.Error{"bad parameter"}
