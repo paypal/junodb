@@ -30,7 +30,26 @@ under junoclustercfg, run
 ```bash
  ./clustermgr --config config.toml --cmd zonemarkdown --type set -zone 0 (1,2,3,4)
 ```
-verify markdown works by checking junostorageserv state log that no new request coming
+verify markdown works by checking etcd cluster info (zonemarkdown flag added) and junostorageserv state log 
+that no new request coming
+```bash
+--- etcd cluster info shows markdown flag is set ---
+run command "export ETCDCTL_API=3; ~/junoclusterserv/etcdctl --endpoints=<ip>:<port> --prefix=true get "" | tail -8 " 
+juno.junoserv_numzones
+3
+juno.junoserv_version
+1
+juno.junoserv_zonemarkdown	(markdown flag is set for zone 0)
+0
+juno.root_junoserv
+2023-12-05 12:16:17|u20box|/home/deploy/junoclustercfg
+
+--- junostorageserv/state-logs/current shows the number of incoming requests(req) didn't change, i.e. no new traffic coming ---
+12-05 12:39:49       id     free     used      req      apt     Read        D        C        A       RR     keys       LN  compSec compCount  pCompKB    stall     pCPU     mCPU     pMem     mMem 
+12-05 12:39:49      3-0   453110    42899    34267       98     3303        0    15482        0        0     4338        0        0         0        0        0      0.1      0.2      0.1     15.6 
+12-05 12:39:50      3-0   453110    42899    34267       98     3303        0    15482        0        0     4338        0        0         0        0        0      0.1      0.2      0.1     15.6 
+12-05 12:39:51      3-0   453110    42899    34267       98     3303        0    15482        0        0     4338        0        0         0        0        0      0.1      0.3      0.1     15.6 
+```
 
 ### Step2
 under junoclustercfg, run 
