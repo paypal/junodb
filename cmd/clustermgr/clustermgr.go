@@ -59,7 +59,7 @@ func main() {
 	flag.StringVar(&flagConfigNew, "new_config", "", "new configfile")
 	flag.BoolVar(&flagDryrun, "dryrun", false, "dry run -- do not save to etcd")
 	flag.BoolVar(&flagVerbose, "verbose", false, "verbose -- print more info")
-	flag.StringVar(&flagCmd, "cmd", "", "command -- store, redist")
+	flag.StringVar(&flagCmd, "cmd", "", "command -- store, redist, redistserv, zonemarkdown")
 	flag.StringVar(&flagType, "type", "cluster_info", "type -- cluster_info, auto, abort")
 	flag.IntVar(&flagZoneid, "zone", -1, "specify zone id")
 	flag.IntVar(&flagSkipZone, "skipzone", -1, "specify zone id to skip")
@@ -180,5 +180,5 @@ func printUsage() {
 	fmt.Printf("Dump redist start_src to stdout: ./%s --new_config redist.toml --cmd redist --type start_src --zone [n] --dryrun --automarkdown=false\n", progName)
 	fmt.Printf("Dump redist commit to stdout:    ./%s --new_config redist.toml --cmd redist --type commit --dryrun\n", progName)
 	fmt.Printf("Dump redist resume: ./%s --new_config redist.toml --cmd redist --type resume --zone [n] --ratelimit 10000 (optional, in kb)\n", progName)
-	fmt.Printf("Zone markdown:    ./%s --config config.toml --cmd markdown --type set/get/delete --zone [n] (--zone -1 disables markdwon)\n", progName)
+	fmt.Printf("Zone markdown:    ./%s --config config.toml --cmd zonemarkdown --type set/get/delete --zone [n] (--zone -1 disables markdwon)\n", progName)
 }

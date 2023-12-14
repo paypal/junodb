@@ -54,12 +54,7 @@ do
     $i/shutdown.sh
   fi 
 
-  if [ $i != "junoclustercfg" ]; then
-    cp $BUILDTOP/package_config/package/${i}/script/shutdown.sh $i
-    cp $BUILDTOP/package_config/package/${i}/script/start.sh $i
-  fi
-  
-  cp $BUILDTOP/package_config/package/${i}/script/postinstall.sh $i
+  cp $BUILDTOP/package_config/package/${i}/script/*.sh $i
   cp $BUILDTOP/package_config/script/postuninstall.sh $i
   cp $BUILDTOP/package_config/script/logstate.sh $i
   cp $BUILDTOP/package_config/script/log.sh $i
