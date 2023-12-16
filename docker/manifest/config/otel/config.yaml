@@ -1,0 +1,29 @@
+# connfig ref : https://opentelemetry.io/docs/collector/configuration/
+receivers:
+  otlp:
+    protocols:
+      http:
+        endpoint: "0.0.0.0:4318"
+
+
+exporters:
+  # Data sources: metrics
+  prometheus:
+    endpoint: "0.0.0.0:8889"
+    namespace: default
+    send_timestamps: true
+    metric_expiration: 180m
+    #    resource_to_telemetry_conversion:
+    #  enabled: true
+
+extensions:
+  health_check:
+  pprof:
+  zpages:
+
+service:
+  extensions: [health_check, pprof, zpages]
+  pipelines:
+    metrics:
+      receivers: [otlp]
+      exporters: [prometheus]

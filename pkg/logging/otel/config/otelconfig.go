@@ -27,6 +27,7 @@ var OtelConfig *Config
 type Config struct {
 	Host        string
 	Port        uint32
+	UrlPath     string
 	Environment string
 	Poolname    string
 	Enabled     bool
@@ -56,6 +57,9 @@ func (c *Config) Default() {
 	}
 	if c.Environment == "" {
 		c.Environment = "OpenSource"
+	}
+	if c.UrlPath == "" {
+		c.UrlPath = "v1/datapoint"
 	}
 }
 
