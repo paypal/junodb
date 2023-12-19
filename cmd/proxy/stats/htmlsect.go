@@ -25,10 +25,10 @@ import (
 	"html/template"
 	"time"
 
-	"juno/cmd/proxy/config"
-	"juno/cmd/proxy/stats/shmstats"
-	"juno/pkg/cluster"
-	"juno/pkg/stats"
+	"github.com/paypal/junodb/cmd/proxy/config"
+	"github.com/paypal/junodb/cmd/proxy/stats/shmstats"
+	"github.com/paypal/junodb/pkg/cluster"
+	"github.com/paypal/junodb/pkg/stats"
 )
 
 type (

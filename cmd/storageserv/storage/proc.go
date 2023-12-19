@@ -26,20 +26,20 @@ import (
 	"runtime"
 	"time"
 
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 
-	"juno/cmd/storageserv/config"
-	ssstats "juno/cmd/storageserv/stats"
-	"juno/cmd/storageserv/storage/db"
-	"juno/pkg/debug"
-	"juno/pkg/io"
-	"juno/pkg/logging"
-	"juno/pkg/logging/cal"
-	"juno/pkg/logging/otel"
-	"juno/pkg/proto"
-	"juno/pkg/shard"
-	"juno/pkg/stats"
-	"juno/pkg/util"
+	"github.com/paypal/junodb/cmd/storageserv/config"
+	ssstats "github.com/paypal/junodb/cmd/storageserv/stats"
+	"github.com/paypal/junodb/cmd/storageserv/storage/db"
+	"github.com/paypal/junodb/pkg/debug"
+	"github.com/paypal/junodb/pkg/io"
+	"github.com/paypal/junodb/pkg/logging"
+	"github.com/paypal/junodb/pkg/logging/cal"
+	"github.com/paypal/junodb/pkg/logging/otel"
+	"github.com/paypal/junodb/pkg/proto"
+	"github.com/paypal/junodb/pkg/shard"
+	"github.com/paypal/junodb/pkg/stats"
+	"github.com/paypal/junodb/pkg/util"
 )
 
 const (

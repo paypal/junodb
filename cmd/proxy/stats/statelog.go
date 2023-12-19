@@ -31,13 +31,13 @@ import (
 	"syscall"
 	"time"
 
-	//	"juno/third_party/forked/golang/glog"
+	//	"github.com/paypal/junodb/third_party/forked/golang/glog"
 
-	"juno/pkg/cluster"
-	"juno/pkg/io"
-	"juno/pkg/proto"
-	"juno/pkg/stats"
-	"juno/pkg/util"
+	"github.com/paypal/junodb/pkg/cluster"
+	"github.com/paypal/junodb/pkg/io"
+	"github.com/paypal/junodb/pkg/proto"
+	"github.com/paypal/junodb/pkg/stats"
+	"github.com/paypal/junodb/pkg/util"
 )
 
 // counters

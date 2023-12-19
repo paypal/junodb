@@ -19,7 +19,7 @@
 
 package main
 
-import "juno/cmd/proxy/app"
+import "github.com/paypal/junodb/cmd/proxy/app"
 
 func main() {
 	app.Main()

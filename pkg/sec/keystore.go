@@ -23,9 +23,10 @@ import (
 	"encoding/hex"
 	"errors"
 	"fmt"
-	"juno/pkg/proto"
-	"juno/third_party/forked/golang/glog"
 	"time"
+
+	"github.com/paypal/junodb/pkg/proto"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 
 	"github.com/BurntSushi/toml"
 )

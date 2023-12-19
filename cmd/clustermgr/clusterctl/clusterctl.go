@@ -28,11 +28,11 @@ import (
 	"path/filepath"
 	"strings"
 
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 
-	"juno/pkg/version"
+	"github.com/paypal/junodb/pkg/version"
 
-	"juno/cmd/clustermgr/cmd"
+	"github.com/paypal/junodb/cmd/clustermgr/cmd"
 )
 
 //

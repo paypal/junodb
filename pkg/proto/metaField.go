@@ -18,53 +18,53 @@
 //
 
 /*
-  ==============================
-  *** Predefined Field Types ***
-  ==============================
+	  ==============================
+	  *** Predefined Field Types ***
+	  ==============================
 
-  Tag/ID |  Field     | SizeType
-  -------+--------------------------------------+------
-    0x01 | TimeToLive                           | 0x01
-    0x02 | Version                              | 0x01
-    0x03 | Creation Time                        | 0x01
-    0x04 | Expiration Time                      | 0x01
-    0x05 | RequestID/UUID                       | 0x03
-    0x06 | Source Info                          | 0
-    0x07 | Last Modification time (nano second) | 0x02
-    0x08 | Originator RequestID/UUID            | 0x03
-    0x09 | Correlation ID                       | 0
-    0x0a | RequestHandlingTime                  | 0x01
-	0x0b | UDF Name			                    | 0
-  -------+--------------------------------------+------
+	  Tag/ID |  Field     | SizeType
+	  -------+--------------------------------------+------
+	    0x01 | TimeToLive                           | 0x01
+	    0x02 | Version                              | 0x01
+	    0x03 | Creation Time                        | 0x01
+	    0x04 | Expiration Time                      | 0x01
+	    0x05 | RequestID/UUID                       | 0x03
+	    0x06 | Source Info                          | 0
+	    0x07 | Last Modification time (nano second) | 0x02
+	    0x08 | Originator RequestID/UUID            | 0x03
+	    0x09 | Correlation ID                       | 0
+	    0x0a | RequestHandlingTime                  | 0x01
+		0x0b | UDF Name			                    | 0
+	  -------+--------------------------------------+------
 
 
-  Tag/ID: 0x06
-  +-----------------------------------------------------------------------------------------------+
-  | 0| 1| 2| 3| 4| 5| 6| 7| 0| 1| 2| 3| 4| 5| 6| 7| 0| 1| 2| 3| 4| 5| 6| 7| 0| 1| 2| 3| 4| 5| 6| 7|
-  |                      0|                      1|                      2|                      3|
-  +-----------+-----------+--------------------+--+-----------------------+-----------------------+
-  | size (include padding)| app name length    | T| Port                                          |
-  +-----------------------+--------------------+--+-----------------------------------------------+
-  | IPv4 address if T is 0 or IPv6 address if T is 1                                              |
-  +-----------------------------------------------------------------------------------------------+
-  | application name, padding to 4-byte aligned                                                   |
-  +-----------------------------------------------------------------------------------------------+
+	  Tag/ID: 0x06
+	  +-----------------------------------------------------------------------------------------------+
+	  | 0| 1| 2| 3| 4| 5| 6| 7| 0| 1| 2| 3| 4| 5| 6| 7| 0| 1| 2| 3| 4| 5| 6| 7| 0| 1| 2| 3| 4| 5| 6| 7|
+	  |                      0|                      1|                      2|                      3|
+	  +-----------+-----------+--------------------+--+-----------------------+-----------------------+
+	  | size (include padding)| app name length    | T| Port                                          |
+	  +-----------------------+--------------------+--+-----------------------------------------------+
+	  | IPv4 address if T is 0 or IPv6 address if T is 1                                              |
+	  +-----------------------------------------------------------------------------------------------+
+	  | application name, padding to 4-byte aligned                                                   |
+	  +-----------------------------------------------------------------------------------------------+
 
-  Tag/ID: 0x09; 0x0b
-  +----+-------------------------------------------
-  |  0 | field size (including padding)
-  +----+-------------------------------------------
-  |  1 | octet sequence length
-  +----+-------------------------------------------
-  |    | octet sequence, padding to 4-byte aligned
-  +----+-------------------------------------------
+	  Tag/ID: 0x09; 0x0b
+	  +----+-------------------------------------------
+	  |  0 | field size (including padding)
+	  +----+-------------------------------------------
+	  |  1 | octet sequence length
+	  +----+-------------------------------------------
+	  |    | octet sequence, padding to 4-byte aligned
+	  +----+-------------------------------------------
 */
 package proto
 
 import (
 	"net"
 
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 )
 
 // Meta Component Field Tag
@@ -173,7 +173,7 @@ func (t requestHandlingTimeT) tagAndSizeTypeByte() uint8 {
 	return kFieldTagRequestHandlingTime | kMetaField_4Bytes
 }
 
-//uint64 meta field
+// uint64 meta field
 func (t uint64T) isSet() bool {
 	return t != 0
 }
@@ -212,7 +212,7 @@ func (t lastModificationTimeT) tagAndSizeTypeByte() uint8 {
 	return kFieldTagLastModificationTime | kMetaField_8Bytes
 }
 
-//16-byte meta field
+// 16-byte meta field
 func (t *requestIdBaseT) value() []byte {
 	return t.Bytes()
 }
@@ -270,7 +270,7 @@ func (t *originatorT) tagAndSizeTypeByte() uint8 {
 	return kFieldTagOriginatorRequestID | kMetaField_16Bytes
 }
 
-//sourceinfo
+// sourceinfo
 func (t *sourceInfoT) isSet() bool {
 	if (len(t.ip) != 0) || (t.port != 0) || (len(t.appName) != 0) {
 		return true
@@ -379,7 +379,7 @@ func (t sourceInfoT) tagAndSizeTypeByte() uint8 {
 	return kFieldTagSourceInfo | kMetaFieldVariableSize
 }
 
-//byte sequence
+// byte sequence
 func (t byteSequenceT) isSet() bool {
 	return len(t) != 0
 }

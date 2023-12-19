@@ -20,8 +20,8 @@
 package logging
 
 import (
-	"juno/pkg/logging/cal"
-	"juno/pkg/proto"
+	"github.com/paypal/junodb/pkg/logging/cal"
+	"github.com/paypal/junodb/pkg/proto"
 )
 
 type Status int

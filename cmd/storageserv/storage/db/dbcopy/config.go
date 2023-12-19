@@ -28,9 +28,9 @@ import (
 
 	"github.com/BurntSushi/toml"
 
-	"juno/cmd/storageserv/config"
-	"juno/cmd/storageserv/storage/db"
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/cmd/storageserv/config"
+	"github.com/paypal/junodb/cmd/storageserv/storage/db"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 )
 
 var cfg = config.Config{

@@ -29,23 +29,23 @@ import (
 	"path/filepath"
 	"time"
 
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 
 	"github.com/BurntSushi/toml"
 
-	dbscan "juno/cmd/dbscanserv/config"
-	"juno/cmd/storageserv/redist"
-	"juno/cmd/storageserv/storage/db"
-	"juno/pkg/cluster"
-	"juno/pkg/etcd"
-	"juno/pkg/initmgr"
-	"juno/pkg/io"
-	cal "juno/pkg/logging/cal/config"
-	otel "juno/pkg/logging/otel/config"
-	"juno/pkg/service"
-	"juno/pkg/shard"
-	"juno/pkg/util"
-	"juno/pkg/version"
+	dbscan "github.com/paypal/junodb/cmd/dbscanserv/config"
+	"github.com/paypal/junodb/cmd/storageserv/redist"
+	"github.com/paypal/junodb/cmd/storageserv/storage/db"
+	"github.com/paypal/junodb/pkg/cluster"
+	"github.com/paypal/junodb/pkg/etcd"
+	"github.com/paypal/junodb/pkg/initmgr"
+	"github.com/paypal/junodb/pkg/io"
+	cal "github.com/paypal/junodb/pkg/logging/cal/config"
+	otel "github.com/paypal/junodb/pkg/logging/otel/config"
+	"github.com/paypal/junodb/pkg/service"
+	"github.com/paypal/junodb/pkg/shard"
+	"github.com/paypal/junodb/pkg/util"
+	"github.com/paypal/junodb/pkg/version"
 )
 
 var Initializer initmgr.IInitializer = initmgr.NewInitializer(initialize, finalize)

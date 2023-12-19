@@ -25,8 +25,8 @@ import (
 	"fmt"
 	"os"
 
-	"juno/pkg/cmd"
-	"juno/pkg/proto"
+	"github.com/paypal/junodb/pkg/cmd"
+	"github.com/paypal/junodb/pkg/proto"
 )
 
 type cmdInspMsgT struct {

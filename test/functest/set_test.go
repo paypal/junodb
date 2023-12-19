@@ -20,13 +20,14 @@
 package functest
 
 import (
-	"juno/pkg/client"
-	"juno/test/testutil"
 	"strconv"
 	"testing"
 	"time"
 
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/pkg/client"
+	"github.com/paypal/junodb/test/testutil"
+
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 )
 
 /*************************************************

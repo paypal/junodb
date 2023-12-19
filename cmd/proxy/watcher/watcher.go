@@ -28,12 +28,12 @@ import (
 
 	clientv3 "go.etcd.io/etcd/client/v3"
 
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 
-	"juno/cmd/proxy/proc"
-	"juno/pkg/cluster"
-	"juno/pkg/etcd"
-	"juno/pkg/util"
+	"github.com/paypal/junodb/cmd/proxy/proc"
+	"github.com/paypal/junodb/pkg/cluster"
+	"github.com/paypal/junodb/pkg/etcd"
+	"github.com/paypal/junodb/pkg/util"
 )
 
 type Watcher struct {

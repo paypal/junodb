@@ -31,16 +31,16 @@ import (
 	"sync"
 	"time"
 
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 
 	"github.com/BurntSushi/toml"
 
-	"juno/pkg/client"
-	"juno/pkg/cmd"
-	"juno/pkg/logging/cal"
-	"juno/pkg/sec"
-	"juno/pkg/util"
-	"juno/pkg/version"
+	"github.com/paypal/junodb/pkg/client"
+	"github.com/paypal/junodb/pkg/cmd"
+	"github.com/paypal/junodb/pkg/logging/cal"
+	"github.com/paypal/junodb/pkg/sec"
+  "github.com/paypal/junodb/pkg/util"
+	"github.com/paypal/junodb/pkg/version"
 )
 
 type (

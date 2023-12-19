@@ -28,9 +28,9 @@ import (
 	"fmt"
 	"io"
 
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 
-	"juno/pkg/util"
+	"github.com/paypal/junodb/pkg/util"
 
 	"github.com/golang/snappy"
 )
@@ -106,7 +106,7 @@ func (p *Payload) SetWithClearValue(value []byte) {
 	p.data = value
 }
 
-///TODO
+// /TODO
 func (p *Payload) GetClearValue() (value []byte, err error) {
 	if p.GetLength() == 0 {
 		return

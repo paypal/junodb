@@ -25,7 +25,7 @@ import (
 	"os"
 	"syscall"
 
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 )
 
 func LogError(err error) {
