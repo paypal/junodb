@@ -26,9 +26,9 @@ import (
 
 	"github.com/BurntSushi/toml"
 
-	"juno/cmd/proxy/config"
-	sscfg "juno/cmd/storageserv/config"
-	"juno/pkg/cmd"
+	"github.com/paypal/junodb/cmd/proxy/config"
+	sscfg "github.com/paypal/junodb/cmd/storageserv/config"
+	"github.com/paypal/junodb/pkg/cmd"
 )
 
 type cfgTypeT int

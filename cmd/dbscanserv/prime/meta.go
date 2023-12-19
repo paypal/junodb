@@ -28,9 +28,9 @@ import (
 	"sync/atomic"
 	"time"
 
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 
-	"juno/cmd/storageserv/storage/db"
+	"github.com/paypal/junodb/cmd/storageserv/storage/db"
 )
 
 type Meta struct {

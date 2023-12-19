@@ -24,15 +24,15 @@ import (
 	goio "io"
 	"time"
 
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 
-	"juno/cmd/proxy/config"
-	"juno/cmd/proxy/replication"
-	"juno/pkg/io"
-	"juno/pkg/logging"
-	"juno/pkg/logging/cal"
-	"juno/pkg/logging/otel"
-	"juno/pkg/proto"
+	"github.com/paypal/junodb/cmd/proxy/config"
+	"github.com/paypal/junodb/cmd/proxy/replication"
+	"github.com/paypal/junodb/pkg/io"
+	"github.com/paypal/junodb/pkg/logging"
+	"github.com/paypal/junodb/pkg/logging/cal"
+	"github.com/paypal/junodb/pkg/logging/otel"
+	"github.com/paypal/junodb/pkg/proto"
 )
 
 type IInbRequestContext interface {
@@ -47,7 +47,7 @@ type IInbRequestContext interface {
 	ReplyStatus(st proto.OpStatus)
 }
 
-//InboundRequestContext Proxy Inbound request context
+// InboundRequestContext Proxy Inbound request context
 type InboundRequestContext struct {
 	io.InboundRequestContext
 	proto.OperationalMessage

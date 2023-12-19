@@ -29,13 +29,13 @@ import (
 	"path/filepath"
 	"time"
 
-	//	"juno/third_party/forked/golang/glog"
+	//	"github.com/paypal/junodb/third_party/forked/golang/glog"
 
-	"juno/cmd/storageserv/config"
-	"juno/cmd/storageserv/stats/shmstats"
-	"juno/pkg/logging/cal"
-	"juno/pkg/logging/otel"
-	"juno/pkg/stats"
+	"github.com/paypal/junodb/cmd/storageserv/config"
+	"github.com/paypal/junodb/cmd/storageserv/stats/shmstats"
+	"github.com/paypal/junodb/pkg/logging/cal"
+	"github.com/paypal/junodb/pkg/logging/otel"
+	"github.com/paypal/junodb/pkg/stats"
 )
 
 var (

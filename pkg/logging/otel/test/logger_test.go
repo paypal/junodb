@@ -23,11 +23,12 @@ package test
 
 import (
 	"fmt"
-	"juno/pkg/logging/otel"
-	config "juno/pkg/logging/otel/config"
-	"juno/pkg/stats"
 	"testing"
 	"time"
+
+	"github.com/paypal/junodb/pkg/logging/otel"
+	config "github.com/paypal/junodb/pkg/logging/otel/config"
+	"github.com/paypal/junodb/pkg/stats"
 )
 
 var exportinterval int = 10

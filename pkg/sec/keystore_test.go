@@ -20,10 +20,11 @@
 package sec
 
 import (
-	"juno/pkg/proto"
 	"os"
 	"reflect"
 	"testing"
+
+	"github.com/paypal/junodb/pkg/proto"
 )
 
 var tomlData = []byte(`# Sample Keystore

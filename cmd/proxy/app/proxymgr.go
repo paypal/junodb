@@ -28,17 +28,17 @@ import (
 	"strings"
 	"syscall"
 
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 
-	"juno/cmd/proxy/config"
-	"juno/cmd/proxy/stats"
-	"juno/pkg/cmd"
-	"juno/pkg/initmgr"
-	"juno/pkg/logging"
-	"juno/pkg/logging/cal"
-	"juno/pkg/sec"
-	"juno/pkg/service"
-	"juno/pkg/util"
+	"github.com/paypal/junodb/cmd/proxy/config"
+	"github.com/paypal/junodb/cmd/proxy/stats"
+	"github.com/paypal/junodb/pkg/cmd"
+	"github.com/paypal/junodb/pkg/initmgr"
+	"github.com/paypal/junodb/pkg/logging"
+	"github.com/paypal/junodb/pkg/logging/cal"
+	"github.com/paypal/junodb/pkg/sec"
+	"github.com/paypal/junodb/pkg/service"
+	"github.com/paypal/junodb/pkg/util"
 )
 
 const (

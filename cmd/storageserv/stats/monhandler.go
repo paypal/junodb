@@ -29,12 +29,12 @@ import (
 	"strconv"
 	"time"
 
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 
-	"juno/cmd/storageserv/config"
-	"juno/cmd/storageserv/stats/shmstats"
-	"juno/pkg/stats"
-	"juno/pkg/version"
+	"github.com/paypal/junodb/cmd/storageserv/config"
+	"github.com/paypal/junodb/cmd/storageserv/stats/shmstats"
+	"github.com/paypal/junodb/pkg/stats"
+	"github.com/paypal/junodb/pkg/version"
 )
 
 type (

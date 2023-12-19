@@ -26,13 +26,13 @@ import (
 	"sync/atomic"
 	"time"
 
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 
-	"juno/pkg/etcd"
-	"juno/pkg/io"
-	"juno/pkg/proto"
-	"juno/pkg/shard"
-	redistst "juno/pkg/stats/redist"
+	"github.com/paypal/junodb/pkg/etcd"
+	"github.com/paypal/junodb/pkg/io"
+	"github.com/paypal/junodb/pkg/proto"
+	"github.com/paypal/junodb/pkg/shard"
+	redistst "github.com/paypal/junodb/pkg/stats/redist"
 )
 
 type IDBRedistHandler interface {

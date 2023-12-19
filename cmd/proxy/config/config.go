@@ -26,21 +26,21 @@ import (
 	"path/filepath"
 	"time"
 
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 
 	"github.com/BurntSushi/toml"
 
-	repconfig "juno/cmd/proxy/replication/config"
-	"juno/pkg/cluster"
-	"juno/pkg/etcd"
-	"juno/pkg/initmgr"
-	"juno/pkg/io"
-	cal "juno/pkg/logging/cal/config"
-	otel "juno/pkg/logging/otel/config"
-	"juno/pkg/sec"
-	"juno/pkg/service"
-	"juno/pkg/util"
-	"juno/pkg/version"
+	repconfig "github.com/paypal/junodb/cmd/proxy/replication/config"
+	"github.com/paypal/junodb/pkg/cluster"
+	"github.com/paypal/junodb/pkg/etcd"
+	"github.com/paypal/junodb/pkg/initmgr"
+	"github.com/paypal/junodb/pkg/io"
+	cal "github.com/paypal/junodb/pkg/logging/cal/config"
+	otel "github.com/paypal/junodb/pkg/logging/otel/config"
+	"github.com/paypal/junodb/pkg/sec"
+	"github.com/paypal/junodb/pkg/service"
+	"github.com/paypal/junodb/pkg/util"
+	"github.com/paypal/junodb/pkg/version"
 )
 
 var (
@@ -211,7 +211,7 @@ func (c *Config) IsEncryptionEnabled() bool {
 	return c.ReplicationEncryptionEnabled || c.PayloadEncryptionEnabled
 }
 
-///TODO find a better name
+// /TODO find a better name
 func (c *Config) GetSecFlag() (f sec.Flag) {
 	if c.IsTLSEnabled(true) {
 		f |= sec.KFlagServerTlsEnabled

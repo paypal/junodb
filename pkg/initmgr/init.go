@@ -32,8 +32,8 @@ import (
 	"syscall"
 	"time"
 
-	"juno/pkg/logging"
-	"juno/pkg/logging/cal"
+	"github.com/paypal/junodb/pkg/logging"
+	"github.com/paypal/junodb/pkg/logging/cal"
 )
 
 var (

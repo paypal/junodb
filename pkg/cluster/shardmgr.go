@@ -28,14 +28,14 @@ import (
 	"sync/atomic"
 	"time"
 
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 
-	"juno/pkg/io"
-	"juno/pkg/logging"
-	"juno/pkg/logging/cal"
-	"juno/pkg/logging/otel"
-	"juno/pkg/shard"
-	"juno/pkg/util"
+	"github.com/paypal/junodb/pkg/io"
+	"github.com/paypal/junodb/pkg/logging"
+	"github.com/paypal/junodb/pkg/logging/cal"
+	"github.com/paypal/junodb/pkg/logging/otel"
+	"github.com/paypal/junodb/pkg/shard"
+	"github.com/paypal/junodb/pkg/util"
 )
 
 var (
@@ -338,8 +338,8 @@ func (p *ShardManager) GetSSProcessor(zoneId int, nodeId int) *OutboundSSProcess
 	return p.processors[zoneId][nodeId]
 }
 
-//used by request processor
-//the caller's responsibility to make sure
+// used by request processor
+// the caller's responsibility to make sure
 // cap(procs) >= numZones and cap(pos) >= numZones
 func (p *ShardManager) GetSSProcessors(key []byte, confNumWrites int, procs []*OutboundSSProcessor, pos []int) (shardId shard.ID, numProcs int) {
 

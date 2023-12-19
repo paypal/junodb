@@ -20,9 +20,10 @@
 package util
 
 import (
-	"github.com/spaolacci/murmur3"
-	"juno/third_party/forked/golang/glog"
 	"sync"
+
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
+	"github.com/spaolacci/murmur3"
 )
 
 type MapPartition struct {

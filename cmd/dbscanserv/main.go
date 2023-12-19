@@ -27,11 +27,11 @@ import (
 	"strconv"
 	"strings"
 
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 
-	"juno/cmd/dbscanserv/app"
-	"juno/cmd/dbscanserv/prime"
-	"juno/pkg/version"
+	"github.com/paypal/junodb/cmd/dbscanserv/app"
+	"github.com/paypal/junodb/cmd/dbscanserv/prime"
+	"github.com/paypal/junodb/pkg/version"
 )
 
 func parseKeyRange(keyRange string, cmd string) (start int, stop int, skip int) {

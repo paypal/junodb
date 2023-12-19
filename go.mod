@@ -1,4 +1,4 @@
-module juno
+module github.com/paypal/junodb
 
 go 1.18
 

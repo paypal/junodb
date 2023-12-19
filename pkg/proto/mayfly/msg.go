@@ -25,7 +25,7 @@ import (
 	"fmt"
 	"io"
 
-	"juno/pkg/util"
+	"github.com/paypal/junodb/pkg/util"
 )
 
 type Msg struct {

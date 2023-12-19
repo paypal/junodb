@@ -27,9 +27,9 @@ import (
 	"sync"
 	"time"
 
-	"juno/pkg/client"
+	"github.com/paypal/junodb/pkg/client"
 
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 
 	"juno/pkg/util"
 

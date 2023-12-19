@@ -34,10 +34,10 @@ import (
 	"syscall"
 	"time"
 
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 
-	"juno/cmd/storageserv/stats/shmstats"
-	"juno/pkg/util"
+	"github.com/paypal/junodb/cmd/storageserv/stats/shmstats"
+	"github.com/paypal/junodb/pkg/util"
 )
 
 type (

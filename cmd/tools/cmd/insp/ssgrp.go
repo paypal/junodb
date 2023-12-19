@@ -23,13 +23,13 @@ import (
 	"encoding/hex"
 	"fmt"
 
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 
 	"github.com/BurntSushi/toml"
 
-	"juno/pkg/cluster"
-	"juno/pkg/cmd"
-	"juno/pkg/util"
+	"github.com/paypal/junodb/pkg/cluster"
+	"github.com/paypal/junodb/pkg/cmd"
+	"github.com/paypal/junodb/pkg/util"
 )
 
 type (
