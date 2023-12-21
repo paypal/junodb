@@ -148,10 +148,10 @@ func (l *Listener) AcceptAndServe() error {
 				cal.Event(cal.TxnTypeAccept, rhost, cal.StatusSuccess, []byte("raddr="+raddr+"&laddr="+conn.LocalAddr().String()))
 			}
 		}
-		if otel.IsEnabled() {
-			otel.RecordCount(otel.Accept, nil)
-		}
+		otel.RecordCount(otel.Accept, []otel.Tags{{otel.Status, otel.Success}})
 		l.startNewConnector(conn)
+	} else {
+		otel.RecordCount(otel.Accept, []otel.Tags{{otel.Status, otel.Error}})
 	}
 	//log the error in caller if needed
 	return err

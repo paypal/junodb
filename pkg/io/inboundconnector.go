@@ -34,6 +34,7 @@ import (
 	"juno/pkg/debug"
 	"juno/pkg/io/ioutil"
 	"juno/pkg/logging/cal"
+	"juno/pkg/logging/otel"
 	"juno/pkg/proto"
 	"juno/pkg/util"
 )
@@ -83,6 +84,7 @@ func (c *Connector) Close() {
 				cal.Event(cal.TxnTypeClose, rhost, cal.StatusSuccess, []byte(addr))
 			}
 		}
+		otel.RecordCount(otel.Close, []otel.Tags{})
 		c.cancelCtx()
 	})
 }

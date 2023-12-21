@@ -116,18 +116,12 @@ func (p *reqProcCtxT) OnComplete() {
 			calData.AddOpRequestResponse(&p.request, &p.response).AddRequestHandleTime(rhtus)
 			cal.AtomicTransaction(cal.TxnTypeAPI, opcode.String(), calst.CalStatus(), rht, calData.Bytes())
 		}
-		if otel.IsEnabled() {
-			otel.RecordOperation(opcode.String(), p.response.GetOpStatus().String(), int64(rhtus))
-			opst := p.response.GetOpStatus()
-			calst := logging.CalStatus(opst)
-			if (opst == proto.OpStatusInconsistent) || calst.NotSuccess() {
-				otel.RecordCount(otel.ProcErr, []otel.Tags{{otel.Operation, opcode.String() + "_" + opst.String()}, {otel.Status, otel.StatusError}})
-			}
-		}
 		if (opst == proto.OpStatusInconsistent) || calst.NotSuccess() {
 			cal.Event("ProcErr", opcode.String()+"_"+opst.String(), cal.StatusSuccess, nil)
 		}
 	}
+
+	otel.RecordOperation(opcode.String(), p.response.GetOpStatus(), int64(rhtus))
 
 	if p.cacheable {
 		if p.prepareCtx != nil {

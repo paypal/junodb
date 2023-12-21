@@ -82,9 +82,7 @@ func (p *CreateProcessor) setInitSSRequest() bool {
 			if cal.IsEnabled() {
 				calLogReqProcError(kEncrypt, []byte(errmsg))
 			}
-			if otel.IsEnabled() {
-				otel.RecordCount(otel.ReqProc, []otel.Tags{{otel.Operation, kEncrypt}, {otel.Status, otel.StatusError}})
-			}
+			otel.RecordCount(otel.ReqProc, []otel.Tags{{otel.Operation, kEncrypt}, {otel.Status, otel.StatusError}})
 			p.replyStatusToClient(proto.OpStatusInternal)
 			return false
 		}
