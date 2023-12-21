@@ -146,9 +146,8 @@ func (r *RepRequestContext) complete(calstatus string, opStatus string, rht time
 			cal.AtomicTransaction(targetType, opCode, calstatus, rht, r.calBuf.Bytes())
 		}
 	}
-	if otel.IsEnabled() {
-		otel.RecordReplication(opCode, opStatus, target, rht.Milliseconds())
-	}
+
+	otel.RecordReplication(opCode, opStatus, target, rht.Microseconds())
 
 	r.this.OnComplete()
 }
@@ -221,9 +220,7 @@ func (r *RepRequestContext) Reply(resp io.IResponseContext) {
 			}
 			r.calBuf.AddDropReason("MaxRetry")
 		}
-		if otel.IsEnabled() {
-			otel.RecordCount(otel.RRDropMaxRetry, []otel.Tags{{"target", r.targetId}})
-		}
+		otel.RecordCount(otel.RRDropMaxRetry, []otel.Tags{{"target", r.targetId}})
 		r.errCnt.Add(1)
 		r.complete(cal.StatusError, opstatus.String(), rht, opCodeText, r.targetId)
 		return
@@ -245,9 +242,7 @@ func (r *RepRequestContext) Reply(resp io.IResponseContext) {
 				}
 				r.calBuf.AddDropReason("QueueFull")
 			}
-			if otel.IsEnabled() {
-				otel.RecordCount(otel.RRDropQueueFull, []otel.Tags{{otel.Target, r.targetId}})
-			}
+			otel.RecordCount(otel.RRDropQueueFull, []otel.Tags{{otel.Target, r.targetId}})
 			r.dropCnt.Add(1)
 			r.complete(cal.StatusError, opstatus.String(), rht, opCodeText, r.targetId)
 		}
@@ -261,9 +256,7 @@ func (r *RepRequestContext) Reply(resp io.IResponseContext) {
 			}
 			r.calBuf.AddDropReason("RecExpired")
 		}
-		if otel.IsEnabled() {
-			otel.RecordCount(otel.RRDropRecExpired, []otel.Tags{{otel.Target, r.targetId}})
-		}
+		otel.RecordCount(otel.RRDropRecExpired, []otel.Tags{{otel.Target, r.targetId}})
 		r.complete(cal.StatusSuccess, opstatus.String(), rht, opCodeText, r.targetId)
 	}
 }

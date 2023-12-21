@@ -28,6 +28,9 @@ import (
 type (
 	Conn interface {
 		GetStateString() string
+		GetTLSVersion() string
+		GetCipherName() string
+		DidResume() string
 		IsServer() bool
 		Handshake() error
 		GetNetConn() net.Conn

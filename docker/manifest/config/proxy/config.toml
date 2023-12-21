@@ -39,16 +39,6 @@ DefaultTimeToLive = 1800
   CalType = "file"
   Enabled = true
 
-[OTEL]
-  Enabled = true
-  Environment = "prod"
-  Host = "otel"
-  Port = 4318
-  Poolname = "proxy_openSource"
-  Resolution = 10
-  UseTls = false
-  UrlPath = ""
-
 [Sherlock]
   Enabled = false
 

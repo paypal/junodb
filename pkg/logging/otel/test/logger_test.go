@@ -19,12 +19,13 @@
 
 // This test uses a mock to validate the metrics and the sends the metric to
 // QA OTEL collector for verifying the results in Sfx UI.
-package test
+package otel
 
 import (
 	"fmt"
 	"juno/pkg/logging/otel"
 	config "juno/pkg/logging/otel/config"
+	"juno/pkg/proto"
 	"juno/pkg/stats"
 	"testing"
 	"time"
@@ -50,13 +51,13 @@ func TestJunoOperation(t *testing.T) {
 
 	time.Sleep(time.Duration(1) * time.Second)
 
-	otel.RecordOperation("Create", "SUCCESS", 2000)
-	otel.RecordOperation("Get", "SUCCESS", 1000)
-	otel.RecordOperation("Update", "SUCCESS", 3000)
-	otel.RecordOperation("Destroy", "SUCCESS", 500)
-	otel.RecordOperation("Set", "SUCCESS", 2500)
+	otel.RecordOperation("Create", proto.OpStatusNoError, 2000)
+	otel.RecordOperation("Get", proto.OpStatusNoError, 1000)
+	otel.RecordOperation("Update", proto.OpStatusNoError, 3000)
+	otel.RecordOperation("Destroy", proto.OpStatusNoError, 500)
+	otel.RecordOperation("Set", proto.OpStatusNoError, 2500)
 
-	otel.RecordOperation("Create", "ERROR", 2000)
+	otel.RecordOperation("Create", proto.OpStatusBadParam, 2000)
 
 	time.Sleep(time.Duration(SfxConfig.Resolution) * time.Second)
 
@@ -357,14 +358,14 @@ func TestJunoStats(t *testing.T) {
 	for i := 0; i < 2; i++ {
 		workerStats[i] = append(workerStats[i],
 			[]stats.IState{
-				stats.NewUint32State(&mcpu, "mCPU", "Machine CPU usage"),
+				stats.NewUint32State(&mcpu, "pCPU", "Process CPU usage"),
 				stats.NewUint16State(&bshd, "nBShd", "number of Bad Shards"),
 			}...)
 	}
 
 	otel.InitSystemMetrics(otel.SvrTypeProxy, workerStats)
 
-	time.Sleep(time.Duration(SfxConfig.Resolution) * time.Second)
+	time.Sleep(time.Duration(SfxConfig.Resolution+10) * time.Second)
 
 	v1m := mc.GetMetrics()
 
@@ -372,11 +373,11 @@ func TestJunoStats(t *testing.T) {
 		t.Errorf("Test fail")
 	} else {
 		for i := 0; i < 2; i++ {
-			if v1m[i].GetName() == "juno.server.machCpuUsed" {
+			if v1m[i].GetName() == "pp.juno.server.proc_cpu_used" {
 				if v1m[i].GetGauge().DataPoints[0].GetAsDouble() != 30 {
 					t.Errorf("CPU utilization is incorrect %f", v1m[i].GetGauge().DataPoints[0].GetAsDouble())
 				}
-			} else if v1m[i].GetName() == "juno.server.badShard" {
+			} else if v1m[i].GetName() == "pp.juno.server.bad_shard" {
 				if v1m[i].GetGauge().DataPoints[0].GetAsDouble() != 5 {
 					t.Errorf("Bad Shard Count is incorrect %f", v1m[i].GetGauge().DataPoints[0].GetAsDouble())
 				}
