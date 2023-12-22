@@ -44,3 +44,13 @@ DefaultTimeToLive = 1800
 
 [Etcd]
   Endpoints=["etcd:2379"]
+
+[OTEL]
+  Enabled = true
+  Environment = "prod"
+  Host = "otel"
+  Port = 4318
+  Poolname = "proxy_openSource"
+  Resolution = 10
+  UseTls = false
+  UrlPath = "/v1/metrics"

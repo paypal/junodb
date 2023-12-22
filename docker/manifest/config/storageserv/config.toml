@@ -31,6 +31,16 @@ DbWatchEnabled=true
 [Sherlock]
   Enabled = false
 
+[OTEL]
+  Enabled = true
+  Environment = "prod"
+  Host = "otel"
+  Port = 4318
+  Poolname = "ss_openSource"
+  Resolution = 10
+  UseTls = false
+  UrlPath = "/v1/metrics"
+
 [DB]
   [[DB.DbPaths]]
     #Path = "/dev/shm/data"

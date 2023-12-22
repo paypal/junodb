@@ -71,6 +71,44 @@ func (c *TlsConn) IsServer() bool {
 	return c.isServer
 }
 
+func GetVersionName(ver uint16) string {
+	switch ver {
+	case tls.VersionSSL30:
+		return "SSLv3"
+	case tls.VersionTLS10:
+		return "TLSv1"
+	case tls.VersionTLS11:
+		return "TLSv1.1"
+	case tls.VersionTLS12:
+		return "TLSv1.2"
+	case tls.VersionTLS13:
+		return "TLSv1.3"
+	default:
+		return ""
+	}
+}
+
+func (c *TlsConn) GetTLSVersion() string {
+	if c.conn != nil {
+		stat := c.conn.ConnectionState()
+		return GetVersionName(stat.Version)
+
+	}
+	return "none"
+}
+
+func (c *TlsConn) GetCipherName() string {
+	if c.conn != nil {
+		stat := c.conn.ConnectionState()
+		return tls.CipherSuiteName(stat.CipherSuite)
+	}
+	return "none"
+}
+
+func (c *TlsConn) DidResume() string {
+	return ""
+}
+
 func (c *TlsConn) Handshake() error {
 	if c.conn != nil {
 		return c.conn.Handshake()

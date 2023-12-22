@@ -118,6 +118,35 @@ services:
       - ${PWD}/config/client/config.toml:/opt/juno/config.toml
       - ${PWD}/config/secrets:/opt/juno/secrets
 
+  otel:
+    <<: *service_default
+    image: otel/opentelemetry-collector:latest
+    container_name: otel
+    command: ["--config=/etc/otel-collector/config.yaml"]
+    depends_on:
+      - proxy
+    volumes:
+      - ${PWD}/config/otel/config.yaml:/etc/otel-collector/config.yaml
+    ports:
+      - "1888:1888" # pprof extension
+      - "8888:8888" # Prometheus metrics exposed by the Collector
+      - "8889:8889" # Prometheus exporter metrics
+      - "13133:13133" # health_check extension
+      - "4317:4317" # OTLP gRPC receiver
+      - "4318:4318" # OTLP http receiver
+      - "55679:55679" # zpages extension
+
+  prometheus:
+    <<: *service_default
+    container_name: prometheus
+    image: prom/prometheus:latest
+    depends_on:
+      - proxy
+    volumes:
+      - ${PWD}/config/prometheus/prometheus.yaml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+
 networks:
   junonet:
     driver: bridge
