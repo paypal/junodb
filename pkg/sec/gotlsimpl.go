@@ -67,6 +67,108 @@ func (c *TlsConn) GetStateString() string {
 	return statStr
 }
 
+func (c *TlsConn) GetTLSVersion() string {
+	if c.conn != nil {
+		stat := c.conn.ConnectionState()
+		return GetVersionName(stat.Version)
+	}
+	return "none"
+}
+
+func GetVersionName(ver uint16) string {
+	switch ver {
+	case tls.VersionTLS10:
+		return "TLSv1"
+	case tls.VersionTLS11:
+		return "TLSv1.1"
+	case tls.VersionTLS12:
+		return "TLSv1.2"
+	case tls.VersionTLS13:
+		return "TLSv1.3"
+	default:
+		return ""
+	}
+}
+
+func (c *TlsConn) GetCipherName() string {
+	if c.conn != nil {
+		stat := c.conn.ConnectionState()
+		return GetCipherName(stat.CipherSuite)
+	}
+	return "none"
+}
+
+func GetCipherName(cipher uint16) string {
+	switch cipher {
+	case tls.TLS_RSA_WITH_RC4_128_SHA:
+		return "RSA-RC4-128-SHA"
+	case tls.TLS_RSA_WITH_3DES_EDE_CBC_SHA:
+		return "RSA-3DES-EDE-CBC-SHA"
+	case tls.TLS_RSA_WITH_AES_128_CBC_SHA:
+		return "AES128-SHA"
+	case tls.TLS_RSA_WITH_AES_256_CBC_SHA:
+		return "AES256-SHA"
+	case tls.TLS_RSA_WITH_AES_128_CBC_SHA256:
+		return "RSA-AES-128-CBC-SHA256"
+	case tls.TLS_RSA_WITH_AES_128_GCM_SHA256:
+		return "RSA-AES-128-GCM-SHA256"
+	case tls.TLS_RSA_WITH_AES_256_GCM_SHA384:
+		return "RSA-AES-256-GCM-SHA384"
+	case tls.TLS_ECDHE_ECDSA_WITH_RC4_128_SHA:
+		return "ECDHE_ECDSA_RC4_128_SHA"
+	case tls.TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA:
+		return "ECDHE_ECDSA_AES128_CBC_SHA"
+	case tls.TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA:
+		return "ECDHE_ECDSA_AES_256_CBC_SHA"
+	case tls.TLS_ECDHE_RSA_WITH_RC4_128_SHA:
+		return "ECDHE_RSA_RC4_128_SHA"
+	case tls.TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA:
+		return "ECDHE_RSA_3DES_EDE_CBC_SHA"
+	case tls.TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:
+		return "ECDHE_RSA_AES128_CBC_SHA"
+	case tls.TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:
+		return "ECDHE_RSA_AES_256_CBC_SHA"
+	case tls.TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256:
+		return "ECDHE_ECDSA_AES128_CBC_SHA256"
+	case tls.TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256:
+		return "ECDHE_RSA_AES128_CBC_SHA256"
+	case tls.TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:
+		return "ECDHE_RSA_AES128_GCM_SHA256"
+	case tls.TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:
+		return "ECDHE_ECDSA_AES128_GCM_SHA256"
+	case tls.TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:
+		return "ECDHE_RSA_AES256_GCM_SHA384"
+	case tls.TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:
+		return "ECDHE_ECDSA_AES256_GCM_SHA384"
+	case tls.TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305:
+		return "ECDHE_RSA_CHACHA20_POLY1305"
+	case tls.TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305:
+		return "ECDHE_ECDSA_CHACHA20_POLY1305"
+	case tls.TLS_AES_128_GCM_SHA256:
+		return "TLS_AES_128_GCM_SHA256"
+	case tls.TLS_AES_256_GCM_SHA384:
+		return "TLS_AES_256_GCM_SHA384"
+	case tls.TLS_CHACHA20_POLY1305_SHA256:
+		return "TLS_CHACHA20_POLY1305_SHA256"
+	case tls.TLS_FALLBACK_SCSV:
+		return "TLS_FALLBACK_SCSV"
+	default:
+		return "unknown"
+	}
+}
+
+func (c *TlsConn) DidResume() string {
+	if c.conn != nil {
+		stat := c.conn.ConnectionState()
+		if stat.DidResume {
+			return "Yes"
+		} else {
+			return "No"
+		}
+	}
+	return "No"
+}
+
 func (c *TlsConn) IsServer() bool {
 	return c.isServer
 }
