@@ -47,13 +47,10 @@ const (
 )
 
 var defaultConfig = client.Config{
-	RetryCount:         1,
-	DefaultTimeToLive:  1800,
-	ConnectTimeout:     util.Duration{100 * time.Millisecond},
-	ReadTimeout:        util.Duration{500 * time.Millisecond},
-	WriteTimeout:       util.Duration{500 * time.Millisecond},
-	RequestTimeout:     util.Duration{1000 * time.Millisecond},
-	ConnRecycleTimeout: util.Duration{9 * time.Second},
+	DefaultTimeToLive: 1800,
+	ConnPoolSize:      1,
+	ConnectTimeout:    util.Duration{100 * time.Millisecond},
+	ResponseTimeout:   util.Duration{1000 * time.Millisecond},
 }
 
 type (

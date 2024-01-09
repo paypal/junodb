@@ -88,14 +88,10 @@ func RepairKey(key []byte, display bool) bool {
 	if !found {
 
 		clientCfg := client.Config{
-			Appname:            "dbscan",
-			Namespace:          ns,
-			RetryCount:         1,
-			ConnectTimeout:     util.Duration{500 * time.Millisecond},
-			ReadTimeout:        util.Duration{500 * time.Millisecond},
-			WriteTimeout:       util.Duration{500 * time.Millisecond},
-			RequestTimeout:     util.Duration{1000 * time.Millisecond},
-			ConnRecycleTimeout: util.Duration{60 * time.Second},
+			Appname:         "dbscan",
+			Namespace:       ns,
+			ConnectTimeout:  util.Duration{500 * time.Millisecond},
+			ResponseTimeout: util.Duration{1000 * time.Millisecond},
 		}
 		clientCfg.Server.Addr = proxyAddr
 

@@ -37,8 +37,8 @@ import (
 )
 
 const (
-	connectTimeout = 100 * time.Millisecond
-	requestTimeout = 1000 * time.Millisecond
+	connectTimeout  = 100 * time.Millisecond
+	responseTimeout = 1000 * time.Millisecond
 )
 
 type (
@@ -173,9 +173,10 @@ func (s *shardOptionsT) getShardId(key []byte) uint16 {
 
 func newProcessor(cfg *client.Config) *cli.Processor {
 	processor := cli.NewProcessor(cfg.Server, cfg.Appname,
+		1, // connPoolSize
 		cfg.ConnectTimeout.Duration,
-		cfg.RequestTimeout.Duration,
-		cfg.ConnRecycleTimeout.Duration)
+		cfg.ResponseTimeout.Duration,
+		nil) // GetTLSConfig
 	processor.Start()
 	return processor
 }
