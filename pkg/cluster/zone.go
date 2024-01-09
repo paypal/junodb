@@ -49,12 +49,14 @@ func SetMappingAlg(algVersion uint32) {
 	newMappingAlg = true
 }
 
+// NewZone creates a new zone with the specified attributes.
+func NewZone(zoneid uint32, numNodes uint32) *Zone {
+	zone := newZone(zoneid, numNodes)
+	return &zone
+}
+
 func NewZoneFromConfig(zoneid uint32, numNodes uint32, numZones uint32, numShards uint32) *Zone {
-	zone := Zone{
-		Zoneid:   zoneid,
-		NumNodes: numNodes,
-		Nodes:    make([]Node, 1, numNodes),
-	}
+	zone := newZone(zoneid, numNodes)
 
 	// Populate Nodes
 	zone.initShardsAsssignment(numZones, numShards)
@@ -384,4 +386,13 @@ func (list byWeight) Swap(i, j int) {
 // Decreasing order by weight
 func (list byWeight) Less(i, j int) bool {
 	return list[i].weight > list[j].weight
+}
+
+// newZone initializes and returns a new zone with the specified attributes.
+func newZone(zoneid uint32, numNodes uint32) Zone {
+	return Zone{
+		Zoneid:   zoneid,
+		NumNodes: numNodes,
+		Nodes:    make([]Node, 1, numNodes),
+	}
 }

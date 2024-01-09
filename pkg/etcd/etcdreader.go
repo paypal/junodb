@@ -445,7 +445,7 @@ func (cr *EtcdReader) readNodesShards(c *cluster.Cluster, tag string, offset int
 
 		// the prefix fetch is sorted by key in reverse order
 		if c.Zones[zoneid] == nil {
-			c.Zones[zoneid] = cluster.NewZoneFromConfig(uint32(zoneid), uint32(nodeid+1), c.NumZones, c.NumShards)
+			c.Zones[zoneid] = cluster.NewZone(uint32(zoneid), uint32(nodeid+1))
 		}
 
 		c.Zones[zoneid].Nodes[nodeid].StringToNode(uint32(zoneid), uint32(nodeid),
