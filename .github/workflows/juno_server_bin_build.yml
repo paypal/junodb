@@ -25,7 +25,7 @@ jobs:
       - name: Get code
         uses: actions/checkout@v3.5.2
       - name: Install golang
-        uses: actions/setup-go@v4.0.1
+        uses: actions/setup-go@v4.1.0
         with:
           go-version: "${{ matrix.go_version }}"
       - name: Install Build dependencies
