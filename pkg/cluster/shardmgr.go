@@ -759,9 +759,9 @@ func (p *OutboundSSProcessor) GetNodeInfo() (zoneid int, hostid int) {
 }
 
 func (p *OutboundSSProcessor) OnConnectSuccess(conn io.Conn, connector *io.OutboundConnector, timeTaken time.Duration) {
+	netConn := conn.GetNetConn()
 	if cal.IsEnabled() {
 		b := logging.NewKVBuffer()
-		netConn := conn.GetNetConn()
 
 		b.Add([]byte("raddr"), netConn.RemoteAddr().String())
 		b.Add([]byte("laddr"), netConn.LocalAddr().String())
@@ -771,10 +771,9 @@ func (p *OutboundSSProcessor) OnConnectSuccess(conn io.Conn, connector *io.Outbo
 
 		cal.AtomicTransaction(logging.CalMsgTypeSSConnect, p.Name(), cal.StatusSuccess, timeTaken, b.Bytes())
 	}
-	if otel.IsEnabled() {
-		netConn := conn.GetNetConn()
-		otel.RecordSSConnection(netConn.RemoteAddr().String(), otel.StatusSuccess, timeTaken.Milliseconds())
-	}
+
+	otel.RecordSSConnection(getIPAddress(netConn.RemoteAddr().String()), otel.StatusSuccess, timeTaken.Microseconds())
+
 }
 
 func (p *OutboundSSProcessor) OnConnectError(timeTaken time.Duration, connStr string, err error) {
@@ -784,9 +783,14 @@ func (p *OutboundSSProcessor) OnConnectError(timeTaken time.Duration, connStr st
 		b.Add([]byte("err"), err.Error())
 		cal.AtomicTransaction(logging.CalMsgTypeSSConnectError, p.Name(), cal.StatusSuccess, timeTaken, b.Bytes())
 	}
-	if otel.IsEnabled() {
-		otel.RecordSSConnection(connStr, otel.StatusError, timeTaken.Milliseconds())
-	}
+
+	otel.RecordSSConnection(getIPAddress(connStr), otel.StatusError, timeTaken.Microseconds())
+
+}
+
+func getIPAddress(endpoint string) string {
+	s := strings.Split(endpoint, ":")
+	return s[0]
 }
 
 func (m *ZoneMarkDown) MarkDown(zoneid int32) {

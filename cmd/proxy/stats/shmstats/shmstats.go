@@ -98,7 +98,7 @@ type (
 		Type     uint16
 		CapQueue uint16
 		Addr     [256]byte
-		Name     [12]byte
+		Name     [256]byte
 	}
 	serverStatsManagerT struct {
 		stats       *ServerStats

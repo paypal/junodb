@@ -43,5 +43,8 @@ type (
 		StatOutputRate  int
 		isVariable      bool
 		disableGetTTL   bool
+		sKey            int64
+		eKey            int64
+		randomize       bool
 	}
 )

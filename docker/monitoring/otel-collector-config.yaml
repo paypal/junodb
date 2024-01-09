@@ -1,0 +1,32 @@
+receivers:
+  otlp:
+    protocols:
+      http:
+
+processors:
+  # batch metrics before sending to reduce API usage
+  batch:
+
+exporters:
+  prometheus:
+    endpoint: "0.0.0.0:8889"
+    const_labels:
+      label: juno
+
+
+# https://github.com/open-telemetry/opentelemetry-collector/blob/main/extension/README.md
+extensions:
+  # responsible for responding to health check calls on behalf of the collector.
+  health_check:
+  # fetches the collector’s performance data
+  pprof:
+  # serves as an http endpoint that provides live debugging data about instrumented components.
+  zpages:
+
+service:
+  extensions: [health_check, pprof, zpages]
+  pipelines:
+    metrics:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [prometheus]

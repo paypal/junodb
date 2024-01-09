@@ -21,9 +21,11 @@ package cluster
 
 import (
 	"fmt"
+	"strings"
 	"sync"
 	"time"
 
+	"juno/pkg/logging/otel"
 	"juno/pkg/util"
 	"juno/third_party/forked/golang/glog"
 )
@@ -180,6 +182,8 @@ func (c *ClusterStats) processStateChange(st *ProcStat) {
 			c.MarkdownTable[idx] = true
 			glog.Infof("markdown: node %d-%d, exp:%d, timout ct: %d",
 				st.zoneid, st.nodeid, c.MarkdownExpiration[idx], timeoutCnt)
+			targetSS := getIP(st.zoneid, st.nodeid)
+			otel.RecordCount(otel.SoftMark, []otel.Tags{{otel.Target, targetSS}, {otel.Status, otel.SSMarkDown}})
 		}
 	}
 
@@ -192,6 +196,20 @@ func (c *ClusterStats) processStateChange(st *ProcStat) {
 		curEMA := ((float32(st.procTime)-prevEMA)*2.0/float32((c.conf.EMARespTimeWindowSize+1)) + prevEMA + 0.5)
 		c.nodes[idx].emaProcTime.Set(int32(curEMA))
 	}
+}
+
+func getIP(zoneid uint32, nodeid uint32) string {
+	shardMgr := GetShardMgr()
+	// First check if the connInfo has the element.
+	if len(shardMgr.connInfo) < int(zoneid+1) || len(shardMgr.connInfo[zoneid]) < int(nodeid+1) {
+		return ""
+	}
+	i := strings.Index(shardMgr.connInfo[zoneid][nodeid], ":")
+
+	if i < 0 {
+		return shardMgr.connInfo[zoneid][nodeid]
+	}
+	return shardMgr.connInfo[zoneid][nodeid][:i]
 }
 
 // Naive way of doing markup: markdown expired.
@@ -215,6 +233,8 @@ func (c *ClusterStats) markup() {
 				glog.Infof("markup: host %d-%d", i, j)
 				c.MarkdownExpiration[idx] = 0
 				c.MarkdownTable[idx] = false
+				targetSS := getIP(i, j)
+				otel.RecordCount(otel.SoftMark, []otel.Tags{{otel.Target, targetSS}, {otel.Status, otel.SSMarkUp}})
 			}
 		}
 	}

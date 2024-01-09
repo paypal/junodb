@@ -314,18 +314,16 @@ func (p *OutboundProcessor) OnConnectSuccess(conn Conn, connector *OutboundConne
 
 		cal.AtomicTransaction(cal.TxnTypeConnect, p.connInfo.GetConnString(), cal.StatusSuccess, timeTaken, data)
 	}
-	if otel.IsEnabled() {
-		otel.RecordOutboundConnection(p.connInfo.GetConnString(), otel.StatusSuccess, timeTaken.Milliseconds())
-	}
+	otel.RecordOutboundConnection(p.connInfo.GetConnString(), otel.StatusSuccess, timeTaken.Microseconds())
+	otel.RecordCount(otel.TLSStatus, []otel.Tags{{otel.Endpoint, p.connInfo.GetConnString()}, {otel.TLS_version, conn.GetTLSVersion()},
+		{otel.Cipher, conn.GetCipherName()}, {otel.Ssl_r, conn.DidResume()}})
 }
 
 func (p *OutboundProcessor) OnConnectError(timeTaken time.Duration, connStr string, err error) {
 	if cal.IsEnabled() {
 		cal.AtomicTransaction(cal.TxnTypeConnect, connStr, cal.StatusError, timeTaken, []byte(err.Error()))
 	}
-	if otel.IsEnabled() {
-		otel.RecordOutboundConnection(connStr, otel.StatusError, timeTaken.Milliseconds())
-	}
+	otel.RecordOutboundConnection(connStr, otel.StatusError, timeTaken.Microseconds())
 }
 
 func (p *OutboundProcessor) connect(connCh chan *OutboundConnector, id int, connector *OutboundConnector) {

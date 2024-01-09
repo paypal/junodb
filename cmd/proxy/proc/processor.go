@@ -135,9 +135,7 @@ func (p *TwoPhaseProcessor) setInitSSRequest() bool {
 			if cal.IsEnabled() {
 				calLogReqProcError(kEncrypt, []byte(errmsg))
 			}
-			if otel.IsEnabled() {
-				otel.RecordCount(otel.ReqProc, []otel.Tags{{otel.Operation, kEncrypt}, {otel.Status, otel.StatusError}})
-			}
+			otel.RecordCount(otel.ReqProc, []otel.Tags{{otel.Operation, kEncrypt}, {otel.Status, otel.StatusError}})
 			p.replyStatusToClient(proto.OpStatusInternal)
 			return false
 		}
@@ -351,9 +349,7 @@ func (p *TwoPhaseProcessor) onRepairFailure(rc *SSRequestContext) {
 			writeBasicSSRequestInfo(buf, rc.opCode, int(rc.ssIndex), p.ssGroup.processors[rc.ssIndex].GetConnInfo(), &p.ProcessorBase)
 			calLogReqProcEvent(kInconsistent, buf.Bytes())
 		}
-		if otel.IsEnabled() {
-			otel.RecordCount(otel.ReqProc, []otel.Tags{{otel.Status, kInconsistent}})
-		}
+		otel.RecordCount(otel.ReqProc, []otel.Tags{{otel.Status, kInconsistent}})
 		p.replyStatusToClient(proto.OpStatusInconsistent)
 	}
 }

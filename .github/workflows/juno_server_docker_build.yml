@@ -18,6 +18,7 @@ jobs:
   build-juno-docker:
     strategy:
       matrix:
+        # os: [ubuntu-latest, macos-latest]
         os: [ubuntu-latest]
     runs-on: ${{ matrix.os }}
     env:
@@ -28,14 +29,21 @@ jobs:
     steps:
       - name: Get code
         uses: actions/checkout@v3.5.2
-      - name: Install dependencies
+      - name: Check openssl version dependencies
         run: |
-          sudo apt install openssl -y
           echo "Openssl Version:" `openssl version`
+      - name: Set up Docker
+        # uses: docker-practice/actions-setup-docker@master
+        # uses: crazy-max/ghaction-setup-docker@v2
+        if: ${{ matrix.os == 'macos-latest' }}
+        run: |
+          brew install docker
+          colima start
+          # For testcontainers to find the Colima socket
+          # https://github.com/abiosoft/colima/blob/main/docs/FAQ.md#cannot-connect-to-the-docker-daemon-at-unixvarrundockersock-is-the-docker-daemon-running
+          sudo ln -sf $HOME/.colima/default/docker.sock /var/run/docker.sock
       - name: Docker Version Check
         run: docker version
-      # - name: Expose GitHub Runtime
-      #   uses: crazy-max/ghaction-github-runtime@v2
       - name: Build docker containers
         run: docker/build.sh
       - name: Start juno containers

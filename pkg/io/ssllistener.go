@@ -30,6 +30,7 @@ import (
 
 	"juno/pkg/logging"
 	"juno/pkg/logging/cal"
+	"juno/pkg/logging/otel"
 	"juno/pkg/sec"
 )
 
@@ -66,6 +67,8 @@ func (l *SslListener) AcceptAndServe() error {
 						cal.Event(cal.TxnTypeAccept, rhost, cal.StatusSuccess, b.Bytes())
 					}
 				}
+				otel.RecordCount(otel.Accept, []otel.Tags{{otel.Status, otel.Success}, {otel.TLS_version, sslConn.GetTLSVersion()},
+					{otel.Cipher, sslConn.GetCipherName()}, {otel.Ssl_r, sslConn.DidResume()}})
 				l.startNewConnector(sslConn.GetNetConn())
 			} else {
 				logAsWarning := true
@@ -95,6 +98,15 @@ func (l *SslListener) AcceptAndServe() error {
 						cal.Event(cal.TxnTypeAccept, rhost, st, b.Bytes())
 					}
 				}
+
+				otelStatus := otel.Success
+				if logAsWarning {
+					otelStatus = otel.Warn
+				}
+
+				otel.RecordCount(otel.Accept, []otel.Tags{{otel.Status, otelStatus}, {otel.TLS_version, sslConn.GetTLSVersion()},
+					{otel.Cipher, sslConn.GetCipherName()}, {otel.Ssl_r, sslConn.DidResume()}})
+
 				if logAsWarning {
 					glog.Warning("handshaking error: ", err)
 				} else {

@@ -34,6 +34,9 @@ import (
 
 type Conn interface {
 	GetStateString() string
+	GetTLSVersion() string
+	GetCipherName() string
+	DidResume() string
 	GetNetConn() net.Conn
 	IsTLS() bool
 }
@@ -51,6 +54,17 @@ func (c *Connection) GetStateString() string {
 	return ""
 }
 
+func (c *Connection) GetTLSVersion() string {
+	return ""
+}
+
+func (c *Connection) GetCipherName() string {
+	return ""
+}
+
+func (c *Connection) DidResume() string {
+	return ""
+}
 func (c *Connection) GetNetConn() net.Conn {
 	return c.conn
 }
@@ -91,13 +105,15 @@ func Connect(endpoint *ServiceEndpoint, connectTimeout time.Duration) (conn net.
 				cal.AtomicTransaction(cal.TxnTypeConnect, endpoint.Addr, status, time.Since(timeStart), b.Bytes())
 			}
 		}
-		if otel.IsEnabled() {
-			status := otel.StatusSuccess
-			if err != nil {
-				status = otel.StatusError
-			}
-			otel.RecordOutboundConnection(endpoint.Addr, status, time.Since(timeStart).Milliseconds())
+		status := otel.StatusSuccess
+
+		if err != nil {
+			status = otel.StatusError
+		} else {
+			otel.RecordCount(otel.TLSStatus, []otel.Tags{{otel.Endpoint, endpoint.Addr}, {otel.TLS_version, sslconn.GetTLSVersion()},
+				{otel.Cipher, sslconn.GetCipherName()}, {otel.Ssl_r, sslconn.DidResume()}})
 		}
+		otel.RecordOutboundConnection(endpoint.Addr, status, time.Since(timeStart).Microseconds())
 	} else {
 		if conn, err = net.DialTimeout("tcp", endpoint.Addr, connectTimeout); err == nil {
 			if glog.LOG_DEBUG {
@@ -115,13 +131,11 @@ func Connect(endpoint *ServiceEndpoint, connectTimeout time.Duration) (conn net.
 			}
 			cal.AtomicTransaction(cal.TxnTypeConnect, endpoint.GetConnString(), status, time.Since(timeStart), data)
 		}
-		if otel.IsEnabled() {
-			status := otel.StatusSuccess
-			if err != nil {
-				status = otel.StatusError
-			}
-			otel.RecordOutboundConnection(endpoint.GetConnString(), status, time.Since(timeStart).Milliseconds())
+		status := otel.StatusSuccess
+		if err != nil {
+			status = otel.StatusError
 		}
+		otel.RecordOutboundConnection(endpoint.GetConnString(), status, time.Since(timeStart).Microseconds())
 	}
 
 	return

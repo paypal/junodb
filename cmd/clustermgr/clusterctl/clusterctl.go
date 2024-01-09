@@ -64,7 +64,7 @@ func main() {
 	flag.StringVar(&flagScale, "scale", "", "n:n:n:n:n")
 
 	flag.BoolVar(&flagVerbose, "verbose", false, "verbose -- print more info")
-	flag.StringVar(&flagCmd, "cmd", "", "command -- store, redist, redistserv")
+	flag.StringVar(&flagCmd, "cmd", "", "command -- store, redist, redistserv, zonemarkdown")
 	flag.StringVar(&flagType, "type", "cluster_info", "type -- cluster_info, auto, abort")
 
 	flag.IntVar(&flagZoneid, "zone", -1, "specify zone id")
@@ -173,5 +173,5 @@ func printUsage() {
 	fmt.Printf("\nAbort redist:  ./%s --cmd redist --type abort\n", progName)
 
 	fmt.Printf("redist resume: ./%s --cmd redist --type resume --zone [n] --ratelimit 10000 (optional, in kb)\n", progName)
-	fmt.Printf("Zone markdown: ./%s --cmd markdown --type set/get/delete --zone [n] (--zone -1 disables markdwon)\n", progName)
+	fmt.Printf("Zone markdown: ./%s --cmd zonemarkdown --type set/get/delete --zone [n] (--zone -1 disables markdwon)\n", progName)
 }
