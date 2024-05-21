@@ -23,7 +23,7 @@ import (
 	"testing"
 	"time"
 
-	"juno/pkg/proto"
+	"github.com/paypal/junodb/pkg/proto"
 )
 
 func BenchmarkSet(b *testing.B) {

@@ -27,7 +27,7 @@ import (
 	"strconv"
 	"strings"
 
-	"juno/pkg/cluster"
+	"github.com/paypal/junodb/pkg/cluster"
 )
 
 var (

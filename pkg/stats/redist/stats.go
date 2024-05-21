@@ -21,12 +21,13 @@ package redist
 
 import (
 	"fmt"
-	"juno/pkg/logging"
-	"juno/pkg/util"
 	"strconv"
 	"strings"
 	"sync/atomic"
 	"time"
+
+	"github.com/paypal/junodb/pkg/logging"
+	"github.com/paypal/junodb/pkg/util"
 )
 
 var (

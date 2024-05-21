@@ -24,8 +24,8 @@ import (
 	"strings"
 	"time"
 
-	"juno/pkg/io"
-	"juno/pkg/util"
+	"github.com/paypal/junodb/pkg/io"
+	"github.com/paypal/junodb/pkg/util"
 )
 
 var (

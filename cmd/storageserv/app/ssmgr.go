@@ -26,14 +26,14 @@ import (
 	"net"
 	"os"
 
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 
-	"juno/cmd/storageserv/config"
-	"juno/pkg/cmd"
-	"juno/pkg/initmgr"
-	"juno/pkg/logging"
-	"juno/pkg/logging/cal"
-	"juno/pkg/net/netutil"
+	"github.com/paypal/junodb/cmd/storageserv/config"
+	"github.com/paypal/junodb/pkg/cmd"
+	"github.com/paypal/junodb/pkg/initmgr"
+	"github.com/paypal/junodb/pkg/logging"
+	"github.com/paypal/junodb/pkg/logging/cal"
+	"github.com/paypal/junodb/pkg/net/netutil"
 )
 
 const (
@@ -97,7 +97,7 @@ func (c *Manager) Parse(args []string) (err error) {
 	return
 }
 
-///TODO refactoring
+// /TODO refactoring
 func (c *Manager) Exec() {
 
 	initmgr.Register(config.Initializer, c.optConfigFile)

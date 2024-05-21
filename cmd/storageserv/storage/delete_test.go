@@ -24,8 +24,8 @@ import (
 	"testing"
 	"time"
 
-	"juno/pkg/proto"
-	"juno/pkg/util"
+	"github.com/paypal/junodb/pkg/proto"
+	"github.com/paypal/junodb/pkg/util"
 )
 
 var (

@@ -97,16 +97,16 @@ export CGO_LDFLAGS="-L$rocksdb_dir/lib -L/usr/local/lib -lrocksdb -lstdc++ -lm -
 juno_version_info="-X juno/pkg/version.BuildTime=$build_time -X juno/pkg/version.Revision=$code_revision -X juno/pkg/version.BuildId=$JUNO_BUILD_NUMBER"
 
 juno_executables="\
-	juno/cmd/proxy \
-	juno/cmd/storageserv \
-	juno/cmd/storageserv/storage/db/dbcopy \
-	juno/cmd/tools/junocli \
-	juno/cmd/clustermgr \
-	juno/cmd/dbscanserv \
-	juno/cmd/dbscanserv/junoctl \
-        juno/test/drv/junoload \
-        juno/cmd/tools/junostats\
-        juno/cmd/tools/junocfg\
+	github.com/paypal/junodb/cmd/proxy \
+	github.com/paypal/junodb/cmd/storageserv \
+	github.com/paypal/junodb/cmd/storageserv/storage/db/dbcopy \
+	github.com/paypal/junodb/cmd/tools/junocli \
+	github.com/paypal/junodb/cmd/clustermgr \
+	github.com/paypal/junodb/cmd/dbscanserv \
+	github.com/paypal/junodb/cmd/dbscanserv/junoctl \
+        github.com/paypal/junodb/test/drv/junoload \
+        github.com/paypal/junodb/cmd/tools/junostats\
+        github.com/paypal/junodb/cmd/tools/junocfg\
 	"
 # DO NOT include junoload in any package
 

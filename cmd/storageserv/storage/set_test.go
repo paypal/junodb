@@ -23,7 +23,7 @@ import (
 	"testing"
 	"time"
 
-	"juno/pkg/proto"
+	"github.com/paypal/junodb/pkg/proto"
 )
 
 var (

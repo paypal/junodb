@@ -23,8 +23,8 @@ import (
 	"fmt"
 	"os"
 
-	"juno/cmd/storageserv/stats/shmstats"
-	"juno/pkg/cmd"
+	"github.com/paypal/junodb/cmd/storageserv/stats/shmstats"
+	"github.com/paypal/junodb/pkg/cmd"
 )
 
 var _ cmd.ICommand = (*CmdStorageStats)(nil)

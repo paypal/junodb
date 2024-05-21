@@ -25,15 +25,15 @@ import (
 	"os"
 	"time"
 
-	//	"juno/third_party/forked/golang/glog"
+	//	"github.com/paypal/junodb/third_party/forked/golang/glog"
 	uuid "github.com/satori/go.uuid"
 
-	"juno/internal/cli"
-	"juno/pkg/client"
-	"juno/pkg/cluster"
-	"juno/pkg/cmd"
-	"juno/pkg/proto"
-	"juno/pkg/util"
+	"github.com/paypal/junodb/internal/cli"
+	"github.com/paypal/junodb/pkg/client"
+	"github.com/paypal/junodb/pkg/cluster"
+	"github.com/paypal/junodb/pkg/cmd"
+	"github.com/paypal/junodb/pkg/proto"
+	"github.com/paypal/junodb/pkg/util"
 )
 
 const (

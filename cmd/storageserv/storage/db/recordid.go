@@ -23,9 +23,9 @@ import (
 	"bytes"
 	"encoding/binary"
 
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 
-	"juno/pkg/shard"
+	"github.com/paypal/junodb/pkg/shard"
 )
 
 var enableMircoShardId bool = false // default false for backward compatibility

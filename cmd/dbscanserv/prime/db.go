@@ -26,10 +26,10 @@ import (
 	"sync/atomic"
 	"time"
 
-	"juno/third_party/forked/golang/glog"
-	"juno/third_party/forked/tecbot/gorocksdb"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/tecbot/gorocksdb"
 
-	"juno/cmd/storageserv/storage/db"
+	"github.com/paypal/junodb/cmd/storageserv/storage/db"
 )
 
 // Map from zoneid, nodeid to db handle

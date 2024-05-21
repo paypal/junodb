@@ -26,11 +26,11 @@ import (
 	"syscall"
 	"time"
 
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 
-	junoio "juno/pkg/io"
-	"juno/pkg/proto"
-	"juno/pkg/util"
+	junoio "github.com/paypal/junodb/pkg/io"
+	"github.com/paypal/junodb/pkg/proto"
+	"github.com/paypal/junodb/pkg/util"
 )
 
 type (

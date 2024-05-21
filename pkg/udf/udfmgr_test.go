@@ -21,7 +21,8 @@ package udf
 
 import (
 	"encoding/binary"
-	"juno/third_party/forked/golang/glog"
+
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 
 	"fmt"
 	"testing"

@@ -1,0 +1,26 @@
+juno:
+  useSSL: true
+  default_record_lifetime_sec: 1800
+  max_record_lifetime_sec: 259200
+  max_record_namespace_length: 256
+  max_key_size: 128
+  application_name: TestApp
+  record_namespace: TestNamespace
+  usePayloadCompression: false
+  operation:
+    retry: true
+  response:
+    timeout_msec: 2000
+    max_timeout_msec: 5000
+  connection:
+    timeout_msec: 300
+    recycle_duration_msec: 30000
+    pool_size: 10
+    reconnect_on_fail: false
+    byPassLTM: true
+    max_timeout_msec: 3000
+    max_recycle_duration_msec: 50000
+    max_pool_size: 20
+  server:
+    host: "127.0.0.1"
+    port: 8080

@@ -24,7 +24,7 @@ import (
 	"fmt"
 	"html/template"
 
-	"juno/pkg/version"
+	"github.com/paypal/junodb/pkg/version"
 )
 
 var (

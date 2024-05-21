@@ -24,14 +24,14 @@ import (
 	"strings"
 	"sync"
 
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 
-	"juno/cmd/storageserv/config"
-	"juno/cmd/storageserv/stats"
-	"juno/pkg/initmgr"
-	"juno/pkg/logging"
-	"juno/pkg/logging/cal"
-	"juno/pkg/logging/otel"
+	"github.com/paypal/junodb/cmd/storageserv/config"
+	"github.com/paypal/junodb/cmd/storageserv/stats"
+	"github.com/paypal/junodb/pkg/initmgr"
+	"github.com/paypal/junodb/pkg/logging"
+	"github.com/paypal/junodb/pkg/logging/cal"
+	"github.com/paypal/junodb/pkg/logging/otel"
 )
 
 type (

@@ -26,9 +26,9 @@ import (
 	"path/filepath"
 	"strings"
 
-	"juno/pkg/cmd"
-	"juno/pkg/initmgr"
-	"juno/pkg/version"
+	"github.com/paypal/junodb/pkg/cmd"
+	"github.com/paypal/junodb/pkg/initmgr"
+	"github.com/paypal/junodb/pkg/version"
 )
 
 func init() {
@@ -96,7 +96,7 @@ func Main() {
 
 }
 
-//TODO may customize this or remove inappalicable glob flags
+// TODO may customize this or remove inappalicable glob flags
 func printUsage() {
 	progName := filepath.Base(os.Args[0])
 	fmt.Printf(`

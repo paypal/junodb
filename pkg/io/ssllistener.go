@@ -26,11 +26,11 @@ import (
 	"syscall"
 	"time"
 
-	"juno/third_party/forked/golang/glog"
-
-	"juno/pkg/logging"
-	"juno/pkg/logging/cal"
-	"juno/pkg/sec"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/pkg/logging"
+	"github.com/paypal/junodb/pkg/logging/cal"
+	"github.com/paypal/junodb/pkg/sec"
+	"github.com/paypal/junodb/pkg/logging/otel"
 )
 
 type SslListener struct {
@@ -66,6 +66,8 @@ func (l *SslListener) AcceptAndServe() error {
 						cal.Event(cal.TxnTypeAccept, rhost, cal.StatusSuccess, b.Bytes())
 					}
 				}
+				otel.RecordCount(otel.Accept, []otel.Tags{{otel.Status, otel.Success}, {otel.TLS_version, sslConn.GetTLSVersion()},
+					{otel.Cipher, sslConn.GetCipherName()}, {otel.Ssl_r, sslConn.DidResume()}})
 				l.startNewConnector(sslConn.GetNetConn())
 			} else {
 				logAsWarning := true
@@ -95,6 +97,15 @@ func (l *SslListener) AcceptAndServe() error {
 						cal.Event(cal.TxnTypeAccept, rhost, st, b.Bytes())
 					}
 				}
+
+				otelStatus := otel.Success
+				if logAsWarning {
+					otelStatus = otel.Warn
+				}
+
+				otel.RecordCount(otel.Accept, []otel.Tags{{otel.Status, otelStatus}, {otel.TLS_version, sslConn.GetTLSVersion()},
+					{otel.Cipher, sslConn.GetCipherName()}, {otel.Ssl_r, sslConn.DidResume()}})
+
 				if logAsWarning {
 					glog.Warning("handshaking error: ", err)
 				} else {

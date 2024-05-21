@@ -16,20 +16,22 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 //
-
 package main
 
 import (
 	"encoding/binary"
+	"errors"
 	"fmt"
 	"math"
 	"math/rand"
 	"sync"
 	"time"
 
-	"juno/pkg/client"
+	"github.com/paypal/junodb/pkg/client"
 
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
+
+	"juno/pkg/util"
 
 	uuid "github.com/satori/go.uuid"
 )
@@ -43,7 +45,7 @@ const (
 	kNumRequestTypes
 )
 
-const MaxDeletes = 10000
+var ErrNoMoreKeys = errors.New("no more keys")
 
 type (
 	RequestType uint8
@@ -53,14 +55,11 @@ type (
 	}
 
 	RecordStore struct {
-		records []Record
-		// Used for preloaded keys
-		numKeys    int
-		currGet    int
-		nextDelete int
-		offsetDel  int
-		offsetGet  int
-		LastDelete bool
+		records   []Record
+		sKey      int
+		eKey      int
+		nextKey   int
+		randomize bool
 	}
 
 	TestEngine struct {
@@ -73,6 +72,7 @@ type (
 		stats           *Statistics
 		movingStats     *Statistics
 		numReqPerSecond int
+		numRunningExec  *util.AtomicCounter
 	}
 	InvokeFunc func() error
 )
@@ -128,27 +128,35 @@ func (r *Record) isExpired() bool {
 }
 
 func (s *RecordStore) Add(rec Record) {
-	if s.numKeys > 0 {
+	if s.isKeyRange() {
 		return
 	}
+
 	s.records = append(s.records, rec)
 }
 
 func (s *RecordStore) display() {
-	glog.Infof("numKeys=%d currGet=%d nextDelete=%d offsetDel=%d offsetGet=%d",
-		s.numKeys, s.currGet, s.nextDelete, s.offsetDel, s.offsetGet)
+	/*
+		glog.Infof("numKeys=%d currGet=%d nextDelete=%d offsetDel=%d offsetGet=%d",
+			s.numKeys, s.currGet, s.nextDelete, s.offsetDel, s.offsetGet)*/
 }
 
 func (s *RecordStore) takeRecord() (rec Record, err error) {
-	if s.numKeys > 0 { // preloaded keys
+	if s.isKeyRange() {
+		var key_id int
+		if s.randomize {
+			key_id = s.sKey + rand.Intn(s.eKey-s.sKey+1)
+		} else {
+			if s.nextKey > s.eKey {
+				err = ErrNoMoreKeys
+				return
+			}
+			key_id = s.nextKey
+			s.nextKey++
+		}
 		rec = Record{
-			key: NewRandomKey(s.offsetDel + s.nextDelete),
+			key: NewRandomKey(key_id),
 		}
-		if s.endOfDelete() {
-			err = fmt.Errorf("no more record for destroy")
-			return
-		}
-		s.nextDelete++
 		return
 	}
 
@@ -164,17 +172,23 @@ func (s *RecordStore) takeRecord() (rec Record, err error) {
 }
 
 func (s *RecordStore) getRecord() (rec Record, err error) {
-	if s.numKeys > 0 { // preloaded keys
-		count := s.numKeys
-		if s.numKeys >= MaxDeletes {
-			count = s.numKeys >> 2
+	if s.isKeyRange() {
+		var key_id int
+		if s.randomize {
+			key_id = s.sKey + rand.Intn(s.eKey-s.sKey+1)
+		} else {
+			if s.nextKey > s.eKey {
+				err = ErrNoMoreKeys
+				return
+			}
+			key_id = s.nextKey
+			s.nextKey++
 		}
-		k := expRand(count)
-		s.currGet = k
 
 		rec = Record{
-			key: NewRandomKey(s.offsetGet + k),
+			key: NewRandomKey(key_id),
 		}
+
 		return
 	}
 
@@ -193,37 +207,48 @@ func (s *RecordStore) getRecord() (rec Record, err error) {
 }
 
 func (s *RecordStore) empty() bool {
-	return len(s.records) == 0 && s.numKeys == 0
-}
-
-func (s *RecordStore) endOfDelete() bool {
-	return s.numKeys > 0 &&
-		(s.nextDelete >= s.numKeys || s.nextDelete >= MaxDeletes)
+	return len(s.records) == 0 && s.isKeyRange() == false
 }
 
 func (s *RecordStore) Get() (rec Record, err error) {
 	for !s.empty() {
 		rec, err = s.getRecord()
-		if err == nil {
-			return
-		}
+		return
 	}
 	err = fmt.Errorf("no record")
 	return
 }
 
 func (s *RecordStore) Take() (rec Record, err error) {
-	for !s.empty() && !s.endOfDelete() {
+	if s.isKeyRange() {
+		return s.takeRecord()
+	}
+
+	if !s.empty() {
 		rec, err = s.takeRecord()
-		if err == nil && !rec.isExpired() {
-			if s.endOfDelete() {
-				s.LastDelete = true
-			}
+		if err == nil {
 			return
 		}
 	}
 	err = fmt.Errorf("no unexpired record")
 	return
+}
+
+func (s *RecordStore) getNextKey() (key []byte) {
+	if s.sKey == -1 {
+		key = newTestKey()
+	} else {
+		if s.nextKey > s.eKey {
+			return nil
+		}
+		key = NewRandomKey(s.nextKey)
+		s.nextKey++
+	}
+	return
+}
+
+func (s *RecordStore) isKeyRange() bool {
+	return s.sKey > -1
 }
 
 func (e *TestEngine) Init() {
@@ -235,70 +260,35 @@ func (e *TestEngine) Init() {
 	e.invokeFuncs[kRequestTypeDestroy] = e.invokeDestroy
 }
 
-func (e *TestEngine) restoreData() {
-	if e.recStore.numKeys <= 0 || e.recStore.nextDelete <= 0 {
-		return
-	}
-
-	count := e.recStore.nextDelete
-
-	// Add back deleted keys
-	glog.Infof("Add back deleted keys: count=%d", count)
-	for i := 0; i < count; i++ {
-
-		now := time.Now()
-
-		key := NewRandomKey(e.recStore.offsetDel + i)
-		_, err := e.client.Create(key, e.rdgen.createPayload())
-		tm := time.Since(now)
-
-		e.stats.Put(kRequestTypeCreate, tm, err)
-		e.movingStats.Put(kRequestTypeCreate, tm, err)
-		if err != nil {
-			glog.Errorf("%s error: %s", kRequestTypeCreate.String(), err)
-			e.recStore.display()
-		}
-	}
-}
-
 func (e *TestEngine) Run(wg *sync.WaitGroup, chDone <-chan bool) {
 	defer wg.Done()
+	defer e.numRunningExec.Add(-1)
 	startTime := time.Now()
 	var numreq int = 0
 	errCount := 0
+
 	for {
 		for _, item := range e.reqSequence.items {
-			if e.recStore.numKeys > 0 &&
-				item.reqType == kRequestTypeCreate {
-				continue
-			}
 			for i := 0; i < item.numRequests; i++ {
 				select {
 				case <-chDone:
-					e.restoreData()
 					return
 				default:
 					now := time.Now()
 					err := e.invoke(item.reqType)
 					tm := time.Since(now)
-					if item.reqType == kRequestTypeDestroy &&
-						e.recStore.endOfDelete() {
-						if e.recStore.LastDelete {
-							e.recStore.LastDelete = false
-						} else {
-							continue
-						}
+					if errors.Is(err, ErrNoMoreKeys) {
+						return
 					}
+
 					e.stats.Put(item.reqType, tm, err)
 					e.movingStats.Put(item.reqType, tm, err)
 					if err != nil {
 						glog.Errorf("%s error: %s", item.reqType.String(), err)
-						if e.recStore.numKeys > 0 {
-							e.recStore.display()
-							errCount++
-							if errCount > 100 {
-								return
-							}
+						e.recStore.display()
+						errCount++
+						if errCount > 100 {
+							//return
 						}
 					}
 					diff := now.Sub(startTime)
@@ -355,10 +345,13 @@ func (e *TestEngine) checkSpeedForVariableTp(now time.Time, numReq int, startTim
 }
 
 func (e *TestEngine) invokeCreate() (err error) {
-	if e.recStore.numKeys > 0 {
+
+	key := e.recStore.getNextKey()
+	if key == nil {
+		err = ErrNoMoreKeys
 		return
 	}
-	key := newTestKey()
+
 	var ctx client.IContext
 
 	if ctx, err = e.client.Create(key, e.rdgen.createPayload(), client.WithTTL(e.rdgen.getTTL())); err == nil {
@@ -405,9 +398,6 @@ func (e *TestEngine) invokeSet() (err error) {
 func (e *TestEngine) invokeDestroy() (err error) {
 	var rec Record
 
-	if e.recStore.endOfDelete() {
-		return nil
-	}
 	if rec, err = e.recStore.Take(); err == nil {
 		err = e.client.Destroy(rec.key)
 	}

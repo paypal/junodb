@@ -45,6 +45,10 @@ Continue building JunoDB server with
 
 <!-- toc -->
 
+**Note** :
+Docker build supported platforms
+- Linux (Ubuntu)
+- OS X (macOS)
 ### <h3 id="docker_install_dependencies">Install Dependencies</h3>
 [Install Docker Engine version 20.10.0+](https://docs.docker.com/engine/install/ubuntu/)
 Check for existing docker version
@@ -206,6 +210,10 @@ More about junoload [here](docs/junoload.md)
 <br>
 
 ## Manual Build
+
+**Note** : 
+Manual build supported platforms
+- Linux (Ubuntu 20.04)
 
 The following sections explain the process for manually building the JunoDB server without Docker. These instructions are based on an Ubuntu 20.04.5 system
 * [Manual](#manual-build)    

@@ -22,10 +22,10 @@ package main
 import (
 	"fmt"
 
-	"juno/third_party/forked/golang/glog"
-	"juno/third_party/forked/tecbot/gorocksdb"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/tecbot/gorocksdb"
 
-	stor "juno/cmd/storageserv/storage/db"
+	stor "github.com/paypal/junodb/cmd/storageserv/storage/db"
 )
 
 func PrintDbStats(name string) {

@@ -22,7 +22,7 @@ package cli
 import (
 	"fmt"
 	"io"
-	"juno/pkg/proto"
+	"github.com/paypal/junodb/pkg/proto"
 )
 
 type RecordInfo struct {

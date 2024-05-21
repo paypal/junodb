@@ -28,14 +28,14 @@ import (
 	"sync/atomic"
 	"time"
 
-	"juno/third_party/forked/golang/glog"
-	"juno/third_party/forked/tecbot/gorocksdb"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/tecbot/gorocksdb"
 
-	"juno/cmd/storageserv/redist"
-	"juno/pkg/logging"
-	"juno/pkg/logging/cal"
-	"juno/pkg/proto"
-	"juno/pkg/shard"
+	"github.com/paypal/junodb/cmd/storageserv/redist"
+	"github.com/paypal/junodb/pkg/logging"
+	"github.com/paypal/junodb/pkg/logging/cal"
+	"github.com/paypal/junodb/pkg/proto"
+	"github.com/paypal/junodb/pkg/shard"
 )
 
 var (
@@ -92,7 +92,7 @@ func GetPrefixDB() *ShardingByPrefix {
 	return nil
 }
 
-///TODO xuli dbDir...
+// /TODO xuli dbDir...
 func newDBSharding(numShards int, numMicroShards int, numMicroShardGroups int, numPrefixDbs int, dbnamePrefix string) (sharding IDBSharding) {
 	if numPrefixDbs > 0 { // Use prefix key
 		shardFilters := make([]*ShardFilter, numPrefixDbs, numPrefixDbs)
@@ -115,7 +115,7 @@ func newDBSharding(numShards int, numMicroShards int, numMicroShardGroups int, n
 	return
 }
 
-///TODO dbDir...
+// /TODO dbDir...
 func newRocksDB(numShards int, numMicroShards int, numMicroShardGroups int, numPrefixDbs int, zoneId int, nodeId int, shardMap shard.Map) *RocksDB {
 	db := &RocksDB{
 		zoneId:    zoneId,

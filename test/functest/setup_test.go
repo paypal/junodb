@@ -30,19 +30,19 @@ import (
 	"testing"
 	"time"
 
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 
 	"github.com/BurntSushi/toml"
 
-	"juno/cmd/proxy/config"
-	"juno/pkg/client"
-	"juno/pkg/cluster"
-	"juno/pkg/etcd"
-	"juno/pkg/io"
-	"juno/pkg/logging/cal"
-	"juno/pkg/sec"
-	"juno/pkg/util"
-	"juno/test/testutil/server"
+	"github.com/paypal/junodb/cmd/proxy/config"
+	"github.com/paypal/junodb/pkg/client"
+	"github.com/paypal/junodb/pkg/cluster"
+	"github.com/paypal/junodb/pkg/etcd"
+	"github.com/paypal/junodb/pkg/io"
+	"github.com/paypal/junodb/pkg/logging/cal"
+	"github.com/paypal/junodb/pkg/sec"
+	"github.com/paypal/junodb/pkg/util"
+	"github.com/paypal/junodb/test/testutil/server"
 )
 
 var testConfig = server.ClusterConfig{

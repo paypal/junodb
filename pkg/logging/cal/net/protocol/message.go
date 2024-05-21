@@ -22,11 +22,12 @@ package protocol
 import (
 	"bytes"
 	"fmt"
-	"juno/third_party/forked/golang/glog"
 	"strconv"
 	"strings"
 	"time"
 	"unicode"
+
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 )
 
 // Msg is a single log message.

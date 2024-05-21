@@ -25,8 +25,8 @@ import (
 	"os"
 	"strings"
 
-	"juno/pkg/cfg"
-	"juno/pkg/cmd"
+	"github.com/paypal/junodb/pkg/cfg"
+	"github.com/paypal/junodb/pkg/cmd"
 )
 
 type cmdConfUnify struct {

@@ -25,9 +25,9 @@ import (
 	"os"
 	"path/filepath"
 
-	"juno/cmd/dbscanserv/app"
-	"juno/pkg/version"
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/cmd/dbscanserv/app"
+	"github.com/paypal/junodb/pkg/version"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 )
 
 func main() {

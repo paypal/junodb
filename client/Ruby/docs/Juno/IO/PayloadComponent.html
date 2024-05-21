@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Class: Juno::IO::PayloadComponent
+  
+    &mdash; Documentation by YARD 0.9.34
+  
+</title>
+
+  <link rel="stylesheet" href="../../css/style.css" type="text/css" />
+
+  <link rel="stylesheet" href="../../css/common.css" type="text/css" />
+
+<script type="text/javascript">
+  pathId = "Juno::IO::PayloadComponent";
+  relpath = '../../';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="../../class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="../../_index.html">Index (P)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../../Juno.html" title="Juno (module)">Juno</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../IO.html" title="Juno::IO (module)">IO</a></span></span>
+     &raquo; 
+    <span class="title">PayloadComponent</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../../class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><h1>Class: Juno::IO::PayloadComponent
+  
+  
+  
+</h1>
+<div class="box_info">
+  
+  <dl>
+    <dt>Inherits:</dt>
+    <dd>
+      <span class="inheritName">BinData::Record</span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next">BinData::Record</li>
+          
+            <li class="next">Juno::IO::PayloadComponent</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+    </dd>
+  </dl>
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>lib/juno/IO/PayloadComponent.rb</dd>
+  </dl>
+  
+</div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    
+<p>** Payload (or KeyValue) Component **</p>
+
+<p>A 12-byte header followed by name, key and value</p>
+
+<pre class="code ruby"><code class="ruby">Tag/ID: 0x01
+</code></pre>
+<ul><li>
+<p>Header *</p>
+
+<pre class="code ruby"><code class="ruby">|0|1|2|3|4|5|6|7|0|1|2|3|4|5|6|7|0|1|2|3|4|5|6|7|0|1|2|3|4|5|6|7|
+|              0|              1|              2|              3|
+</code></pre>
+</li></ul>
+
+<p>——<code>---------------</code>—————<code>---------------</code>—————+</p>
+
+<pre class="code ruby"><code class="ruby">0 | Size                                                          |
+</code></pre>
+
+<p>——<code>---------------</code>—————<code>-------------------------------</code></p>
+
+<pre class="code ruby"><code class="ruby">4 | Tag/ID (0x01) | namespace len | key length                    |
+</code></pre>
+
+<p>——<code>---------------</code>—————<code>-------------------------------</code></p>
+
+<pre class="code ruby"><code class="ruby">8 | payload length                                                |
+</code></pre>
+
+<p>——<code>---------------------------------------------------------------</code></p>
+
+<pre class="code ruby"><code class="ruby">(
+ The max namespace length: 255
+ payload length = 0 if len(payload data) = 0, otherwise,
+ payload length = 1 + len(payload data) = len(payload field)
+)
+</code></pre>
+<ul><li>
+<p>Body *</p>
+</li></ul>
+
+<p><code>---------</code>—–<code>---------------</code>————————-+ |namespace| key | payload field | Padding to align 8-byte | <code>---------</code>—–<code>---------------</code>————————-+</p>
+<ul><li>
+<p>Payload field*</p>
+</li></ul>
+
+<p><code>---------------------</code>————–+ | 1 byte payload type | Payload data | <code>---------------------</code>————–+</p>
+<ul><li>
+<p>Payload Type</p>
+</li></ul>
+
+<p>0: payload data is the actual value passed from client user 1: payload data is encrypted by Juno client library, details not specified 2: payload data is encrypted by Juno proxy with AES-GCM. encryption key length is 256 bits 3: Payload data is compressed by Juno Client library.</p>
+<ul><li>
+<p>Payload data</p>
+</li></ul>
+
+<p>for payload type 2 <code>--------------------------------</code>—————-<code>----------------</code> | 4 bytes encryption key version | 12 bytes nonce | encrypted data | <code>--------------------------------</code>—————-<code>----------------</code></p>
+
+<p>for payload type 3 <code>---------------------------------</code>——————<code>----------------</code> | 1 byte size of compression type | compression type | compressed data| <code>---------------------------------</code>——————<code>----------------</code></p>
+<ul><li>
+<p>compression type</p>
+</li></ul>
+
+<p>1) snappy (default algorithm) 2) TBD</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><h2>Defined Under Namespace</h2>
+<p class="children">
+  
+    
+  
+    
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="PayloadComponent/CompressedPayloadData.html" title="Juno::IO::PayloadComponent::CompressedPayloadData (class)">CompressedPayloadData</a></span>, <span class='object_link'><a href="PayloadComponent/EncryptedPayloadData.html" title="Juno::IO::PayloadComponent::EncryptedPayloadData (class)">EncryptedPayloadData</a></span>, <span class='object_link'><a href="PayloadComponent/UncompressedPayloadData.html" title="Juno::IO::PayloadComponent::UncompressedPayloadData (class)">UncompressedPayloadData</a></span>
+    
+  
+</p>
+
+
+
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#compressed%3F-instance_method" title="#compressed? (instance method)">#<strong>compressed?</strong>  &#x21d2; Boolean </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#compression_type-instance_method" title="#compression_type (instance method)">#<strong>compression_type</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#custom_num_bytes-instance_method" title="#custom_num_bytes (instance method)">#<strong>custom_num_bytes</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>to prevent stack overflow.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#get_payload_data_length-instance_method" title="#get_payload_data_length (instance method)">#<strong>get_payload_data_length</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#padding_length-instance_method" title="#padding_length (instance method)">#<strong>padding_length</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#set_value-instance_method" title="#set_value (instance method)">#<strong>set_value</strong>(input_value, compression_type = CompressionType::None)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#value-instance_method" title="#value (instance method)">#<strong>value</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="compressed?-instance_method">
+  
+    #<strong>compressed?</strong>  &#x21d2; <tt>Boolean</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+154
+155
+156
+157
+158</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/IO/PayloadComponent.rb', line 154</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_compressed?'>compressed?</span>
+  <span class='kw'>return</span> <span class='kw'>true</span> <span class='kw'>if</span> <span class='id identifier rubyid_payload_type'>payload_type</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="PayloadType.html" title="Juno::IO::PayloadType (class)">PayloadType</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="PayloadType.html#Compressed-constant" title="Juno::IO::PayloadType::Compressed (constant)">Compressed</a></span></span>
+
+  <span class='kw'>false</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="compression_type-instance_method">
+  
+    #<strong>compression_type</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+160
+161
+162
+163
+164</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/IO/PayloadComponent.rb', line 160</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_compression_type'>compression_type</span>
+  <span class='kw'>return</span> <span class='id identifier rubyid_payload_data'>payload_data</span><span class='period'>.</span><span class='id identifier rubyid_compression_type'>compression_type</span> <span class='kw'>if</span> <span class='id identifier rubyid_compressed?'>compressed?</span>
+
+  <span class='const'><span class='object_link'><a href="CompressionType.html" title="Juno::IO::CompressionType (class)">CompressionType</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="CompressionType.html#None-constant" title="Juno::IO::CompressionType::None (constant)">None</a></span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="custom_num_bytes-instance_method">
+  
+    #<strong>custom_num_bytes</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>to prevent stack overflow</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+103
+104
+105
+106
+107</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/IO/PayloadComponent.rb', line 103</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_custom_num_bytes'>custom_num_bytes</span>
+  <span class='id identifier rubyid_size'>size</span> <span class='op'>=</span> <span class='id identifier rubyid_component_size'>component_size</span><span class='period'>.</span><span class='id identifier rubyid_num_bytes'>num_bytes</span> <span class='op'>+</span> <span class='id identifier rubyid_tag_id'>tag_id</span><span class='period'>.</span><span class='id identifier rubyid_num_bytes'>num_bytes</span> <span class='op'>+</span> <span class='id identifier rubyid_namespace_length'>namespace_length</span><span class='period'>.</span><span class='id identifier rubyid_num_bytes'>num_bytes</span> <span class='op'>+</span> <span class='id identifier rubyid_key_length'>key_length</span><span class='period'>.</span><span class='id identifier rubyid_num_bytes'>num_bytes</span> <span class='op'>+</span> <span class='id identifier rubyid_payload_length'>payload_length</span><span class='period'>.</span><span class='id identifier rubyid_num_bytes'>num_bytes</span> <span class='op'>+</span> <span class='id identifier rubyid_namespace'>namespace</span><span class='period'>.</span><span class='id identifier rubyid_num_bytes'>num_bytes</span> <span class='op'>+</span> <span class='id identifier rubyid_payload_key'>payload_key</span><span class='period'>.</span><span class='id identifier rubyid_num_bytes'>num_bytes</span>
+  <span class='id identifier rubyid_size'>size</span> <span class='op'>+=</span> <span class='id identifier rubyid_payload_type'>payload_type</span><span class='period'>.</span><span class='id identifier rubyid_num_bytes'>num_bytes</span> <span class='op'>+</span> <span class='id identifier rubyid_payload_data'>payload_data</span><span class='period'>.</span><span class='id identifier rubyid_num_bytes'>num_bytes</span> <span class='kw'>if</span> <span class='id identifier rubyid_payload_length'>payload_length</span><span class='period'>.</span><span class='id identifier rubyid_positive?'>positive?</span>
+  <span class='id identifier rubyid_size'>size</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="get_payload_data_length-instance_method">
+  
+    #<strong>get_payload_data_length</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+98
+99
+100</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/IO/PayloadComponent.rb', line 98</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_get_payload_data_length'>get_payload_data_length</span>
+  <span class='lparen'>(</span><span class='id identifier rubyid_payload_length'>payload_length</span><span class='period'>.</span><span class='id identifier rubyid_positive?'>positive?</span> <span class='op'>?</span> <span class='id identifier rubyid_payload_length'>payload_length</span> <span class='op'>-</span> <span class='int'>1</span> <span class='op'>:</span> <span class='int'>0</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="padding_length-instance_method">
+  
+    #<strong>padding_length</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+109
+110
+111</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/IO/PayloadComponent.rb', line 109</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_padding_length'>padding_length</span>
+  <span class='lparen'>(</span><span class='int'>8</span> <span class='op'>-</span> <span class='id identifier rubyid_custom_num_bytes'>custom_num_bytes</span> <span class='op'>%</span> <span class='int'>8</span><span class='rparen'>)</span> <span class='op'>%</span> <span class='int'>8</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="set_value-instance_method">
+  
+    #<strong>set_value</strong>(input_value, compression_type = CompressionType::None)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+140
+141
+142
+143
+144
+145
+146
+147
+148</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/IO/PayloadComponent.rb', line 140</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_set_value'>set_value</span><span class='lparen'>(</span><span class='id identifier rubyid_input_value'>input_value</span><span class='comma'>,</span> <span class='id identifier rubyid_compression_type'>compression_type</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="CompressionType.html" title="Juno::IO::CompressionType (class)">CompressionType</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="CompressionType.html#None-constant" title="Juno::IO::CompressionType::None (constant)">None</a></span></span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_compression_type'>compression_type</span> <span class='op'>!=</span> <span class='const'><span class='object_link'><a href="CompressionType.html" title="Juno::IO::CompressionType (class)">CompressionType</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="CompressionType.html#None-constant" title="Juno::IO::CompressionType::None (constant)">None</a></span></span>
+    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_payload_type'>payload_type</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="PayloadType.html" title="Juno::IO::PayloadType (class)">PayloadType</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="PayloadType.html#Compressed-constant" title="Juno::IO::PayloadType::Compressed (constant)">Compressed</a></span></span>
+    <span class='id identifier rubyid_payload_data'>payload_data</span><span class='period'>.</span><span class='id identifier rubyid_compression_type'>compression_type</span> <span class='op'>=</span> <span class='id identifier rubyid_compression_type'>compression_type</span>
+  <span class='kw'>else</span>
+    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_payload_type'>payload_type</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="PayloadType.html" title="Juno::IO::PayloadType (class)">PayloadType</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="PayloadType.html#UnCompressed-constant" title="Juno::IO::PayloadType::UnCompressed (constant)">UnCompressed</a></span></span>
+  <span class='kw'>end</span>
+  <span class='id identifier rubyid_payload_data'>payload_data</span><span class='period'>.</span><span class='id identifier rubyid_data'>data</span> <span class='op'>=</span> <span class='id identifier rubyid_input_value'>input_value</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="value-instance_method">
+  
+    #<strong>value</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+150
+151
+152</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/juno/IO/PayloadComponent.rb', line 150</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_value'>value</span>
+  <span class='id identifier rubyid_payload_data'>payload_data</span><span class='period'>.</span><span class='id identifier rubyid_data'>data</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+      <div id="footer">
+  Generated on Fri Aug 11 11:39:55 2023 by
+  <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.34 (ruby-3.0.0).
+</div>
+
+    </div>
+  </body>
+</html>

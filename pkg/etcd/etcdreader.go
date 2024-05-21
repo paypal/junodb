@@ -28,11 +28,11 @@ import (
 	"strings"
 	"time"
 
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 
-	"juno/pkg/cluster"
-	"juno/pkg/shard"
-	"juno/pkg/stats/redist"
+	"github.com/paypal/junodb/pkg/cluster"
+	"github.com/paypal/junodb/pkg/shard"
+	"github.com/paypal/junodb/pkg/stats/redist"
 )
 
 // Implements cluster.IReader

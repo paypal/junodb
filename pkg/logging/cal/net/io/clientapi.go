@@ -21,10 +21,11 @@ package io
 
 import (
 	"bufio"
-	"juno/pkg/logging/cal/net/protocol"
 	"net"
 	"sync"
 	"sync/atomic"
+
+	"github.com/paypal/junodb/pkg/logging/cal/net/protocol"
 )
 
 // Client is a CAL client. It is used to configure and organize

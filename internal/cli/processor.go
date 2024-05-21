@@ -25,12 +25,12 @@ import (
 	"sync"
 	"time"
 
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 
-	"juno/pkg/io"
-	"juno/pkg/logging"
-	"juno/pkg/logging/cal"
-	"juno/pkg/proto"
+	"github.com/paypal/junodb/pkg/io"
+	"github.com/paypal/junodb/pkg/logging"
+	"github.com/paypal/junodb/pkg/logging/cal"
+	"github.com/paypal/junodb/pkg/proto"
 )
 
 type IOError struct {

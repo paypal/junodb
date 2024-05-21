@@ -28,14 +28,14 @@ import (
 	"sync/atomic"
 	"time"
 
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 
-	"juno/pkg/errors"
-	"juno/pkg/logging"
-	"juno/pkg/logging/cal"
-	"juno/pkg/logging/otel"
-	"juno/pkg/proto"
-	"juno/pkg/util"
+	"github.com/paypal/junodb/pkg/errors"
+	"github.com/paypal/junodb/pkg/logging"
+	"github.com/paypal/junodb/pkg/logging/cal"
+	"github.com/paypal/junodb/pkg/logging/otel"
+	"github.com/paypal/junodb/pkg/proto"
+	"github.com/paypal/junodb/pkg/util"
 )
 
 type (
@@ -114,9 +114,7 @@ func (p *OutboundProcessor) GetRequestCh() chan IRequestContext {
 	return p.reqCh
 }
 
-//
 // Non-blocking send
-//
 func (p *OutboundProcessor) sendRequest(req IRequestContext) (err *errors.Error) {
 	// send request
 	select {
@@ -314,18 +312,16 @@ func (p *OutboundProcessor) OnConnectSuccess(conn Conn, connector *OutboundConne
 
 		cal.AtomicTransaction(cal.TxnTypeConnect, p.connInfo.GetConnString(), cal.StatusSuccess, timeTaken, data)
 	}
-	if otel.IsEnabled() {
-		otel.RecordOutboundConnection(p.connInfo.GetConnString(), otel.StatusSuccess, timeTaken.Milliseconds())
-	}
+	otel.RecordOutboundConnection(p.connInfo.GetConnString(), otel.StatusSuccess, timeTaken.Microseconds())
+	otel.RecordCount(otel.TLSStatus, []otel.Tags{{otel.Endpoint, p.connInfo.GetConnString()}, {otel.TLS_version, conn.GetTLSVersion()},
+		{otel.Cipher, conn.GetCipherName()}, {otel.Ssl_r, conn.DidResume()}})
 }
 
 func (p *OutboundProcessor) OnConnectError(timeTaken time.Duration, connStr string, err error) {
 	if cal.IsEnabled() {
 		cal.AtomicTransaction(cal.TxnTypeConnect, connStr, cal.StatusError, timeTaken, []byte(err.Error()))
 	}
-	if otel.IsEnabled() {
-		otel.RecordOutboundConnection(connStr, otel.StatusError, timeTaken.Milliseconds())
-	}
+	otel.RecordOutboundConnection(connStr, otel.StatusError, timeTaken.Microseconds())
 }
 
 func (p *OutboundProcessor) connect(connCh chan *OutboundConnector, id int, connector *OutboundConnector) {

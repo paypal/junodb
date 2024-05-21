@@ -30,13 +30,13 @@ import (
 	"os/exec"
 	"path/filepath"
 
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 
-	"juno/cmd/proxy/config"
-	"juno/pkg/cmd"
-	"juno/pkg/initmgr"
-	"juno/pkg/sec"
-	"juno/pkg/version"
+	"github.com/paypal/junodb/cmd/proxy/config"
+	"github.com/paypal/junodb/pkg/cmd"
+	"github.com/paypal/junodb/pkg/initmgr"
+	"github.com/paypal/junodb/pkg/sec"
+	"github.com/paypal/junodb/pkg/version"
 )
 
 func Main() {

@@ -23,8 +23,8 @@ import (
 	"fmt"
 	"os"
 
-	"juno/cmd/proxy/stats/shmstats"
-	"juno/pkg/cmd"
+	"github.com/paypal/junodb/cmd/proxy/stats/shmstats"
+	"github.com/paypal/junodb/pkg/cmd"
 )
 
 var _ cmd.ICommand = (*CmdProxyStats)(nil)

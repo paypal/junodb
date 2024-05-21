@@ -28,16 +28,16 @@ import (
 	"sync"
 	"time"
 
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 
-	repconfig "juno/cmd/proxy/replication/config"
-	proxystats "juno/cmd/proxy/stats"
-	"juno/cmd/proxy/stats/shmstats"
-	"juno/pkg/io"
-	"juno/pkg/logging"
-	"juno/pkg/logging/cal"
-	"juno/pkg/proto"
-	"juno/pkg/util"
+	repconfig "github.com/paypal/junodb/cmd/proxy/replication/config"
+	proxystats "github.com/paypal/junodb/cmd/proxy/stats"
+	"github.com/paypal/junodb/cmd/proxy/stats/shmstats"
+	"github.com/paypal/junodb/pkg/io"
+	"github.com/paypal/junodb/pkg/logging"
+	"github.com/paypal/junodb/pkg/logging/cal"
+	"github.com/paypal/junodb/pkg/proto"
+	"github.com/paypal/junodb/pkg/util"
 )
 
 var (

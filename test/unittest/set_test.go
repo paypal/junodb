@@ -20,11 +20,12 @@
 package unittest
 
 import (
-	"juno/pkg/client"
-	"juno/pkg/proto"
-	"juno/test/testutil"
-	"juno/test/testutil/mock"
 	"testing"
+
+	"github.com/paypal/junodb/pkg/client"
+	"github.com/paypal/junodb/pkg/proto"
+	"github.com/paypal/junodb/test/testutil"
+	"github.com/paypal/junodb/test/testutil/mock"
 )
 
 var setPrepareArray [7]uint8

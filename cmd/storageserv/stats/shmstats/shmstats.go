@@ -32,10 +32,10 @@ import (
 	"time"
 	"unsafe"
 
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 
-	"juno/cmd/storageserv/config"
-	"juno/pkg/stats"
+	"github.com/paypal/junodb/cmd/storageserv/config"
+	"github.com/paypal/junodb/pkg/stats"
 )
 
 const (

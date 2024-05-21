@@ -20,9 +20,10 @@
 package redist
 
 import (
-	"juno/pkg/io"
-	"juno/pkg/util"
 	"time"
+
+	"github.com/paypal/junodb/pkg/io"
+	"github.com/paypal/junodb/pkg/util"
 )
 
 type Config struct {

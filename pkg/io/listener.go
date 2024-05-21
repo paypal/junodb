@@ -25,10 +25,10 @@ import (
 	"os"
 	"time"
 
-	"juno/pkg/logging/cal"
-	"juno/pkg/logging/otel"
-	"juno/pkg/util"
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/pkg/logging/cal"
+	"github.com/paypal/junodb/pkg/logging/otel"
+	"github.com/paypal/junodb/pkg/util"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 )
 
 const (
@@ -148,10 +148,10 @@ func (l *Listener) AcceptAndServe() error {
 				cal.Event(cal.TxnTypeAccept, rhost, cal.StatusSuccess, []byte("raddr="+raddr+"&laddr="+conn.LocalAddr().String()))
 			}
 		}
-		if otel.IsEnabled() {
-			otel.RecordCount(otel.Accept, nil)
-		}
+		otel.RecordCount(otel.Accept, []otel.Tags{{otel.Status, otel.Success}})
 		l.startNewConnector(conn)
+	} else {
+		otel.RecordCount(otel.Accept, []otel.Tags{{otel.Status, otel.Error}})
 	}
 	//log the error in caller if needed
 	return err

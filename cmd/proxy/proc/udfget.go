@@ -20,9 +20,9 @@
 package proc
 
 import (
-	"juno/pkg/proto"
-	"juno/pkg/udf"
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/pkg/proto"
+	"github.com/paypal/junodb/pkg/udf"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 )
 
 var _ IOnePhaseProcessor = (*UDFGetProcessor)(nil)

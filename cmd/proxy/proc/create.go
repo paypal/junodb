@@ -23,11 +23,11 @@ import (
 	"fmt"
 	"time"
 
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 
-	"juno/pkg/logging/cal"
-	"juno/pkg/logging/otel"
-	"juno/pkg/proto"
+	"github.com/paypal/junodb/pkg/logging/cal"
+	"github.com/paypal/junodb/pkg/logging/otel"
+	"github.com/paypal/junodb/pkg/proto"
 )
 
 var _ ITwoPhaseProcessor = (*CreateProcessor)(nil)
@@ -82,9 +82,7 @@ func (p *CreateProcessor) setInitSSRequest() bool {
 			if cal.IsEnabled() {
 				calLogReqProcError(kEncrypt, []byte(errmsg))
 			}
-			if otel.IsEnabled() {
-				otel.RecordCount(otel.ReqProc, []otel.Tags{{otel.Operation, kEncrypt}, {otel.Status, otel.StatusError}})
-			}
+			otel.RecordCount(otel.ReqProc, []otel.Tags{{otel.Operation, kEncrypt}, {otel.Status, otel.StatusError}})
 			p.replyStatusToClient(proto.OpStatusInternal)
 			return false
 		}

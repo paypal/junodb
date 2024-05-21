@@ -20,9 +20,9 @@
 package proc
 
 import (
-	"juno/cmd/proxy/stats"
-	"juno/pkg/proto"
-	"juno/pkg/util"
+	"github.com/paypal/junodb/cmd/proxy/stats"
+	"github.com/paypal/junodb/pkg/proto"
+	"github.com/paypal/junodb/pkg/util"
 )
 
 type ReqProcessorPool struct {

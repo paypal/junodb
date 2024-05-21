@@ -27,13 +27,13 @@ import (
 	"strconv"
 	"time"
 
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 
 	clientv3 "go.etcd.io/etcd/client/v3"
 
-	"juno/pkg/cluster"
-	"juno/pkg/etcd"
-	"juno/pkg/shard"
+	"github.com/paypal/junodb/pkg/cluster"
+	"github.com/paypal/junodb/pkg/etcd"
+	"github.com/paypal/junodb/pkg/shard"
 )
 
 // watch for the following etcd changes

@@ -20,12 +20,13 @@
 package unittest
 
 import (
-	//"juno/third_party/forked/golang/glog"
-	"juno/pkg/client"
-	"juno/pkg/proto"
-	"juno/test/testutil"
-	"juno/test/testutil/mock"
+	//"github.com/paypal/junodb/third_party/forked/golang/glog"
 	"testing"
+
+	"github.com/paypal/junodb/pkg/client"
+	"github.com/paypal/junodb/pkg/proto"
+	"github.com/paypal/junodb/test/testutil"
+	"github.com/paypal/junodb/test/testutil/mock"
 )
 
 var updatePrepareArray [6]uint8

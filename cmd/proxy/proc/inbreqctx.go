@@ -24,15 +24,15 @@ import (
 	goio "io"
 	"time"
 
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 
-	"juno/cmd/proxy/config"
-	"juno/cmd/proxy/replication"
-	"juno/pkg/io"
-	"juno/pkg/logging"
-	"juno/pkg/logging/cal"
-	"juno/pkg/logging/otel"
-	"juno/pkg/proto"
+	"github.com/paypal/junodb/cmd/proxy/config"
+	"github.com/paypal/junodb/cmd/proxy/replication"
+	"github.com/paypal/junodb/pkg/io"
+	"github.com/paypal/junodb/pkg/logging"
+	"github.com/paypal/junodb/pkg/logging/cal"
+	"github.com/paypal/junodb/pkg/logging/otel"
+	"github.com/paypal/junodb/pkg/proto"
 )
 
 type IInbRequestContext interface {
@@ -47,7 +47,7 @@ type IInbRequestContext interface {
 	ReplyStatus(st proto.OpStatus)
 }
 
-//InboundRequestContext Proxy Inbound request context
+// InboundRequestContext Proxy Inbound request context
 type InboundRequestContext struct {
 	io.InboundRequestContext
 	proto.OperationalMessage
@@ -75,9 +75,7 @@ func (r *InboundRequestContext) ValidateRequest() bool {
 		data.AddReqIdString(r.GetRequestIDString())
 		data.AddInt([]byte("len"), szKey)
 		calLogReqProcEvent(kBadParamInvalidKeyLen, data.Bytes())
-		if otel.IsEnabled() {
-			otel.RecordCount(otel.ReqProc, []otel.Tags{{otel.Status, kBadParamInvalidKeyLen}})
-		}
+		otel.RecordCount(otel.ReqProc, []otel.Tags{{otel.Status, kBadParamInvalidKeyLen}})
 		return false
 	}
 	szNs := len(r.GetNamespace())
@@ -88,9 +86,7 @@ func (r *InboundRequestContext) ValidateRequest() bool {
 		data.AddReqIdString(r.GetRequestIDString())
 		data.AddInt([]byte("len"), szNs)
 		calLogReqProcEvent(kBadParamInvalidNsLen, data.Bytes())
-		if otel.IsEnabled() {
-			otel.RecordCount(otel.ReqProc, []otel.Tags{{otel.Status, kBadParamInvalidNsLen}})
-		}
+		otel.RecordCount(otel.ReqProc, []otel.Tags{{otel.Status, kBadParamInvalidNsLen}})
 		return false
 	}
 	ttl := r.GetTimeToLive()
@@ -101,9 +97,7 @@ func (r *InboundRequestContext) ValidateRequest() bool {
 			data.AddReqIdString(r.GetRequestIDString())
 			data.AddInt([]byte("ttl"), int(ttl))
 			calLogReqProcEvent(kBadParamInvalidTTL, data.Bytes())
-			if otel.IsEnabled() {
-				otel.RecordCount(otel.ReqProc, []otel.Tags{{otel.Status, kBadParamInvalidTTL}})
-			}
+			otel.RecordCount(otel.ReqProc, []otel.Tags{{otel.Status, kBadParamInvalidTTL}})
 			return false
 		}
 	} else {
@@ -114,9 +108,7 @@ func (r *InboundRequestContext) ValidateRequest() bool {
 			data.AddInt([]byte("len"), szKey)
 			calLogReqProcEvent(kBadParamInvalidKeyLen, data.Bytes())
 			glog.Warningf("limit exceeded: key length %d > %d", szKey, limits.MaxKeyLength)
-			if otel.IsEnabled() {
-				otel.RecordCount(otel.ReqProc, []otel.Tags{{otel.Status, kBadParamInvalidKeyLen}})
-			}
+			otel.RecordCount(otel.ReqProc, []otel.Tags{{otel.Status, kBadParamInvalidKeyLen}})
 			return false
 		}
 		if limits.MaxTimeToLive != 0 && ttl > limits.MaxTimeToLive {
@@ -125,9 +117,7 @@ func (r *InboundRequestContext) ValidateRequest() bool {
 			data.AddInt([]byte("ttl"), int(ttl))
 			calLogReqProcEvent(kBadParamInvalidTTL, data.Bytes())
 			glog.Warningf("limit exceeded: TTL %d > %d", ttl, limits.MaxTimeToLive)
-			if otel.IsEnabled() {
-				otel.RecordCount(otel.ReqProc, []otel.Tags{{otel.Status, kBadParamInvalidTTL}})
-			}
+			otel.RecordCount(otel.ReqProc, []otel.Tags{{otel.Status, kBadParamInvalidTTL}})
 			return false
 		}
 		szValue := r.GetPayloadValueLength()
@@ -137,9 +127,7 @@ func (r *InboundRequestContext) ValidateRequest() bool {
 			data.AddInt([]byte("len"), int(szValue))
 			calLogReqProcEvent(kBadParamInvalidValueLen, data.Bytes())
 			glog.Warningf("limit exceeded: payload length %d > %d", ttl, limits.MaxTimeToLive)
-			if otel.IsEnabled() {
-				otel.RecordCount(otel.ReqProc, []otel.Tags{{otel.Status, kBadParamInvalidValueLen}})
-			}
+			otel.RecordCount(otel.ReqProc, []otel.Tags{{otel.Status, kBadParamInvalidValueLen}})
 			return false
 		}
 	}

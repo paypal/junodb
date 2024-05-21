@@ -27,7 +27,7 @@ import (
 	"path/filepath"
 	"runtime"
 
-	"juno/pkg/debug"
+	"github.com/paypal/junodb/pkg/debug"
 )
 
 var (

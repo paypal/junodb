@@ -26,11 +26,11 @@ import (
 	"net"
 	"time"
 
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 
-	"juno/pkg/client"
-	"juno/pkg/cluster"
-	"juno/pkg/proto"
+	"github.com/paypal/junodb/pkg/client"
+	"github.com/paypal/junodb/pkg/cluster"
+	"github.com/paypal/junodb/pkg/proto"
 )
 
 type MockClient struct {

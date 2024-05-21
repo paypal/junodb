@@ -23,10 +23,10 @@ import (
 	"strings"
 	"time"
 
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 
-	"juno/pkg/client"
-	"juno/pkg/util"
+	"github.com/paypal/junodb/pkg/client"
+	"github.com/paypal/junodb/pkg/util"
 )
 
 type KeyList struct {
