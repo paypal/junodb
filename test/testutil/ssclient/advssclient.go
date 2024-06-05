@@ -258,45 +258,6 @@ func (c *AdvSSClient) Clone(request *proto.OperationalMessage) (response *proto.
 	return response, err
 }
 
-//func (c *AdvSSClient) StartRedist(zoneid uint16, nodeid uint16, nodeInfo []string, changeMap map[uint16]uint16) (err error) {
-//	cfg := etcd.NewConfig("127.0.0.1:2379")
-//	cli := etcd.NewEtcdClient(cfg, "testcluster")
-//	if cli == nil {
-//		return errors.New("failed to connect to ETCD server")
-//	}
-//
-//	// Set new node
-//	for id, node := range nodeInfo {
-//		if node == "" {
-//			continue
-//		}
-//
-//		key := etcd.KeyRedistNode(int(zoneid), id)
-//		err = cli.PutValue(key, node)
-//		if err != nil {
-//			return err
-//		}
-//	}
-//
-//	// Set change map
-//	key := etcd.KeyRedist(int(zoneid), int(nodeid))
-//	var value string
-//	for k, v := range changeMap {
-//		if value == "" {
-//			value = fmt.Sprintf("%d_%d", k, v)
-//		} else {
-//			value = value + fmt.Sprintf(",%d_%d", k, v)
-//		}
-//	}
-//	err = cli.PutValue(key, value)
-//	if err != nil {
-//		return err
-//	}
-//
-//	key = etcd.KeyRedistEnable(int(zoneid))
-//	return cli.PutValue(key, "yes")
-//}
-
 func (c *AdvSSClient) StopRedist(zoneid uint16) (err error) {
 	cfg := etcd.NewConfig("127.0.0.1:2379")
 	cli := etcd.NewEtcdClient(cfg, "testcluster")
