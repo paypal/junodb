@@ -20,11 +20,11 @@
 package proc
 
 import (
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 
-	"juno/pkg/debug"
-	"juno/pkg/errors"
-	"juno/pkg/proto"
+	"github.com/paypal/junodb/pkg/debug"
+	"github.com/paypal/junodb/pkg/errors"
+	"github.com/paypal/junodb/pkg/proto"
 )
 
 type RequestAndStats struct {
@@ -42,7 +42,7 @@ type RequestAndStats struct {
 	funcIsSuccess       func(proto.OpStatus) bool
 }
 
-///TODO may just change to *SSRequestContext
+// /TODO may just change to *SSRequestContext
 type ResponseWrapper struct {
 	ssRequest *SSRequestContext
 }

@@ -27,15 +27,15 @@ import (
 
 	"github.com/BurntSushi/toml"
 
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 
-	"juno/cmd/clustermgr/cmd"
-	"juno/cmd/dbscanserv/config"
-	"juno/cmd/dbscanserv/prime"
-	"juno/cmd/storageserv/storage/db"
-	"juno/pkg/cluster"
-	"juno/pkg/etcd"
-	"juno/pkg/sec"
+	"github.com/paypal/junodb/cmd/clustermgr/cmd"
+	"github.com/paypal/junodb/cmd/dbscanserv/config"
+	"github.com/paypal/junodb/cmd/dbscanserv/prime"
+	"github.com/paypal/junodb/cmd/storageserv/storage/db"
+	"github.com/paypal/junodb/pkg/cluster"
+	"github.com/paypal/junodb/pkg/etcd"
+	"github.com/paypal/junodb/pkg/sec"
 )
 
 type CmdConfig cmd.Config

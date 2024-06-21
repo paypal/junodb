@@ -27,21 +27,21 @@ import (
 	"sync"
 	"time"
 
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 
-	"juno/cmd/dbscanserv/patch"
-	"juno/cmd/storageserv/config"
-	"juno/cmd/storageserv/redist"
-	"juno/cmd/storageserv/storage/db"
-	"juno/cmd/storageserv/watcher"
-	"juno/pkg/cluster"
-	"juno/pkg/debug"
-	"juno/pkg/etcd"
-	"juno/pkg/logging"
-	"juno/pkg/logging/cal"
-	"juno/pkg/proto"
-	"juno/pkg/shard"
-	"juno/pkg/util"
+	"github.com/paypal/junodb/cmd/dbscanserv/patch"
+	"github.com/paypal/junodb/cmd/storageserv/config"
+	"github.com/paypal/junodb/cmd/storageserv/redist"
+	"github.com/paypal/junodb/cmd/storageserv/storage/db"
+	"github.com/paypal/junodb/cmd/storageserv/watcher"
+	"github.com/paypal/junodb/pkg/cluster"
+	"github.com/paypal/junodb/pkg/debug"
+	"github.com/paypal/junodb/pkg/etcd"
+	"github.com/paypal/junodb/pkg/logging"
+	"github.com/paypal/junodb/pkg/logging/cal"
+	"github.com/paypal/junodb/pkg/proto"
+	"github.com/paypal/junodb/pkg/shard"
+	"github.com/paypal/junodb/pkg/util"
 )
 
 var (
@@ -1125,7 +1125,7 @@ func TruncateExpired() {
 }
 
 // TODO: revisit...
-//Used to detect replication conflict. Not for conditional update
+// Used to detect replication conflict. Not for conditional update
 func isConflict(request *proto.OperationalMessage, rec *db.Record) (conflict bool) {
 	lmt := request.GetLastModificationTime()
 	if lmt != 0 {

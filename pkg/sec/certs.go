@@ -20,8 +20,9 @@
 package sec
 
 import (
-	"juno/third_party/forked/golang/glog"
 	"os"
+
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 )
 
 type localFileProtectedT struct {

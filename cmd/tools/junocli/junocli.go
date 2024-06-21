@@ -22,11 +22,11 @@ package main
 import (
 	"fmt"
 
-	_ "juno/cmd/tools/cmd/cfg"
-	_ "juno/cmd/tools/cmd/cli"
-	_ "juno/cmd/tools/cmd/insp"
-	"juno/pkg/cmd"
-	"juno/pkg/logging/cal"
+	_ "github.com/paypal/junodb/cmd/tools/cmd/cfg"
+	_ "github.com/paypal/junodb/cmd/tools/cmd/cli"
+	_ "github.com/paypal/junodb/cmd/tools/cmd/insp"
+	"github.com/paypal/junodb/pkg/cmd"
+	"github.com/paypal/junodb/pkg/logging/cal"
 )
 
 func main() {

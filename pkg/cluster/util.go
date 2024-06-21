@@ -22,7 +22,7 @@ package cluster
 import (
 	"fmt"
 
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 )
 
 func DisplayZones(zones []*Zone, header string) {

@@ -1,4 +1,3 @@
-//
 //  Copyright 2023 PayPal Inc.
 //
 //  Licensed to the Apache Software Foundation (ASF) under one or more
@@ -15,60 +14,36 @@
 //  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
-//
 
+// Package client handles the configuration for a Juno client.
 package client
 
 import (
 	"fmt"
-	"time"
 
-	"juno/pkg/io"
-	"juno/pkg/util"
+	"github.com/paypal/junodb/pkg/io"
+	"github.com/paypal/junodb/pkg/util"
+	cal "github.com/paypal/junodb/pkg/logging/cal/config"
 )
 
+// Duration is a type alias for util.Duration.
 type Duration = util.Duration
 
+// Config holds the configuration values for the Juno client.
 type Config struct {
-	Server             io.ServiceEndpoint
-	Appname            string
-	Namespace          string
-	RetryCount         int
-	DefaultTimeToLive  int
-	ConnectTimeout     Duration
-	ReadTimeout        Duration
-	WriteTimeout       Duration
-	RequestTimeout     Duration
-	ConnRecycleTimeout Duration
+	Server    io.ServiceEndpoint
+	Appname   string
+	Namespace string
+
+	DefaultTimeToLive int
+	ConnPoolSize      int
+	ConnectTimeout    Duration
+	ResponseTimeout   Duration
+	BypassLTM         bool
+	Cal               cal.Config
 }
 
-var defaultConfig = Config{
-	RetryCount:         1,
-	DefaultTimeToLive:  1800,
-	ConnectTimeout:     Duration{100 * time.Millisecond},
-	ReadTimeout:        Duration{500 * time.Millisecond},
-	WriteTimeout:       Duration{500 * time.Millisecond},
-	RequestTimeout:     Duration{1000 * time.Millisecond},
-	ConnRecycleTimeout: Duration{9 * time.Second},
-}
-
-func SetDefaultTimeToLive(ttl int) {
-	defaultConfig.DefaultTimeToLive = ttl
-}
-
-func SetDefaultTimeout(connect, read, write, request, connRecycle time.Duration) {
-	defaultConfig.ConnectTimeout.Duration = connect
-	defaultConfig.ReadTimeout.Duration = read
-	defaultConfig.WriteTimeout.Duration = write
-	defaultConfig.RequestTimeout.Duration = request
-	defaultConfig.ConnRecycleTimeout.Duration = connRecycle
-}
-
-func (c *Config) SetDefault() {
-	*c = defaultConfig
-}
-
-func (c *Config) validate() error {
+func (c *Config) validate(useGetTLS bool) error {
 	if err := c.Server.Validate(); err != nil {
 		return err
 	}
@@ -78,6 +53,8 @@ func (c *Config) validate() error {
 	if len(c.Namespace) == 0 {
 		return fmt.Errorf("Config.Namespace not specified.")
 	}
-	/// TODO to validate others
+	if c.DefaultTimeToLive < 0 {
+		return fmt.Errorf("Config.DefaultTimeToLive is negative.")
+	}
 	return nil
 }

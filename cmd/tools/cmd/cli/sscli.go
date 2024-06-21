@@ -25,20 +25,20 @@ import (
 	"os"
 	"time"
 
-	//	"juno/third_party/forked/golang/glog"
+	//	"github.com/paypal/junodb/third_party/forked/golang/glog"
 	uuid "github.com/satori/go.uuid"
 
-	"juno/internal/cli"
-	"juno/pkg/client"
-	"juno/pkg/cluster"
-	"juno/pkg/cmd"
-	"juno/pkg/proto"
-	"juno/pkg/util"
+	"github.com/paypal/junodb/internal/cli"
+	"github.com/paypal/junodb/pkg/client"
+	"github.com/paypal/junodb/pkg/cluster"
+	"github.com/paypal/junodb/pkg/cmd"
+	"github.com/paypal/junodb/pkg/proto"
+	"github.com/paypal/junodb/pkg/util"
 )
 
 const (
-	connectTimeout = 100 * time.Millisecond
-	requestTimeout = 1000 * time.Millisecond
+	connectTimeout  = 100 * time.Millisecond
+	responseTimeout = 1000 * time.Millisecond
 )
 
 type (
@@ -173,9 +173,10 @@ func (s *shardOptionsT) getShardId(key []byte) uint16 {
 
 func newProcessor(cfg *client.Config) *cli.Processor {
 	processor := cli.NewProcessor(cfg.Server, cfg.Appname,
+		1, // connPoolSize
 		cfg.ConnectTimeout.Duration,
-		cfg.RequestTimeout.Duration,
-		cfg.ConnRecycleTimeout.Duration)
+		cfg.ResponseTimeout.Duration,
+		nil) // GetTLSConfig
 	processor.Start()
 	return processor
 }

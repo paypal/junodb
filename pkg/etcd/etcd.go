@@ -21,8 +21,9 @@ package etcd
 
 import (
 	"errors"
-	"juno/third_party/forked/golang/glog"
 	"sync"
+
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 )
 
 var (

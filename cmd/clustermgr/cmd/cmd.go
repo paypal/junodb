@@ -27,10 +27,10 @@ import (
 	"strings"
 	"time"
 
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 
-	"juno/pkg/cluster"
-	"juno/pkg/etcd"
+	"github.com/paypal/junodb/pkg/cluster"
+	"github.com/paypal/junodb/pkg/etcd"
 )
 
 func GetStatus(configFile string) {

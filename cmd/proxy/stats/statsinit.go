@@ -22,9 +22,9 @@ package stats
 import (
 	"fmt"
 
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 
-	"juno/cmd/proxy/stats/shmstats"
+	"github.com/paypal/junodb/cmd/proxy/stats/shmstats"
 )
 
 const (
@@ -39,9 +39,9 @@ type (
 )
 
 /*
-	Arguments
-	arg 0: Type stats.Type
-	arg 1: WorkerId int, if Type == KTypeWorker
+Arguments
+arg 0: Type stats.Type
+arg 1: WorkerId int, if Type == KTypeWorker
 */
 func Initialize(args ...interface{}) (err error) {
 	var (

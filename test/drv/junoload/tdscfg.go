@@ -20,9 +20,9 @@
 package main
 
 import (
-	"juno/pkg/client"
-	"juno/pkg/logging/cal/config"
-	"juno/pkg/sec"
+	"github.com/paypal/junodb/pkg/client"
+	"github.com/paypal/junodb/pkg/logging/cal/config"
+	"github.com/paypal/junodb/pkg/sec"
 )
 
 type (
@@ -43,5 +43,8 @@ type (
 		StatOutputRate  int
 		isVariable      bool
 		disableGetTTL   bool
+		sKey            int64
+		eKey            int64
+		randomize       bool
 	}
 )

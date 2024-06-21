@@ -23,12 +23,12 @@ import (
 	"fmt"
 	"sync"
 
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 
-	"juno/pkg/initmgr"
-	"juno/pkg/logging"
-	"juno/pkg/logging/cal"
-	"juno/pkg/proto"
+	"github.com/paypal/junodb/pkg/initmgr"
+	"github.com/paypal/junodb/pkg/logging"
+	"github.com/paypal/junodb/pkg/logging/cal"
+	"github.com/paypal/junodb/pkg/proto"
 )
 
 const (
@@ -60,10 +60,10 @@ var (
 type Flag uint8
 
 /*
-	Two arguments required
-	arg 0: *Config
-	arg 1: uint8 bitmask flag
-	arg 2: isServerManager (optional)
+Two arguments required
+arg 0: *Config
+arg 1: uint8 bitmask flag
+arg 2: isServerManager (optional)
 */
 func Initialize(args ...interface{}) (err error) {
 	var cfg *Config

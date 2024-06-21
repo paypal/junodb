@@ -29,12 +29,12 @@ import (
 	"path/filepath"
 	"time"
 
-	"juno/cmd/proxy/config"
-	"juno/cmd/proxy/stats/shmstats"
-	"juno/pkg/io"
-	"juno/pkg/logging/cal"
-	"juno/pkg/logging/otel"
-	"juno/pkg/stats"
+	"github.com/paypal/junodb/cmd/proxy/config"
+	"github.com/paypal/junodb/cmd/proxy/stats/shmstats"
+	"github.com/paypal/junodb/pkg/io"
+	"github.com/paypal/junodb/pkg/logging/cal"
+	"github.com/paypal/junodb/pkg/logging/otel"
+	"github.com/paypal/junodb/pkg/stats"
 )
 
 var (

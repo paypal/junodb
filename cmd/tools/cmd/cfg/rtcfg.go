@@ -26,11 +26,12 @@ import (
 	"os"
 	"time"
 
-	"juno/cmd/proxy/config"
-	"juno/pkg/cfg"
-	"juno/pkg/client"
-	"juno/pkg/cmd"
-	"juno/pkg/etcd"
+	"github.com/paypal/junodb/cmd/proxy/config"
+	"github.com/paypal/junodb/pkg/cfg"
+	"github.com/paypal/junodb/pkg/client"
+	"github.com/paypal/junodb/pkg/cmd"
+	"github.com/paypal/junodb/pkg/etcd"
+	"github.com/paypal/junodb/pkg/util"
 )
 
 const (
@@ -78,7 +79,10 @@ func (c *cmdRuntimeConfig) Parse(args []string) (err error) {
 			return
 		}
 	}
-	c.clientConfig.SetDefault()
+	c.clientConfig.DefaultTimeToLive = 1800
+	c.clientConfig.ConnPoolSize = 1
+	c.clientConfig.ConnectTimeout = util.Duration{1000 * time.Millisecond}
+	c.clientConfig.ResponseTimeout = util.Duration{1000 * time.Millisecond}
 
 	if cfg, e := c.config.GetConfig("Juno"); e == nil {
 		cfg.WriteTo(&c.clientConfig)

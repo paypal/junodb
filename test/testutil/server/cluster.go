@@ -31,16 +31,16 @@ import (
 	"syscall"
 	"time"
 
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 
-	"juno/cmd/proxy/handler"
-	"juno/cmd/proxy/stats"
-	"juno/pkg/cluster"
-	"juno/pkg/etcd"
-	"juno/pkg/net/netutil"
-	"juno/pkg/util"
-	"juno/test/testutil/log/frwk"
-	"juno/test/testutil/mock"
+	"github.com/paypal/junodb/cmd/proxy/handler"
+	"github.com/paypal/junodb/cmd/proxy/stats"
+	"github.com/paypal/junodb/pkg/cluster"
+	"github.com/paypal/junodb/pkg/etcd"
+	"github.com/paypal/junodb/pkg/net/netutil"
+	"github.com/paypal/junodb/pkg/util"
+	"github.com/paypal/junodb/test/testutil/log/frwk"
+	"github.com/paypal/junodb/test/testutil/mock"
 )
 
 type ICluster interface {

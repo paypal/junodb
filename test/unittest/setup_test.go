@@ -28,17 +28,17 @@ import (
 	"testing"
 	"time"
 
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 
-	"juno/cmd/proxy/config"
-	"juno/pkg/client"
-	"juno/pkg/cluster"
-	"juno/pkg/etcd"
-	"juno/pkg/io"
-	"juno/pkg/util"
+	"github.com/paypal/junodb/cmd/proxy/config"
+	"github.com/paypal/junodb/pkg/client"
+	"github.com/paypal/junodb/pkg/cluster"
+	"github.com/paypal/junodb/pkg/etcd"
+	"github.com/paypal/junodb/pkg/io"
+	"github.com/paypal/junodb/pkg/util"
 
-	"juno/test/testutil/mock"
-	"juno/test/testutil/server"
+	"github.com/paypal/junodb/test/testutil/mock"
+	"github.com/paypal/junodb/test/testutil/server"
 )
 
 var testConfig = server.ClusterConfig{
@@ -95,9 +95,7 @@ func mainSetup() {
 		Namespace:         "ns",
 		DefaultTimeToLive: 3600,
 		ConnectTimeout:    util.Duration{4000 * time.Millisecond},
-		ReadTimeout:       util.Duration{1500 * time.Millisecond},
-		WriteTimeout:      util.Duration{1500 * time.Millisecond},
-		RequestTimeout:    util.Duration{3000 * time.Millisecond},
+		ResponseTimeout:   util.Duration{3000 * time.Millisecond},
 	}
 	Mockclient = mock.NewMockClient(config.Conf.ClusterInfo.ConnInfo, cliCfg)
 }

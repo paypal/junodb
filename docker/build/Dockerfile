@@ -1,4 +1,4 @@
-FROM ubuntu:16.04 AS juno-base
+FROM ubuntu:20.04 AS juno-base
 USER root
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get -qq install -y \
 	cmake \

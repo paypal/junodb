@@ -28,7 +28,7 @@ import (
 	"sync"
 	"unsafe"
 
-	"juno/third_party/forked/tecbot/gorocksdb"
+	"github.com/paypal/junodb/third_party/forked/tecbot/gorocksdb"
 )
 
 var (

@@ -22,9 +22,9 @@ package proto
 import (
 	"io"
 
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 
-	"juno/pkg/util"
+	"github.com/paypal/junodb/pkg/util"
 )
 
 const (
@@ -69,7 +69,7 @@ func (dec *Decoder) Decode(op *OperationalMessage) error {
 	return op.decode(raw, &header, true)
 }
 
-//Caller's responsibility to have op zeroed
+// Caller's responsibility to have op zeroed
 func (op *OperationalMessage) decode(raw []byte, msgHeader *messageHeaderT, copyData bool) error {
 	offset := 0
 	szBuf := len(raw)

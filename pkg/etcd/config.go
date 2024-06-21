@@ -24,7 +24,7 @@ import (
 
 	clientv3 "go.etcd.io/etcd/client/v3"
 
-	"juno/pkg/util"
+	"github.com/paypal/junodb/pkg/util"
 )
 
 var (

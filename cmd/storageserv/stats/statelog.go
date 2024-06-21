@@ -31,9 +31,9 @@ import (
 	"syscall"
 	"time"
 
-	"juno/cmd/storageserv/storage/db"
-	"juno/pkg/proto"
-	"juno/pkg/stats"
+	"github.com/paypal/junodb/cmd/storageserv/storage/db"
+	"github.com/paypal/junodb/pkg/proto"
+	"github.com/paypal/junodb/pkg/stats"
 )
 
 const (
@@ -46,7 +46,7 @@ const (
 	kNumRequestTypes
 )
 
-//Exponential Moving Average (EMA)
+// Exponential Moving Average (EMA)
 var (
 	statsNumRequests       uint64
 	statsNumRequestsPrev   uint64

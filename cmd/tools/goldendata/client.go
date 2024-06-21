@@ -25,10 +25,10 @@ import (
 	"strings"
 	"time"
 
-	"juno/pkg/client"
-	"juno/pkg/util"
+	"github.com/paypal/junodb/pkg/client"
+	"github.com/paypal/junodb/pkg/util"
 
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 )
 
 type Duration = util.Duration

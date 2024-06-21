@@ -26,17 +26,17 @@ import (
 	"os"
 	"time"
 
-	"juno/pkg/logging/cal"
-	"juno/pkg/logging/cal/config"
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/pkg/logging/cal"
+	"github.com/paypal/junodb/pkg/logging/cal/config"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 
 	"github.com/BurntSushi/toml"
 	uuid "github.com/satori/go.uuid"
 
-	"juno/pkg/client"
-	"juno/pkg/cmd"
-	"juno/pkg/sec"
-	"juno/pkg/util"
+	"github.com/paypal/junodb/pkg/client"
+	"github.com/paypal/junodb/pkg/cmd"
+	"github.com/paypal/junodb/pkg/sec"
+	"github.com/paypal/junodb/pkg/util"
 )
 
 const (
@@ -47,13 +47,10 @@ const (
 )
 
 var defaultConfig = client.Config{
-	RetryCount:         1,
-	DefaultTimeToLive:  1800,
-	ConnectTimeout:     util.Duration{100 * time.Millisecond},
-	ReadTimeout:        util.Duration{500 * time.Millisecond},
-	WriteTimeout:       util.Duration{500 * time.Millisecond},
-	RequestTimeout:     util.Duration{1000 * time.Millisecond},
-	ConnRecycleTimeout: util.Duration{9 * time.Second},
+	DefaultTimeToLive: 1800,
+	ConnPoolSize:      1,
+	ConnectTimeout:    util.Duration{100 * time.Millisecond},
+	ResponseTimeout:   util.Duration{1000 * time.Millisecond},
 }
 
 type (

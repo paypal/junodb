@@ -22,8 +22,8 @@ package db
 import (
 	"io"
 
-	"juno/cmd/storageserv/redist"
-	"juno/pkg/shard"
+	"github.com/paypal/junodb/cmd/storageserv/redist"
+	"github.com/paypal/junodb/pkg/shard"
 )
 
 type IDatabase interface {

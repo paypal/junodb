@@ -23,7 +23,7 @@ import (
 	"sync"
 	"sync/atomic"
 
-	"juno/pkg/proto"
+	"github.com/paypal/junodb/pkg/proto"
 )
 
 const (

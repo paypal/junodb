@@ -21,10 +21,11 @@ package functest
 
 import (
 	//	"encoding/hex"
-	"juno/pkg/client"
-	"juno/test/testutil"
 	"testing"
 	"time"
+
+	"github.com/paypal/junodb/pkg/client"
+	"github.com/paypal/junodb/test/testutil"
 )
 
 /************************************************************************

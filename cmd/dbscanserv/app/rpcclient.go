@@ -27,10 +27,10 @@ import (
 	"strings"
 	"time"
 
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 
-	"juno/cmd/dbscanserv/config"
-	"juno/cmd/dbscanserv/prime"
+	"github.com/paypal/junodb/cmd/dbscanserv/config"
+	"github.com/paypal/junodb/cmd/dbscanserv/prime"
 )
 
 type RpcClient struct {

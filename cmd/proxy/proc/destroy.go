@@ -20,7 +20,7 @@
 package proc
 
 import (
-	"juno/pkg/proto"
+	"github.com/paypal/junodb/pkg/proto"
 )
 
 var _ IOnePhaseProcessor = (*DestroyProcessor)(nil)

@@ -23,10 +23,10 @@ import (
 	"fmt"
 	"sync"
 
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 
-	"juno/pkg/service"
-	"juno/test/testutil/log/frwk"
+	"github.com/paypal/junodb/pkg/service"
+	"github.com/paypal/junodb/test/testutil/log/frwk"
 )
 
 var _ IServer = (*InProcessServer)(nil)

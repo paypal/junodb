@@ -20,10 +20,11 @@
 package sec
 
 import (
-	"juno/third_party/forked/golang/glog"
 	"os"
 	"reflect"
 	"testing"
+
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 )
 
 // Sample secrets crt, not a real crt

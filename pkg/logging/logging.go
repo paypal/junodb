@@ -26,11 +26,11 @@ import (
 	"strconv"
 	"time"
 
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 
-	"juno/pkg/logging/cal"
-	"juno/pkg/proto"
-	"juno/pkg/util"
+	"github.com/paypal/junodb/pkg/logging/cal"
+	"github.com/paypal/junodb/pkg/proto"
+	"github.com/paypal/junodb/pkg/util"
 )
 
 type KeyValueBuffer struct {
@@ -360,7 +360,7 @@ func (b *KeyValueBuffer) AddOpRequestInfo(request *proto.OperationalMessage) *Ke
 	return b
 }
 
-//difference from AddOpRequestInfo(): namespace and key not logged
+// difference from AddOpRequestInfo(): namespace and key not logged
 func (b *KeyValueBuffer) AddOpRequest(request *proto.OperationalMessage) *KeyValueBuffer {
 	b.Add(logDataKeyRid, request.GetRequestIDString())
 	reqParam := &KeyValueBuffer{delimiter: ':', pairDelimiter: '|'}

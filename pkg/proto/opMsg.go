@@ -27,7 +27,7 @@ import (
 
 	uuid "github.com/satori/go.uuid"
 
-	"juno/pkg/util"
+	"github.com/paypal/junodb/pkg/util"
 )
 
 type OperationalMessage struct {

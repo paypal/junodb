@@ -28,13 +28,13 @@ import (
 	"sync/atomic"
 	"time"
 
-	"juno/third_party/forked/golang/glog"
-	"juno/third_party/forked/tecbot/gorocksdb"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/tecbot/gorocksdb"
 
-	"juno/cmd/storageserv/redist"
-	"juno/pkg/shard"
-	redistst "juno/pkg/stats/redist"
-	"juno/pkg/util"
+	"github.com/paypal/junodb/cmd/storageserv/redist"
+	"github.com/paypal/junodb/pkg/shard"
+	redistst "github.com/paypal/junodb/pkg/stats/redist"
+	"github.com/paypal/junodb/pkg/util"
 )
 
 type ShardFilter struct {

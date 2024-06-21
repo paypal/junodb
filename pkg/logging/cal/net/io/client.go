@@ -32,11 +32,11 @@ import (
 	"sync/atomic"
 	"time"
 
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 
-	"juno/pkg/logging/cal/config"
-	"juno/pkg/logging/cal/net/protocol"
-	"juno/pkg/logging/cal/util"
+	"github.com/paypal/junodb/pkg/logging/cal/config"
+	"github.com/paypal/junodb/pkg/logging/cal/net/protocol"
+	"github.com/paypal/junodb/pkg/logging/cal/util"
 )
 
 var logFile *os.File
@@ -259,9 +259,7 @@ func (c *client) sendFileLoop() {
 	}
 }
 
-//
 // Sender need to make should not send message after Shutdown()
-//
 func (c *client) Send(m *protocol.CalMessage) {
 	if m == nil {
 		glog.V(2).Info("Cal: Message can not be nil.")
@@ -282,7 +280,7 @@ func (c *client) Send(m *protocol.CalMessage) {
 	}
 }
 
-//If you close client connection you wouldnt be able to log anything using logger.
+// If you close client connection you wouldnt be able to log anything using logger.
 // This should be called when parent process Shutdown.
 func (c *client) Shutdown() {
 	c.closeOnce.Do(func() {
@@ -307,7 +305,7 @@ func (c *client) Shutdown() {
 	})
 }
 
-//Flush blocks till the messages are processed by the channel
+// Flush blocks till the messages are processed by the channel
 func (c *client) Flush() {
 	c.wg.Wait()
 	if logFile != nil {

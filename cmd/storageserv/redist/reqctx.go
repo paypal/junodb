@@ -24,12 +24,12 @@ import (
 	"io"
 	"time"
 
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 
-	. "juno/pkg/io"
-	"juno/pkg/proto"
-	redistst "juno/pkg/stats/redist"
-	"juno/pkg/util"
+	. "github.com/paypal/junodb/pkg/io"
+	"github.com/paypal/junodb/pkg/proto"
+	redistst "github.com/paypal/junodb/pkg/stats/redist"
+	"github.com/paypal/junodb/pkg/util"
 )
 
 type RedistRequestContext struct {

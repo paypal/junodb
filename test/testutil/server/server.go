@@ -22,7 +22,6 @@ package server
 import (
 	"fmt"
 	pkgio "io"
-	"juno/third_party/forked/golang/glog"
 	"net"
 	"net/http"
 	"os"
@@ -31,11 +30,13 @@ import (
 	"strings"
 	"time"
 
-	"juno/internal/cli"
-	"juno/pkg/io"
-	"juno/pkg/net/netutil"
-	"juno/pkg/proto"
-	"juno/test/testutil/log/frwk"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
+
+	"github.com/paypal/junodb/internal/cli"
+	"github.com/paypal/junodb/pkg/io"
+	"github.com/paypal/junodb/pkg/net/netutil"
+	"github.com/paypal/junodb/pkg/proto"
+	"github.com/paypal/junodb/test/testutil/log/frwk"
 )
 
 const (
@@ -143,7 +144,8 @@ func (s *ServerBase) IsUp() bool {
 	if frwk.LOG_DEBUG {
 		glog.DebugInfof("Testing if %s is up", s.Address())
 	}
-	clientProcessor := cli.NewProcessor(io.ServiceEndpoint{Addr: s.Address(), SSLEnabled: s.IsSSLEnabled()}, "testFramework", s.startWaitTime, s.startWaitTime, 0)
+	clientProcessor := cli.NewProcessor(io.ServiceEndpoint{Addr: s.Address(), SSLEnabled: s.IsSSLEnabled()}, "testFramework", 1,
+		s.startWaitTime, s.startWaitTime, nil)
 	clientProcessor.Start()
 	defer clientProcessor.Close()
 	request := &proto.OperationalMessage{}

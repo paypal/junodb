@@ -26,7 +26,7 @@ import (
 	"plugin"
 	"strings"
 
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 )
 
 func loadOneUDFbyName(dir string, name string) (iudf IUDF, err error) {

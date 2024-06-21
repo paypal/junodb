@@ -22,8 +22,8 @@ package main
 import (
 	"fmt"
 
-	"juno/cmd/tools/cmd/cfg"
-	"juno/pkg/cmd"
+	"github.com/paypal/junodb/cmd/tools/cmd/cfg"
+	"github.com/paypal/junodb/pkg/cmd"
 )
 
 func main() {

@@ -24,14 +24,14 @@ import (
 	"sync"
 	"time"
 
-	cerr "juno/pkg/errors"
-	"juno/pkg/etcd"
-	"juno/pkg/io"
-	"juno/pkg/proto"
-	"juno/pkg/shard"
-	redistst "juno/pkg/stats/redist"
+	cerr "github.com/paypal/junodb/pkg/errors"
+	"github.com/paypal/junodb/pkg/etcd"
+	"github.com/paypal/junodb/pkg/io"
+	"github.com/paypal/junodb/pkg/proto"
+	"github.com/paypal/junodb/pkg/shard"
+	redistst "github.com/paypal/junodb/pkg/stats/redist"
 
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 )
 
 type Replicator struct {

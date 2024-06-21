@@ -57,7 +57,23 @@ make image_tag=${image_tag} docker_repo=${docker_repo} source_repo=${source_repo
 
 
 # Set the app version using image_tag in manifest/.env
-sed -i "s#.*VERSION=.*#VERSION=${image_tag}#g" ${wd}/manifest/.env
+# Get the kernel name
+kernel=$(uname -s)
+
+# Set the sed command based on the operating system
+if [[ $kernel == "Linux" ]]; then
+    sed_command="sed -i 's#.*VERSION=.*#VERSION=${image_tag}#g' ${wd}/manifest/.env"
+elif [[ $kernel == "Darwin" ]]; then
+    sed_command="sed -i '' 's#.*VERSION=.*#VERSION=${image_tag}#g' ${wd}/manifest/.env"
+elif [[ $kernel == "CYGWIN"* || $kernel == "MINGW"* ]]; then
+    sed_command="sed -i 's#.*VERSION=.*#VERSION=${image_tag}#g' ${wd}/manifest/.env"
+else
+    echo "Unknown operating system."
+    exit 1
+fi
+
+# Run the sed command
+eval "$sed_command"
 
 # Generate the test secrets to initialize proxy
 manifest/config/secrets/gensecrets.sh

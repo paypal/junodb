@@ -22,7 +22,7 @@ package main
 import (
 	"time"
 
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 )
 
 type CmdLine struct {

@@ -30,8 +30,8 @@ import (
 	"sync/atomic"
 	"time"
 
-	"juno/pkg/net/netutil"
-	"juno/pkg/util"
+	"github.com/paypal/junodb/pkg/net/netutil"
+	"github.com/paypal/junodb/pkg/util"
 )
 
 type (

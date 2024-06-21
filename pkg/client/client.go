@@ -20,57 +20,42 @@
 /*
 package client implements Juno client API.
 
-possible returned error if client successfully received the response from Proxy
+Possible returned errors.
+
+  Common Errors
+  * nil
+  * ErrBadMsg
+  * ErrBadParam
+  * ErrBusy
+  * ErrConnect
+  * ErrInternal
+  * ErrNoStorage
+  * ErrResponseTimeout
 
   Create
-  * nil
-  * ErrBadMsg
-  * ErrBadParam
-  * ErrInternal
-  * ErrBusy
-  * ErrNoStorage
-  * ErrUniqueKeyViolation
+  * Common Errors
   * ErrRecordLocked
   * ErrWriteFailure
+  * ErrUniqueKeyViolation
 
   Get
-  * nil
-  * ErrBadMsg
-  * ErrBadParam
-  * ErrInternal
-  * ErrBusy
-  * ErrNoStorage
-  * ErrNoKey
+  * Common Errors
+  * ErrNoKey  // Normal if key has not been created or has expired.
   * ErrTTLExtendFailure
 
   Update
-  * nil
-  * ErrBadMsg
-  * ErrBadParam
-  * ErrInternal
-  * ErrBusy
-  * ErrNoStorage
-  * ErrRecordLocked
+  * Common Errors
   * ErrConditionViolation
+  * ErrRecordLocked
   * ErrWriteFailure
 
   Set
-  * nil
-  * ErrBadMsg
-  * ErrBadParam
-  * ErrInternal
-  * ErrBusy
-  * ErrNoStorage
+  * Common Errors
   * ErrRecordLocked
   * ErrWriteFailure
 
   Destroy
-  * nil
-  * ErrBadMsg
-  * ErrBadParam
-  * ErrInternal
-  * ErrBusy
-  * ErrNoStorage
+  * Common Errors
   * ErrRecordLocked
   * ErrWriteFailure
 
@@ -88,31 +73,13 @@ type IContext interface {
 	PrettyPrint(w io.Writer)
 }
 
-///TODO check API input arguments
-
 type IClient interface {
 	Create(key []byte, value []byte, opts ...IOption) (IContext, error)
 	Get(key []byte, opts ...IOption) ([]byte, IContext, error)
 	Update(key []byte, value []byte, opts ...IOption) (IContext, error)
 	Set(key []byte, value []byte, opts ...IOption) (IContext, error)
 	Destroy(key []byte, opts ...IOption) (err error)
+
 	UDFGet(key []byte, fname []byte, params []byte, opts ...IOption) ([]byte, IContext, error)
 	UDFSet(key []byte, fname []byte, params []byte, opts ...IOption) (IContext, error)
 }
-
-//type IResult interface {
-//	Get()
-//	GetWithTimeout()
-//	Poll()
-//}
-//type IValueResult interface {
-//	IResult
-//}
-//
-//type AsyncClient interface {
-//	Create(key []byte, value []byte, opts ...IOption) IResult
-//	Update(key []byte, value []byte, opts ...IOption) IResult
-//	Set(key []byte, value []byte, opts ...IOption) IResult
-//	Get(key []byte, value []byte, opts ...IOption) IResult
-//	Destroy(key []byte) IResult
-//}

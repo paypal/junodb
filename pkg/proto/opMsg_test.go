@@ -23,8 +23,9 @@ import (
 	"bytes"
 	"encoding/binary"
 	"fmt"
-	"juno/pkg/util"
 	"testing"
+
+	"github.com/paypal/junodb/pkg/util"
 )
 
 func testRequestResponse(t *testing.T, rawRequest []byte, rawResponse []byte) {

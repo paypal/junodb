@@ -16,7 +16,7 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 //
-package test
+package otel
 
 import (
 	"bytes"
@@ -31,6 +31,7 @@ import (
 	"encoding/pem"
 	"fmt"
 	"io"
+	"io/ioutil"
 	"math/big"
 	mathrand "math/rand"
 	"net"
@@ -112,7 +113,7 @@ func (c *mockCollector) serveMetrics(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
-
+	// fmt.Println("---------------raw req--------------", rawRequest)
 	request, err := unmarshalMetricsRequest(rawRequest, r.Header.Get("content-type"))
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
@@ -122,7 +123,7 @@ func (c *mockCollector) serveMetrics(w http.ResponseWriter, r *http.Request) {
 	c.spanLock.Lock()
 	defer c.spanLock.Unlock()
 
-	//	fmt.Println("---------------serveMetrics--------------", request)
+	fmt.Println("---------------serveMetrics--------------", request)
 	c.metricsStorage.AddMetrics(request)
 }
 
@@ -161,7 +162,7 @@ func readRequest(r *http.Request) ([]byte, error) {
 	if r.Header.Get("Content-Encoding") == "gzip" {
 		return readGzipBody(r.Body)
 	}
-	return io.ReadAll(r.Body)
+	return ioutil.ReadAll(r.Body)
 }
 
 func readGzipBody(body io.Reader) ([]byte, error) {
@@ -334,8 +335,13 @@ func NewMetricsStorage() MetricsStorage {
 func (s *MetricsStorage) AddMetrics(request *collectormetricpb.ExportMetricsServiceRequest) {
 	for _, rm := range request.GetResourceMetrics() {
 		// TODO (rghetia) handle multiple resource and library info.
+		fmt.Println("---------------AddMetrics------------------", rm)
+
 		if len(rm.ScopeMetrics) > 0 {
 			s.metrics = append(s.metrics, rm.ScopeMetrics[0].Metrics...)
+			fmt.Println("Metric added successfully")
+		} else {
+			fmt.Println("Metrics added filed")
 		}
 
 		// if len(rm.InstrumentationLibraryMetrics) > 0 {

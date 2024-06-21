@@ -30,19 +30,20 @@ import (
 	"testing"
 	"time"
 
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 
 	"github.com/BurntSushi/toml"
 
-	"juno/cmd/proxy/config"
-	"juno/pkg/client"
-	"juno/pkg/cluster"
-	"juno/pkg/etcd"
-	"juno/pkg/io"
-	"juno/pkg/logging/cal"
-	"juno/pkg/sec"
-	"juno/pkg/util"
-	"juno/test/testutil/server"
+	"github.com/paypal/junodb/internal/cli"
+	"github.com/paypal/junodb/cmd/proxy/config"
+	"github.com/paypal/junodb/pkg/client"
+	"github.com/paypal/junodb/pkg/cluster"
+	"github.com/paypal/junodb/pkg/etcd"
+	"github.com/paypal/junodb/pkg/io"
+	"github.com/paypal/junodb/pkg/logging/cal"
+	"github.com/paypal/junodb/pkg/sec"
+	"github.com/paypal/junodb/pkg/util"
+	"github.com/paypal/junodb/test/testutil/server"
 )
 
 var testConfig = server.ClusterConfig{
@@ -72,20 +73,12 @@ var (
 	defaultClientConfig = client.Config{
 		DefaultTimeToLive: 1800,
 		ConnectTimeout:    util.Duration{4000 * time.Millisecond},
-		ReadTimeout:       util.Duration{1500 * time.Millisecond},
-		WriteTimeout:      util.Duration{1500 * time.Millisecond},
-		RequestTimeout:    util.Duration{3000 * time.Millisecond},
+		ResponseTimeout:   util.Duration{3000 * time.Millisecond},
 	}
 )
 
 func setup() {
 
-	client.SetDefaultTimeToLive(defaultClientConfig.DefaultTimeToLive)
-	client.SetDefaultTimeout(defaultClientConfig.ConnectTimeout.Duration,
-		defaultClientConfig.ReadTimeout.Duration,
-		defaultClientConfig.WriteTimeout.Duration,
-		defaultClientConfig.RequestTimeout.Duration,
-		defaultClientConfig.ConnRecycleTimeout.Duration)
 	sigs := make(chan os.Signal)
 	signal.Notify(sigs, syscall.SIGINT, syscall.SIGTERM)
 	go func(sigCh chan os.Signal) {
@@ -117,7 +110,7 @@ func setup() {
 	var err error
 
 	if proxyClient, err = client.New(cfg); err != nil {
-		glog.Exitf("proxyClient create in set up is null, fail")
+		glog.Exitf("%s proxyClient create in set up is null, fail", err)
 	}
 	cfgShare = cfg
 	cfgShare.Namespace = "NS2"
@@ -176,6 +169,7 @@ func TestMain(m *testing.M) {
 		cal.InitWithConfig(&testConfig.CAL)
 	}
 
+	cli.SetConnectRecycleTimeout(time.Duration(0 * time.Second))
 	sec.Initialize(&testConfig.Sec, sec.KFlagClientTlsEnabled|sec.KFlagEncryptionEnabled)
 
 	ProxyAddr = testConfig.ProxyAddress

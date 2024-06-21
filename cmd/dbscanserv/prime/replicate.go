@@ -21,20 +21,19 @@ package prime
 
 import (
 	"errors"
-	"runtime"
 	"time"
 
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 
-	"juno/internal/cli"
-	"juno/pkg/io"
-	"juno/pkg/proto"
-	"juno/pkg/sec"
+	"github.com/paypal/junodb/internal/cli"
+	"github.com/paypal/junodb/pkg/io"
+	"github.com/paypal/junodb/pkg/proto"
+	"github.com/paypal/junodb/pkg/sec"
 )
 
 var (
 	secConfig *sec.Config
-	processor []*cli.Processor
+	processor *cli.Processor
 	inChan    = make(chan *proto.OperationalMessage, 1000)
 	outChan   = make(chan bool, 1000)
 )
@@ -57,39 +56,31 @@ func InitReplicator(proxyAddr string, numConns int) {
 	}
 
 	if numConns <= 0 {
-		numConns = 1
+		numConns = 2
 	}
 	if numConns > 4 {
 		numConns = 4
 	}
 
-	processor = make([]*cli.Processor, numConns)
-	for i := 0; i < numConns; i++ {
+	processor = cli.NewProcessor(
+		io.ServiceEndpoint{Addr: proxyAddr, SSLEnabled: secConfig != nil},
+		"dbscan",
+		numConns,                             // connPoolSize
+		time.Duration(500*time.Millisecond),  // ConnectTimeout
+		time.Duration(1000*time.Millisecond), // ResponseTimeout
+		nil)                                  // GetTLSConfig
 
-		processor[i] = cli.NewProcessor(
-			io.ServiceEndpoint{Addr: proxyAddr, SSLEnabled: secConfig != nil},
-			"dbscan",
-			time.Duration(500*time.Millisecond),  // ConnectTimeout
-			time.Duration(1000*time.Millisecond), // RequestTimeout
-			time.Duration(60*time.Second))        // ConnectRecycleTimeout
-
-		processor[i].Start()
-
-		runtime.SetFinalizer(processor[i], func(p *cli.Processor) {
-			p.Close()
-		})
-
-		go processRequest(i)
-	}
+	processor.Start()
+	go processRequest()
 }
 
-func processRequest(k int) {
+func processRequest() {
 	count := uint64(0)
 	for {
 		select {
 		case op := <-inChan:
 			for i := 0; i < 3; i++ {
-				reply, err := processor[k].ProcessRequest(op)
+				reply, err := processor.ProcessRequest(op)
 				if err != nil {
 					if i < 2 {
 						time.Sleep(10 * time.Millisecond)

@@ -25,13 +25,13 @@ import (
 	"sync"
 	"time"
 
-	"juno/third_party/forked/golang/glog"
+	"github.com/paypal/junodb/third_party/forked/golang/glog"
 
-	//	"juno/cmd/proxy/handler"
-	"juno/pkg/io"
-	"juno/pkg/proto"
-	"juno/pkg/service"
-	"juno/pkg/util"
+	//	"github.com/paypal/junodb/cmd/proxy/handler"
+	"github.com/paypal/junodb/pkg/io"
+	"github.com/paypal/junodb/pkg/proto"
+	"github.com/paypal/junodb/pkg/service"
+	"github.com/paypal/junodb/pkg/util"
 )
 
 var _ io.IRequestHandler = (*RequestHandler)(nil)
