@@ -33,12 +33,6 @@ import (
 	"github.com/paypal/junodb/third_party/forked/golang/glog"
 )
 
-//type IRequestHandler interface {
-//	Process(reqCtx *InboundRequestContext) error
-//	Start()
-//	Shutdown()
-//}
-
 type RequestHandler struct {
 	meanDelay   int
 	stdDevDelay int
