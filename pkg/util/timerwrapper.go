@@ -28,7 +28,6 @@ import (
 //
 // timer.C is buffered, so if the timer has just expired,
 // the newly reset timer can actually trigger immediately.
-//
 type TimerWrapper struct {
 	t       *time.Timer
 	stopped bool
@@ -37,10 +36,9 @@ type TimerWrapper struct {
 func NewTimerWrapper(d time.Duration) *TimerWrapper {
 	t := &TimerWrapper{
 		t:       time.NewTimer(d),
-		stopped: true,
+		stopped: false,
 	}
 
-	t.t.Stop()
 	return t
 }
 
